@@ -1,5 +1,8 @@
 # openapi-generator config for the Rust client (crate: fever-client).
 # library=reqwest: the maintained, async-capable transport.
+# Quirk: hyphenated dev versions get mangled by the template ("0.0.0-dev" →
+# "0.0.0-de") — harmless: CI drift-checks regenerate with the same stamp, and
+# real releases always stamp clean semver.
 generatorName: rust
 outputDir: /local/clients/rust
 inputSpec: /local/spec/openapi.json
