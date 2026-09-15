@@ -59,14 +59,6 @@ paths:
           nullable: true
           type: string
         style: form
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -80,6 +72,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: "Corpus composition: per-kind counts and top autotags"
       tags:
       - corpus
@@ -96,15 +90,6 @@ paths:
         \ file completes in seconds. Reports matched/updated/noop/unmatched/conflict\
         \ counts; filename fanout moves every match."
       operationId: reassign_customers_bulk
-      parameters:
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       requestBody:
         content:
           multipart/form-data:
@@ -122,6 +107,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - adminToken: []
       summary: Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
       tags:
       - customers
@@ -137,15 +124,6 @@ paths:
         \ Both admin shapes see cross-customer duplicates. No delete or keep recommendation\
         \ is made: the clusters are yours to act on."
       operationId: find_duplicates
-      parameters:
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -165,6 +143,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Find near-duplicate media clusters for a customer
       tags:
       - duplicates
@@ -183,14 +163,6 @@ paths:
           nullable: true
           type: string
         style: form
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -203,6 +175,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Suggest a duplicate-detection threshold from this customer's edge cosine
         distribution
       tags:
@@ -212,15 +186,6 @@ paths:
   /v1/export:
     post:
       operationId: export_tenant
-      parameters:
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -240,6 +205,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Export the tenant's vectors and metadata to S3
       tags:
       - export
@@ -262,15 +229,6 @@ paths:
   /v1/import:
     post:
       operationId: import_tenant
-      parameters:
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -290,6 +248,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Import vectors and metadata from a previous FEVER export in S3
       tags:
       - export
@@ -308,14 +268,6 @@ paths:
           title: Job Id
           type: integer
         style: simple
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -329,6 +281,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Get ingest job progress
       tags:
       - jobs
@@ -346,14 +300,6 @@ paths:
           title: Job Id
           type: integer
         style: simple
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -367,6 +313,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Cancel a pending or running ingest job
       tags:
       - jobs
@@ -375,15 +323,6 @@ paths:
   /v1/keys:
     get:
       operationId: list_keys
-      parameters:
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -395,12 +334,8 @@ paths:
                 type: array
                 default: null
           description: Successful Response
-        "422":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HTTPValidationError"
-          description: Validation Error
+      security:
+      - adminToken: []
       summary: List this appliance's API keys
       tags:
       - keys
@@ -408,15 +343,6 @@ paths:
       - application/json
     post:
       operationId: create_key
-      parameters:
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -436,6 +362,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - adminToken: []
       summary: Mint an API key for this appliance
       tags:
       - keys
@@ -454,14 +382,6 @@ paths:
           title: Key Id
           type: integer
         style: simple
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -474,6 +394,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - adminToken: []
       summary: Revoke an API key
       tags:
       - keys
@@ -486,15 +408,6 @@ paths:
         \ an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken\
         \ from the API key."
       operationId: ingest_media
-      parameters:
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -514,6 +427,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Ingest one or many media items
       tags:
       - ingest
@@ -523,15 +438,6 @@ paths:
   /v1/media/formats:
     get:
       operationId: list_media_formats
-      parameters:
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -539,12 +445,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/MediaFormats"
           description: Successful Response
-        "422":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HTTPValidationError"
-          description: Validation Error
+      security:
+      - bearerAuth: []
       summary: "Ingest capability: supported extensions per media family"
       tags:
       - media
@@ -574,14 +476,6 @@ paths:
           nullable: true
           type: string
         style: form
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -595,6 +489,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: "Everything known about a blob: annotations, EXIF summary, media kind,\
         \ derived artifact counts"
       tags:
@@ -639,14 +535,6 @@ paths:
           title: Waveform
           type: integer
         style: form
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -661,6 +549,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Fetch an indexed media item's bytes (images normalized to JPEG)
       tags:
       - media
@@ -688,14 +578,6 @@ paths:
           nullable: true
           type: string
         style: form
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -713,6 +595,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Sampled video frames for a parent blob
       tags:
       - media
@@ -738,14 +622,6 @@ paths:
           nullable: true
           type: string
         style: form
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -763,6 +639,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Whisper transcript segments for a parent blob (audio or video)
       tags:
       - media
@@ -788,15 +666,6 @@ paths:
         \ admin key for them). Admin keys parse unrestricted and see every customer's\
         \ rows in their own tenant."
       operationId: query
-      parameters:
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -816,6 +685,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Run a read-only SQL SELECT over the corpus tables
       tags:
       - query
@@ -828,15 +699,6 @@ paths:
         \ (RRF), reranked and calibrated so min_score is a real match probability.\
         \ image runs cosine similarity. customer_id and EXIF fields narrow the results."
       operationId: search
-      parameters:
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -860,6 +722,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPValidationError"
           description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Search by text or image
       tags:
       - search
@@ -869,27 +733,14 @@ paths:
   /v1/whoami:
     get:
       operationId: whoami
-      parameters:
-      - explode: false
-        in: header
-        name: authorization
-        required: false
-        schema:
-          nullable: true
-          type: string
-        style: simple
       responses:
         "200":
           content:
             application/json:
               schema: {}
           description: Successful Response
-        "422":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HTTPValidationError"
-          description: Validation Error
+      security:
+      - bearerAuth: []
       summary: Report the calling key's role and customer scope
       tags:
       - auth
@@ -2068,4 +1919,13 @@ components:
       anyOf:
       - type: string
       - type: integer
+  securitySchemes:
+    adminToken:
+      description: Operator admin token (the appliance's FEVER_ADMIN_TOKEN).
+      scheme: bearer
+      type: http
+    bearerAuth:
+      description: "Tenant API key: admin (tenant-wide) or scoped (one customer_id)."
+      scheme: bearer
+      type: http
 

@@ -42,7 +42,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.lowdownlabs</groupId>
   <artifactId>fever-client</artifactId>
-  <version>0.3.0</version>
+  <version>0.3.1</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -52,7 +52,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.lowdownlabs:fever-client:0.3.0"
+compile "com.lowdownlabs:fever-client:0.3.1"
 ```
 
 ### Others
@@ -65,7 +65,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-- `target/fever-client-0.3.0.jar`
+- `target/fever-client-0.3.1.jar`
 - `target/lib/*.jar`
 
 ## Getting Started
@@ -85,9 +85,8 @@ public class AuthApiExample {
         // Configure clients using the `defaultClient` object, such as
         // overriding the host and port, timeout, etc.
         AuthApi apiInstance = new AuthApi(defaultClient);
-        String authorization = "authorization_example"; // String | 
         try {
-            Object result = apiInstance.whoami(authorization);
+            Object result = apiInstance.whoami();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AuthApi#whoami");
@@ -191,7 +190,19 @@ Class | Method | HTTP request | Description
 <a id="documentation-for-authorization"></a>
 ## Documentation for Authorization
 
-Endpoints do not require authorization.
+
+Authentication schemes defined for the API:
+<a id="adminToken"></a>
+### adminToken
+
+
+- **Type**: HTTP Bearer Token authentication
+
+<a id="bearerAuth"></a>
+### bearerAuth
+
+
+- **Type**: HTTP Bearer Token authentication
 
 
 ## Recommendation

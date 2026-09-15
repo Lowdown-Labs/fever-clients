@@ -18,7 +18,6 @@ import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
 import com.lowdownlabs.fever.Pair;
 
-import org.openapitools.client.model.HTTPValidationError;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -165,48 +164,44 @@ public class AuthApi {
   /**
    * Report the calling key&#39;s role and customer scope
    * 
-   * @param authorization  (optional)
    * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object whoami(@javax.annotation.Nullable String authorization) throws ApiException {
-    return whoami(authorization, null);
+  public Object whoami() throws ApiException {
+    return whoami(null);
   }
 
   /**
    * Report the calling key&#39;s role and customer scope
    * 
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object whoami(@javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<Object> localVarResponse = whoamiWithHttpInfo(authorization, headers);
+  public Object whoami(Map<String, String> headers) throws ApiException {
+    ApiResponse<Object> localVarResponse = whoamiWithHttpInfo(headers);
     return localVarResponse.getData();
   }
 
   /**
    * Report the calling key&#39;s role and customer scope
    * 
-   * @param authorization  (optional)
    * @return ApiResponse&lt;Object&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Object> whoamiWithHttpInfo(@javax.annotation.Nullable String authorization) throws ApiException {
-    return whoamiWithHttpInfo(authorization, null);
+  public ApiResponse<Object> whoamiWithHttpInfo() throws ApiException {
+    return whoamiWithHttpInfo(null);
   }
 
   /**
    * Report the calling key&#39;s role and customer scope
    * 
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;Object&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Object> whoamiWithHttpInfo(@javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = whoamiRequestBuilder(authorization, headers);
+  public ApiResponse<Object> whoamiWithHttpInfo(Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = whoamiRequestBuilder(headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -253,7 +248,7 @@ public class AuthApi {
     }
   }
 
-  private HttpRequest.Builder whoamiRequestBuilder(@javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder whoamiRequestBuilder(Map<String, String> headers) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -261,9 +256,6 @@ public class AuthApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());

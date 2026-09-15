@@ -15,7 +15,7 @@ All URIs are relative to *http://localhost*
 
 ## createKey
 
-> KeyReveal createKey(createKeyRequest, authorization)
+> KeyReveal createKey(createKeyRequest)
 
 Mint an API key for this appliance
 
@@ -26,6 +26,7 @@ Mint an API key for this appliance
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.KeysApi;
 
@@ -33,12 +34,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: adminToken
+        HttpBearerAuth adminToken = (HttpBearerAuth) defaultClient.getAuthentication("adminToken");
+        adminToken.setBearerToken("BEARER TOKEN");
 
         KeysApi apiInstance = new KeysApi(defaultClient);
         CreateKeyRequest createKeyRequest = new CreateKeyRequest(); // CreateKeyRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            KeyReveal result = apiInstance.createKey(createKeyRequest, authorization);
+            KeyReveal result = apiInstance.createKey(createKeyRequest);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling KeysApi#createKey");
@@ -57,7 +61,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **createKeyRequest** | [**CreateKeyRequest**](CreateKeyRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -66,7 +69,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -81,7 +84,7 @@ No authorization required
 
 ## createKeyWithHttpInfo
 
-> ApiResponse<KeyReveal> createKeyWithHttpInfo(createKeyRequest, authorization)
+> ApiResponse<KeyReveal> createKeyWithHttpInfo(createKeyRequest)
 
 Mint an API key for this appliance
 
@@ -93,6 +96,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.KeysApi;
 
@@ -100,12 +104,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: adminToken
+        HttpBearerAuth adminToken = (HttpBearerAuth) defaultClient.getAuthentication("adminToken");
+        adminToken.setBearerToken("BEARER TOKEN");
 
         KeysApi apiInstance = new KeysApi(defaultClient);
         CreateKeyRequest createKeyRequest = new CreateKeyRequest(); // CreateKeyRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<KeyReveal> response = apiInstance.createKeyWithHttpInfo(createKeyRequest, authorization);
+            ApiResponse<KeyReveal> response = apiInstance.createKeyWithHttpInfo(createKeyRequest);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -126,7 +133,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **createKeyRequest** | [**CreateKeyRequest**](CreateKeyRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -135,7 +141,7 @@ ApiResponse<[**KeyReveal**](KeyReveal.md)>
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -151,7 +157,7 @@ No authorization required
 
 ## listKeys
 
-> List<ApiKey> listKeys(authorization)
+> List<ApiKey> listKeys()
 
 List this appliance&#39;s API keys
 
@@ -162,6 +168,7 @@ List this appliance&#39;s API keys
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.KeysApi;
 
@@ -169,11 +176,14 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: adminToken
+        HttpBearerAuth adminToken = (HttpBearerAuth) defaultClient.getAuthentication("adminToken");
+        adminToken.setBearerToken("BEARER TOKEN");
 
         KeysApi apiInstance = new KeysApi(defaultClient);
-        String authorization = "authorization_example"; // String | 
         try {
-            List<ApiKey> result = apiInstance.listKeys(authorization);
+            List<ApiKey> result = apiInstance.listKeys();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling KeysApi#listKeys");
@@ -188,10 +198,7 @@ public class Example {
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **authorization** | **String**|  | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -200,7 +207,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -211,11 +218,10 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 ## listKeysWithHttpInfo
 
-> ApiResponse<List<ApiKey>> listKeysWithHttpInfo(authorization)
+> ApiResponse<List<ApiKey>> listKeysWithHttpInfo()
 
 List this appliance&#39;s API keys
 
@@ -227,6 +233,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.KeysApi;
 
@@ -234,11 +241,14 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: adminToken
+        HttpBearerAuth adminToken = (HttpBearerAuth) defaultClient.getAuthentication("adminToken");
+        adminToken.setBearerToken("BEARER TOKEN");
 
         KeysApi apiInstance = new KeysApi(defaultClient);
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<List<ApiKey>> response = apiInstance.listKeysWithHttpInfo(authorization);
+            ApiResponse<List<ApiKey>> response = apiInstance.listKeysWithHttpInfo();
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -255,10 +265,7 @@ public class Example {
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **authorization** | **String**|  | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -267,7 +274,7 @@ ApiResponse<[**List&lt;ApiKey&gt;**](ApiKey.md)>
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -278,12 +285,11 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 
 ## revokeKey
 
-> Object revokeKey(keyId, authorization)
+> Object revokeKey(keyId)
 
 Revoke an API key
 
@@ -294,6 +300,7 @@ Revoke an API key
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.KeysApi;
 
@@ -301,12 +308,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: adminToken
+        HttpBearerAuth adminToken = (HttpBearerAuth) defaultClient.getAuthentication("adminToken");
+        adminToken.setBearerToken("BEARER TOKEN");
 
         KeysApi apiInstance = new KeysApi(defaultClient);
         Integer keyId = 56; // Integer | 
-        String authorization = "authorization_example"; // String | 
         try {
-            Object result = apiInstance.revokeKey(keyId, authorization);
+            Object result = apiInstance.revokeKey(keyId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling KeysApi#revokeKey");
@@ -325,7 +335,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **keyId** | **Integer**|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -334,7 +343,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -349,7 +358,7 @@ No authorization required
 
 ## revokeKeyWithHttpInfo
 
-> ApiResponse<Object> revokeKeyWithHttpInfo(keyId, authorization)
+> ApiResponse<Object> revokeKeyWithHttpInfo(keyId)
 
 Revoke an API key
 
@@ -361,6 +370,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.KeysApi;
 
@@ -368,12 +378,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: adminToken
+        HttpBearerAuth adminToken = (HttpBearerAuth) defaultClient.getAuthentication("adminToken");
+        adminToken.setBearerToken("BEARER TOKEN");
 
         KeysApi apiInstance = new KeysApi(defaultClient);
         Integer keyId = 56; // Integer | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<Object> response = apiInstance.revokeKeyWithHttpInfo(keyId, authorization);
+            ApiResponse<Object> response = apiInstance.revokeKeyWithHttpInfo(keyId);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -394,7 +407,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **keyId** | **Integer**|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -403,7 +415,7 @@ ApiResponse<**Object**>
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

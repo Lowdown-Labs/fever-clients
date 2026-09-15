@@ -112,6 +112,8 @@ HTTPSignatureAuthSetting = TypedDict(
 AuthSettings = TypedDict(
     "AuthSettings",
     {
+        "adminToken": BearerAuthSetting,
+        "bearerAuth": BearerAuthSetting,
     },
     total=False,
 )
@@ -183,6 +185,7 @@ class Configuration:
     :param datetime_format: Datetime format string for serialization.
     :param date_format: Date format string for serialization.
 
+    :Example:
     """
 
     _default: ClassVar[Optional[Self]] = None
@@ -534,6 +537,20 @@ class Configuration:
         :return: The Auth Settings information dict.
         """
         auth: AuthSettings = {}
+        if self.access_token is not None:
+            auth['adminToken'] = {
+                'type': 'bearer',
+                'in': 'header',
+                'key': 'Authorization',
+                'value': 'Bearer ' + self.access_token
+            }
+        if self.access_token is not None:
+            auth['bearerAuth'] = {
+                'type': 'bearer',
+                'in': 'header',
+                'key': 'Authorization',
+                'value': 'Bearer ' + self.access_token
+            }
         return auth
 
     def to_debug_report(self) -> str:
@@ -545,7 +562,7 @@ class Configuration:
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 0.3.0\n"\
-               "SDK Package Version: 0.3.0".\
+               "SDK Package Version: 0.3.1".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

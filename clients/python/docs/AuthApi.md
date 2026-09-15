@@ -8,12 +8,13 @@ Method | HTTP request | Description
 
 
 # **whoami**
-> object whoami(authorization=authorization)
+> object whoami()
 
 Report the calling key's role and customer scope
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -26,16 +27,24 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.AuthApi(api_client)
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Report the calling key's role and customer scope
-        api_response = await api_instance.whoami(authorization=authorization)
+        api_response = await api_instance.whoami()
         print("The response of AuthApi->whoami:\n")
         pprint(api_response)
     except Exception as e:
@@ -46,10 +55,7 @@ async with fever_client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **authorization** | **str**|  | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -57,7 +63,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -69,7 +75,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

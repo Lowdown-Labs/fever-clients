@@ -39,7 +39,6 @@ describe 'MediaApi' do
   # @param [Hash] opts the optional parameters
   # @option opts [Integer] :max_dim 
   # @option opts [Integer] :waveform 
-  # @option opts [String] :authorization 
   # @return [Object]
   describe 'get_media_bytes test' do
     it 'should work' do
@@ -53,7 +52,6 @@ describe 'MediaApi' do
   # @param blob_id 
   # @param [Hash] opts the optional parameters
   # @option opts [String] :customer_id 
-  # @option opts [String] :authorization 
   # @return [MediaInfo]
   describe 'get_media_info test' do
     it 'should work' do
@@ -64,7 +62,6 @@ describe 'MediaApi' do
   # unit tests for list_media_formats
   # Ingest capability: supported extensions per media family
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [MediaFormats]
   describe 'list_media_formats test' do
     it 'should work' do
@@ -77,7 +74,6 @@ describe 'MediaApi' do
   # @param blob_id 
   # @param [Hash] opts the optional parameters
   # @option opts [String] :customer_id 
-  # @option opts [String] :authorization 
   # @return [Array<MediaFrame>]
   describe 'list_media_frames test' do
     it 'should work' do
@@ -90,7 +86,6 @@ describe 'MediaApi' do
   # @param blob_id 
   # @param [Hash] opts the optional parameters
   # @option opts [String] :customer_id 
-  # @option opts [String] :authorization 
   # @return [Array<TranscriptSegment>]
   describe 'list_media_transcript test' do
     it 'should work' do

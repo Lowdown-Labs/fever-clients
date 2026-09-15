@@ -22,7 +22,6 @@ module FeverClient
     # Mint an API key for this appliance
     # @param create_key_request [CreateKeyRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [KeyReveal]
     def create_key(create_key_request, opts = {})
       data, _status_code, _headers = create_key_with_http_info(create_key_request, opts)
@@ -32,7 +31,6 @@ module FeverClient
     # Mint an API key for this appliance
     # @param create_key_request [CreateKeyRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(KeyReveal, Integer, Hash)>] KeyReveal data, response status code and response headers
     def create_key_with_http_info(create_key_request, opts = {})
       if @api_client.config.debugging
@@ -57,7 +55,6 @@ module FeverClient
       if !content_type.nil?
           header_params['Content-Type'] = content_type
       end
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -69,7 +66,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'KeyReveal'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['adminToken']
 
       new_options = opts.merge(
         :operation => :"KeysApi.create_key",
@@ -90,7 +87,6 @@ module FeverClient
 
     # List this appliance's API keys
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<ApiKey>]
     def list_keys(opts = {})
       data, _status_code, _headers = list_keys_with_http_info(opts)
@@ -99,7 +95,6 @@ module FeverClient
 
     # List this appliance&#39;s API keys
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(Array<ApiKey>, Integer, Hash)>] Array<ApiKey> data, response status code and response headers
     def list_keys_with_http_info(opts = {})
       if @api_client.config.debugging
@@ -115,7 +110,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -127,7 +121,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'Array<ApiKey>'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['adminToken']
 
       new_options = opts.merge(
         :operation => :"KeysApi.list_keys",
@@ -149,7 +143,6 @@ module FeverClient
     # Revoke an API key
     # @param key_id [Integer] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Object]
     def revoke_key(key_id, opts = {})
       data, _status_code, _headers = revoke_key_with_http_info(key_id, opts)
@@ -159,7 +152,6 @@ module FeverClient
     # Revoke an API key
     # @param key_id [Integer] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def revoke_key_with_http_info(key_id, opts = {})
       if @api_client.config.debugging
@@ -179,7 +171,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -191,7 +182,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'Object'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['adminToken']
 
       new_options = opts.merge(
         :operation => :"KeysApi.revoke_key",

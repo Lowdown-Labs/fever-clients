@@ -61,8 +61,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //QueryRequest queryRequest = null;
-            //string? authorization = null;
-            //var response = instance.Query(queryRequest, authorization);
+            //var response = instance.Query(queryRequest);
             //Assert.IsType<QueryResult>(response);
         }
     }

@@ -35,9 +35,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="queryRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>QueryResult</returns>
-        QueryResult Query(QueryRequest queryRequest, string? authorization = default);
+        QueryResult Query(QueryRequest queryRequest);
 
         /// <summary>
         /// Run a read-only SQL SELECT over the corpus tables
@@ -47,9 +46,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="queryRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of QueryResult</returns>
-        ApiResponse<QueryResult> QueryWithHttpInfo(QueryRequest queryRequest, string? authorization = default);
+        ApiResponse<QueryResult> QueryWithHttpInfo(QueryRequest queryRequest);
         #endregion Synchronous Operations
     }
 
@@ -67,10 +65,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="queryRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of QueryResult</returns>
-        System.Threading.Tasks.Task<QueryResult> QueryAsync(QueryRequest queryRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<QueryResult> QueryAsync(QueryRequest queryRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Run a read-only SQL SELECT over the corpus tables
@@ -80,10 +77,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="queryRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (QueryResult)</returns>
-        System.Threading.Tasks.Task<ApiResponse<QueryResult>> QueryWithHttpInfoAsync(QueryRequest queryRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<QueryResult>> QueryWithHttpInfoAsync(QueryRequest queryRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -302,11 +298,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="queryRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>QueryResult</returns>
-        public QueryResult Query(QueryRequest queryRequest, string? authorization = default)
+        public QueryResult Query(QueryRequest queryRequest)
         {
-            LowdownLabs.Fever.Client.ApiResponse<QueryResult> localVarResponse = QueryWithHttpInfo(queryRequest, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<QueryResult> localVarResponse = QueryWithHttpInfo(queryRequest);
             return localVarResponse.Data;
         }
 
@@ -315,9 +310,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="queryRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of QueryResult</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<QueryResult> QueryWithHttpInfo(QueryRequest queryRequest, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<QueryResult> QueryWithHttpInfo(QueryRequest queryRequest)
         {
             // verify the required parameter 'queryRequest' is set
             if (queryRequest == null)
@@ -340,12 +334,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = queryRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<QueryResult>("/v1/query", localVarRequestOptions, this.Configuration);
@@ -364,12 +360,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="queryRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of QueryResult</returns>
-        public async System.Threading.Tasks.Task<QueryResult> QueryAsync(QueryRequest queryRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<QueryResult> QueryAsync(QueryRequest queryRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<QueryResult> localVarResponse = await QueryWithHttpInfoAsync(queryRequest, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<QueryResult> localVarResponse = await QueryWithHttpInfoAsync(queryRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -378,10 +373,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="queryRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (QueryResult)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<QueryResult>> QueryWithHttpInfoAsync(QueryRequest queryRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<QueryResult>> QueryWithHttpInfoAsync(QueryRequest queryRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'queryRequest' is set
             if (queryRequest == null)
@@ -406,12 +400,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = queryRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 

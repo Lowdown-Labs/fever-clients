@@ -13,7 +13,7 @@ All URIs are relative to *http://localhost*
 
 ## findDuplicates
 
-> DuplicatesResponse findDuplicates(duplicatesRequest, authorization)
+> DuplicatesResponse findDuplicates(duplicatesRequest)
 
 Find near-duplicate media clusters for a customer
 
@@ -26,6 +26,7 @@ Find near-duplicate clusters. Scoped to one customer, this reads the edge set ma
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.DuplicatesApi;
 
@@ -33,12 +34,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         DuplicatesApi apiInstance = new DuplicatesApi(defaultClient);
         DuplicatesRequest duplicatesRequest = new DuplicatesRequest(); // DuplicatesRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            DuplicatesResponse result = apiInstance.findDuplicates(duplicatesRequest, authorization);
+            DuplicatesResponse result = apiInstance.findDuplicates(duplicatesRequest);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling DuplicatesApi#findDuplicates");
@@ -57,7 +61,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **duplicatesRequest** | [**DuplicatesRequest**](DuplicatesRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -66,7 +69,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -81,7 +84,7 @@ No authorization required
 
 ## findDuplicatesWithHttpInfo
 
-> ApiResponse<DuplicatesResponse> findDuplicatesWithHttpInfo(duplicatesRequest, authorization)
+> ApiResponse<DuplicatesResponse> findDuplicatesWithHttpInfo(duplicatesRequest)
 
 Find near-duplicate media clusters for a customer
 
@@ -95,6 +98,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.DuplicatesApi;
 
@@ -102,12 +106,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         DuplicatesApi apiInstance = new DuplicatesApi(defaultClient);
         DuplicatesRequest duplicatesRequest = new DuplicatesRequest(); // DuplicatesRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<DuplicatesResponse> response = apiInstance.findDuplicatesWithHttpInfo(duplicatesRequest, authorization);
+            ApiResponse<DuplicatesResponse> response = apiInstance.findDuplicatesWithHttpInfo(duplicatesRequest);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -128,7 +135,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **duplicatesRequest** | [**DuplicatesRequest**](DuplicatesRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -137,7 +143,7 @@ ApiResponse<[**DuplicatesResponse**](DuplicatesResponse.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -153,7 +159,7 @@ No authorization required
 
 ## suggestedDedupThreshold
 
-> Object suggestedDedupThreshold(customerId, authorization)
+> Object suggestedDedupThreshold(customerId)
 
 Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
 
@@ -164,6 +170,7 @@ Suggest a duplicate-detection threshold from this customer&#39;s edge cosine dis
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.DuplicatesApi;
 
@@ -171,12 +178,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         DuplicatesApi apiInstance = new DuplicatesApi(defaultClient);
         String customerId = "customerId_example"; // String | 
-        String authorization = "authorization_example"; // String | 
         try {
-            Object result = apiInstance.suggestedDedupThreshold(customerId, authorization);
+            Object result = apiInstance.suggestedDedupThreshold(customerId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling DuplicatesApi#suggestedDedupThreshold");
@@ -195,7 +205,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **customerId** | **String**|  | [optional] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -204,7 +213,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -219,7 +228,7 @@ No authorization required
 
 ## suggestedDedupThresholdWithHttpInfo
 
-> ApiResponse<Object> suggestedDedupThresholdWithHttpInfo(customerId, authorization)
+> ApiResponse<Object> suggestedDedupThresholdWithHttpInfo(customerId)
 
 Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
 
@@ -231,6 +240,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.DuplicatesApi;
 
@@ -238,12 +248,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         DuplicatesApi apiInstance = new DuplicatesApi(defaultClient);
         String customerId = "customerId_example"; // String | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<Object> response = apiInstance.suggestedDedupThresholdWithHttpInfo(customerId, authorization);
+            ApiResponse<Object> response = apiInstance.suggestedDedupThresholdWithHttpInfo(customerId);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -264,7 +277,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **customerId** | **String**|  | [optional] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -273,7 +285,7 @@ ApiResponse<**Object**>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

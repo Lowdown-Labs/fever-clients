@@ -16,7 +16,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LowdownLabs.Fever.Client;
-using LowdownLabs.Fever.Model;
 
 namespace LowdownLabs.Fever.Api
 {
@@ -31,9 +30,8 @@ namespace LowdownLabs.Fever.Api
         /// Report the calling key&#39;s role and customer scope
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        Object Whoami(string? authorization = default);
+        Object Whoami();
 
         /// <summary>
         /// Report the calling key&#39;s role and customer scope
@@ -42,9 +40,8 @@ namespace LowdownLabs.Fever.Api
         /// 
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        ApiResponse<Object> WhoamiWithHttpInfo(string? authorization = default);
+        ApiResponse<Object> WhoamiWithHttpInfo();
         #endregion Synchronous Operations
     }
 
@@ -61,10 +58,9 @@ namespace LowdownLabs.Fever.Api
         /// 
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        System.Threading.Tasks.Task<Object> WhoamiAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<Object> WhoamiAsync(System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Report the calling key&#39;s role and customer scope
@@ -73,10 +69,9 @@ namespace LowdownLabs.Fever.Api
         /// 
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> WhoamiWithHttpInfoAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<Object>> WhoamiWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -294,11 +289,10 @@ namespace LowdownLabs.Fever.Api
         /// Report the calling key&#39;s role and customer scope 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        public Object Whoami(string? authorization = default)
+        public Object Whoami()
         {
-            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = WhoamiWithHttpInfo(authorization);
+            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = WhoamiWithHttpInfo();
             return localVarResponse.Data;
         }
 
@@ -306,9 +300,8 @@ namespace LowdownLabs.Fever.Api
         /// Report the calling key&#39;s role and customer scope 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<Object> WhoamiWithHttpInfo(string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<Object> WhoamiWithHttpInfo()
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -326,11 +319,13 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<Object>("/v1/whoami", localVarRequestOptions, this.Configuration);
@@ -348,12 +343,11 @@ namespace LowdownLabs.Fever.Api
         /// Report the calling key&#39;s role and customer scope 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        public async System.Threading.Tasks.Task<Object> WhoamiAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<Object> WhoamiAsync(System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = await WhoamiWithHttpInfoAsync(authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = await WhoamiWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -361,10 +355,9 @@ namespace LowdownLabs.Fever.Api
         /// Report the calling key&#39;s role and customer scope 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Object>> WhoamiWithHttpInfoAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Object>> WhoamiWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -384,11 +377,13 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 

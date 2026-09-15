@@ -63,8 +63,7 @@ namespace LowdownLabs.Fever.Test.Api
             //int blobId = null;
             //int? maxDim = null;
             //int? waveform = null;
-            //string? authorization = null;
-            //var response = instance.GetMediaBytes(blobId, maxDim, waveform, authorization);
+            //var response = instance.GetMediaBytes(blobId, maxDim, waveform);
             //Assert.IsType<Object>(response);
         }
 
@@ -77,8 +76,7 @@ namespace LowdownLabs.Fever.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //int blobId = null;
             //string? customerId = null;
-            //string? authorization = null;
-            //var response = instance.GetMediaInfo(blobId, customerId, authorization);
+            //var response = instance.GetMediaInfo(blobId, customerId);
             //Assert.IsType<MediaInfo>(response);
         }
 
@@ -89,8 +87,7 @@ namespace LowdownLabs.Fever.Test.Api
         public void ListMediaFormatsTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //string? authorization = null;
-            //var response = instance.ListMediaFormats(authorization);
+            //var response = instance.ListMediaFormats();
             //Assert.IsType<MediaFormats>(response);
         }
 
@@ -103,8 +100,7 @@ namespace LowdownLabs.Fever.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //int blobId = null;
             //string? customerId = null;
-            //string? authorization = null;
-            //var response = instance.ListMediaFrames(blobId, customerId, authorization);
+            //var response = instance.ListMediaFrames(blobId, customerId);
             //Assert.IsType<List<MediaFrame>>(response);
         }
 
@@ -117,8 +113,7 @@ namespace LowdownLabs.Fever.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //int blobId = null;
             //string? customerId = null;
-            //string? authorization = null;
-            //var response = instance.ListMediaTranscript(blobId, customerId, authorization);
+            //var response = instance.ListMediaTranscript(blobId, customerId);
             //Assert.IsType<List<TranscriptSegment>>(response);
         }
     }

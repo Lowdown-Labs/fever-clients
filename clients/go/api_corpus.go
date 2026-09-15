@@ -41,16 +41,10 @@ type ApiCorpusStatsRequest struct {
 	ctx context.Context
 	ApiService CorpusAPI
 	customerId *string
-	authorization *string
 }
 
 func (r ApiCorpusStatsRequest) CustomerId(customerId string) ApiCorpusStatsRequest {
 	r.customerId = &customerId
-	return r
-}
-
-func (r ApiCorpusStatsRequest) Authorization(authorization string) ApiCorpusStatsRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -111,9 +105,6 @@ func (a *CorpusAPIService) CorpusStatsExecute(r ApiCorpusStatsRequest) (*CorpusS
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

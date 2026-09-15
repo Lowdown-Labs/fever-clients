@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## find_duplicates
 
-> models::DuplicatesResponse find_duplicates(duplicates_request, authorization)
+> models::DuplicatesResponse find_duplicates(duplicates_request)
 Find near-duplicate media clusters for a customer
 
 Find near-duplicate clusters. Scoped to one customer, this reads the edge set maintained at ingest (millisecond answers; edges exist down to cosine 0.80). An admin key with no customer_id scans live across all customers; passing customer_ids narrows that live scan to a handful of accounts. Both admin shapes see cross-customer duplicates. No delete or keep recommendation is made: the clusters are yours to act on.
@@ -22,7 +22,6 @@ Find near-duplicate clusters. Scoped to one customer, this reads the edge set ma
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **duplicates_request** | [**DuplicatesRequest**](DuplicatesRequest.md) |  | [required] |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -30,7 +29,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -42,7 +41,7 @@ No authorization required
 
 ## suggested_dedup_threshold
 
-> serde_json::Value suggested_dedup_threshold(customer_id, authorization)
+> serde_json::Value suggested_dedup_threshold(customer_id)
 Suggest a duplicate-detection threshold from this customer's edge cosine distribution
 
 ### Parameters
@@ -51,7 +50,6 @@ Suggest a duplicate-detection threshold from this customer's edge cosine distrib
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **customer_id** | Option<**String**> |  |  |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -59,7 +57,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

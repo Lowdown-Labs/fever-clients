@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## IngestMedia
 
-> IngestResult IngestMedia(ctx).IngestRequest(ingestRequest).Authorization(authorization).Execute()
+> IngestResult IngestMedia(ctx).IngestRequest(ingestRequest).Execute()
 
 Ingest one or many media items
 
@@ -30,11 +30,10 @@ import (
 
 func main() {
 	ingestRequest := *openapiclient.NewIngestRequest() // IngestRequest | 
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.IngestAPI.IngestMedia(context.Background()).IngestRequest(ingestRequest).Authorization(authorization).Execute()
+	resp, r, err := apiClient.IngestAPI.IngestMedia(context.Background()).IngestRequest(ingestRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `IngestAPI.IngestMedia``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -56,7 +55,6 @@ Other parameters are passed through a pointer to a apiIngestMediaRequest struct 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ingestRequest** | [**IngestRequest**](IngestRequest.md) |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -64,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## whoami
 
-> any whoami(authorization)
+> any whoami()
 
 Report the calling key\&#39;s role and customer scope
 
@@ -25,15 +25,14 @@ import type { WhoamiRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new AuthApi();
-
-  const body = {
-    // string (optional)
-    authorization: authorization_example,
-  } satisfies WhoamiRequest;
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new AuthApi(config);
 
   try {
-    const data = await api.whoami(body);
+    const data = await api.whoami();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -46,10 +45,7 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -57,7 +53,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -69,7 +65,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

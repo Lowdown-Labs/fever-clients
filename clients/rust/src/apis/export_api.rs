@@ -32,10 +32,9 @@ pub enum ImportTenantError {
 }
 
 
-pub async fn export_tenant(configuration: &configuration::Configuration, export_request: models::ExportRequest, authorization: Option<&str>) -> Result<models::ExportResult, Error<ExportTenantError>> {
+pub async fn export_tenant(configuration: &configuration::Configuration, export_request: models::ExportRequest) -> Result<models::ExportResult, Error<ExportTenantError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_export_request = export_request;
-    let p_header_authorization = authorization;
 
     let uri_str = format!("{}/v1/export", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -43,9 +42,9 @@ pub async fn export_tenant(configuration: &configuration::Configuration, export_
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_header_authorization {
-        req_builder = req_builder.header("authorization", param_value.to_string());
-    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
     req_builder = req_builder.json(&p_body_export_request);
 
     let req = req_builder.build()?;
@@ -73,10 +72,9 @@ pub async fn export_tenant(configuration: &configuration::Configuration, export_
     }
 }
 
-pub async fn import_tenant(configuration: &configuration::Configuration, import_request: models::ImportRequest, authorization: Option<&str>) -> Result<models::ImportResult, Error<ImportTenantError>> {
+pub async fn import_tenant(configuration: &configuration::Configuration, import_request: models::ImportRequest) -> Result<models::ImportResult, Error<ImportTenantError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_import_request = import_request;
-    let p_header_authorization = authorization;
 
     let uri_str = format!("{}/v1/import", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -84,9 +82,9 @@ pub async fn import_tenant(configuration: &configuration::Configuration, import_
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_header_authorization {
-        req_builder = req_builder.header("authorization", param_value.to_string());
-    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
     req_builder = req_builder.json(&p_body_import_request);
 
     let req = req_builder.build()?;

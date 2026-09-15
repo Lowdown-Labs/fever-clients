@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## ingestMedia
 
-> IngestResult ingestMedia(ingestRequest, authorization)
+> IngestResult ingestMedia(ingestRequest)
 
 Ingest one or many media items
 
@@ -27,13 +27,15 @@ import type { IngestMediaRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new IngestApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new IngestApi(config);
 
   const body = {
     // IngestRequest
     ingestRequest: ...,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies IngestMediaRequest;
 
   try {
@@ -54,7 +56,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **ingestRequest** | [IngestRequest](IngestRequest.md) |  | |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -62,7 +63,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

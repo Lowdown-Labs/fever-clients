@@ -32,9 +32,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="exportRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ExportResult</returns>
-        ExportResult ExportTenant(ExportRequest exportRequest, string? authorization = default);
+        ExportResult ExportTenant(ExportRequest exportRequest);
 
         /// <summary>
         /// Export the tenant&#39;s vectors and metadata to S3
@@ -44,17 +43,15 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="exportRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of ExportResult</returns>
-        ApiResponse<ExportResult> ExportTenantWithHttpInfo(ExportRequest exportRequest, string? authorization = default);
+        ApiResponse<ExportResult> ExportTenantWithHttpInfo(ExportRequest exportRequest);
         /// <summary>
         /// Import vectors and metadata from a previous FEVER export in S3
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="importRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ImportResult</returns>
-        ImportResult ImportTenant(ImportRequest importRequest, string? authorization = default);
+        ImportResult ImportTenant(ImportRequest importRequest);
 
         /// <summary>
         /// Import vectors and metadata from a previous FEVER export in S3
@@ -64,9 +61,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="importRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of ImportResult</returns>
-        ApiResponse<ImportResult> ImportTenantWithHttpInfo(ImportRequest importRequest, string? authorization = default);
+        ApiResponse<ImportResult> ImportTenantWithHttpInfo(ImportRequest importRequest);
         #endregion Synchronous Operations
     }
 
@@ -84,10 +80,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="exportRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ExportResult</returns>
-        System.Threading.Tasks.Task<ExportResult> ExportTenantAsync(ExportRequest exportRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ExportResult> ExportTenantAsync(ExportRequest exportRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Export the tenant&#39;s vectors and metadata to S3
@@ -97,10 +92,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="exportRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ExportResult)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ExportResult>> ExportTenantWithHttpInfoAsync(ExportRequest exportRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<ExportResult>> ExportTenantWithHttpInfoAsync(ExportRequest exportRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Import vectors and metadata from a previous FEVER export in S3
         /// </summary>
@@ -109,10 +103,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="importRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ImportResult</returns>
-        System.Threading.Tasks.Task<ImportResult> ImportTenantAsync(ImportRequest importRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ImportResult> ImportTenantAsync(ImportRequest importRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Import vectors and metadata from a previous FEVER export in S3
@@ -122,10 +115,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="importRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ImportResult)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ImportResult>> ImportTenantWithHttpInfoAsync(ImportRequest importRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<ImportResult>> ImportTenantWithHttpInfoAsync(ImportRequest importRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -344,11 +336,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="exportRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ExportResult</returns>
-        public ExportResult ExportTenant(ExportRequest exportRequest, string? authorization = default)
+        public ExportResult ExportTenant(ExportRequest exportRequest)
         {
-            LowdownLabs.Fever.Client.ApiResponse<ExportResult> localVarResponse = ExportTenantWithHttpInfo(exportRequest, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<ExportResult> localVarResponse = ExportTenantWithHttpInfo(exportRequest);
             return localVarResponse.Data;
         }
 
@@ -357,9 +348,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="exportRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of ExportResult</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<ExportResult> ExportTenantWithHttpInfo(ExportRequest exportRequest, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<ExportResult> ExportTenantWithHttpInfo(ExportRequest exportRequest)
         {
             // verify the required parameter 'exportRequest' is set
             if (exportRequest == null)
@@ -382,12 +372,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = exportRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<ExportResult>("/v1/export", localVarRequestOptions, this.Configuration);
@@ -406,12 +398,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="exportRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ExportResult</returns>
-        public async System.Threading.Tasks.Task<ExportResult> ExportTenantAsync(ExportRequest exportRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<ExportResult> ExportTenantAsync(ExportRequest exportRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<ExportResult> localVarResponse = await ExportTenantWithHttpInfoAsync(exportRequest, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<ExportResult> localVarResponse = await ExportTenantWithHttpInfoAsync(exportRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -420,10 +411,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="exportRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ExportResult)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<ExportResult>> ExportTenantWithHttpInfoAsync(ExportRequest exportRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<ExportResult>> ExportTenantWithHttpInfoAsync(ExportRequest exportRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'exportRequest' is set
             if (exportRequest == null)
@@ -448,12 +438,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = exportRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 
@@ -473,11 +465,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="importRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ImportResult</returns>
-        public ImportResult ImportTenant(ImportRequest importRequest, string? authorization = default)
+        public ImportResult ImportTenant(ImportRequest importRequest)
         {
-            LowdownLabs.Fever.Client.ApiResponse<ImportResult> localVarResponse = ImportTenantWithHttpInfo(importRequest, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<ImportResult> localVarResponse = ImportTenantWithHttpInfo(importRequest);
             return localVarResponse.Data;
         }
 
@@ -486,9 +477,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="importRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of ImportResult</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<ImportResult> ImportTenantWithHttpInfo(ImportRequest importRequest, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<ImportResult> ImportTenantWithHttpInfo(ImportRequest importRequest)
         {
             // verify the required parameter 'importRequest' is set
             if (importRequest == null)
@@ -511,12 +501,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = importRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<ImportResult>("/v1/import", localVarRequestOptions, this.Configuration);
@@ -535,12 +527,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="importRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ImportResult</returns>
-        public async System.Threading.Tasks.Task<ImportResult> ImportTenantAsync(ImportRequest importRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<ImportResult> ImportTenantAsync(ImportRequest importRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<ImportResult> localVarResponse = await ImportTenantWithHttpInfoAsync(importRequest, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<ImportResult> localVarResponse = await ImportTenantWithHttpInfoAsync(importRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -549,10 +540,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="importRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ImportResult)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<ImportResult>> ImportTenantWithHttpInfoAsync(ImportRequest importRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<ImportResult>> ImportTenantWithHttpInfoAsync(ImportRequest importRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'importRequest' is set
             if (importRequest == null)
@@ -577,12 +567,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = importRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 

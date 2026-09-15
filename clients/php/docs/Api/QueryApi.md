@@ -12,7 +12,7 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 ## `query()`
 
 ```php
-query($query_request, $authorization): \LowdownLabs\Fever\Model\QueryResult
+query($query_request): \LowdownLabs\Fever\Model\QueryResult
 ```
 
 Run a read-only SQL SELECT over the corpus tables
@@ -26,17 +26,20 @@ A mini SQL console over the appliance's corpus tables: as_blobs, annotations, du
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\QueryApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $query_request = new \LowdownLabs\Fever\Model\QueryRequest(); // \LowdownLabs\Fever\Model\QueryRequest
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->query($query_request, $authorization);
+    $result = $apiInstance->query($query_request);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling QueryApi->query: ', $e->getMessage(), PHP_EOL;
@@ -48,7 +51,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **query_request** | [**\LowdownLabs\Fever\Model\QueryRequest**](../Model/QueryRequest.md)|  | |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -56,7 +58,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../../README.md#bearerAuth)
 
 ### HTTP request headers
 

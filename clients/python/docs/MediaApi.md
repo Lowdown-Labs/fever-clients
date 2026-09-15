@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 
 # **get_media_bytes**
-> object get_media_bytes(blob_id, max_dim=max_dim, waveform=waveform, authorization=authorization)
+> object get_media_bytes(blob_id, max_dim=max_dim, waveform=waveform)
 
 Fetch an indexed media item's bytes (images normalized to JPEG)
 
@@ -26,6 +26,7 @@ in the browser.
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -38,6 +39,15 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
@@ -46,11 +56,10 @@ async with fever_client.ApiClient(configuration) as api_client:
     blob_id = 56 # int | 
     max_dim = 1280 # int |  (optional) (default to 1280)
     waveform = 0 # int |  (optional) (default to 0)
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Fetch an indexed media item's bytes (images normalized to JPEG)
-        api_response = await api_instance.get_media_bytes(blob_id, max_dim=max_dim, waveform=waveform, authorization=authorization)
+        api_response = await api_instance.get_media_bytes(blob_id, max_dim=max_dim, waveform=waveform)
         print("The response of MediaApi->get_media_bytes:\n")
         pprint(api_response)
     except Exception as e:
@@ -67,7 +76,6 @@ Name | Type | Description  | Notes
  **blob_id** | **int**|  | 
  **max_dim** | **int**|  | [optional] [default to 1280]
  **waveform** | **int**|  | [optional] [default to 0]
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -75,7 +83,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -92,7 +100,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_media_info**
-> MediaInfo get_media_info(blob_id, customer_id=customer_id, authorization=authorization)
+> MediaInfo get_media_info(blob_id, customer_id=customer_id)
 
 Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 
@@ -102,6 +110,7 @@ leak). Admin keys may narrow with ?customer_id=.
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -115,6 +124,15 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
@@ -122,11 +140,10 @@ async with fever_client.ApiClient(configuration) as api_client:
     api_instance = fever_client.MediaApi(api_client)
     blob_id = 56 # int | 
     customer_id = 'customer_id_example' # str |  (optional)
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
-        api_response = await api_instance.get_media_info(blob_id, customer_id=customer_id, authorization=authorization)
+        api_response = await api_instance.get_media_info(blob_id, customer_id=customer_id)
         print("The response of MediaApi->get_media_info:\n")
         pprint(api_response)
     except Exception as e:
@@ -142,7 +159,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blob_id** | **int**|  | 
  **customer_id** | **str**|  | [optional] 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -150,7 +166,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -167,12 +183,13 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_media_formats**
-> MediaFormats list_media_formats(authorization=authorization)
+> MediaFormats list_media_formats()
 
 Ingest capability: supported extensions per media family
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -186,16 +203,24 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.MediaApi(api_client)
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Ingest capability: supported extensions per media family
-        api_response = await api_instance.list_media_formats(authorization=authorization)
+        api_response = await api_instance.list_media_formats()
         print("The response of MediaApi->list_media_formats:\n")
         pprint(api_response)
     except Exception as e:
@@ -206,10 +231,7 @@ async with fever_client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **authorization** | **str**|  | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -217,7 +239,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -229,17 +251,17 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_media_frames**
-> List[MediaFrame] list_media_frames(blob_id, customer_id=customer_id, authorization=authorization)
+> List[MediaFrame] list_media_frames(blob_id, customer_id=customer_id)
 
 Sampled video frames for a parent blob
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -253,6 +275,15 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
@@ -260,11 +291,10 @@ async with fever_client.ApiClient(configuration) as api_client:
     api_instance = fever_client.MediaApi(api_client)
     blob_id = 56 # int | 
     customer_id = 'customer_id_example' # str |  (optional)
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Sampled video frames for a parent blob
-        api_response = await api_instance.list_media_frames(blob_id, customer_id=customer_id, authorization=authorization)
+        api_response = await api_instance.list_media_frames(blob_id, customer_id=customer_id)
         print("The response of MediaApi->list_media_frames:\n")
         pprint(api_response)
     except Exception as e:
@@ -280,7 +310,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blob_id** | **int**|  | 
  **customer_id** | **str**|  | [optional] 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -288,7 +317,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -305,12 +334,13 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_media_transcript**
-> List[TranscriptSegment] list_media_transcript(blob_id, customer_id=customer_id, authorization=authorization)
+> List[TranscriptSegment] list_media_transcript(blob_id, customer_id=customer_id)
 
 Whisper transcript segments for a parent blob (audio or video)
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -324,6 +354,15 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
@@ -331,11 +370,10 @@ async with fever_client.ApiClient(configuration) as api_client:
     api_instance = fever_client.MediaApi(api_client)
     blob_id = 56 # int | 
     customer_id = 'customer_id_example' # str |  (optional)
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Whisper transcript segments for a parent blob (audio or video)
-        api_response = await api_instance.list_media_transcript(blob_id, customer_id=customer_id, authorization=authorization)
+        api_response = await api_instance.list_media_transcript(blob_id, customer_id=customer_id)
         print("The response of MediaApi->list_media_transcript:\n")
         pprint(api_response)
     except Exception as e:
@@ -351,7 +389,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **blob_id** | **int**|  | 
  **customer_id** | **str**|  | [optional] 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -359,7 +396,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

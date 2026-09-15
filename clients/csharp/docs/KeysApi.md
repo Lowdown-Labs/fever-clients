@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 <a id="createkey"></a>
 # **CreateKey**
-> KeyReveal CreateKey (CreateKeyRequest createKeyRequest, string? authorization = null)
+> KeyReveal CreateKey (CreateKeyRequest createKeyRequest)
 
 Mint an API key for this appliance
 
@@ -31,17 +31,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: adminToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new KeysApi(httpClient, config, httpClientHandler);
             var createKeyRequest = new CreateKeyRequest(); // CreateKeyRequest | 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Mint an API key for this appliance
-                KeyReveal result = apiInstance.CreateKey(createKeyRequest, authorization);
+                KeyReveal result = apiInstance.CreateKey(createKeyRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -62,7 +64,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Mint an API key for this appliance
-    ApiResponse<KeyReveal> response = apiInstance.CreateKeyWithHttpInfo(createKeyRequest, authorization);
+    ApiResponse<KeyReveal> response = apiInstance.CreateKeyWithHttpInfo(createKeyRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -80,7 +82,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **createKeyRequest** | [**CreateKeyRequest**](CreateKeyRequest.md) |  |  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -88,7 +89,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -106,7 +107,7 @@ No authorization required
 
 <a id="listkeys"></a>
 # **ListKeys**
-> List&lt;ApiKey&gt; ListKeys (string? authorization = null)
+> List&lt;ApiKey&gt; ListKeys ()
 
 List this appliance's API keys
 
@@ -127,16 +128,18 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: adminToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new KeysApi(httpClient, config, httpClientHandler);
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // List this appliance's API keys
-                List<ApiKey> result = apiInstance.ListKeys(authorization);
+                List<ApiKey> result = apiInstance.ListKeys();
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -157,7 +160,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // List this appliance's API keys
-    ApiResponse<List<ApiKey>> response = apiInstance.ListKeysWithHttpInfo(authorization);
+    ApiResponse<List<ApiKey>> response = apiInstance.ListKeysWithHttpInfo();
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -171,18 +174,14 @@ catch (ApiException e)
 ```
 
 ### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **authorization** | **string?** |  | [optional]  |
-
+This endpoint does not need any parameter.
 ### Return type
 
 [**List&lt;ApiKey&gt;**](ApiKey.md)
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -194,13 +193,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="revokekey"></a>
 # **RevokeKey**
-> Object RevokeKey (int keyId, string? authorization = null)
+> Object RevokeKey (int keyId)
 
 Revoke an API key
 
@@ -221,17 +219,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: adminToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new KeysApi(httpClient, config, httpClientHandler);
             var keyId = 56;  // int | 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Revoke an API key
-                Object result = apiInstance.RevokeKey(keyId, authorization);
+                Object result = apiInstance.RevokeKey(keyId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -252,7 +252,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Revoke an API key
-    ApiResponse<Object> response = apiInstance.RevokeKeyWithHttpInfo(keyId, authorization);
+    ApiResponse<Object> response = apiInstance.RevokeKeyWithHttpInfo(keyId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -270,7 +270,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **keyId** | **int** |  |  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -278,7 +277,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

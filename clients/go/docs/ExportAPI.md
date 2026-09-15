@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## ExportTenant
 
-> ExportResult ExportTenant(ctx).ExportRequest(exportRequest).Authorization(authorization).Execute()
+> ExportResult ExportTenant(ctx).ExportRequest(exportRequest).Execute()
 
 Export the tenant's vectors and metadata to S3
 
@@ -29,11 +29,10 @@ import (
 
 func main() {
 	exportRequest := *openapiclient.NewExportRequest("S3Uri_example") // ExportRequest | 
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ExportAPI.ExportTenant(context.Background()).ExportRequest(exportRequest).Authorization(authorization).Execute()
+	resp, r, err := apiClient.ExportAPI.ExportTenant(context.Background()).ExportRequest(exportRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ExportAPI.ExportTenant``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -55,7 +54,6 @@ Other parameters are passed through a pointer to a apiExportTenantRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **exportRequest** | [**ExportRequest**](ExportRequest.md) |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -63,7 +61,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -77,7 +75,7 @@ No authorization required
 
 ## ImportTenant
 
-> ImportResult ImportTenant(ctx).ImportRequest(importRequest).Authorization(authorization).Execute()
+> ImportResult ImportTenant(ctx).ImportRequest(importRequest).Execute()
 
 Import vectors and metadata from a previous FEVER export in S3
 
@@ -95,11 +93,10 @@ import (
 
 func main() {
 	importRequest := *openapiclient.NewImportRequest("S3Uri_example") // ImportRequest | 
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.ExportAPI.ImportTenant(context.Background()).ImportRequest(importRequest).Authorization(authorization).Execute()
+	resp, r, err := apiClient.ExportAPI.ImportTenant(context.Background()).ImportRequest(importRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `ExportAPI.ImportTenant``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -121,7 +118,6 @@ Other parameters are passed through a pointer to a apiImportTenantRequest struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **importRequest** | [**ImportRequest**](ImportRequest.md) |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -129,7 +125,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

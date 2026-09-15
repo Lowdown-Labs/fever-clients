@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## find_duplicates
 
-> <DuplicatesResponse> find_duplicates(duplicates_request, opts)
+> <DuplicatesResponse> find_duplicates(duplicates_request)
 
 Find near-duplicate media clusters for a customer
 
@@ -21,16 +21,18 @@ Find near-duplicate clusters. Scoped to one customer, this reads the edge set ma
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::DuplicatesApi.new
 duplicates_request = FeverClient::DuplicatesRequest.new # DuplicatesRequest | 
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # Find near-duplicate media clusters for a customer
-  result = api_instance.find_duplicates(duplicates_request, opts)
+  result = api_instance.find_duplicates(duplicates_request)
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling DuplicatesApi->find_duplicates: #{e}"
@@ -41,12 +43,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<DuplicatesResponse>, Integer, Hash)> find_duplicates_with_http_info(duplicates_request, opts)
+> <Array(<DuplicatesResponse>, Integer, Hash)> find_duplicates_with_http_info(duplicates_request)
 
 ```ruby
 begin
   # Find near-duplicate media clusters for a customer
-  data, status_code, headers = api_instance.find_duplicates_with_http_info(duplicates_request, opts)
+  data, status_code, headers = api_instance.find_duplicates_with_http_info(duplicates_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <DuplicatesResponse>
@@ -60,7 +62,6 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **duplicates_request** | [**DuplicatesRequest**](DuplicatesRequest.md) |  |  |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -68,7 +69,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -87,11 +88,15 @@ Suggest a duplicate-detection threshold from this customer's edge cosine distrib
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::DuplicatesApi.new
 opts = {
-  customer_id: 'customer_id_example', # String | 
-  authorization: 'authorization_example' # String | 
+  customer_id: 'customer_id_example' # String | 
 }
 
 begin
@@ -126,7 +131,6 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **customer_id** | **String** |  | [optional] |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -134,7 +138,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

@@ -178,12 +178,11 @@ public class MediaApi {
    * @param blobId  (required)
    * @param maxDim  (optional, default to 1280)
    * @param waveform  (optional, default to 0)
-   * @param authorization  (optional)
    * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object getMediaBytes(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable Integer maxDim, @javax.annotation.Nullable Integer waveform, @javax.annotation.Nullable String authorization) throws ApiException {
-    return getMediaBytes(blobId, maxDim, waveform, authorization, null);
+  public Object getMediaBytes(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable Integer maxDim, @javax.annotation.Nullable Integer waveform) throws ApiException {
+    return getMediaBytes(blobId, maxDim, waveform, null);
   }
 
   /**
@@ -192,13 +191,12 @@ public class MediaApi {
    * @param blobId  (required)
    * @param maxDim  (optional, default to 1280)
    * @param waveform  (optional, default to 0)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object getMediaBytes(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable Integer maxDim, @javax.annotation.Nullable Integer waveform, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<Object> localVarResponse = getMediaBytesWithHttpInfo(blobId, maxDim, waveform, authorization, headers);
+  public Object getMediaBytes(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable Integer maxDim, @javax.annotation.Nullable Integer waveform, Map<String, String> headers) throws ApiException {
+    ApiResponse<Object> localVarResponse = getMediaBytesWithHttpInfo(blobId, maxDim, waveform, headers);
     return localVarResponse.getData();
   }
 
@@ -208,12 +206,11 @@ public class MediaApi {
    * @param blobId  (required)
    * @param maxDim  (optional, default to 1280)
    * @param waveform  (optional, default to 0)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;Object&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Object> getMediaBytesWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable Integer maxDim, @javax.annotation.Nullable Integer waveform, @javax.annotation.Nullable String authorization) throws ApiException {
-    return getMediaBytesWithHttpInfo(blobId, maxDim, waveform, authorization, null);
+  public ApiResponse<Object> getMediaBytesWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable Integer maxDim, @javax.annotation.Nullable Integer waveform) throws ApiException {
+    return getMediaBytesWithHttpInfo(blobId, maxDim, waveform, null);
   }
 
   /**
@@ -222,13 +219,12 @@ public class MediaApi {
    * @param blobId  (required)
    * @param maxDim  (optional, default to 1280)
    * @param waveform  (optional, default to 0)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;Object&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Object> getMediaBytesWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable Integer maxDim, @javax.annotation.Nullable Integer waveform, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = getMediaBytesRequestBuilder(blobId, maxDim, waveform, authorization, headers);
+  public ApiResponse<Object> getMediaBytesWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable Integer maxDim, @javax.annotation.Nullable Integer waveform, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getMediaBytesRequestBuilder(blobId, maxDim, waveform, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -275,7 +271,7 @@ public class MediaApi {
     }
   }
 
-  private HttpRequest.Builder getMediaBytesRequestBuilder(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable Integer maxDim, @javax.annotation.Nullable Integer waveform, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder getMediaBytesRequestBuilder(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable Integer maxDim, @javax.annotation.Nullable Integer waveform, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'blobId' is set
     if (blobId == null) {
       throw new ApiException(400, "Missing the required parameter 'blobId' when calling getMediaBytes");
@@ -305,9 +301,6 @@ public class MediaApi {
       localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
     }
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json, image/jpeg, image/png");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
@@ -327,12 +320,11 @@ public class MediaApi {
    * Unified record for a blob_id. Scoped keys can only read their own customer&#39;s blobs; other customers&#39; blobs are a 404 (never an existence leak). Admin keys may narrow with ?customer_id&#x3D;.
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @return MediaInfo
    * @throws ApiException if fails to make API call
    */
-  public MediaInfo getMediaInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return getMediaInfo(blobId, customerId, authorization, null);
+  public MediaInfo getMediaInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId) throws ApiException {
+    return getMediaInfo(blobId, customerId, null);
   }
 
   /**
@@ -340,13 +332,12 @@ public class MediaApi {
    * Unified record for a blob_id. Scoped keys can only read their own customer&#39;s blobs; other customers&#39; blobs are a 404 (never an existence leak). Admin keys may narrow with ?customer_id&#x3D;.
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return MediaInfo
    * @throws ApiException if fails to make API call
    */
-  public MediaInfo getMediaInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<MediaInfo> localVarResponse = getMediaInfoWithHttpInfo(blobId, customerId, authorization, headers);
+  public MediaInfo getMediaInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
+    ApiResponse<MediaInfo> localVarResponse = getMediaInfoWithHttpInfo(blobId, customerId, headers);
     return localVarResponse.getData();
   }
 
@@ -355,12 +346,11 @@ public class MediaApi {
    * Unified record for a blob_id. Scoped keys can only read their own customer&#39;s blobs; other customers&#39; blobs are a 404 (never an existence leak). Admin keys may narrow with ?customer_id&#x3D;.
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;MediaInfo&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<MediaInfo> getMediaInfoWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return getMediaInfoWithHttpInfo(blobId, customerId, authorization, null);
+  public ApiResponse<MediaInfo> getMediaInfoWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId) throws ApiException {
+    return getMediaInfoWithHttpInfo(blobId, customerId, null);
   }
 
   /**
@@ -368,13 +358,12 @@ public class MediaApi {
    * Unified record for a blob_id. Scoped keys can only read their own customer&#39;s blobs; other customers&#39; blobs are a 404 (never an existence leak). Admin keys may narrow with ?customer_id&#x3D;.
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;MediaInfo&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<MediaInfo> getMediaInfoWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = getMediaInfoRequestBuilder(blobId, customerId, authorization, headers);
+  public ApiResponse<MediaInfo> getMediaInfoWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getMediaInfoRequestBuilder(blobId, customerId, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -421,7 +410,7 @@ public class MediaApi {
     }
   }
 
-  private HttpRequest.Builder getMediaInfoRequestBuilder(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder getMediaInfoRequestBuilder(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'blobId' is set
     if (blobId == null) {
       throw new ApiException(400, "Missing the required parameter 'blobId' when calling getMediaInfo");
@@ -449,9 +438,6 @@ public class MediaApi {
       localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
     }
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
@@ -469,48 +455,44 @@ public class MediaApi {
   /**
    * Ingest capability: supported extensions per media family
    * 
-   * @param authorization  (optional)
    * @return MediaFormats
    * @throws ApiException if fails to make API call
    */
-  public MediaFormats listMediaFormats(@javax.annotation.Nullable String authorization) throws ApiException {
-    return listMediaFormats(authorization, null);
+  public MediaFormats listMediaFormats() throws ApiException {
+    return listMediaFormats(null);
   }
 
   /**
    * Ingest capability: supported extensions per media family
    * 
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return MediaFormats
    * @throws ApiException if fails to make API call
    */
-  public MediaFormats listMediaFormats(@javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<MediaFormats> localVarResponse = listMediaFormatsWithHttpInfo(authorization, headers);
+  public MediaFormats listMediaFormats(Map<String, String> headers) throws ApiException {
+    ApiResponse<MediaFormats> localVarResponse = listMediaFormatsWithHttpInfo(headers);
     return localVarResponse.getData();
   }
 
   /**
    * Ingest capability: supported extensions per media family
    * 
-   * @param authorization  (optional)
    * @return ApiResponse&lt;MediaFormats&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<MediaFormats> listMediaFormatsWithHttpInfo(@javax.annotation.Nullable String authorization) throws ApiException {
-    return listMediaFormatsWithHttpInfo(authorization, null);
+  public ApiResponse<MediaFormats> listMediaFormatsWithHttpInfo() throws ApiException {
+    return listMediaFormatsWithHttpInfo(null);
   }
 
   /**
    * Ingest capability: supported extensions per media family
    * 
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;MediaFormats&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<MediaFormats> listMediaFormatsWithHttpInfo(@javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listMediaFormatsRequestBuilder(authorization, headers);
+  public ApiResponse<MediaFormats> listMediaFormatsWithHttpInfo(Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listMediaFormatsRequestBuilder(headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -557,7 +539,7 @@ public class MediaApi {
     }
   }
 
-  private HttpRequest.Builder listMediaFormatsRequestBuilder(@javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder listMediaFormatsRequestBuilder(Map<String, String> headers) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -565,9 +547,6 @@ public class MediaApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
@@ -587,12 +566,11 @@ public class MediaApi {
    * 
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @return List&lt;MediaFrame&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<MediaFrame> listMediaFrames(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return listMediaFrames(blobId, customerId, authorization, null);
+  public List<MediaFrame> listMediaFrames(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId) throws ApiException {
+    return listMediaFrames(blobId, customerId, null);
   }
 
   /**
@@ -600,13 +578,12 @@ public class MediaApi {
    * 
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return List&lt;MediaFrame&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<MediaFrame> listMediaFrames(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<List<MediaFrame>> localVarResponse = listMediaFramesWithHttpInfo(blobId, customerId, authorization, headers);
+  public List<MediaFrame> listMediaFrames(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
+    ApiResponse<List<MediaFrame>> localVarResponse = listMediaFramesWithHttpInfo(blobId, customerId, headers);
     return localVarResponse.getData();
   }
 
@@ -615,12 +592,11 @@ public class MediaApi {
    * 
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;List&lt;MediaFrame&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<MediaFrame>> listMediaFramesWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return listMediaFramesWithHttpInfo(blobId, customerId, authorization, null);
+  public ApiResponse<List<MediaFrame>> listMediaFramesWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId) throws ApiException {
+    return listMediaFramesWithHttpInfo(blobId, customerId, null);
   }
 
   /**
@@ -628,13 +604,12 @@ public class MediaApi {
    * 
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;List&lt;MediaFrame&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<MediaFrame>> listMediaFramesWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listMediaFramesRequestBuilder(blobId, customerId, authorization, headers);
+  public ApiResponse<List<MediaFrame>> listMediaFramesWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listMediaFramesRequestBuilder(blobId, customerId, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -681,7 +656,7 @@ public class MediaApi {
     }
   }
 
-  private HttpRequest.Builder listMediaFramesRequestBuilder(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder listMediaFramesRequestBuilder(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'blobId' is set
     if (blobId == null) {
       throw new ApiException(400, "Missing the required parameter 'blobId' when calling listMediaFrames");
@@ -709,9 +684,6 @@ public class MediaApi {
       localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
     }
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
@@ -731,12 +703,11 @@ public class MediaApi {
    * 
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @return List&lt;TranscriptSegment&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<TranscriptSegment> listMediaTranscript(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return listMediaTranscript(blobId, customerId, authorization, null);
+  public List<TranscriptSegment> listMediaTranscript(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId) throws ApiException {
+    return listMediaTranscript(blobId, customerId, null);
   }
 
   /**
@@ -744,13 +715,12 @@ public class MediaApi {
    * 
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return List&lt;TranscriptSegment&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<TranscriptSegment> listMediaTranscript(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<List<TranscriptSegment>> localVarResponse = listMediaTranscriptWithHttpInfo(blobId, customerId, authorization, headers);
+  public List<TranscriptSegment> listMediaTranscript(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
+    ApiResponse<List<TranscriptSegment>> localVarResponse = listMediaTranscriptWithHttpInfo(blobId, customerId, headers);
     return localVarResponse.getData();
   }
 
@@ -759,12 +729,11 @@ public class MediaApi {
    * 
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;List&lt;TranscriptSegment&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<TranscriptSegment>> listMediaTranscriptWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return listMediaTranscriptWithHttpInfo(blobId, customerId, authorization, null);
+  public ApiResponse<List<TranscriptSegment>> listMediaTranscriptWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId) throws ApiException {
+    return listMediaTranscriptWithHttpInfo(blobId, customerId, null);
   }
 
   /**
@@ -772,13 +741,12 @@ public class MediaApi {
    * 
    * @param blobId  (required)
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;List&lt;TranscriptSegment&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<TranscriptSegment>> listMediaTranscriptWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listMediaTranscriptRequestBuilder(blobId, customerId, authorization, headers);
+  public ApiResponse<List<TranscriptSegment>> listMediaTranscriptWithHttpInfo(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listMediaTranscriptRequestBuilder(blobId, customerId, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -825,7 +793,7 @@ public class MediaApi {
     }
   }
 
-  private HttpRequest.Builder listMediaTranscriptRequestBuilder(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder listMediaTranscriptRequestBuilder(@javax.annotation.Nonnull Integer blobId, @javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'blobId' is set
     if (blobId == null) {
       throw new ApiException(400, "Missing the required parameter 'blobId' when calling listMediaTranscript");
@@ -853,9 +821,6 @@ public class MediaApi {
       localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
     }
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());

@@ -35,7 +35,6 @@ describe 'AuthApi' do
   # unit tests for whoami
   # Report the calling key&#39;s role and customer scope
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [Object]
   describe 'whoami test' do
     it 'should work' do

@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## query
 
-> QueryResult query(queryRequest, authorization)
+> QueryResult query(queryRequest)
 
 Run a read-only SQL SELECT over the corpus tables
 
@@ -27,13 +27,15 @@ import type { QueryOperationRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new QueryApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new QueryApi(config);
 
   const body = {
     // QueryRequest
     queryRequest: ...,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies QueryOperationRequest;
 
   try {
@@ -54,7 +56,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **queryRequest** | [QueryRequest](QueryRequest.md) |  | |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -62,7 +63,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

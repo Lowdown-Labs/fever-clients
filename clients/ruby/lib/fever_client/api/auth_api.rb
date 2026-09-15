@@ -21,7 +21,6 @@ module FeverClient
     end
     # Report the calling key's role and customer scope
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Object]
     def whoami(opts = {})
       data, _status_code, _headers = whoami_with_http_info(opts)
@@ -30,7 +29,6 @@ module FeverClient
 
     # Report the calling key&#39;s role and customer scope
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def whoami_with_http_info(opts = {})
       if @api_client.config.debugging
@@ -46,7 +44,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -58,7 +55,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'Object'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"AuthApi.whoami",

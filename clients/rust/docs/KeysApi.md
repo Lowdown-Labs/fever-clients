@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 ## create_key
 
-> models::KeyReveal create_key(create_key_request, authorization)
+> models::KeyReveal create_key(create_key_request)
 Mint an API key for this appliance
 
 ### Parameters
@@ -21,7 +21,6 @@ Mint an API key for this appliance
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **create_key_request** | [**CreateKeyRequest**](CreateKeyRequest.md) |  | [required] |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -29,7 +28,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -41,15 +40,12 @@ No authorization required
 
 ## list_keys
 
-> Vec<models::ApiKey> list_keys(authorization)
+> Vec<models::ApiKey> list_keys()
 List this appliance's API keys
 
 ### Parameters
 
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**authorization** | Option<**String**> |  |  |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -57,7 +53,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -69,7 +65,7 @@ No authorization required
 
 ## revoke_key
 
-> serde_json::Value revoke_key(key_id, authorization)
+> serde_json::Value revoke_key(key_id)
 Revoke an API key
 
 ### Parameters
@@ -78,7 +74,6 @@ Revoke an API key
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **key_id** | **i32** |  | [required] |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -86,7 +81,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

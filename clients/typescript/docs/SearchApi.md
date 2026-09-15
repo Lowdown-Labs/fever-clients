@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## search
 
-> Array&lt;SearchHit&gt; search(searchRequest, authorization)
+> Array&lt;SearchHit&gt; search(searchRequest)
 
 Search by text or image
 
@@ -27,13 +27,15 @@ import type { SearchOperationRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new SearchApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new SearchApi(config);
 
   const body = {
     // SearchRequest
     searchRequest: ...,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies SearchOperationRequest;
 
   try {
@@ -54,7 +56,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **searchRequest** | [SearchRequest](SearchRequest.md) |  | |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -62,7 +63,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

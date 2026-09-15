@@ -25,10 +25,9 @@ pub enum SearchError {
 
 
 /// text runs a meaning-based vector search fused with lexical full-text (RRF), reranked and calibrated so min_score is a real match probability. image runs cosine similarity. customer_id and EXIF fields narrow the results.
-pub async fn search(configuration: &configuration::Configuration, search_request: models::SearchRequest, authorization: Option<&str>) -> Result<Vec<models::SearchHit>, Error<SearchError>> {
+pub async fn search(configuration: &configuration::Configuration, search_request: models::SearchRequest) -> Result<Vec<models::SearchHit>, Error<SearchError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_search_request = search_request;
-    let p_header_authorization = authorization;
 
     let uri_str = format!("{}/v1/search", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -36,9 +35,9 @@ pub async fn search(configuration: &configuration::Configuration, search_request
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_header_authorization {
-        req_builder = req_builder.header("authorization", param_value.to_string());
-    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
     req_builder = req_builder.json(&p_body_search_request);
 
     let req = req_builder.build()?;

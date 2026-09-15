@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## reassignCustomersBulk
 
-> any reassignCustomersBulk(authorization, file)
+> any reassignCustomersBulk(file)
 
 Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
 
@@ -27,11 +27,13 @@ import type { ReassignCustomersBulkRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new CustomersApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: adminToken
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new CustomersApi(config);
 
   const body = {
-    // string (optional)
-    authorization: authorization_example,
     // Blob (optional)
     file: BINARY_DATA_HERE,
   } satisfies ReassignCustomersBulkRequest;
@@ -53,7 +55,6 @@ example().catch(console.error);
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 | **file** | `Blob` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
@@ -62,7 +63,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

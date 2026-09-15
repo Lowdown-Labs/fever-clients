@@ -34,10 +34,6 @@ export interface SearchOperationRequest {
      * 
      */
     searchRequest: SearchRequest;
-    /**
-     * 
-     */
-    authorization?: string | null;
 }
 
 /**
@@ -62,10 +58,14 @@ export class SearchApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/search`;
 

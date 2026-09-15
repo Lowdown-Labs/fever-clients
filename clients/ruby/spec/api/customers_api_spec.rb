@@ -36,7 +36,6 @@ describe 'CustomersApi' do
   # Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
   # Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @option opts [File] :file 
   # @return [Object]
   describe 'reassign_customers_bulk test' do

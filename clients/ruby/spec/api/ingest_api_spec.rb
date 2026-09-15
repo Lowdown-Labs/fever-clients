@@ -37,7 +37,6 @@ describe 'IngestApi' do
   # Throw 1..N media items over the wall. Small inline batches are embedded and indexed synchronously and return blob ids; large batches or an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken from the API key.
   # @param ingest_request 
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [IngestResult]
   describe 'ingest_media test' do
     it 'should work' do

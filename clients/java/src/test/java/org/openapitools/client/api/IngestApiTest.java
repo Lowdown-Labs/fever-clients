@@ -47,9 +47,8 @@ public class IngestApiTest {
     @Test
     public void ingestMediaTest() throws ApiException {
         IngestRequest ingestRequest = null;
-        String authorization = null;
         IngestResult response = 
-        api.ingestMedia(ingestRequest, authorization);
+        api.ingestMedia(ingestRequest);
         
         // TODO: test validations
     }

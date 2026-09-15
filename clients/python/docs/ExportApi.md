@@ -9,12 +9,13 @@ Method | HTTP request | Description
 
 
 # **export_tenant**
-> ExportResult export_tenant(export_request, authorization=authorization)
+> ExportResult export_tenant(export_request)
 
 Export the tenant's vectors and metadata to S3
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -29,17 +30,25 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.ExportApi(api_client)
     export_request = fever_client.ExportRequest() # ExportRequest | 
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Export the tenant's vectors and metadata to S3
-        api_response = await api_instance.export_tenant(export_request, authorization=authorization)
+        api_response = await api_instance.export_tenant(export_request)
         print("The response of ExportApi->export_tenant:\n")
         pprint(api_response)
     except Exception as e:
@@ -54,7 +63,6 @@ async with fever_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **export_request** | [**ExportRequest**](ExportRequest.md)|  | 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -62,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -79,12 +87,13 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **import_tenant**
-> ImportResult import_tenant(import_request, authorization=authorization)
+> ImportResult import_tenant(import_request)
 
 Import vectors and metadata from a previous FEVER export in S3
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -99,17 +108,25 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.ExportApi(api_client)
     import_request = fever_client.ImportRequest() # ImportRequest | 
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Import vectors and metadata from a previous FEVER export in S3
-        api_response = await api_instance.import_tenant(import_request, authorization=authorization)
+        api_response = await api_instance.import_tenant(import_request)
         print("The response of ExportApi->import_tenant:\n")
         pprint(api_response)
     except Exception as e:
@@ -124,7 +141,6 @@ async with fever_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **import_request** | [**ImportRequest**](ImportRequest.md)|  | 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -132,7 +148,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

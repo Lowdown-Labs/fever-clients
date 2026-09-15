@@ -131,16 +131,15 @@ class QueryApi
      * Run a read-only SQL SELECT over the corpus tables
      *
      * @param  \LowdownLabs\Fever\Model\QueryRequest $query_request query_request (required)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['query'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\QueryResult|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function query($query_request, $authorization = null, string $contentType = self::contentTypes['query'][0])
+    public function query($query_request, string $contentType = self::contentTypes['query'][0])
     {
-        list($response) = $this->queryWithHttpInfo($query_request, $authorization, $contentType);
+        list($response) = $this->queryWithHttpInfo($query_request, $contentType);
         return $response;
     }
 
@@ -150,16 +149,15 @@ class QueryApi
      * Run a read-only SQL SELECT over the corpus tables
      *
      * @param  \LowdownLabs\Fever\Model\QueryRequest $query_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['query'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\QueryResult|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function queryWithHttpInfo($query_request, $authorization = null, string $contentType = self::contentTypes['query'][0])
+    public function queryWithHttpInfo($query_request, string $contentType = self::contentTypes['query'][0])
     {
-        $request = $this->queryRequest($query_request, $authorization, $contentType);
+        $request = $this->queryRequest($query_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -250,15 +248,14 @@ class QueryApi
      * Run a read-only SQL SELECT over the corpus tables
      *
      * @param  \LowdownLabs\Fever\Model\QueryRequest $query_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['query'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function queryAsync($query_request, $authorization = null, string $contentType = self::contentTypes['query'][0])
+    public function queryAsync($query_request, string $contentType = self::contentTypes['query'][0])
     {
-        return $this->queryAsyncWithHttpInfo($query_request, $authorization, $contentType)
+        return $this->queryAsyncWithHttpInfo($query_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -272,16 +269,15 @@ class QueryApi
      * Run a read-only SQL SELECT over the corpus tables
      *
      * @param  \LowdownLabs\Fever\Model\QueryRequest $query_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['query'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function queryAsyncWithHttpInfo($query_request, $authorization = null, string $contentType = self::contentTypes['query'][0])
+    public function queryAsyncWithHttpInfo($query_request, string $contentType = self::contentTypes['query'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\QueryResult';
-        $request = $this->queryRequest($query_request, $authorization, $contentType);
+        $request = $this->queryRequest($query_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -323,13 +319,12 @@ class QueryApi
      * Create request for operation 'query'
      *
      * @param  \LowdownLabs\Fever\Model\QueryRequest $query_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['query'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function queryRequest($query_request, $authorization = null, string $contentType = self::contentTypes['query'][0])
+    public function queryRequest($query_request, string $contentType = self::contentTypes['query'][0])
     {
 
         // verify the required parameter 'query_request' is set
@@ -340,7 +335,6 @@ class QueryApi
         }
 
 
-
         $resourcePath = '/v1/query';
         $formParams = [];
         $queryParams = [];
@@ -349,10 +343,6 @@ class QueryApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -402,6 +392,10 @@ class QueryApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

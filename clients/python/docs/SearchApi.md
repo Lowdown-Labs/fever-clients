@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **search**
-> List[SearchHit] search(search_request, authorization=authorization)
+> List[SearchHit] search(search_request)
 
 Search by text or image
 
@@ -16,6 +16,7 @@ text runs a meaning-based vector search fused with lexical full-text (RRF), rera
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -30,17 +31,25 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.SearchApi(api_client)
     search_request = fever_client.SearchRequest() # SearchRequest | 
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Search by text or image
-        api_response = await api_instance.search(search_request, authorization=authorization)
+        api_response = await api_instance.search(search_request)
         print("The response of SearchApi->search:\n")
         pprint(api_response)
     except Exception as e:
@@ -55,7 +64,6 @@ async with fever_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **search_request** | [**SearchRequest**](SearchRequest.md)|  | 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -63,7 +71,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

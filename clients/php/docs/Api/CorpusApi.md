@@ -12,7 +12,7 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 ## `corpusStats()`
 
 ```php
-corpusStats($customer_id, $authorization): \LowdownLabs\Fever\Model\CorpusStats
+corpusStats($customer_id): \LowdownLabs\Fever\Model\CorpusStats
 ```
 
 Corpus composition: per-kind counts and top autotags
@@ -24,17 +24,20 @@ Corpus composition: per-kind counts and top autotags
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\CorpusApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $customer_id = 'customer_id_example'; // string
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->corpusStats($customer_id, $authorization);
+    $result = $apiInstance->corpusStats($customer_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CorpusApi->corpusStats: ', $e->getMessage(), PHP_EOL;
@@ -46,7 +49,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **customer_id** | **string**|  | [optional] |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -54,7 +56,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../../README.md#bearerAuth)
 
 ### HTTP request headers
 

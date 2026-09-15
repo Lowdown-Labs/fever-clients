@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## ReassignCustomersBulk
 
-> interface{} ReassignCustomersBulk(ctx).Authorization(authorization).File(file).Execute()
+> interface{} ReassignCustomersBulk(ctx).File(file).Execute()
 
 Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
 
@@ -29,12 +29,11 @@ import (
 )
 
 func main() {
-	authorization := "authorization_example" // string |  (optional)
 	file := os.NewFile(1234, "some_file") // *os.File |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CustomersAPI.ReassignCustomersBulk(context.Background()).Authorization(authorization).File(file).Execute()
+	resp, r, err := apiClient.CustomersAPI.ReassignCustomersBulk(context.Background()).File(file).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CustomersAPI.ReassignCustomersBulk``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -55,7 +54,6 @@ Other parameters are passed through a pointer to a apiReassignCustomersBulkReque
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **authorization** | **string** |  | 
  **file** | ***os.File** |  | 
 
 ### Return type
@@ -64,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

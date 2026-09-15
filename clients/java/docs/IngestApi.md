@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 
 ## ingestMedia
 
-> IngestResult ingestMedia(ingestRequest, authorization)
+> IngestResult ingestMedia(ingestRequest)
 
 Ingest one or many media items
 
@@ -24,6 +24,7 @@ Throw 1..N media items over the wall. Small inline batches are embedded and inde
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.IngestApi;
 
@@ -31,12 +32,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         IngestApi apiInstance = new IngestApi(defaultClient);
         IngestRequest ingestRequest = new IngestRequest(); // IngestRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            IngestResult result = apiInstance.ingestMedia(ingestRequest, authorization);
+            IngestResult result = apiInstance.ingestMedia(ingestRequest);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling IngestApi#ingestMedia");
@@ -55,7 +59,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **ingestRequest** | [**IngestRequest**](IngestRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -64,7 +67,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -79,7 +82,7 @@ No authorization required
 
 ## ingestMediaWithHttpInfo
 
-> ApiResponse<IngestResult> ingestMediaWithHttpInfo(ingestRequest, authorization)
+> ApiResponse<IngestResult> ingestMediaWithHttpInfo(ingestRequest)
 
 Ingest one or many media items
 
@@ -93,6 +96,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.IngestApi;
 
@@ -100,12 +104,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         IngestApi apiInstance = new IngestApi(defaultClient);
         IngestRequest ingestRequest = new IngestRequest(); // IngestRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<IngestResult> response = apiInstance.ingestMediaWithHttpInfo(ingestRequest, authorization);
+            ApiResponse<IngestResult> response = apiInstance.ingestMediaWithHttpInfo(ingestRequest);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -126,7 +133,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **ingestRequest** | [**IngestRequest**](IngestRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -135,7 +141,7 @@ ApiResponse<[**IngestResult**](IngestResult.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

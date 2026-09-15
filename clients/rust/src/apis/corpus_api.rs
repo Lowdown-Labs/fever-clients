@@ -24,10 +24,9 @@ pub enum CorpusStatsError {
 }
 
 
-pub async fn corpus_stats(configuration: &configuration::Configuration, customer_id: Option<&str>, authorization: Option<&str>) -> Result<models::CorpusStats, Error<CorpusStatsError>> {
+pub async fn corpus_stats(configuration: &configuration::Configuration, customer_id: Option<&str>) -> Result<models::CorpusStats, Error<CorpusStatsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_customer_id = customer_id;
-    let p_header_authorization = authorization;
 
     let uri_str = format!("{}/v1/corpus", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -38,9 +37,9 @@ pub async fn corpus_stats(configuration: &configuration::Configuration, customer
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_header_authorization {
-        req_builder = req_builder.header("authorization", param_value.to_string());
-    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

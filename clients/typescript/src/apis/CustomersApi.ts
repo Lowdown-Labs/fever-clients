@@ -23,10 +23,6 @@ export interface ReassignCustomersBulkRequest {
     /**
      * 
      */
-    authorization?: string | null;
-    /**
-     * 
-     */
     file?: Blob | null;
 }
 
@@ -43,10 +39,14 @@ export class CustomersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("adminToken", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
         const consumes: runtime.Consume[] = [
             { contentType: 'multipart/form-data' },
         ];

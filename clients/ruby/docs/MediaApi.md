@@ -24,13 +24,17 @@ Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw bytes). Sco
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::MediaApi.new
 blob_id = 56 # Integer | 
 opts = {
   max_dim: 56, # Integer | 
-  waveform: 56, # Integer | 
-  authorization: 'authorization_example' # String | 
+  waveform: 56 # Integer | 
 }
 
 begin
@@ -67,7 +71,6 @@ end
 | **blob_id** | **Integer** |  |  |
 | **max_dim** | **Integer** |  | [optional][default to 1280] |
 | **waveform** | **Integer** |  | [optional][default to 0] |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -75,7 +78,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -96,12 +99,16 @@ Unified record for a blob_id. Scoped keys can only read their own customer's blo
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::MediaApi.new
 blob_id = 56 # Integer | 
 opts = {
-  customer_id: 'customer_id_example', # String | 
-  authorization: 'authorization_example' # String | 
+  customer_id: 'customer_id_example' # String | 
 }
 
 begin
@@ -137,7 +144,6 @@ end
 | ---- | ---- | ----------- | ----- |
 | **blob_id** | **Integer** |  |  |
 | **customer_id** | **String** |  | [optional] |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -145,7 +151,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -155,7 +161,7 @@ No authorization required
 
 ## list_media_formats
 
-> <MediaFormats> list_media_formats(opts)
+> <MediaFormats> list_media_formats
 
 Ingest capability: supported extensions per media family
 
@@ -164,15 +170,17 @@ Ingest capability: supported extensions per media family
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::MediaApi.new
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # Ingest capability: supported extensions per media family
-  result = api_instance.list_media_formats(opts)
+  result = api_instance.list_media_formats
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling MediaApi->list_media_formats: #{e}"
@@ -183,12 +191,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<MediaFormats>, Integer, Hash)> list_media_formats_with_http_info(opts)
+> <Array(<MediaFormats>, Integer, Hash)> list_media_formats_with_http_info
 
 ```ruby
 begin
   # Ingest capability: supported extensions per media family
-  data, status_code, headers = api_instance.list_media_formats_with_http_info(opts)
+  data, status_code, headers = api_instance.list_media_formats_with_http_info
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <MediaFormats>
@@ -199,9 +207,7 @@ end
 
 ### Parameters
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **authorization** | **String** |  | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -209,7 +215,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -228,12 +234,16 @@ Sampled video frames for a parent blob
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::MediaApi.new
 blob_id = 56 # Integer | 
 opts = {
-  customer_id: 'customer_id_example', # String | 
-  authorization: 'authorization_example' # String | 
+  customer_id: 'customer_id_example' # String | 
 }
 
 begin
@@ -269,7 +279,6 @@ end
 | ---- | ---- | ----------- | ----- |
 | **blob_id** | **Integer** |  |  |
 | **customer_id** | **String** |  | [optional] |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -277,7 +286,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -296,12 +305,16 @@ Whisper transcript segments for a parent blob (audio or video)
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::MediaApi.new
 blob_id = 56 # Integer | 
 opts = {
-  customer_id: 'customer_id_example', # String | 
-  authorization: 'authorization_example' # String | 
+  customer_id: 'customer_id_example' # String | 
 }
 
 begin
@@ -337,7 +350,6 @@ end
 | ---- | ---- | ----------- | ----- |
 | **blob_id** | **Integer** |  |  |
 | **customer_id** | **String** |  | [optional] |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -345,7 +357,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

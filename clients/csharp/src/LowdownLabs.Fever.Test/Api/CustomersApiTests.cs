@@ -60,9 +60,8 @@ namespace LowdownLabs.Fever.Test.Api
         public void ReassignCustomersBulkTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //string? authorization = null;
             //FileParameter? file = null;
-            //var response = instance.ReassignCustomersBulk(authorization, file);
+            //var response = instance.ReassignCustomersBulk(file);
             //Assert.IsType<Object>(response);
         }
     }

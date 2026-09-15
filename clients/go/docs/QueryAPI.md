@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## Query
 
-> QueryResult Query(ctx).QueryRequest(queryRequest).Authorization(authorization).Execute()
+> QueryResult Query(ctx).QueryRequest(queryRequest).Execute()
 
 Run a read-only SQL SELECT over the corpus tables
 
@@ -30,11 +30,10 @@ import (
 
 func main() {
 	queryRequest := *openapiclient.NewQueryRequest("Sql_example") // QueryRequest | 
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.QueryAPI.Query(context.Background()).QueryRequest(queryRequest).Authorization(authorization).Execute()
+	resp, r, err := apiClient.QueryAPI.Query(context.Background()).QueryRequest(queryRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `QueryAPI.Query``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -56,7 +55,6 @@ Other parameters are passed through a pointer to a apiQueryRequest struct via th
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **queryRequest** | [**QueryRequest**](QueryRequest.md) |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -64,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

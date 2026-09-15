@@ -12,7 +12,7 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 ## `reassignCustomersBulk()`
 
 ```php
-reassignCustomersBulk($authorization, $file): mixed
+reassignCustomersBulk($file): mixed
 ```
 
 Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
@@ -26,17 +26,20 @@ Associate already-ingested images to customers after the fact, at millions-of-ro
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: adminToken
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\CustomersApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$authorization = 'authorization_example'; // string
 $file = '/path/to/file.txt'; // \SplFileObject
 
 try {
-    $result = $apiInstance->reassignCustomersBulk($authorization, $file);
+    $result = $apiInstance->reassignCustomersBulk($file);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CustomersApi->reassignCustomersBulk: ', $e->getMessage(), PHP_EOL;
@@ -47,7 +50,6 @@ try {
 
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
-| **authorization** | **string**|  | [optional] |
 | **file** | **\SplFileObject****\SplFileObject**|  | [optional] |
 
 ### Return type
@@ -56,7 +58,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[adminToken](../../README.md#adminToken)
 
 ### HTTP request headers
 

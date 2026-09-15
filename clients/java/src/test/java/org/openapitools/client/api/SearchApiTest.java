@@ -47,9 +47,8 @@ public class SearchApiTest {
     @Test
     public void searchTest() throws ApiException {
         SearchRequest searchRequest = null;
-        String authorization = null;
         List<SearchHit> response = 
-        api.search(searchRequest, authorization);
+        api.search(searchRequest);
         
         // TODO: test validations
     }

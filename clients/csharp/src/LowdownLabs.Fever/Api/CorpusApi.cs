@@ -32,9 +32,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>CorpusStats</returns>
-        CorpusStats CorpusStats(string? customerId = default, string? authorization = default);
+        CorpusStats CorpusStats(string? customerId = default);
 
         /// <summary>
         /// Corpus composition: per-kind counts and top autotags
@@ -44,9 +43,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of CorpusStats</returns>
-        ApiResponse<CorpusStats> CorpusStatsWithHttpInfo(string? customerId = default, string? authorization = default);
+        ApiResponse<CorpusStats> CorpusStatsWithHttpInfo(string? customerId = default);
         #endregion Synchronous Operations
     }
 
@@ -64,10 +62,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CorpusStats</returns>
-        System.Threading.Tasks.Task<CorpusStats> CorpusStatsAsync(string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<CorpusStats> CorpusStatsAsync(string? customerId = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Corpus composition: per-kind counts and top autotags
@@ -77,10 +74,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CorpusStats)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CorpusStats>> CorpusStatsWithHttpInfoAsync(string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<CorpusStats>> CorpusStatsWithHttpInfoAsync(string? customerId = default, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -299,11 +295,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>CorpusStats</returns>
-        public CorpusStats CorpusStats(string? customerId = default, string? authorization = default)
+        public CorpusStats CorpusStats(string? customerId = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<CorpusStats> localVarResponse = CorpusStatsWithHttpInfo(customerId, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<CorpusStats> localVarResponse = CorpusStatsWithHttpInfo(customerId);
             return localVarResponse.Data;
         }
 
@@ -312,9 +307,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of CorpusStats</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<CorpusStats> CorpusStatsWithHttpInfo(string? customerId = default, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<CorpusStats> CorpusStatsWithHttpInfo(string? customerId = default)
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -336,11 +330,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "customer_id", customerId));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<CorpusStats>("/v1/corpus", localVarRequestOptions, this.Configuration);
@@ -359,12 +355,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of CorpusStats</returns>
-        public async System.Threading.Tasks.Task<CorpusStats> CorpusStatsAsync(string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<CorpusStats> CorpusStatsAsync(string? customerId = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<CorpusStats> localVarResponse = await CorpusStatsWithHttpInfoAsync(customerId, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<CorpusStats> localVarResponse = await CorpusStatsWithHttpInfoAsync(customerId, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -373,10 +368,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (CorpusStats)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<CorpusStats>> CorpusStatsWithHttpInfoAsync(string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<CorpusStats>> CorpusStatsWithHttpInfoAsync(string? customerId = default, System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -400,11 +394,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "customer_id", customerId));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 

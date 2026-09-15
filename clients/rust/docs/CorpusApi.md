@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## corpus_stats
 
-> models::CorpusStats corpus_stats(customer_id, authorization)
+> models::CorpusStats corpus_stats(customer_id)
 Corpus composition: per-kind counts and top autotags
 
 ### Parameters
@@ -19,7 +19,6 @@ Corpus composition: per-kind counts and top autotags
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **customer_id** | Option<**String**> |  |  |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -27,7 +26,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

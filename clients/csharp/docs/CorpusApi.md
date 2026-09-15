@@ -8,7 +8,7 @@ All URIs are relative to *http://localhost*
 
 <a id="corpusstats"></a>
 # **CorpusStats**
-> CorpusStats CorpusStats (string? customerId = null, string? authorization = null)
+> CorpusStats CorpusStats (string? customerId = null)
 
 Corpus composition: per-kind counts and top autotags
 
@@ -29,17 +29,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new CorpusApi(httpClient, config, httpClientHandler);
             var customerId = "customerId_example";  // string? |  (optional) 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Corpus composition: per-kind counts and top autotags
-                CorpusStats result = apiInstance.CorpusStats(customerId, authorization);
+                CorpusStats result = apiInstance.CorpusStats(customerId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -60,7 +62,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Corpus composition: per-kind counts and top autotags
-    ApiResponse<CorpusStats> response = apiInstance.CorpusStatsWithHttpInfo(customerId, authorization);
+    ApiResponse<CorpusStats> response = apiInstance.CorpusStatsWithHttpInfo(customerId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -78,7 +80,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **customerId** | **string?** |  | [optional]  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -86,7 +87,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

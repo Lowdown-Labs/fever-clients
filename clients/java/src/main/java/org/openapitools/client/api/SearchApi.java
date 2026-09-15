@@ -174,25 +174,23 @@ public class SearchApi {
    * Search by text or image
    * text runs a meaning-based vector search fused with lexical full-text (RRF), reranked and calibrated so min_score is a real match probability. image runs cosine similarity. customer_id and EXIF fields narrow the results.
    * @param searchRequest  (required)
-   * @param authorization  (optional)
    * @return List&lt;SearchHit&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<SearchHit> search(@javax.annotation.Nonnull SearchRequest searchRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return search(searchRequest, authorization, null);
+  public List<SearchHit> search(@javax.annotation.Nonnull SearchRequest searchRequest) throws ApiException {
+    return search(searchRequest, null);
   }
 
   /**
    * Search by text or image
    * text runs a meaning-based vector search fused with lexical full-text (RRF), reranked and calibrated so min_score is a real match probability. image runs cosine similarity. customer_id and EXIF fields narrow the results.
    * @param searchRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return List&lt;SearchHit&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<SearchHit> search(@javax.annotation.Nonnull SearchRequest searchRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<List<SearchHit>> localVarResponse = searchWithHttpInfo(searchRequest, authorization, headers);
+  public List<SearchHit> search(@javax.annotation.Nonnull SearchRequest searchRequest, Map<String, String> headers) throws ApiException {
+    ApiResponse<List<SearchHit>> localVarResponse = searchWithHttpInfo(searchRequest, headers);
     return localVarResponse.getData();
   }
 
@@ -200,25 +198,23 @@ public class SearchApi {
    * Search by text or image
    * text runs a meaning-based vector search fused with lexical full-text (RRF), reranked and calibrated so min_score is a real match probability. image runs cosine similarity. customer_id and EXIF fields narrow the results.
    * @param searchRequest  (required)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;List&lt;SearchHit&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<SearchHit>> searchWithHttpInfo(@javax.annotation.Nonnull SearchRequest searchRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return searchWithHttpInfo(searchRequest, authorization, null);
+  public ApiResponse<List<SearchHit>> searchWithHttpInfo(@javax.annotation.Nonnull SearchRequest searchRequest) throws ApiException {
+    return searchWithHttpInfo(searchRequest, null);
   }
 
   /**
    * Search by text or image
    * text runs a meaning-based vector search fused with lexical full-text (RRF), reranked and calibrated so min_score is a real match probability. image runs cosine similarity. customer_id and EXIF fields narrow the results.
    * @param searchRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;List&lt;SearchHit&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<SearchHit>> searchWithHttpInfo(@javax.annotation.Nonnull SearchRequest searchRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = searchRequestBuilder(searchRequest, authorization, headers);
+  public ApiResponse<List<SearchHit>> searchWithHttpInfo(@javax.annotation.Nonnull SearchRequest searchRequest, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = searchRequestBuilder(searchRequest, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -265,7 +261,7 @@ public class SearchApi {
     }
   }
 
-  private HttpRequest.Builder searchRequestBuilder(@javax.annotation.Nonnull SearchRequest searchRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder searchRequestBuilder(@javax.annotation.Nonnull SearchRequest searchRequest, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'searchRequest' is set
     if (searchRequest == null) {
       throw new ApiException(400, "Missing the required parameter 'searchRequest' when calling search");
@@ -277,9 +273,6 @@ public class SearchApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 

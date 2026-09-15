@@ -175,25 +175,23 @@ public class KeysApi {
    * Mint an API key for this appliance
    * 
    * @param createKeyRequest  (required)
-   * @param authorization  (optional)
    * @return KeyReveal
    * @throws ApiException if fails to make API call
    */
-  public KeyReveal createKey(@javax.annotation.Nonnull CreateKeyRequest createKeyRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return createKey(createKeyRequest, authorization, null);
+  public KeyReveal createKey(@javax.annotation.Nonnull CreateKeyRequest createKeyRequest) throws ApiException {
+    return createKey(createKeyRequest, null);
   }
 
   /**
    * Mint an API key for this appliance
    * 
    * @param createKeyRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return KeyReveal
    * @throws ApiException if fails to make API call
    */
-  public KeyReveal createKey(@javax.annotation.Nonnull CreateKeyRequest createKeyRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<KeyReveal> localVarResponse = createKeyWithHttpInfo(createKeyRequest, authorization, headers);
+  public KeyReveal createKey(@javax.annotation.Nonnull CreateKeyRequest createKeyRequest, Map<String, String> headers) throws ApiException {
+    ApiResponse<KeyReveal> localVarResponse = createKeyWithHttpInfo(createKeyRequest, headers);
     return localVarResponse.getData();
   }
 
@@ -201,25 +199,23 @@ public class KeysApi {
    * Mint an API key for this appliance
    * 
    * @param createKeyRequest  (required)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;KeyReveal&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<KeyReveal> createKeyWithHttpInfo(@javax.annotation.Nonnull CreateKeyRequest createKeyRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return createKeyWithHttpInfo(createKeyRequest, authorization, null);
+  public ApiResponse<KeyReveal> createKeyWithHttpInfo(@javax.annotation.Nonnull CreateKeyRequest createKeyRequest) throws ApiException {
+    return createKeyWithHttpInfo(createKeyRequest, null);
   }
 
   /**
    * Mint an API key for this appliance
    * 
    * @param createKeyRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;KeyReveal&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<KeyReveal> createKeyWithHttpInfo(@javax.annotation.Nonnull CreateKeyRequest createKeyRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = createKeyRequestBuilder(createKeyRequest, authorization, headers);
+  public ApiResponse<KeyReveal> createKeyWithHttpInfo(@javax.annotation.Nonnull CreateKeyRequest createKeyRequest, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = createKeyRequestBuilder(createKeyRequest, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -266,7 +262,7 @@ public class KeysApi {
     }
   }
 
-  private HttpRequest.Builder createKeyRequestBuilder(@javax.annotation.Nonnull CreateKeyRequest createKeyRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder createKeyRequestBuilder(@javax.annotation.Nonnull CreateKeyRequest createKeyRequest, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'createKeyRequest' is set
     if (createKeyRequest == null) {
       throw new ApiException(400, "Missing the required parameter 'createKeyRequest' when calling createKey");
@@ -278,9 +274,6 @@ public class KeysApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
@@ -304,48 +297,44 @@ public class KeysApi {
   /**
    * List this appliance&#39;s API keys
    * 
-   * @param authorization  (optional)
    * @return List&lt;ApiKey&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<ApiKey> listKeys(@javax.annotation.Nullable String authorization) throws ApiException {
-    return listKeys(authorization, null);
+  public List<ApiKey> listKeys() throws ApiException {
+    return listKeys(null);
   }
 
   /**
    * List this appliance&#39;s API keys
    * 
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return List&lt;ApiKey&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<ApiKey> listKeys(@javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<List<ApiKey>> localVarResponse = listKeysWithHttpInfo(authorization, headers);
+  public List<ApiKey> listKeys(Map<String, String> headers) throws ApiException {
+    ApiResponse<List<ApiKey>> localVarResponse = listKeysWithHttpInfo(headers);
     return localVarResponse.getData();
   }
 
   /**
    * List this appliance&#39;s API keys
    * 
-   * @param authorization  (optional)
    * @return ApiResponse&lt;List&lt;ApiKey&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<ApiKey>> listKeysWithHttpInfo(@javax.annotation.Nullable String authorization) throws ApiException {
-    return listKeysWithHttpInfo(authorization, null);
+  public ApiResponse<List<ApiKey>> listKeysWithHttpInfo() throws ApiException {
+    return listKeysWithHttpInfo(null);
   }
 
   /**
    * List this appliance&#39;s API keys
    * 
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;List&lt;ApiKey&gt;&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<List<ApiKey>> listKeysWithHttpInfo(@javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = listKeysRequestBuilder(authorization, headers);
+  public ApiResponse<List<ApiKey>> listKeysWithHttpInfo(Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = listKeysRequestBuilder(headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -392,7 +381,7 @@ public class KeysApi {
     }
   }
 
-  private HttpRequest.Builder listKeysRequestBuilder(@javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder listKeysRequestBuilder(Map<String, String> headers) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -400,9 +389,6 @@ public class KeysApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
@@ -421,25 +407,23 @@ public class KeysApi {
    * Revoke an API key
    * 
    * @param keyId  (required)
-   * @param authorization  (optional)
    * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object revokeKey(@javax.annotation.Nonnull Integer keyId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return revokeKey(keyId, authorization, null);
+  public Object revokeKey(@javax.annotation.Nonnull Integer keyId) throws ApiException {
+    return revokeKey(keyId, null);
   }
 
   /**
    * Revoke an API key
    * 
    * @param keyId  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object revokeKey(@javax.annotation.Nonnull Integer keyId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<Object> localVarResponse = revokeKeyWithHttpInfo(keyId, authorization, headers);
+  public Object revokeKey(@javax.annotation.Nonnull Integer keyId, Map<String, String> headers) throws ApiException {
+    ApiResponse<Object> localVarResponse = revokeKeyWithHttpInfo(keyId, headers);
     return localVarResponse.getData();
   }
 
@@ -447,25 +431,23 @@ public class KeysApi {
    * Revoke an API key
    * 
    * @param keyId  (required)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;Object&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Object> revokeKeyWithHttpInfo(@javax.annotation.Nonnull Integer keyId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return revokeKeyWithHttpInfo(keyId, authorization, null);
+  public ApiResponse<Object> revokeKeyWithHttpInfo(@javax.annotation.Nonnull Integer keyId) throws ApiException {
+    return revokeKeyWithHttpInfo(keyId, null);
   }
 
   /**
    * Revoke an API key
    * 
    * @param keyId  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;Object&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Object> revokeKeyWithHttpInfo(@javax.annotation.Nonnull Integer keyId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = revokeKeyRequestBuilder(keyId, authorization, headers);
+  public ApiResponse<Object> revokeKeyWithHttpInfo(@javax.annotation.Nonnull Integer keyId, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = revokeKeyRequestBuilder(keyId, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -512,7 +494,7 @@ public class KeysApi {
     }
   }
 
-  private HttpRequest.Builder revokeKeyRequestBuilder(@javax.annotation.Nonnull Integer keyId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder revokeKeyRequestBuilder(@javax.annotation.Nonnull Integer keyId, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'keyId' is set
     if (keyId == null) {
       throw new ApiException(400, "Missing the required parameter 'keyId' when calling revokeKey");
@@ -525,9 +507,6 @@ public class KeysApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());

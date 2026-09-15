@@ -131,16 +131,15 @@ class IngestApi
      * Ingest one or many media items
      *
      * @param  \LowdownLabs\Fever\Model\IngestRequest $ingest_request ingest_request (required)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['ingestMedia'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\IngestResult|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function ingestMedia($ingest_request, $authorization = null, string $contentType = self::contentTypes['ingestMedia'][0])
+    public function ingestMedia($ingest_request, string $contentType = self::contentTypes['ingestMedia'][0])
     {
-        list($response) = $this->ingestMediaWithHttpInfo($ingest_request, $authorization, $contentType);
+        list($response) = $this->ingestMediaWithHttpInfo($ingest_request, $contentType);
         return $response;
     }
 
@@ -150,16 +149,15 @@ class IngestApi
      * Ingest one or many media items
      *
      * @param  \LowdownLabs\Fever\Model\IngestRequest $ingest_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['ingestMedia'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\IngestResult|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function ingestMediaWithHttpInfo($ingest_request, $authorization = null, string $contentType = self::contentTypes['ingestMedia'][0])
+    public function ingestMediaWithHttpInfo($ingest_request, string $contentType = self::contentTypes['ingestMedia'][0])
     {
-        $request = $this->ingestMediaRequest($ingest_request, $authorization, $contentType);
+        $request = $this->ingestMediaRequest($ingest_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -250,15 +248,14 @@ class IngestApi
      * Ingest one or many media items
      *
      * @param  \LowdownLabs\Fever\Model\IngestRequest $ingest_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['ingestMedia'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ingestMediaAsync($ingest_request, $authorization = null, string $contentType = self::contentTypes['ingestMedia'][0])
+    public function ingestMediaAsync($ingest_request, string $contentType = self::contentTypes['ingestMedia'][0])
     {
-        return $this->ingestMediaAsyncWithHttpInfo($ingest_request, $authorization, $contentType)
+        return $this->ingestMediaAsyncWithHttpInfo($ingest_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -272,16 +269,15 @@ class IngestApi
      * Ingest one or many media items
      *
      * @param  \LowdownLabs\Fever\Model\IngestRequest $ingest_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['ingestMedia'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function ingestMediaAsyncWithHttpInfo($ingest_request, $authorization = null, string $contentType = self::contentTypes['ingestMedia'][0])
+    public function ingestMediaAsyncWithHttpInfo($ingest_request, string $contentType = self::contentTypes['ingestMedia'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\IngestResult';
-        $request = $this->ingestMediaRequest($ingest_request, $authorization, $contentType);
+        $request = $this->ingestMediaRequest($ingest_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -323,13 +319,12 @@ class IngestApi
      * Create request for operation 'ingestMedia'
      *
      * @param  \LowdownLabs\Fever\Model\IngestRequest $ingest_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['ingestMedia'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function ingestMediaRequest($ingest_request, $authorization = null, string $contentType = self::contentTypes['ingestMedia'][0])
+    public function ingestMediaRequest($ingest_request, string $contentType = self::contentTypes['ingestMedia'][0])
     {
 
         // verify the required parameter 'ingest_request' is set
@@ -340,7 +335,6 @@ class IngestApi
         }
 
 
-
         $resourcePath = '/v1/media';
         $formParams = [];
         $queryParams = [];
@@ -349,10 +343,6 @@ class IngestApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -402,6 +392,10 @@ class IngestApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## CorpusStats
 
-> CorpusStats CorpusStats(ctx).CustomerId(customerId).Authorization(authorization).Execute()
+> CorpusStats CorpusStats(ctx).CustomerId(customerId).Execute()
 
 Corpus composition: per-kind counts and top autotags
 
@@ -28,11 +28,10 @@ import (
 
 func main() {
 	customerId := "customerId_example" // string |  (optional)
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CorpusAPI.CorpusStats(context.Background()).CustomerId(customerId).Authorization(authorization).Execute()
+	resp, r, err := apiClient.CorpusAPI.CorpusStats(context.Background()).CustomerId(customerId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CorpusAPI.CorpusStats``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -54,7 +53,6 @@ Other parameters are passed through a pointer to a apiCorpusStatsRequest struct 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customerId** | **string** |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -62,7 +60,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

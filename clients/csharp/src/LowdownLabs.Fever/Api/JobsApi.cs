@@ -32,9 +32,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Job</returns>
-        Job CancelJob(int jobId, string? authorization = default);
+        Job CancelJob(int jobId);
 
         /// <summary>
         /// Cancel a pending or running ingest job
@@ -44,17 +43,15 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Job</returns>
-        ApiResponse<Job> CancelJobWithHttpInfo(int jobId, string? authorization = default);
+        ApiResponse<Job> CancelJobWithHttpInfo(int jobId);
         /// <summary>
         /// Get ingest job progress
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Job</returns>
-        Job GetJob(int jobId, string? authorization = default);
+        Job GetJob(int jobId);
 
         /// <summary>
         /// Get ingest job progress
@@ -64,9 +61,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Job</returns>
-        ApiResponse<Job> GetJobWithHttpInfo(int jobId, string? authorization = default);
+        ApiResponse<Job> GetJobWithHttpInfo(int jobId);
         #endregion Synchronous Operations
     }
 
@@ -84,10 +80,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Job</returns>
-        System.Threading.Tasks.Task<Job> CancelJobAsync(int jobId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<Job> CancelJobAsync(int jobId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Cancel a pending or running ingest job
@@ -97,10 +92,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Job)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Job>> CancelJobWithHttpInfoAsync(int jobId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<Job>> CancelJobWithHttpInfoAsync(int jobId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Get ingest job progress
         /// </summary>
@@ -109,10 +103,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Job</returns>
-        System.Threading.Tasks.Task<Job> GetJobAsync(int jobId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<Job> GetJobAsync(int jobId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get ingest job progress
@@ -122,10 +115,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Job)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Job>> GetJobWithHttpInfoAsync(int jobId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<Job>> GetJobWithHttpInfoAsync(int jobId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -344,11 +336,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Job</returns>
-        public Job CancelJob(int jobId, string? authorization = default)
+        public Job CancelJob(int jobId)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Job> localVarResponse = CancelJobWithHttpInfo(jobId, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<Job> localVarResponse = CancelJobWithHttpInfo(jobId);
             return localVarResponse.Data;
         }
 
@@ -357,9 +348,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Job</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<Job> CancelJobWithHttpInfo(int jobId, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<Job> CancelJobWithHttpInfo(int jobId)
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -378,11 +368,13 @@ namespace LowdownLabs.Fever.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("job_id", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(jobId)); // path parameter
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Job>("/v1/jobs/{job_id}/cancel", localVarRequestOptions, this.Configuration);
@@ -401,12 +393,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Job</returns>
-        public async System.Threading.Tasks.Task<Job> CancelJobAsync(int jobId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<Job> CancelJobAsync(int jobId, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Job> localVarResponse = await CancelJobWithHttpInfoAsync(jobId, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<Job> localVarResponse = await CancelJobWithHttpInfoAsync(jobId, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -415,10 +406,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Job)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Job>> CancelJobWithHttpInfoAsync(int jobId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Job>> CancelJobWithHttpInfoAsync(int jobId, System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -439,11 +429,13 @@ namespace LowdownLabs.Fever.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("job_id", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(jobId)); // path parameter
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 
@@ -463,11 +455,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Job</returns>
-        public Job GetJob(int jobId, string? authorization = default)
+        public Job GetJob(int jobId)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Job> localVarResponse = GetJobWithHttpInfo(jobId, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<Job> localVarResponse = GetJobWithHttpInfo(jobId);
             return localVarResponse.Data;
         }
 
@@ -476,9 +467,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Job</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<Job> GetJobWithHttpInfo(int jobId, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<Job> GetJobWithHttpInfo(int jobId)
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -497,11 +487,13 @@ namespace LowdownLabs.Fever.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("job_id", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(jobId)); // path parameter
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<Job>("/v1/jobs/{job_id}", localVarRequestOptions, this.Configuration);
@@ -520,12 +512,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Job</returns>
-        public async System.Threading.Tasks.Task<Job> GetJobAsync(int jobId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<Job> GetJobAsync(int jobId, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Job> localVarResponse = await GetJobWithHttpInfoAsync(jobId, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<Job> localVarResponse = await GetJobWithHttpInfoAsync(jobId, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -534,10 +525,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="jobId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Job)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Job>> GetJobWithHttpInfoAsync(int jobId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Job>> GetJobWithHttpInfoAsync(int jobId, System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -558,11 +548,13 @@ namespace LowdownLabs.Fever.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("job_id", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(jobId)); // path parameter
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 

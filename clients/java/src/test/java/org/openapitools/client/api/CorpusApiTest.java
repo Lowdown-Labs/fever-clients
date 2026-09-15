@@ -46,9 +46,8 @@ public class CorpusApiTest {
     @Test
     public void corpusStatsTest() throws ApiException {
         String customerId = null;
-        String authorization = null;
         CorpusStats response = 
-        api.corpusStats(customerId, authorization);
+        api.corpusStats(customerId);
         
         // TODO: test validations
     }

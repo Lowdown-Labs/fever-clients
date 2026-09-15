@@ -15,8 +15,6 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
-from typing import Optional
 from fever_client.models.ingest_request import IngestRequest
 from fever_client.models.ingest_result import IngestResult
 
@@ -42,7 +40,6 @@ class IngestApi:
     async def ingest_media(
         self,
         ingest_request: IngestRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -62,8 +59,6 @@ class IngestApi:
 
         :param ingest_request: (required)
         :type ingest_request: IngestRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -88,7 +83,6 @@ class IngestApi:
 
         _param = self._ingest_media_serialize(
             ingest_request=ingest_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -114,7 +108,6 @@ class IngestApi:
     async def ingest_media_with_http_info(
         self,
         ingest_request: IngestRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -134,8 +127,6 @@ class IngestApi:
 
         :param ingest_request: (required)
         :type ingest_request: IngestRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -160,7 +151,6 @@ class IngestApi:
 
         _param = self._ingest_media_serialize(
             ingest_request=ingest_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -186,7 +176,6 @@ class IngestApi:
     async def ingest_media_without_preload_content(
         self,
         ingest_request: IngestRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -206,8 +195,6 @@ class IngestApi:
 
         :param ingest_request: (required)
         :type ingest_request: IngestRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -232,7 +219,6 @@ class IngestApi:
 
         _param = self._ingest_media_serialize(
             ingest_request=ingest_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -253,7 +239,6 @@ class IngestApi:
     def _ingest_media_serialize(
         self,
         ingest_request,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -277,8 +262,6 @@ class IngestApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
         if ingest_request is not None:
@@ -309,6 +292,7 @@ class IngestApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(

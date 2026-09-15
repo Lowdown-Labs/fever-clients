@@ -27,9 +27,8 @@ pub enum ReassignCustomersBulkError {
 
 
 /// Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\"s3_uri\": \"s3://bucket/key\", \"format\"?: \"csv|jsonl|parquet\"}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
-pub async fn reassign_customers_bulk(configuration: &configuration::Configuration, authorization: Option<&str>, file: Option<std::path::PathBuf>) -> Result<serde_json::Value, Error<ReassignCustomersBulkError>> {
+pub async fn reassign_customers_bulk(configuration: &configuration::Configuration, file: Option<std::path::PathBuf>) -> Result<serde_json::Value, Error<ReassignCustomersBulkError>> {
     // add a prefix to parameters to efficiently prevent name collisions
-    let p_header_authorization = authorization;
     let p_form_file = file;
 
     let uri_str = format!("{}/v1/customers/reassign-bulk", configuration.base_path);
@@ -38,9 +37,9 @@ pub async fn reassign_customers_bulk(configuration: &configuration::Configuratio
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_header_authorization {
-        req_builder = req_builder.header("authorization", param_value.to_string());
-    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
     let mut multipart_form = reqwest::multipart::Form::new();
     if let Some(ref param_value) = p_form_file {
                 let file = TokioFile::open(param_value).await?;

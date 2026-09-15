@@ -173,25 +173,23 @@ public class JobsApi {
    * Cancel a pending or running ingest job
    * 
    * @param jobId  (required)
-   * @param authorization  (optional)
    * @return Job
    * @throws ApiException if fails to make API call
    */
-  public Job cancelJob(@javax.annotation.Nonnull Integer jobId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return cancelJob(jobId, authorization, null);
+  public Job cancelJob(@javax.annotation.Nonnull Integer jobId) throws ApiException {
+    return cancelJob(jobId, null);
   }
 
   /**
    * Cancel a pending or running ingest job
    * 
    * @param jobId  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return Job
    * @throws ApiException if fails to make API call
    */
-  public Job cancelJob(@javax.annotation.Nonnull Integer jobId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<Job> localVarResponse = cancelJobWithHttpInfo(jobId, authorization, headers);
+  public Job cancelJob(@javax.annotation.Nonnull Integer jobId, Map<String, String> headers) throws ApiException {
+    ApiResponse<Job> localVarResponse = cancelJobWithHttpInfo(jobId, headers);
     return localVarResponse.getData();
   }
 
@@ -199,25 +197,23 @@ public class JobsApi {
    * Cancel a pending or running ingest job
    * 
    * @param jobId  (required)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;Job&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Job> cancelJobWithHttpInfo(@javax.annotation.Nonnull Integer jobId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return cancelJobWithHttpInfo(jobId, authorization, null);
+  public ApiResponse<Job> cancelJobWithHttpInfo(@javax.annotation.Nonnull Integer jobId) throws ApiException {
+    return cancelJobWithHttpInfo(jobId, null);
   }
 
   /**
    * Cancel a pending or running ingest job
    * 
    * @param jobId  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;Job&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Job> cancelJobWithHttpInfo(@javax.annotation.Nonnull Integer jobId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = cancelJobRequestBuilder(jobId, authorization, headers);
+  public ApiResponse<Job> cancelJobWithHttpInfo(@javax.annotation.Nonnull Integer jobId, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = cancelJobRequestBuilder(jobId, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -264,7 +260,7 @@ public class JobsApi {
     }
   }
 
-  private HttpRequest.Builder cancelJobRequestBuilder(@javax.annotation.Nonnull Integer jobId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder cancelJobRequestBuilder(@javax.annotation.Nonnull Integer jobId, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'jobId' is set
     if (jobId == null) {
       throw new ApiException(400, "Missing the required parameter 'jobId' when calling cancelJob");
@@ -277,9 +273,6 @@ public class JobsApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
@@ -298,25 +291,23 @@ public class JobsApi {
    * Get ingest job progress
    * 
    * @param jobId  (required)
-   * @param authorization  (optional)
    * @return Job
    * @throws ApiException if fails to make API call
    */
-  public Job getJob(@javax.annotation.Nonnull Integer jobId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return getJob(jobId, authorization, null);
+  public Job getJob(@javax.annotation.Nonnull Integer jobId) throws ApiException {
+    return getJob(jobId, null);
   }
 
   /**
    * Get ingest job progress
    * 
    * @param jobId  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return Job
    * @throws ApiException if fails to make API call
    */
-  public Job getJob(@javax.annotation.Nonnull Integer jobId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<Job> localVarResponse = getJobWithHttpInfo(jobId, authorization, headers);
+  public Job getJob(@javax.annotation.Nonnull Integer jobId, Map<String, String> headers) throws ApiException {
+    ApiResponse<Job> localVarResponse = getJobWithHttpInfo(jobId, headers);
     return localVarResponse.getData();
   }
 
@@ -324,25 +315,23 @@ public class JobsApi {
    * Get ingest job progress
    * 
    * @param jobId  (required)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;Job&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Job> getJobWithHttpInfo(@javax.annotation.Nonnull Integer jobId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return getJobWithHttpInfo(jobId, authorization, null);
+  public ApiResponse<Job> getJobWithHttpInfo(@javax.annotation.Nonnull Integer jobId) throws ApiException {
+    return getJobWithHttpInfo(jobId, null);
   }
 
   /**
    * Get ingest job progress
    * 
    * @param jobId  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;Job&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Job> getJobWithHttpInfo(@javax.annotation.Nonnull Integer jobId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = getJobRequestBuilder(jobId, authorization, headers);
+  public ApiResponse<Job> getJobWithHttpInfo(@javax.annotation.Nonnull Integer jobId, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = getJobRequestBuilder(jobId, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -389,7 +378,7 @@ public class JobsApi {
     }
   }
 
-  private HttpRequest.Builder getJobRequestBuilder(@javax.annotation.Nonnull Integer jobId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder getJobRequestBuilder(@javax.annotation.Nonnull Integer jobId, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'jobId' is set
     if (jobId == null) {
       throw new ApiException(400, "Missing the required parameter 'jobId' when calling getJob");
@@ -402,9 +391,6 @@ public class JobsApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());

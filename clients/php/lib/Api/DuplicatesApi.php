@@ -134,16 +134,15 @@ class DuplicatesApi
      * Find near-duplicate media clusters for a customer
      *
      * @param  \LowdownLabs\Fever\Model\DuplicatesRequest $duplicates_request duplicates_request (required)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['findDuplicates'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\DuplicatesResponse|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function findDuplicates($duplicates_request, $authorization = null, string $contentType = self::contentTypes['findDuplicates'][0])
+    public function findDuplicates($duplicates_request, string $contentType = self::contentTypes['findDuplicates'][0])
     {
-        list($response) = $this->findDuplicatesWithHttpInfo($duplicates_request, $authorization, $contentType);
+        list($response) = $this->findDuplicatesWithHttpInfo($duplicates_request, $contentType);
         return $response;
     }
 
@@ -153,16 +152,15 @@ class DuplicatesApi
      * Find near-duplicate media clusters for a customer
      *
      * @param  \LowdownLabs\Fever\Model\DuplicatesRequest $duplicates_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['findDuplicates'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\DuplicatesResponse|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function findDuplicatesWithHttpInfo($duplicates_request, $authorization = null, string $contentType = self::contentTypes['findDuplicates'][0])
+    public function findDuplicatesWithHttpInfo($duplicates_request, string $contentType = self::contentTypes['findDuplicates'][0])
     {
-        $request = $this->findDuplicatesRequest($duplicates_request, $authorization, $contentType);
+        $request = $this->findDuplicatesRequest($duplicates_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -253,15 +251,14 @@ class DuplicatesApi
      * Find near-duplicate media clusters for a customer
      *
      * @param  \LowdownLabs\Fever\Model\DuplicatesRequest $duplicates_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['findDuplicates'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function findDuplicatesAsync($duplicates_request, $authorization = null, string $contentType = self::contentTypes['findDuplicates'][0])
+    public function findDuplicatesAsync($duplicates_request, string $contentType = self::contentTypes['findDuplicates'][0])
     {
-        return $this->findDuplicatesAsyncWithHttpInfo($duplicates_request, $authorization, $contentType)
+        return $this->findDuplicatesAsyncWithHttpInfo($duplicates_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -275,16 +272,15 @@ class DuplicatesApi
      * Find near-duplicate media clusters for a customer
      *
      * @param  \LowdownLabs\Fever\Model\DuplicatesRequest $duplicates_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['findDuplicates'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function findDuplicatesAsyncWithHttpInfo($duplicates_request, $authorization = null, string $contentType = self::contentTypes['findDuplicates'][0])
+    public function findDuplicatesAsyncWithHttpInfo($duplicates_request, string $contentType = self::contentTypes['findDuplicates'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\DuplicatesResponse';
-        $request = $this->findDuplicatesRequest($duplicates_request, $authorization, $contentType);
+        $request = $this->findDuplicatesRequest($duplicates_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -326,13 +322,12 @@ class DuplicatesApi
      * Create request for operation 'findDuplicates'
      *
      * @param  \LowdownLabs\Fever\Model\DuplicatesRequest $duplicates_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['findDuplicates'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function findDuplicatesRequest($duplicates_request, $authorization = null, string $contentType = self::contentTypes['findDuplicates'][0])
+    public function findDuplicatesRequest($duplicates_request, string $contentType = self::contentTypes['findDuplicates'][0])
     {
 
         // verify the required parameter 'duplicates_request' is set
@@ -343,7 +338,6 @@ class DuplicatesApi
         }
 
 
-
         $resourcePath = '/v1/duplicates';
         $formParams = [];
         $queryParams = [];
@@ -352,10 +346,6 @@ class DuplicatesApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -405,6 +395,10 @@ class DuplicatesApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -433,16 +427,15 @@ class DuplicatesApi
      * Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
      *
      * @param  string|null $customer_id customer_id (optional)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['suggestedDedupThreshold'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return mixed|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function suggestedDedupThreshold($customer_id = null, $authorization = null, string $contentType = self::contentTypes['suggestedDedupThreshold'][0])
+    public function suggestedDedupThreshold($customer_id = null, string $contentType = self::contentTypes['suggestedDedupThreshold'][0])
     {
-        list($response) = $this->suggestedDedupThresholdWithHttpInfo($customer_id, $authorization, $contentType);
+        list($response) = $this->suggestedDedupThresholdWithHttpInfo($customer_id, $contentType);
         return $response;
     }
 
@@ -452,16 +445,15 @@ class DuplicatesApi
      * Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
      *
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['suggestedDedupThreshold'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of mixed|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function suggestedDedupThresholdWithHttpInfo($customer_id = null, $authorization = null, string $contentType = self::contentTypes['suggestedDedupThreshold'][0])
+    public function suggestedDedupThresholdWithHttpInfo($customer_id = null, string $contentType = self::contentTypes['suggestedDedupThreshold'][0])
     {
-        $request = $this->suggestedDedupThresholdRequest($customer_id, $authorization, $contentType);
+        $request = $this->suggestedDedupThresholdRequest($customer_id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -552,15 +544,14 @@ class DuplicatesApi
      * Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
      *
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['suggestedDedupThreshold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function suggestedDedupThresholdAsync($customer_id = null, $authorization = null, string $contentType = self::contentTypes['suggestedDedupThreshold'][0])
+    public function suggestedDedupThresholdAsync($customer_id = null, string $contentType = self::contentTypes['suggestedDedupThreshold'][0])
     {
-        return $this->suggestedDedupThresholdAsyncWithHttpInfo($customer_id, $authorization, $contentType)
+        return $this->suggestedDedupThresholdAsyncWithHttpInfo($customer_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -574,16 +565,15 @@ class DuplicatesApi
      * Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
      *
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['suggestedDedupThreshold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function suggestedDedupThresholdAsyncWithHttpInfo($customer_id = null, $authorization = null, string $contentType = self::contentTypes['suggestedDedupThreshold'][0])
+    public function suggestedDedupThresholdAsyncWithHttpInfo($customer_id = null, string $contentType = self::contentTypes['suggestedDedupThreshold'][0])
     {
         $returnType = 'mixed';
-        $request = $this->suggestedDedupThresholdRequest($customer_id, $authorization, $contentType);
+        $request = $this->suggestedDedupThresholdRequest($customer_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -625,15 +615,13 @@ class DuplicatesApi
      * Create request for operation 'suggestedDedupThreshold'
      *
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['suggestedDedupThreshold'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function suggestedDedupThresholdRequest($customer_id = null, $authorization = null, string $contentType = self::contentTypes['suggestedDedupThreshold'][0])
+    public function suggestedDedupThresholdRequest($customer_id = null, string $contentType = self::contentTypes['suggestedDedupThreshold'][0])
     {
-
 
 
 
@@ -654,10 +642,6 @@ class DuplicatesApi
             false // required
         ) ?? []);
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -696,6 +680,10 @@ class DuplicatesApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

@@ -137,16 +137,15 @@ class KeysApi
      * Mint an API key for this appliance
      *
      * @param  \LowdownLabs\Fever\Model\CreateKeyRequest $create_key_request create_key_request (required)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createKey'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\KeyReveal|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function createKey($create_key_request, $authorization = null, string $contentType = self::contentTypes['createKey'][0])
+    public function createKey($create_key_request, string $contentType = self::contentTypes['createKey'][0])
     {
-        list($response) = $this->createKeyWithHttpInfo($create_key_request, $authorization, $contentType);
+        list($response) = $this->createKeyWithHttpInfo($create_key_request, $contentType);
         return $response;
     }
 
@@ -156,16 +155,15 @@ class KeysApi
      * Mint an API key for this appliance
      *
      * @param  \LowdownLabs\Fever\Model\CreateKeyRequest $create_key_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createKey'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\KeyReveal|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function createKeyWithHttpInfo($create_key_request, $authorization = null, string $contentType = self::contentTypes['createKey'][0])
+    public function createKeyWithHttpInfo($create_key_request, string $contentType = self::contentTypes['createKey'][0])
     {
-        $request = $this->createKeyRequest($create_key_request, $authorization, $contentType);
+        $request = $this->createKeyRequest($create_key_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -256,15 +254,14 @@ class KeysApi
      * Mint an API key for this appliance
      *
      * @param  \LowdownLabs\Fever\Model\CreateKeyRequest $create_key_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createKey'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createKeyAsync($create_key_request, $authorization = null, string $contentType = self::contentTypes['createKey'][0])
+    public function createKeyAsync($create_key_request, string $contentType = self::contentTypes['createKey'][0])
     {
-        return $this->createKeyAsyncWithHttpInfo($create_key_request, $authorization, $contentType)
+        return $this->createKeyAsyncWithHttpInfo($create_key_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -278,16 +275,15 @@ class KeysApi
      * Mint an API key for this appliance
      *
      * @param  \LowdownLabs\Fever\Model\CreateKeyRequest $create_key_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createKey'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createKeyAsyncWithHttpInfo($create_key_request, $authorization = null, string $contentType = self::contentTypes['createKey'][0])
+    public function createKeyAsyncWithHttpInfo($create_key_request, string $contentType = self::contentTypes['createKey'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\KeyReveal';
-        $request = $this->createKeyRequest($create_key_request, $authorization, $contentType);
+        $request = $this->createKeyRequest($create_key_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -329,13 +325,12 @@ class KeysApi
      * Create request for operation 'createKey'
      *
      * @param  \LowdownLabs\Fever\Model\CreateKeyRequest $create_key_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createKey'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createKeyRequest($create_key_request, $authorization = null, string $contentType = self::contentTypes['createKey'][0])
+    public function createKeyRequest($create_key_request, string $contentType = self::contentTypes['createKey'][0])
     {
 
         // verify the required parameter 'create_key_request' is set
@@ -346,7 +341,6 @@ class KeysApi
         }
 
 
-
         $resourcePath = '/v1/keys';
         $formParams = [];
         $queryParams = [];
@@ -355,10 +349,6 @@ class KeysApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -408,6 +398,10 @@ class KeysApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -435,16 +429,15 @@ class KeysApi
      *
      * List this appliance&#39;s API keys
      *
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listKeys'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \LowdownLabs\Fever\Model\ApiKey[]|\LowdownLabs\Fever\Model\HTTPValidationError
+     * @return \LowdownLabs\Fever\Model\ApiKey[]
      */
-    public function listKeys($authorization = null, string $contentType = self::contentTypes['listKeys'][0])
+    public function listKeys(string $contentType = self::contentTypes['listKeys'][0])
     {
-        list($response) = $this->listKeysWithHttpInfo($authorization, $contentType);
+        list($response) = $this->listKeysWithHttpInfo($contentType);
         return $response;
     }
 
@@ -453,16 +446,15 @@ class KeysApi
      *
      * List this appliance&#39;s API keys
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listKeys'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \LowdownLabs\Fever\Model\ApiKey[]|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \LowdownLabs\Fever\Model\ApiKey[], HTTP status code, HTTP response headers (array of strings)
      */
-    public function listKeysWithHttpInfo($authorization = null, string $contentType = self::contentTypes['listKeys'][0])
+    public function listKeysWithHttpInfo(string $contentType = self::contentTypes['listKeys'][0])
     {
-        $request = $this->listKeysRequest($authorization, $contentType);
+        $request = $this->listKeysRequest($contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -491,12 +483,6 @@ class KeysApi
                 case 200:
                     return $this->handleResponseWithDataType(
                         '\LowdownLabs\Fever\Model\ApiKey[]',
-                        $request,
-                        $response,
-                    );
-                case 422:
-                    return $this->handleResponseWithDataType(
-                        '\LowdownLabs\Fever\Model\HTTPValidationError',
                         $request,
                         $response,
                     );
@@ -532,14 +518,6 @@ class KeysApi
                     );
                     $e->setResponseObject($data);
                     throw $e;
-                case 422:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\LowdownLabs\Fever\Model\HTTPValidationError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
             }
         
 
@@ -552,15 +530,14 @@ class KeysApi
      *
      * List this appliance&#39;s API keys
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listKeys'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listKeysAsync($authorization = null, string $contentType = self::contentTypes['listKeys'][0])
+    public function listKeysAsync(string $contentType = self::contentTypes['listKeys'][0])
     {
-        return $this->listKeysAsyncWithHttpInfo($authorization, $contentType)
+        return $this->listKeysAsyncWithHttpInfo($contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -573,16 +550,15 @@ class KeysApi
      *
      * List this appliance&#39;s API keys
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listKeys'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listKeysAsyncWithHttpInfo($authorization = null, string $contentType = self::contentTypes['listKeys'][0])
+    public function listKeysAsyncWithHttpInfo(string $contentType = self::contentTypes['listKeys'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\ApiKey[]';
-        $request = $this->listKeysRequest($authorization, $contentType);
+        $request = $this->listKeysRequest($contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -623,15 +599,13 @@ class KeysApi
     /**
      * Create request for operation 'listKeys'
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listKeys'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listKeysRequest($authorization = null, string $contentType = self::contentTypes['listKeys'][0])
+    public function listKeysRequest(string $contentType = self::contentTypes['listKeys'][0])
     {
-
 
 
         $resourcePath = '/v1/keys';
@@ -642,10 +616,6 @@ class KeysApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -684,6 +654,10 @@ class KeysApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -712,16 +686,15 @@ class KeysApi
      * Revoke an API key
      *
      * @param  int $key_id key_id (required)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeKey'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return mixed|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function revokeKey($key_id, $authorization = null, string $contentType = self::contentTypes['revokeKey'][0])
+    public function revokeKey($key_id, string $contentType = self::contentTypes['revokeKey'][0])
     {
-        list($response) = $this->revokeKeyWithHttpInfo($key_id, $authorization, $contentType);
+        list($response) = $this->revokeKeyWithHttpInfo($key_id, $contentType);
         return $response;
     }
 
@@ -731,16 +704,15 @@ class KeysApi
      * Revoke an API key
      *
      * @param  int $key_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeKey'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of mixed|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function revokeKeyWithHttpInfo($key_id, $authorization = null, string $contentType = self::contentTypes['revokeKey'][0])
+    public function revokeKeyWithHttpInfo($key_id, string $contentType = self::contentTypes['revokeKey'][0])
     {
-        $request = $this->revokeKeyRequest($key_id, $authorization, $contentType);
+        $request = $this->revokeKeyRequest($key_id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -831,15 +803,14 @@ class KeysApi
      * Revoke an API key
      *
      * @param  int $key_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeKey'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function revokeKeyAsync($key_id, $authorization = null, string $contentType = self::contentTypes['revokeKey'][0])
+    public function revokeKeyAsync($key_id, string $contentType = self::contentTypes['revokeKey'][0])
     {
-        return $this->revokeKeyAsyncWithHttpInfo($key_id, $authorization, $contentType)
+        return $this->revokeKeyAsyncWithHttpInfo($key_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -853,16 +824,15 @@ class KeysApi
      * Revoke an API key
      *
      * @param  int $key_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeKey'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function revokeKeyAsyncWithHttpInfo($key_id, $authorization = null, string $contentType = self::contentTypes['revokeKey'][0])
+    public function revokeKeyAsyncWithHttpInfo($key_id, string $contentType = self::contentTypes['revokeKey'][0])
     {
         $returnType = 'mixed';
-        $request = $this->revokeKeyRequest($key_id, $authorization, $contentType);
+        $request = $this->revokeKeyRequest($key_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -904,13 +874,12 @@ class KeysApi
      * Create request for operation 'revokeKey'
      *
      * @param  int $key_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['revokeKey'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function revokeKeyRequest($key_id, $authorization = null, string $contentType = self::contentTypes['revokeKey'][0])
+    public function revokeKeyRequest($key_id, string $contentType = self::contentTypes['revokeKey'][0])
     {
 
         // verify the required parameter 'key_id' is set
@@ -921,7 +890,6 @@ class KeysApi
         }
 
 
-
         $resourcePath = '/v1/keys/{key_id}/revoke';
         $formParams = [];
         $queryParams = [];
@@ -930,10 +898,6 @@ class KeysApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
         // path params
         if ($key_id !== null) {
@@ -980,6 +944,10 @@ class KeysApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

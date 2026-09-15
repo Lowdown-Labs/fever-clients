@@ -51,9 +51,8 @@ public class MediaApiTest {
         Integer blobId = null;
         Integer maxDim = null;
         Integer waveform = null;
-        String authorization = null;
         Object response = 
-        api.getMediaBytes(blobId, maxDim, waveform, authorization);
+        api.getMediaBytes(blobId, maxDim, waveform);
         
         // TODO: test validations
     }
@@ -70,9 +69,8 @@ public class MediaApiTest {
     public void getMediaInfoTest() throws ApiException {
         Integer blobId = null;
         String customerId = null;
-        String authorization = null;
         MediaInfo response = 
-        api.getMediaInfo(blobId, customerId, authorization);
+        api.getMediaInfo(blobId, customerId);
         
         // TODO: test validations
     }
@@ -87,9 +85,8 @@ public class MediaApiTest {
      */
     @Test
     public void listMediaFormatsTest() throws ApiException {
-        String authorization = null;
         MediaFormats response = 
-        api.listMediaFormats(authorization);
+        api.listMediaFormats();
         
         // TODO: test validations
     }
@@ -106,9 +103,8 @@ public class MediaApiTest {
     public void listMediaFramesTest() throws ApiException {
         Integer blobId = null;
         String customerId = null;
-        String authorization = null;
         List<MediaFrame> response = 
-        api.listMediaFrames(blobId, customerId, authorization);
+        api.listMediaFrames(blobId, customerId);
         
         // TODO: test validations
     }
@@ -125,9 +121,8 @@ public class MediaApiTest {
     public void listMediaTranscriptTest() throws ApiException {
         Integer blobId = null;
         String customerId = null;
-        String authorization = null;
         List<TranscriptSegment> response = 
-        api.listMediaTranscript(blobId, customerId, authorization);
+        api.listMediaTranscript(blobId, customerId);
         
         // TODO: test validations
     }

@@ -42,7 +42,6 @@ class DuplicatesApi:
     async def find_duplicates(
         self,
         duplicates_request: DuplicatesRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -62,8 +61,6 @@ class DuplicatesApi:
 
         :param duplicates_request: (required)
         :type duplicates_request: DuplicatesRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -88,7 +85,6 @@ class DuplicatesApi:
 
         _param = self._find_duplicates_serialize(
             duplicates_request=duplicates_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -114,7 +110,6 @@ class DuplicatesApi:
     async def find_duplicates_with_http_info(
         self,
         duplicates_request: DuplicatesRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -134,8 +129,6 @@ class DuplicatesApi:
 
         :param duplicates_request: (required)
         :type duplicates_request: DuplicatesRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -160,7 +153,6 @@ class DuplicatesApi:
 
         _param = self._find_duplicates_serialize(
             duplicates_request=duplicates_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -186,7 +178,6 @@ class DuplicatesApi:
     async def find_duplicates_without_preload_content(
         self,
         duplicates_request: DuplicatesRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -206,8 +197,6 @@ class DuplicatesApi:
 
         :param duplicates_request: (required)
         :type duplicates_request: DuplicatesRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -232,7 +221,6 @@ class DuplicatesApi:
 
         _param = self._find_duplicates_serialize(
             duplicates_request=duplicates_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -253,7 +241,6 @@ class DuplicatesApi:
     def _find_duplicates_serialize(
         self,
         duplicates_request,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -277,8 +264,6 @@ class DuplicatesApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
         if duplicates_request is not None:
@@ -309,6 +294,7 @@ class DuplicatesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(
@@ -333,7 +319,6 @@ class DuplicatesApi:
     async def suggested_dedup_threshold(
         self,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -352,8 +337,6 @@ class DuplicatesApi:
 
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -378,7 +361,6 @@ class DuplicatesApi:
 
         _param = self._suggested_dedup_threshold_serialize(
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -404,7 +386,6 @@ class DuplicatesApi:
     async def suggested_dedup_threshold_with_http_info(
         self,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -423,8 +404,6 @@ class DuplicatesApi:
 
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -449,7 +428,6 @@ class DuplicatesApi:
 
         _param = self._suggested_dedup_threshold_serialize(
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -475,7 +453,6 @@ class DuplicatesApi:
     async def suggested_dedup_threshold_without_preload_content(
         self,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -494,8 +471,6 @@ class DuplicatesApi:
 
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -520,7 +495,6 @@ class DuplicatesApi:
 
         _param = self._suggested_dedup_threshold_serialize(
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -541,7 +515,6 @@ class DuplicatesApi:
     def _suggested_dedup_threshold_serialize(
         self,
         customer_id,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -569,8 +542,6 @@ class DuplicatesApi:
             _query_params.append(('customer_id', customer_id))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -586,6 +557,7 @@ class DuplicatesApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(

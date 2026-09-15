@@ -15,8 +15,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr
-from typing import Optional
+from pydantic import StrictInt
 from fever_client.models.job import Job
 
 from fever_client.api_client import ApiClient, RequestSerialized
@@ -41,7 +40,6 @@ class JobsApi:
     async def cancel_job(
         self,
         job_id: StrictInt,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -60,8 +58,6 @@ class JobsApi:
 
         :param job_id: (required)
         :type job_id: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -86,7 +82,6 @@ class JobsApi:
 
         _param = self._cancel_job_serialize(
             job_id=job_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -112,7 +107,6 @@ class JobsApi:
     async def cancel_job_with_http_info(
         self,
         job_id: StrictInt,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -131,8 +125,6 @@ class JobsApi:
 
         :param job_id: (required)
         :type job_id: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -157,7 +149,6 @@ class JobsApi:
 
         _param = self._cancel_job_serialize(
             job_id=job_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -183,7 +174,6 @@ class JobsApi:
     async def cancel_job_without_preload_content(
         self,
         job_id: StrictInt,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -202,8 +192,6 @@ class JobsApi:
 
         :param job_id: (required)
         :type job_id: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -228,7 +216,6 @@ class JobsApi:
 
         _param = self._cancel_job_serialize(
             job_id=job_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -249,7 +236,6 @@ class JobsApi:
     def _cancel_job_serialize(
         self,
         job_id,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -275,8 +261,6 @@ class JobsApi:
             _path_params['job_id'] = job_id
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -292,6 +276,7 @@ class JobsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(
@@ -316,7 +301,6 @@ class JobsApi:
     async def get_job(
         self,
         job_id: StrictInt,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -335,8 +319,6 @@ class JobsApi:
 
         :param job_id: (required)
         :type job_id: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -361,7 +343,6 @@ class JobsApi:
 
         _param = self._get_job_serialize(
             job_id=job_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -387,7 +368,6 @@ class JobsApi:
     async def get_job_with_http_info(
         self,
         job_id: StrictInt,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -406,8 +386,6 @@ class JobsApi:
 
         :param job_id: (required)
         :type job_id: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -432,7 +410,6 @@ class JobsApi:
 
         _param = self._get_job_serialize(
             job_id=job_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -458,7 +435,6 @@ class JobsApi:
     async def get_job_without_preload_content(
         self,
         job_id: StrictInt,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -477,8 +453,6 @@ class JobsApi:
 
         :param job_id: (required)
         :type job_id: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -503,7 +477,6 @@ class JobsApi:
 
         _param = self._get_job_serialize(
             job_id=job_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -524,7 +497,6 @@ class JobsApi:
     def _get_job_serialize(
         self,
         job_id,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -550,8 +522,6 @@ class JobsApi:
             _path_params['job_id'] = job_id
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -567,6 +537,7 @@ class JobsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(

@@ -61,8 +61,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //ExportRequest exportRequest = null;
-            //string? authorization = null;
-            //var response = instance.ExportTenant(exportRequest, authorization);
+            //var response = instance.ExportTenant(exportRequest);
             //Assert.IsType<ExportResult>(response);
         }
 
@@ -74,8 +73,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //ImportRequest importRequest = null;
-            //string? authorization = null;
-            //var response = instance.ImportTenant(importRequest, authorization);
+            //var response = instance.ImportTenant(importRequest);
             //Assert.IsType<ImportResult>(response);
         }
     }

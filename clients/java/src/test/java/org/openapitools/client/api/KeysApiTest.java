@@ -48,9 +48,8 @@ public class KeysApiTest {
     @Test
     public void createKeyTest() throws ApiException {
         CreateKeyRequest createKeyRequest = null;
-        String authorization = null;
         KeyReveal response = 
-        api.createKey(createKeyRequest, authorization);
+        api.createKey(createKeyRequest);
         
         // TODO: test validations
     }
@@ -65,9 +64,8 @@ public class KeysApiTest {
      */
     @Test
     public void listKeysTest() throws ApiException {
-        String authorization = null;
         List<ApiKey> response = 
-        api.listKeys(authorization);
+        api.listKeys();
         
         // TODO: test validations
     }
@@ -83,9 +81,8 @@ public class KeysApiTest {
     @Test
     public void revokeKeyTest() throws ApiException {
         Integer keyId = null;
-        String authorization = null;
         Object response = 
-        api.revokeKey(keyId, authorization);
+        api.revokeKey(keyId);
         
         // TODO: test validations
     }

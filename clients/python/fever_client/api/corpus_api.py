@@ -41,7 +41,6 @@ class CorpusApi:
     async def corpus_stats(
         self,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -60,8 +59,6 @@ class CorpusApi:
 
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -86,7 +83,6 @@ class CorpusApi:
 
         _param = self._corpus_stats_serialize(
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -112,7 +108,6 @@ class CorpusApi:
     async def corpus_stats_with_http_info(
         self,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -131,8 +126,6 @@ class CorpusApi:
 
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -157,7 +150,6 @@ class CorpusApi:
 
         _param = self._corpus_stats_serialize(
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -183,7 +175,6 @@ class CorpusApi:
     async def corpus_stats_without_preload_content(
         self,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -202,8 +193,6 @@ class CorpusApi:
 
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -228,7 +217,6 @@ class CorpusApi:
 
         _param = self._corpus_stats_serialize(
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -249,7 +237,6 @@ class CorpusApi:
     def _corpus_stats_serialize(
         self,
         customer_id,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -277,8 +264,6 @@ class CorpusApi:
             _query_params.append(('customer_id', customer_id))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -294,6 +279,7 @@ class CorpusApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(

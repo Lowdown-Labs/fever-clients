@@ -15,8 +15,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
-from typing import List, Optional
+from typing import List
 from fever_client.models.search_hit import SearchHit
 from fever_client.models.search_request import SearchRequest
 
@@ -42,7 +41,6 @@ class SearchApi:
     async def search(
         self,
         search_request: SearchRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -62,8 +60,6 @@ class SearchApi:
 
         :param search_request: (required)
         :type search_request: SearchRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -88,7 +84,6 @@ class SearchApi:
 
         _param = self._search_serialize(
             search_request=search_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -114,7 +109,6 @@ class SearchApi:
     async def search_with_http_info(
         self,
         search_request: SearchRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -134,8 +128,6 @@ class SearchApi:
 
         :param search_request: (required)
         :type search_request: SearchRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -160,7 +152,6 @@ class SearchApi:
 
         _param = self._search_serialize(
             search_request=search_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -186,7 +177,6 @@ class SearchApi:
     async def search_without_preload_content(
         self,
         search_request: SearchRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -206,8 +196,6 @@ class SearchApi:
 
         :param search_request: (required)
         :type search_request: SearchRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -232,7 +220,6 @@ class SearchApi:
 
         _param = self._search_serialize(
             search_request=search_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -253,7 +240,6 @@ class SearchApi:
     def _search_serialize(
         self,
         search_request,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -277,8 +263,6 @@ class SearchApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
         if search_request is not None:
@@ -309,6 +293,7 @@ class SearchApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(

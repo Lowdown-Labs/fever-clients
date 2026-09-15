@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **find_duplicates**
-> DuplicatesResponse find_duplicates(duplicates_request, authorization=authorization)
+> DuplicatesResponse find_duplicates(duplicates_request)
 
 Find near-duplicate media clusters for a customer
 
@@ -17,6 +17,7 @@ Find near-duplicate clusters. Scoped to one customer, this reads the edge set ma
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -31,17 +32,25 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.DuplicatesApi(api_client)
     duplicates_request = fever_client.DuplicatesRequest() # DuplicatesRequest | 
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Find near-duplicate media clusters for a customer
-        api_response = await api_instance.find_duplicates(duplicates_request, authorization=authorization)
+        api_response = await api_instance.find_duplicates(duplicates_request)
         print("The response of DuplicatesApi->find_duplicates:\n")
         pprint(api_response)
     except Exception as e:
@@ -56,7 +65,6 @@ async with fever_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **duplicates_request** | [**DuplicatesRequest**](DuplicatesRequest.md)|  | 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -64,7 +72,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -81,12 +89,13 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **suggested_dedup_threshold**
-> object suggested_dedup_threshold(customer_id=customer_id, authorization=authorization)
+> object suggested_dedup_threshold(customer_id=customer_id)
 
 Suggest a duplicate-detection threshold from this customer's edge cosine distribution
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -99,17 +108,25 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.DuplicatesApi(api_client)
     customer_id = 'customer_id_example' # str |  (optional)
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Suggest a duplicate-detection threshold from this customer's edge cosine distribution
-        api_response = await api_instance.suggested_dedup_threshold(customer_id=customer_id, authorization=authorization)
+        api_response = await api_instance.suggested_dedup_threshold(customer_id=customer_id)
         print("The response of DuplicatesApi->suggested_dedup_threshold:\n")
         pprint(api_response)
     except Exception as e:
@@ -124,7 +141,6 @@ async with fever_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**|  | [optional] 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -132,7 +148,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

@@ -14,7 +14,7 @@ All URIs are relative to *http://localhost*
 
 ## getMediaBytes
 
-> any getMediaBytes(blobId, maxDim, waveform, authorization)
+> any getMediaBytes(blobId, maxDim, waveform)
 
 Fetch an indexed media item\&#39;s bytes (images normalized to JPEG)
 
@@ -31,7 +31,11 @@ import type { GetMediaBytesRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new MediaApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new MediaApi(config);
 
   const body = {
     // number
@@ -40,8 +44,6 @@ async function example() {
     maxDim: 56,
     // number (optional)
     waveform: 56,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies GetMediaBytesRequest;
 
   try {
@@ -64,7 +66,6 @@ example().catch(console.error);
 | **blobId** | `number` |  | [Defaults to `undefined`] |
 | **maxDim** | `number` |  | [Optional] [Defaults to `1280`] |
 | **waveform** | `number` |  | [Optional] [Defaults to `0`] |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -72,7 +73,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -91,7 +92,7 @@ No authorization required
 
 ## getMediaInfo
 
-> MediaInfo getMediaInfo(blobId, customerId, authorization)
+> MediaInfo getMediaInfo(blobId, customerId)
 
 Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 
@@ -108,15 +109,17 @@ import type { GetMediaInfoRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new MediaApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new MediaApi(config);
 
   const body = {
     // number
     blobId: 56,
     // string (optional)
     customerId: customerId_example,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies GetMediaInfoRequest;
 
   try {
@@ -138,7 +141,6 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **blobId** | `number` |  | [Defaults to `undefined`] |
 | **customerId** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -146,7 +148,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -165,7 +167,7 @@ No authorization required
 
 ## listMediaFormats
 
-> MediaFormats listMediaFormats(authorization)
+> MediaFormats listMediaFormats()
 
 Ingest capability: supported extensions per media family
 
@@ -180,15 +182,14 @@ import type { ListMediaFormatsRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new MediaApi();
-
-  const body = {
-    // string (optional)
-    authorization: authorization_example,
-  } satisfies ListMediaFormatsRequest;
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new MediaApi(config);
 
   try {
-    const data = await api.listMediaFormats(body);
+    const data = await api.listMediaFormats();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -201,10 +202,7 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -212,7 +210,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -224,14 +222,13 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## listMediaFrames
 
-> Array&lt;MediaFrame&gt; listMediaFrames(blobId, customerId, authorization)
+> Array&lt;MediaFrame&gt; listMediaFrames(blobId, customerId)
 
 Sampled video frames for a parent blob
 
@@ -246,15 +243,17 @@ import type { ListMediaFramesRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new MediaApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new MediaApi(config);
 
   const body = {
     // number
     blobId: 56,
     // string (optional)
     customerId: customerId_example,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies ListMediaFramesRequest;
 
   try {
@@ -276,7 +275,6 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **blobId** | `number` |  | [Defaults to `undefined`] |
 | **customerId** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -284,7 +282,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -303,7 +301,7 @@ No authorization required
 
 ## listMediaTranscript
 
-> Array&lt;TranscriptSegment&gt; listMediaTranscript(blobId, customerId, authorization)
+> Array&lt;TranscriptSegment&gt; listMediaTranscript(blobId, customerId)
 
 Whisper transcript segments for a parent blob (audio or video)
 
@@ -318,15 +316,17 @@ import type { ListMediaTranscriptRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new MediaApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new MediaApi(config);
 
   const body = {
     // number
     blobId: 56,
     // string (optional)
     customerId: customerId_example,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies ListMediaTranscriptRequest;
 
   try {
@@ -348,7 +348,6 @@ example().catch(console.error);
 |------------- | ------------- | ------------- | -------------|
 | **blobId** | `number` |  | [Defaults to `undefined`] |
 | **customerId** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -356,7 +355,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

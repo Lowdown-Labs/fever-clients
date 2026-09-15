@@ -56,12 +56,6 @@ type ApiCancelJobRequest struct {
 	ctx context.Context
 	ApiService JobsAPI
 	jobId int32
-	authorization *string
-}
-
-func (r ApiCancelJobRequest) Authorization(authorization string) ApiCancelJobRequest {
-	r.authorization = &authorization
-	return r
 }
 
 func (r ApiCancelJobRequest) Execute() (*Job, *http.Response, error) {
@@ -122,9 +116,6 @@ func (a *JobsAPIService) CancelJobExecute(r ApiCancelJobRequest) (*Job, *http.Re
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -176,12 +167,6 @@ type ApiGetJobRequest struct {
 	ctx context.Context
 	ApiService JobsAPI
 	jobId int32
-	authorization *string
-}
-
-func (r ApiGetJobRequest) Authorization(authorization string) ApiGetJobRequest {
-	r.authorization = &authorization
-	return r
 }
 
 func (r ApiGetJobRequest) Execute() (*Job, *http.Response, error) {
@@ -241,9 +226,6 @@ func (a *JobsAPIService) GetJobExecute(r ApiGetJobRequest) (*Job, *http.Response
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

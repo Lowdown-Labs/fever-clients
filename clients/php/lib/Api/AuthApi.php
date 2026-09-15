@@ -130,16 +130,15 @@ class AuthApi
      *
      * Report the calling key&#39;s role and customer scope
      *
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['whoami'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return mixed|\LowdownLabs\Fever\Model\HTTPValidationError
+     * @return mixed
      */
-    public function whoami($authorization = null, string $contentType = self::contentTypes['whoami'][0])
+    public function whoami(string $contentType = self::contentTypes['whoami'][0])
     {
-        list($response) = $this->whoamiWithHttpInfo($authorization, $contentType);
+        list($response) = $this->whoamiWithHttpInfo($contentType);
         return $response;
     }
 
@@ -148,16 +147,15 @@ class AuthApi
      *
      * Report the calling key&#39;s role and customer scope
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['whoami'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of mixed|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
+     * @return array of mixed, HTTP status code, HTTP response headers (array of strings)
      */
-    public function whoamiWithHttpInfo($authorization = null, string $contentType = self::contentTypes['whoami'][0])
+    public function whoamiWithHttpInfo(string $contentType = self::contentTypes['whoami'][0])
     {
-        $request = $this->whoamiRequest($authorization, $contentType);
+        $request = $this->whoamiRequest($contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -186,12 +184,6 @@ class AuthApi
                 case 200:
                     return $this->handleResponseWithDataType(
                         'mixed',
-                        $request,
-                        $response,
-                    );
-                case 422:
-                    return $this->handleResponseWithDataType(
-                        '\LowdownLabs\Fever\Model\HTTPValidationError',
                         $request,
                         $response,
                     );
@@ -227,14 +219,6 @@ class AuthApi
                     );
                     $e->setResponseObject($data);
                     throw $e;
-                case 422:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\LowdownLabs\Fever\Model\HTTPValidationError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
             }
         
 
@@ -247,15 +231,14 @@ class AuthApi
      *
      * Report the calling key&#39;s role and customer scope
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['whoami'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function whoamiAsync($authorization = null, string $contentType = self::contentTypes['whoami'][0])
+    public function whoamiAsync(string $contentType = self::contentTypes['whoami'][0])
     {
-        return $this->whoamiAsyncWithHttpInfo($authorization, $contentType)
+        return $this->whoamiAsyncWithHttpInfo($contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -268,16 +251,15 @@ class AuthApi
      *
      * Report the calling key&#39;s role and customer scope
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['whoami'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function whoamiAsyncWithHttpInfo($authorization = null, string $contentType = self::contentTypes['whoami'][0])
+    public function whoamiAsyncWithHttpInfo(string $contentType = self::contentTypes['whoami'][0])
     {
         $returnType = 'mixed';
-        $request = $this->whoamiRequest($authorization, $contentType);
+        $request = $this->whoamiRequest($contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -318,15 +300,13 @@ class AuthApi
     /**
      * Create request for operation 'whoami'
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['whoami'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function whoamiRequest($authorization = null, string $contentType = self::contentTypes['whoami'][0])
+    public function whoamiRequest(string $contentType = self::contentTypes['whoami'][0])
     {
-
 
 
         $resourcePath = '/v1/whoami';
@@ -337,10 +317,6 @@ class AuthApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -379,6 +355,10 @@ class AuthApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

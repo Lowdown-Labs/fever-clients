@@ -43,13 +43,7 @@ type CustomersAPIService service
 type ApiReassignCustomersBulkRequest struct {
 	ctx context.Context
 	ApiService CustomersAPI
-	authorization *string
 	file *os.File
-}
-
-func (r ApiReassignCustomersBulkRequest) Authorization(authorization string) ApiReassignCustomersBulkRequest {
-	r.authorization = &authorization
-	return r
 }
 
 func (r ApiReassignCustomersBulkRequest) File(file *os.File) ApiReassignCustomersBulkRequest {
@@ -113,9 +107,6 @@ func (a *CustomersAPIService) ReassignCustomersBulkExecute(r ApiReassignCustomer
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
 	var fileLocalVarFormFileName string
 	var fileLocalVarFileName     string

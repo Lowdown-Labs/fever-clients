@@ -108,7 +108,6 @@ type ApiGetMediaBytesRequest struct {
 	blobId int32
 	maxDim *int32
 	waveform *int32
-	authorization *string
 }
 
 func (r ApiGetMediaBytesRequest) MaxDim(maxDim int32) ApiGetMediaBytesRequest {
@@ -118,11 +117,6 @@ func (r ApiGetMediaBytesRequest) MaxDim(maxDim int32) ApiGetMediaBytesRequest {
 
 func (r ApiGetMediaBytesRequest) Waveform(waveform int32) ApiGetMediaBytesRequest {
 	r.waveform = &waveform
-	return r
-}
-
-func (r ApiGetMediaBytesRequest) Authorization(authorization string) ApiGetMediaBytesRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -206,9 +200,6 @@ func (a *MediaAPIService) GetMediaBytesExecute(r ApiGetMediaBytesRequest) (inter
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -261,16 +252,10 @@ type ApiGetMediaInfoRequest struct {
 	ApiService MediaAPI
 	blobId int32
 	customerId *string
-	authorization *string
 }
 
 func (r ApiGetMediaInfoRequest) CustomerId(customerId string) ApiGetMediaInfoRequest {
 	r.customerId = &customerId
-	return r
-}
-
-func (r ApiGetMediaInfoRequest) Authorization(authorization string) ApiGetMediaInfoRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -339,9 +324,6 @@ func (a *MediaAPIService) GetMediaInfoExecute(r ApiGetMediaInfoRequest) (*MediaI
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -392,12 +374,6 @@ func (a *MediaAPIService) GetMediaInfoExecute(r ApiGetMediaInfoRequest) (*MediaI
 type ApiListMediaFormatsRequest struct {
 	ctx context.Context
 	ApiService MediaAPI
-	authorization *string
-}
-
-func (r ApiListMediaFormatsRequest) Authorization(authorization string) ApiListMediaFormatsRequest {
-	r.authorization = &authorization
-	return r
 }
 
 func (r ApiListMediaFormatsRequest) Execute() (*MediaFormats, *http.Response, error) {
@@ -455,9 +431,6 @@ func (a *MediaAPIService) ListMediaFormatsExecute(r ApiListMediaFormatsRequest) 
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -480,16 +453,6 @@ func (a *MediaAPIService) ListMediaFormatsExecute(r ApiListMediaFormatsRequest) 
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 422 {
-			var v HTTPValidationError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -510,16 +473,10 @@ type ApiListMediaFramesRequest struct {
 	ApiService MediaAPI
 	blobId int32
 	customerId *string
-	authorization *string
 }
 
 func (r ApiListMediaFramesRequest) CustomerId(customerId string) ApiListMediaFramesRequest {
 	r.customerId = &customerId
-	return r
-}
-
-func (r ApiListMediaFramesRequest) Authorization(authorization string) ApiListMediaFramesRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -584,9 +541,6 @@ func (a *MediaAPIService) ListMediaFramesExecute(r ApiListMediaFramesRequest) ([
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -639,16 +593,10 @@ type ApiListMediaTranscriptRequest struct {
 	ApiService MediaAPI
 	blobId int32
 	customerId *string
-	authorization *string
 }
 
 func (r ApiListMediaTranscriptRequest) CustomerId(customerId string) ApiListMediaTranscriptRequest {
 	r.customerId = &customerId
-	return r
-}
-
-func (r ApiListMediaTranscriptRequest) Authorization(authorization string) ApiListMediaTranscriptRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -712,9 +660,6 @@ func (a *MediaAPIService) ListMediaTranscriptExecute(r ApiListMediaTranscriptReq
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

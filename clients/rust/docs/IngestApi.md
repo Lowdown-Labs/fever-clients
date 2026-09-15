@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## ingest_media
 
-> models::IngestResult ingest_media(ingest_request, authorization)
+> models::IngestResult ingest_media(ingest_request)
 Ingest one or many media items
 
 Throw 1..N media items over the wall. Small inline batches are embedded and indexed synchronously and return blob ids; large batches or an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken from the API key.
@@ -21,7 +21,6 @@ Throw 1..N media items over the wall. Small inline batches are embedded and inde
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **ingest_request** | [**IngestRequest**](IngestRequest.md) |  | [required] |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -29,7 +28,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

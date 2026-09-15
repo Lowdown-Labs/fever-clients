@@ -67,16 +67,10 @@ type ApiCreateKeyRequest struct {
 	ctx context.Context
 	ApiService KeysAPI
 	createKeyRequest *CreateKeyRequest
-	authorization *string
 }
 
 func (r ApiCreateKeyRequest) CreateKeyRequest(createKeyRequest CreateKeyRequest) ApiCreateKeyRequest {
 	r.createKeyRequest = &createKeyRequest
-	return r
-}
-
-func (r ApiCreateKeyRequest) Authorization(authorization string) ApiCreateKeyRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -138,9 +132,6 @@ func (a *KeysAPIService) CreateKeyExecute(r ApiCreateKeyRequest) (*KeyReveal, *h
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.createKeyRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -193,12 +184,6 @@ func (a *KeysAPIService) CreateKeyExecute(r ApiCreateKeyRequest) (*KeyReveal, *h
 type ApiListKeysRequest struct {
 	ctx context.Context
 	ApiService KeysAPI
-	authorization *string
-}
-
-func (r ApiListKeysRequest) Authorization(authorization string) ApiListKeysRequest {
-	r.authorization = &authorization
-	return r
 }
 
 func (r ApiListKeysRequest) Execute() ([]ApiKey, *http.Response, error) {
@@ -256,9 +241,6 @@ func (a *KeysAPIService) ListKeysExecute(r ApiListKeysRequest) ([]ApiKey, *http.
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -281,16 +263,6 @@ func (a *KeysAPIService) ListKeysExecute(r ApiListKeysRequest) ([]ApiKey, *http.
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 422 {
-			var v HTTPValidationError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -310,12 +282,6 @@ type ApiRevokeKeyRequest struct {
 	ctx context.Context
 	ApiService KeysAPI
 	keyId int32
-	authorization *string
-}
-
-func (r ApiRevokeKeyRequest) Authorization(authorization string) ApiRevokeKeyRequest {
-	r.authorization = &authorization
-	return r
 }
 
 func (r ApiRevokeKeyRequest) Execute() (interface{}, *http.Response, error) {
@@ -375,9 +341,6 @@ func (a *KeysAPIService) RevokeKeyExecute(r ApiRevokeKeyRequest) (interface{}, *
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

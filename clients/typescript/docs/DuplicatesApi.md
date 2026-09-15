@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 
 ## findDuplicates
 
-> DuplicatesResponse findDuplicates(duplicatesRequest, authorization)
+> DuplicatesResponse findDuplicates(duplicatesRequest)
 
 Find near-duplicate media clusters for a customer
 
@@ -28,13 +28,15 @@ import type { FindDuplicatesRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new DuplicatesApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new DuplicatesApi(config);
 
   const body = {
     // DuplicatesRequest
     duplicatesRequest: ...,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies FindDuplicatesRequest;
 
   try {
@@ -55,7 +57,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **duplicatesRequest** | [DuplicatesRequest](DuplicatesRequest.md) |  | |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -63,7 +64,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -82,7 +83,7 @@ No authorization required
 
 ## suggestedDedupThreshold
 
-> any suggestedDedupThreshold(customerId, authorization)
+> any suggestedDedupThreshold(customerId)
 
 Suggest a duplicate-detection threshold from this customer\&#39;s edge cosine distribution
 
@@ -97,13 +98,15 @@ import type { SuggestedDedupThresholdRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new DuplicatesApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new DuplicatesApi(config);
 
   const body = {
     // string (optional)
     customerId: customerId_example,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies SuggestedDedupThresholdRequest;
 
   try {
@@ -124,7 +127,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **customerId** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -132,7 +134,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

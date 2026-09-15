@@ -23,7 +23,6 @@ module FeverClient
     # Throw 1..N media items over the wall. Small inline batches are embedded and indexed synchronously and return blob ids; large batches or an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken from the API key.
     # @param ingest_request [IngestRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [IngestResult]
     def ingest_media(ingest_request, opts = {})
       data, _status_code, _headers = ingest_media_with_http_info(ingest_request, opts)
@@ -34,7 +33,6 @@ module FeverClient
     # Throw 1..N media items over the wall. Small inline batches are embedded and indexed synchronously and return blob ids; large batches or an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken from the API key.
     # @param ingest_request [IngestRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(IngestResult, Integer, Hash)>] IngestResult data, response status code and response headers
     def ingest_media_with_http_info(ingest_request, opts = {})
       if @api_client.config.debugging
@@ -59,7 +57,6 @@ module FeverClient
       if !content_type.nil?
           header_params['Content-Type'] = content_type
       end
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -71,7 +68,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'IngestResult'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"IngestApi.ingest_media",

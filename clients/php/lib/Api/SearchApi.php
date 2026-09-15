@@ -131,16 +131,15 @@ class SearchApi
      * Search by text or image
      *
      * @param  \LowdownLabs\Fever\Model\SearchRequest $search_request search_request (required)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['search'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\SearchHit[]|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function search($search_request, $authorization = null, string $contentType = self::contentTypes['search'][0])
+    public function search($search_request, string $contentType = self::contentTypes['search'][0])
     {
-        list($response) = $this->searchWithHttpInfo($search_request, $authorization, $contentType);
+        list($response) = $this->searchWithHttpInfo($search_request, $contentType);
         return $response;
     }
 
@@ -150,16 +149,15 @@ class SearchApi
      * Search by text or image
      *
      * @param  \LowdownLabs\Fever\Model\SearchRequest $search_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['search'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\SearchHit[]|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function searchWithHttpInfo($search_request, $authorization = null, string $contentType = self::contentTypes['search'][0])
+    public function searchWithHttpInfo($search_request, string $contentType = self::contentTypes['search'][0])
     {
-        $request = $this->searchRequest($search_request, $authorization, $contentType);
+        $request = $this->searchRequest($search_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -250,15 +248,14 @@ class SearchApi
      * Search by text or image
      *
      * @param  \LowdownLabs\Fever\Model\SearchRequest $search_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['search'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function searchAsync($search_request, $authorization = null, string $contentType = self::contentTypes['search'][0])
+    public function searchAsync($search_request, string $contentType = self::contentTypes['search'][0])
     {
-        return $this->searchAsyncWithHttpInfo($search_request, $authorization, $contentType)
+        return $this->searchAsyncWithHttpInfo($search_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -272,16 +269,15 @@ class SearchApi
      * Search by text or image
      *
      * @param  \LowdownLabs\Fever\Model\SearchRequest $search_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['search'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function searchAsyncWithHttpInfo($search_request, $authorization = null, string $contentType = self::contentTypes['search'][0])
+    public function searchAsyncWithHttpInfo($search_request, string $contentType = self::contentTypes['search'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\SearchHit[]';
-        $request = $this->searchRequest($search_request, $authorization, $contentType);
+        $request = $this->searchRequest($search_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -323,13 +319,12 @@ class SearchApi
      * Create request for operation 'search'
      *
      * @param  \LowdownLabs\Fever\Model\SearchRequest $search_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['search'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function searchRequest($search_request, $authorization = null, string $contentType = self::contentTypes['search'][0])
+    public function searchRequest($search_request, string $contentType = self::contentTypes['search'][0])
     {
 
         // verify the required parameter 'search_request' is set
@@ -340,7 +335,6 @@ class SearchApi
         }
 
 
-
         $resourcePath = '/v1/search';
         $formParams = [];
         $queryParams = [];
@@ -349,10 +343,6 @@ class SearchApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -402,6 +392,10 @@ class SearchApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

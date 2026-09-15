@@ -61,8 +61,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string? customerId = null;
-            //string? authorization = null;
-            //var response = instance.CorpusStats(customerId, authorization);
+            //var response = instance.CorpusStats(customerId);
             //Assert.IsType<CorpusStats>(response);
         }
     }

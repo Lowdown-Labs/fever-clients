@@ -18,11 +18,15 @@ Corpus composition: per-kind counts and top autotags
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::CorpusApi.new
 opts = {
-  customer_id: 'customer_id_example', # String | 
-  authorization: 'authorization_example' # String | 
+  customer_id: 'customer_id_example' # String | 
 }
 
 begin
@@ -57,7 +61,6 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **customer_id** | **String** |  | [optional] |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -65,7 +68,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

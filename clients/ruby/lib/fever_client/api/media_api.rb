@@ -25,7 +25,6 @@ module FeverClient
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :max_dim  (default to 1280)
     # @option opts [Integer] :waveform  (default to 0)
-    # @option opts [String] :authorization 
     # @return [Object]
     def get_media_bytes(blob_id, opts = {})
       data, _status_code, _headers = get_media_bytes_with_http_info(blob_id, opts)
@@ -38,7 +37,6 @@ module FeverClient
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :max_dim  (default to 1280)
     # @option opts [Integer] :waveform  (default to 0)
-    # @option opts [String] :authorization 
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def get_media_bytes_with_http_info(blob_id, opts = {})
       if @api_client.config.debugging
@@ -60,7 +58,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json', 'image/jpeg', 'image/png']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -72,7 +69,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'Object'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"MediaApi.get_media_bytes",
@@ -96,7 +93,6 @@ module FeverClient
     # @param blob_id [Integer] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :customer_id 
-    # @option opts [String] :authorization 
     # @return [MediaInfo]
     def get_media_info(blob_id, opts = {})
       data, _status_code, _headers = get_media_info_with_http_info(blob_id, opts)
@@ -108,7 +104,6 @@ module FeverClient
     # @param blob_id [Integer] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :customer_id 
-    # @option opts [String] :authorization 
     # @return [Array<(MediaInfo, Integer, Hash)>] MediaInfo data, response status code and response headers
     def get_media_info_with_http_info(blob_id, opts = {})
       if @api_client.config.debugging
@@ -129,7 +124,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -141,7 +135,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'MediaInfo'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"MediaApi.get_media_info",
@@ -162,7 +156,6 @@ module FeverClient
 
     # Ingest capability: supported extensions per media family
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [MediaFormats]
     def list_media_formats(opts = {})
       data, _status_code, _headers = list_media_formats_with_http_info(opts)
@@ -171,7 +164,6 @@ module FeverClient
 
     # Ingest capability: supported extensions per media family
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(MediaFormats, Integer, Hash)>] MediaFormats data, response status code and response headers
     def list_media_formats_with_http_info(opts = {})
       if @api_client.config.debugging
@@ -187,7 +179,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -199,7 +190,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'MediaFormats'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"MediaApi.list_media_formats",
@@ -222,7 +213,6 @@ module FeverClient
     # @param blob_id [Integer] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :customer_id 
-    # @option opts [String] :authorization 
     # @return [Array<MediaFrame>]
     def list_media_frames(blob_id, opts = {})
       data, _status_code, _headers = list_media_frames_with_http_info(blob_id, opts)
@@ -233,7 +223,6 @@ module FeverClient
     # @param blob_id [Integer] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :customer_id 
-    # @option opts [String] :authorization 
     # @return [Array<(Array<MediaFrame>, Integer, Hash)>] Array<MediaFrame> data, response status code and response headers
     def list_media_frames_with_http_info(blob_id, opts = {})
       if @api_client.config.debugging
@@ -254,7 +243,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -266,7 +254,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'Array<MediaFrame>'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"MediaApi.list_media_frames",
@@ -289,7 +277,6 @@ module FeverClient
     # @param blob_id [Integer] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :customer_id 
-    # @option opts [String] :authorization 
     # @return [Array<TranscriptSegment>]
     def list_media_transcript(blob_id, opts = {})
       data, _status_code, _headers = list_media_transcript_with_http_info(blob_id, opts)
@@ -300,7 +287,6 @@ module FeverClient
     # @param blob_id [Integer] 
     # @param [Hash] opts the optional parameters
     # @option opts [String] :customer_id 
-    # @option opts [String] :authorization 
     # @return [Array<(Array<TranscriptSegment>, Integer, Hash)>] Array<TranscriptSegment> data, response status code and response headers
     def list_media_transcript_with_http_info(blob_id, opts = {})
       if @api_client.config.debugging
@@ -321,7 +307,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -333,7 +318,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'Array<TranscriptSegment>'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"MediaApi.list_media_transcript",

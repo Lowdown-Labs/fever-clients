@@ -35,9 +35,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="duplicatesRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>DuplicatesResponse</returns>
-        DuplicatesResponse FindDuplicates(DuplicatesRequest duplicatesRequest, string? authorization = default);
+        DuplicatesResponse FindDuplicates(DuplicatesRequest duplicatesRequest);
 
         /// <summary>
         /// Find near-duplicate media clusters for a customer
@@ -47,17 +46,15 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="duplicatesRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of DuplicatesResponse</returns>
-        ApiResponse<DuplicatesResponse> FindDuplicatesWithHttpInfo(DuplicatesRequest duplicatesRequest, string? authorization = default);
+        ApiResponse<DuplicatesResponse> FindDuplicatesWithHttpInfo(DuplicatesRequest duplicatesRequest);
         /// <summary>
         /// Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        Object SuggestedDedupThreshold(string? customerId = default, string? authorization = default);
+        Object SuggestedDedupThreshold(string? customerId = default);
 
         /// <summary>
         /// Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
@@ -67,9 +64,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        ApiResponse<Object> SuggestedDedupThresholdWithHttpInfo(string? customerId = default, string? authorization = default);
+        ApiResponse<Object> SuggestedDedupThresholdWithHttpInfo(string? customerId = default);
         #endregion Synchronous Operations
     }
 
@@ -87,10 +83,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="duplicatesRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DuplicatesResponse</returns>
-        System.Threading.Tasks.Task<DuplicatesResponse> FindDuplicatesAsync(DuplicatesRequest duplicatesRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<DuplicatesResponse> FindDuplicatesAsync(DuplicatesRequest duplicatesRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Find near-duplicate media clusters for a customer
@@ -100,10 +95,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="duplicatesRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DuplicatesResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<DuplicatesResponse>> FindDuplicatesWithHttpInfoAsync(DuplicatesRequest duplicatesRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<DuplicatesResponse>> FindDuplicatesWithHttpInfoAsync(DuplicatesRequest duplicatesRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
         /// </summary>
@@ -112,10 +106,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        System.Threading.Tasks.Task<Object> SuggestedDedupThresholdAsync(string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<Object> SuggestedDedupThresholdAsync(string? customerId = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
@@ -125,10 +118,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> SuggestedDedupThresholdWithHttpInfoAsync(string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<Object>> SuggestedDedupThresholdWithHttpInfoAsync(string? customerId = default, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -347,11 +339,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="duplicatesRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>DuplicatesResponse</returns>
-        public DuplicatesResponse FindDuplicates(DuplicatesRequest duplicatesRequest, string? authorization = default)
+        public DuplicatesResponse FindDuplicates(DuplicatesRequest duplicatesRequest)
         {
-            LowdownLabs.Fever.Client.ApiResponse<DuplicatesResponse> localVarResponse = FindDuplicatesWithHttpInfo(duplicatesRequest, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<DuplicatesResponse> localVarResponse = FindDuplicatesWithHttpInfo(duplicatesRequest);
             return localVarResponse.Data;
         }
 
@@ -360,9 +351,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="duplicatesRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of DuplicatesResponse</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<DuplicatesResponse> FindDuplicatesWithHttpInfo(DuplicatesRequest duplicatesRequest, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<DuplicatesResponse> FindDuplicatesWithHttpInfo(DuplicatesRequest duplicatesRequest)
         {
             // verify the required parameter 'duplicatesRequest' is set
             if (duplicatesRequest == null)
@@ -385,12 +375,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = duplicatesRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<DuplicatesResponse>("/v1/duplicates", localVarRequestOptions, this.Configuration);
@@ -409,12 +401,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="duplicatesRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of DuplicatesResponse</returns>
-        public async System.Threading.Tasks.Task<DuplicatesResponse> FindDuplicatesAsync(DuplicatesRequest duplicatesRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<DuplicatesResponse> FindDuplicatesAsync(DuplicatesRequest duplicatesRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<DuplicatesResponse> localVarResponse = await FindDuplicatesWithHttpInfoAsync(duplicatesRequest, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<DuplicatesResponse> localVarResponse = await FindDuplicatesWithHttpInfoAsync(duplicatesRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -423,10 +414,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="duplicatesRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (DuplicatesResponse)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<DuplicatesResponse>> FindDuplicatesWithHttpInfoAsync(DuplicatesRequest duplicatesRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<DuplicatesResponse>> FindDuplicatesWithHttpInfoAsync(DuplicatesRequest duplicatesRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'duplicatesRequest' is set
             if (duplicatesRequest == null)
@@ -451,12 +441,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = duplicatesRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 
@@ -476,11 +468,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        public Object SuggestedDedupThreshold(string? customerId = default, string? authorization = default)
+        public Object SuggestedDedupThreshold(string? customerId = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = SuggestedDedupThresholdWithHttpInfo(customerId, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = SuggestedDedupThresholdWithHttpInfo(customerId);
             return localVarResponse.Data;
         }
 
@@ -489,9 +480,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<Object> SuggestedDedupThresholdWithHttpInfo(string? customerId = default, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<Object> SuggestedDedupThresholdWithHttpInfo(string? customerId = default)
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -513,11 +503,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "customer_id", customerId));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<Object>("/v1/duplicates/suggested-threshold", localVarRequestOptions, this.Configuration);
@@ -536,12 +528,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        public async System.Threading.Tasks.Task<Object> SuggestedDedupThresholdAsync(string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<Object> SuggestedDedupThresholdAsync(string? customerId = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = await SuggestedDedupThresholdWithHttpInfoAsync(customerId, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = await SuggestedDedupThresholdWithHttpInfoAsync(customerId, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -550,10 +541,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Object>> SuggestedDedupThresholdWithHttpInfoAsync(string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Object>> SuggestedDedupThresholdWithHttpInfoAsync(string? customerId = default, System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -577,11 +567,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "customer_id", customerId));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 

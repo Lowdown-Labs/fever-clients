@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## CancelJob
 
-> Job CancelJob(ctx, jobId).Authorization(authorization).Execute()
+> Job CancelJob(ctx, jobId).Execute()
 
 Cancel a pending or running ingest job
 
@@ -29,11 +29,10 @@ import (
 
 func main() {
 	jobId := int32(56) // int32 | 
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.JobsAPI.CancelJob(context.Background(), jobId).Authorization(authorization).Execute()
+	resp, r, err := apiClient.JobsAPI.CancelJob(context.Background(), jobId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `JobsAPI.CancelJob``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -59,7 +58,6 @@ Other parameters are passed through a pointer to a apiCancelJobRequest struct vi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -67,7 +65,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -81,7 +79,7 @@ No authorization required
 
 ## GetJob
 
-> Job GetJob(ctx, jobId).Authorization(authorization).Execute()
+> Job GetJob(ctx, jobId).Execute()
 
 Get ingest job progress
 
@@ -99,11 +97,10 @@ import (
 
 func main() {
 	jobId := int32(56) // int32 | 
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.JobsAPI.GetJob(context.Background(), jobId).Authorization(authorization).Execute()
+	resp, r, err := apiClient.JobsAPI.GetJob(context.Background(), jobId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `JobsAPI.GetJob``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -129,7 +126,6 @@ Other parameters are passed through a pointer to a apiGetJobRequest struct via t
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -137,7 +133,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

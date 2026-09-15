@@ -22,7 +22,6 @@ module FeverClient
     # Cancel a pending or running ingest job
     # @param job_id [Integer] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Job]
     def cancel_job(job_id, opts = {})
       data, _status_code, _headers = cancel_job_with_http_info(job_id, opts)
@@ -32,7 +31,6 @@ module FeverClient
     # Cancel a pending or running ingest job
     # @param job_id [Integer] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(Job, Integer, Hash)>] Job data, response status code and response headers
     def cancel_job_with_http_info(job_id, opts = {})
       if @api_client.config.debugging
@@ -52,7 +50,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -64,7 +61,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'Job'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"JobsApi.cancel_job",
@@ -86,7 +83,6 @@ module FeverClient
     # Get ingest job progress
     # @param job_id [Integer] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Job]
     def get_job(job_id, opts = {})
       data, _status_code, _headers = get_job_with_http_info(job_id, opts)
@@ -96,7 +92,6 @@ module FeverClient
     # Get ingest job progress
     # @param job_id [Integer] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(Job, Integer, Hash)>] Job data, response status code and response headers
     def get_job_with_http_info(job_id, opts = {})
       if @api_client.config.debugging
@@ -116,7 +111,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -128,7 +122,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'Job'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"JobsApi.get_job",

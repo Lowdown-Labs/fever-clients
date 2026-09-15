@@ -52,10 +52,6 @@ export interface GetMediaBytesRequest {
      * 
      */
     waveform?: number;
-    /**
-     * 
-     */
-    authorization?: string | null;
 }
 
 export interface GetMediaInfoRequest {
@@ -67,17 +63,6 @@ export interface GetMediaInfoRequest {
      * 
      */
     customerId?: string | null;
-    /**
-     * 
-     */
-    authorization?: string | null;
-}
-
-export interface ListMediaFormatsRequest {
-    /**
-     * 
-     */
-    authorization?: string | null;
 }
 
 export interface ListMediaFramesRequest {
@@ -89,10 +74,6 @@ export interface ListMediaFramesRequest {
      * 
      */
     customerId?: string | null;
-    /**
-     * 
-     */
-    authorization?: string | null;
 }
 
 export interface ListMediaTranscriptRequest {
@@ -104,10 +85,6 @@ export interface ListMediaTranscriptRequest {
      * 
      */
     customerId?: string | null;
-    /**
-     * 
-     */
-    authorization?: string | null;
 }
 
 /**
@@ -138,10 +115,14 @@ export class MediaApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/media/{blob_id}/bytes`;
         urlPath = urlPath.replace('{blob_id}', encodeURIComponent(String(requestParameters['blobId'])));
@@ -197,10 +178,14 @@ export class MediaApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/media/{blob_id}`;
         urlPath = urlPath.replace('{blob_id}', encodeURIComponent(String(requestParameters['blobId'])));
@@ -236,15 +221,19 @@ export class MediaApi extends runtime.BaseAPI {
     /**
      * Creates request options for listMediaFormats without sending the request
      */
-    async listMediaFormatsRequestOpts(requestParameters: ListMediaFormatsRequest): Promise<runtime.RequestOpts> {
+    async listMediaFormatsRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/media/formats`;
 
@@ -259,8 +248,8 @@ export class MediaApi extends runtime.BaseAPI {
     /**
      * Ingest capability: supported extensions per media family
      */
-    async listMediaFormatsRaw(requestParameters: ListMediaFormatsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MediaFormats>> {
-        const requestOptions = await this.listMediaFormatsRequestOpts(requestParameters);
+    async listMediaFormatsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MediaFormats>> {
+        const requestOptions = await this.listMediaFormatsRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => MediaFormatsFromJSON(jsonValue));
@@ -269,8 +258,8 @@ export class MediaApi extends runtime.BaseAPI {
     /**
      * Ingest capability: supported extensions per media family
      */
-    async listMediaFormats(requestParameters: ListMediaFormatsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MediaFormats> {
-        const response = await this.listMediaFormatsRaw(requestParameters, initOverrides);
+    async listMediaFormats(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MediaFormats> {
+        const response = await this.listMediaFormatsRaw(initOverrides);
         return await response.value();
     }
 
@@ -293,10 +282,14 @@ export class MediaApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/media/{blob_id}/frames`;
         urlPath = urlPath.replace('{blob_id}', encodeURIComponent(String(requestParameters['blobId'])));
@@ -346,10 +339,14 @@ export class MediaApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/media/{blob_id}/transcript`;
         urlPath = urlPath.replace('{blob_id}', encodeURIComponent(String(requestParameters['blobId'])));

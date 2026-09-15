@@ -46,9 +46,8 @@ public class JobsApiTest {
     @Test
     public void cancelJobTest() throws ApiException {
         Integer jobId = null;
-        String authorization = null;
         Job response = 
-        api.cancelJob(jobId, authorization);
+        api.cancelJob(jobId);
         
         // TODO: test validations
     }
@@ -64,9 +63,8 @@ public class JobsApiTest {
     @Test
     public void getJobTest() throws ApiException {
         Integer jobId = null;
-        String authorization = null;
         Job response = 
-        api.getJob(jobId, authorization);
+        api.getJob(jobId);
         
         // TODO: test validations
     }

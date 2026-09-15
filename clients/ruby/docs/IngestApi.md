@@ -9,7 +9,7 @@ All URIs are relative to *http://localhost*
 
 ## ingest_media
 
-> <IngestResult> ingest_media(ingest_request, opts)
+> <IngestResult> ingest_media(ingest_request)
 
 Ingest one or many media items
 
@@ -20,16 +20,18 @@ Throw 1..N media items over the wall. Small inline batches are embedded and inde
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::IngestApi.new
 ingest_request = FeverClient::IngestRequest.new # IngestRequest | 
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # Ingest one or many media items
-  result = api_instance.ingest_media(ingest_request, opts)
+  result = api_instance.ingest_media(ingest_request)
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling IngestApi->ingest_media: #{e}"
@@ -40,12 +42,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<IngestResult>, Integer, Hash)> ingest_media_with_http_info(ingest_request, opts)
+> <Array(<IngestResult>, Integer, Hash)> ingest_media_with_http_info(ingest_request)
 
 ```ruby
 begin
   # Ingest one or many media items
-  data, status_code, headers = api_instance.ingest_media_with_http_info(ingest_request, opts)
+  data, status_code, headers = api_instance.ingest_media_with_http_info(ingest_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <IngestResult>
@@ -59,7 +61,6 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **ingest_request** | [**IngestRequest**](IngestRequest.md) |  |  |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -67,7 +68,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

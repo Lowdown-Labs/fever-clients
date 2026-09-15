@@ -40,12 +40,6 @@ type AuthAPIService service
 type ApiWhoamiRequest struct {
 	ctx context.Context
 	ApiService AuthAPI
-	authorization *string
-}
-
-func (r ApiWhoamiRequest) Authorization(authorization string) ApiWhoamiRequest {
-	r.authorization = &authorization
-	return r
 }
 
 func (r ApiWhoamiRequest) Execute() (interface{}, *http.Response, error) {
@@ -103,9 +97,6 @@ func (a *AuthAPIService) WhoamiExecute(r ApiWhoamiRequest) (interface{}, *http.R
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -127,16 +118,6 @@ func (a *AuthAPIService) WhoamiExecute(r ApiWhoamiRequest) (interface{}, *http.R
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 422 {
-			var v HTTPValidationError
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

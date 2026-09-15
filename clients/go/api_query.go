@@ -43,16 +43,10 @@ type ApiQueryRequest struct {
 	ctx context.Context
 	ApiService QueryAPI
 	queryRequest *QueryRequest
-	authorization *string
 }
 
 func (r ApiQueryRequest) QueryRequest(queryRequest QueryRequest) ApiQueryRequest {
 	r.queryRequest = &queryRequest
-	return r
-}
-
-func (r ApiQueryRequest) Authorization(authorization string) ApiQueryRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -115,9 +109,6 @@ func (a *QueryAPIService) QueryExecute(r ApiQueryRequest) (*QueryResult, *http.R
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
 	// body params
 	localVarPostBody = r.queryRequest

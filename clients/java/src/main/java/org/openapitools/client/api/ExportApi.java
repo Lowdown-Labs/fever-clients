@@ -176,25 +176,23 @@ public class ExportApi {
    * Export the tenant&#39;s vectors and metadata to S3
    * 
    * @param exportRequest  (required)
-   * @param authorization  (optional)
    * @return ExportResult
    * @throws ApiException if fails to make API call
    */
-  public ExportResult exportTenant(@javax.annotation.Nonnull ExportRequest exportRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return exportTenant(exportRequest, authorization, null);
+  public ExportResult exportTenant(@javax.annotation.Nonnull ExportRequest exportRequest) throws ApiException {
+    return exportTenant(exportRequest, null);
   }
 
   /**
    * Export the tenant&#39;s vectors and metadata to S3
    * 
    * @param exportRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ExportResult
    * @throws ApiException if fails to make API call
    */
-  public ExportResult exportTenant(@javax.annotation.Nonnull ExportRequest exportRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<ExportResult> localVarResponse = exportTenantWithHttpInfo(exportRequest, authorization, headers);
+  public ExportResult exportTenant(@javax.annotation.Nonnull ExportRequest exportRequest, Map<String, String> headers) throws ApiException {
+    ApiResponse<ExportResult> localVarResponse = exportTenantWithHttpInfo(exportRequest, headers);
     return localVarResponse.getData();
   }
 
@@ -202,25 +200,23 @@ public class ExportApi {
    * Export the tenant&#39;s vectors and metadata to S3
    * 
    * @param exportRequest  (required)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;ExportResult&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ExportResult> exportTenantWithHttpInfo(@javax.annotation.Nonnull ExportRequest exportRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return exportTenantWithHttpInfo(exportRequest, authorization, null);
+  public ApiResponse<ExportResult> exportTenantWithHttpInfo(@javax.annotation.Nonnull ExportRequest exportRequest) throws ApiException {
+    return exportTenantWithHttpInfo(exportRequest, null);
   }
 
   /**
    * Export the tenant&#39;s vectors and metadata to S3
    * 
    * @param exportRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;ExportResult&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ExportResult> exportTenantWithHttpInfo(@javax.annotation.Nonnull ExportRequest exportRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = exportTenantRequestBuilder(exportRequest, authorization, headers);
+  public ApiResponse<ExportResult> exportTenantWithHttpInfo(@javax.annotation.Nonnull ExportRequest exportRequest, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = exportTenantRequestBuilder(exportRequest, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -267,7 +263,7 @@ public class ExportApi {
     }
   }
 
-  private HttpRequest.Builder exportTenantRequestBuilder(@javax.annotation.Nonnull ExportRequest exportRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder exportTenantRequestBuilder(@javax.annotation.Nonnull ExportRequest exportRequest, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'exportRequest' is set
     if (exportRequest == null) {
       throw new ApiException(400, "Missing the required parameter 'exportRequest' when calling exportTenant");
@@ -279,9 +275,6 @@ public class ExportApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
@@ -306,25 +299,23 @@ public class ExportApi {
    * Import vectors and metadata from a previous FEVER export in S3
    * 
    * @param importRequest  (required)
-   * @param authorization  (optional)
    * @return ImportResult
    * @throws ApiException if fails to make API call
    */
-  public ImportResult importTenant(@javax.annotation.Nonnull ImportRequest importRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return importTenant(importRequest, authorization, null);
+  public ImportResult importTenant(@javax.annotation.Nonnull ImportRequest importRequest) throws ApiException {
+    return importTenant(importRequest, null);
   }
 
   /**
    * Import vectors and metadata from a previous FEVER export in S3
    * 
    * @param importRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ImportResult
    * @throws ApiException if fails to make API call
    */
-  public ImportResult importTenant(@javax.annotation.Nonnull ImportRequest importRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<ImportResult> localVarResponse = importTenantWithHttpInfo(importRequest, authorization, headers);
+  public ImportResult importTenant(@javax.annotation.Nonnull ImportRequest importRequest, Map<String, String> headers) throws ApiException {
+    ApiResponse<ImportResult> localVarResponse = importTenantWithHttpInfo(importRequest, headers);
     return localVarResponse.getData();
   }
 
@@ -332,25 +323,23 @@ public class ExportApi {
    * Import vectors and metadata from a previous FEVER export in S3
    * 
    * @param importRequest  (required)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;ImportResult&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ImportResult> importTenantWithHttpInfo(@javax.annotation.Nonnull ImportRequest importRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return importTenantWithHttpInfo(importRequest, authorization, null);
+  public ApiResponse<ImportResult> importTenantWithHttpInfo(@javax.annotation.Nonnull ImportRequest importRequest) throws ApiException {
+    return importTenantWithHttpInfo(importRequest, null);
   }
 
   /**
    * Import vectors and metadata from a previous FEVER export in S3
    * 
    * @param importRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;ImportResult&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<ImportResult> importTenantWithHttpInfo(@javax.annotation.Nonnull ImportRequest importRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = importTenantRequestBuilder(importRequest, authorization, headers);
+  public ApiResponse<ImportResult> importTenantWithHttpInfo(@javax.annotation.Nonnull ImportRequest importRequest, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = importTenantRequestBuilder(importRequest, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -397,7 +386,7 @@ public class ExportApi {
     }
   }
 
-  private HttpRequest.Builder importTenantRequestBuilder(@javax.annotation.Nonnull ImportRequest importRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder importTenantRequestBuilder(@javax.annotation.Nonnull ImportRequest importRequest, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'importRequest' is set
     if (importRequest == null) {
       throw new ApiException(400, "Missing the required parameter 'importRequest' when calling importTenant");
@@ -409,9 +398,6 @@ public class ExportApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 

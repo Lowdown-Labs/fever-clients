@@ -8,7 +8,7 @@ All URIs are relative to *http://localhost*
 
 <a id="reassigncustomersbulk"></a>
 # **ReassignCustomersBulk**
-> Object ReassignCustomersBulk (string? authorization = null, FileParameter? file = null)
+> Object ReassignCustomersBulk (FileParameter? file = null)
 
 Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
 
@@ -31,17 +31,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: adminToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new CustomersApi(httpClient, config, httpClientHandler);
-            var authorization = "authorization_example";  // string? |  (optional) 
             var file = new System.IO.MemoryStream(System.IO.File.ReadAllBytes("/path/to/file.txt"));  // FileParameter? |  (optional) 
 
             try
             {
                 // Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
-                Object result = apiInstance.ReassignCustomersBulk(authorization, file);
+                Object result = apiInstance.ReassignCustomersBulk(file);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -62,7 +64,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
-    ApiResponse<Object> response = apiInstance.ReassignCustomersBulkWithHttpInfo(authorization, file);
+    ApiResponse<Object> response = apiInstance.ReassignCustomersBulkWithHttpInfo(file);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -79,7 +81,6 @@ catch (ApiException e)
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **authorization** | **string?** |  | [optional]  |
 | **file** | **FileParameter?****FileParameter?** |  | [optional]  |
 
 ### Return type
@@ -88,7 +89,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

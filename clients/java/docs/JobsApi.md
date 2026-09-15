@@ -13,7 +13,7 @@ All URIs are relative to *http://localhost*
 
 ## cancelJob
 
-> Job cancelJob(jobId, authorization)
+> Job cancelJob(jobId)
 
 Cancel a pending or running ingest job
 
@@ -24,6 +24,7 @@ Cancel a pending or running ingest job
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.JobsApi;
 
@@ -31,12 +32,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         JobsApi apiInstance = new JobsApi(defaultClient);
         Integer jobId = 56; // Integer | 
-        String authorization = "authorization_example"; // String | 
         try {
-            Job result = apiInstance.cancelJob(jobId, authorization);
+            Job result = apiInstance.cancelJob(jobId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling JobsApi#cancelJob");
@@ -55,7 +59,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **jobId** | **Integer**|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -64,7 +67,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -79,7 +82,7 @@ No authorization required
 
 ## cancelJobWithHttpInfo
 
-> ApiResponse<Job> cancelJobWithHttpInfo(jobId, authorization)
+> ApiResponse<Job> cancelJobWithHttpInfo(jobId)
 
 Cancel a pending or running ingest job
 
@@ -91,6 +94,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.JobsApi;
 
@@ -98,12 +102,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         JobsApi apiInstance = new JobsApi(defaultClient);
         Integer jobId = 56; // Integer | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<Job> response = apiInstance.cancelJobWithHttpInfo(jobId, authorization);
+            ApiResponse<Job> response = apiInstance.cancelJobWithHttpInfo(jobId);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -124,7 +131,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **jobId** | **Integer**|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -133,7 +139,7 @@ ApiResponse<[**Job**](Job.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -149,7 +155,7 @@ No authorization required
 
 ## getJob
 
-> Job getJob(jobId, authorization)
+> Job getJob(jobId)
 
 Get ingest job progress
 
@@ -160,6 +166,7 @@ Get ingest job progress
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.JobsApi;
 
@@ -167,12 +174,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         JobsApi apiInstance = new JobsApi(defaultClient);
         Integer jobId = 56; // Integer | 
-        String authorization = "authorization_example"; // String | 
         try {
-            Job result = apiInstance.getJob(jobId, authorization);
+            Job result = apiInstance.getJob(jobId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling JobsApi#getJob");
@@ -191,7 +201,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **jobId** | **Integer**|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -200,7 +209,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -215,7 +224,7 @@ No authorization required
 
 ## getJobWithHttpInfo
 
-> ApiResponse<Job> getJobWithHttpInfo(jobId, authorization)
+> ApiResponse<Job> getJobWithHttpInfo(jobId)
 
 Get ingest job progress
 
@@ -227,6 +236,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.JobsApi;
 
@@ -234,12 +244,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         JobsApi apiInstance = new JobsApi(defaultClient);
         Integer jobId = 56; // Integer | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<Job> response = apiInstance.getJobWithHttpInfo(jobId, authorization);
+            ApiResponse<Job> response = apiInstance.getJobWithHttpInfo(jobId);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -260,7 +273,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **jobId** | **Integer**|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -269,7 +281,7 @@ ApiResponse<[**Job**](Job.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

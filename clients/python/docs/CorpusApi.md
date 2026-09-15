@@ -8,12 +8,13 @@ Method | HTTP request | Description
 
 
 # **corpus_stats**
-> CorpusStats corpus_stats(customer_id=customer_id, authorization=authorization)
+> CorpusStats corpus_stats(customer_id=customer_id)
 
 Corpus composition: per-kind counts and top autotags
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -27,17 +28,25 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.CorpusApi(api_client)
     customer_id = 'customer_id_example' # str |  (optional)
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Corpus composition: per-kind counts and top autotags
-        api_response = await api_instance.corpus_stats(customer_id=customer_id, authorization=authorization)
+        api_response = await api_instance.corpus_stats(customer_id=customer_id)
         print("The response of CorpusApi->corpus_stats:\n")
         pprint(api_response)
     except Exception as e:
@@ -52,7 +61,6 @@ async with fever_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customer_id** | **str**|  | [optional] 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -60,7 +68,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

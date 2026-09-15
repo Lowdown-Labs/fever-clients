@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **query**
-> QueryResult query(query_request, authorization=authorization)
+> QueryResult query(query_request)
 
 Run a read-only SQL SELECT over the corpus tables
 
@@ -16,6 +16,7 @@ A mini SQL console over the appliance's corpus tables: as_blobs, annotations, du
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -30,17 +31,25 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.QueryApi(api_client)
     query_request = fever_client.QueryRequest() # QueryRequest | 
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Run a read-only SQL SELECT over the corpus tables
-        api_response = await api_instance.query(query_request, authorization=authorization)
+        api_response = await api_instance.query(query_request)
         print("The response of QueryApi->query:\n")
         pprint(api_response)
     except Exception as e:
@@ -55,7 +64,6 @@ async with fever_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **query_request** | [**QueryRequest**](QueryRequest.md)|  | 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -63,7 +71,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

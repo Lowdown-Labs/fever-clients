@@ -36,7 +36,6 @@ describe 'ExportApi' do
   # Export the tenant&#39;s vectors and metadata to S3
   # @param export_request 
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [ExportResult]
   describe 'export_tenant test' do
     it 'should work' do
@@ -48,7 +47,6 @@ describe 'ExportApi' do
   # Import vectors and metadata from a previous FEVER export in S3
   # @param import_request 
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [ImportResult]
   describe 'import_tenant test' do
     it 'should work' do

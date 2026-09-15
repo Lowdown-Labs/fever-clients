@@ -9,7 +9,7 @@ All URIs are relative to *http://localhost*
 
 <a id="findduplicates"></a>
 # **FindDuplicates**
-> DuplicatesResponse FindDuplicates (DuplicatesRequest duplicatesRequest, string? authorization = null)
+> DuplicatesResponse FindDuplicates (DuplicatesRequest duplicatesRequest)
 
 Find near-duplicate media clusters for a customer
 
@@ -32,17 +32,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new DuplicatesApi(httpClient, config, httpClientHandler);
             var duplicatesRequest = new DuplicatesRequest(); // DuplicatesRequest | 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Find near-duplicate media clusters for a customer
-                DuplicatesResponse result = apiInstance.FindDuplicates(duplicatesRequest, authorization);
+                DuplicatesResponse result = apiInstance.FindDuplicates(duplicatesRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -63,7 +65,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Find near-duplicate media clusters for a customer
-    ApiResponse<DuplicatesResponse> response = apiInstance.FindDuplicatesWithHttpInfo(duplicatesRequest, authorization);
+    ApiResponse<DuplicatesResponse> response = apiInstance.FindDuplicatesWithHttpInfo(duplicatesRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -81,7 +83,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **duplicatesRequest** | [**DuplicatesRequest**](DuplicatesRequest.md) |  |  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -89,7 +90,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -107,7 +108,7 @@ No authorization required
 
 <a id="suggesteddedupthreshold"></a>
 # **SuggestedDedupThreshold**
-> Object SuggestedDedupThreshold (string? customerId = null, string? authorization = null)
+> Object SuggestedDedupThreshold (string? customerId = null)
 
 Suggest a duplicate-detection threshold from this customer's edge cosine distribution
 
@@ -128,17 +129,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new DuplicatesApi(httpClient, config, httpClientHandler);
             var customerId = "customerId_example";  // string? |  (optional) 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Suggest a duplicate-detection threshold from this customer's edge cosine distribution
-                Object result = apiInstance.SuggestedDedupThreshold(customerId, authorization);
+                Object result = apiInstance.SuggestedDedupThreshold(customerId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -159,7 +162,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Suggest a duplicate-detection threshold from this customer's edge cosine distribution
-    ApiResponse<Object> response = apiInstance.SuggestedDedupThresholdWithHttpInfo(customerId, authorization);
+    ApiResponse<Object> response = apiInstance.SuggestedDedupThresholdWithHttpInfo(customerId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -177,7 +180,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **customerId** | **string?** |  | [optional]  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -185,7 +187,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

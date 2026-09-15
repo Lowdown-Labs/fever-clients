@@ -22,7 +22,6 @@ module FeverClient
     # Corpus composition: per-kind counts and top autotags
     # @param [Hash] opts the optional parameters
     # @option opts [String] :customer_id 
-    # @option opts [String] :authorization 
     # @return [CorpusStats]
     def corpus_stats(opts = {})
       data, _status_code, _headers = corpus_stats_with_http_info(opts)
@@ -32,7 +31,6 @@ module FeverClient
     # Corpus composition: per-kind counts and top autotags
     # @param [Hash] opts the optional parameters
     # @option opts [String] :customer_id 
-    # @option opts [String] :authorization 
     # @return [Array<(CorpusStats, Integer, Hash)>] CorpusStats data, response status code and response headers
     def corpus_stats_with_http_info(opts = {})
       if @api_client.config.debugging
@@ -49,7 +47,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -61,7 +58,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'CorpusStats'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"CorpusApi.corpus_stats",

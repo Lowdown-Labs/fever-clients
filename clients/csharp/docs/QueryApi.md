@@ -8,7 +8,7 @@ All URIs are relative to *http://localhost*
 
 <a id="query"></a>
 # **Query**
-> QueryResult Query (QueryRequest queryRequest, string? authorization = null)
+> QueryResult Query (QueryRequest queryRequest)
 
 Run a read-only SQL SELECT over the corpus tables
 
@@ -31,17 +31,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new QueryApi(httpClient, config, httpClientHandler);
             var queryRequest = new QueryRequest(); // QueryRequest | 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Run a read-only SQL SELECT over the corpus tables
-                QueryResult result = apiInstance.Query(queryRequest, authorization);
+                QueryResult result = apiInstance.Query(queryRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -62,7 +64,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Run a read-only SQL SELECT over the corpus tables
-    ApiResponse<QueryResult> response = apiInstance.QueryWithHttpInfo(queryRequest, authorization);
+    ApiResponse<QueryResult> response = apiInstance.QueryWithHttpInfo(queryRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -80,7 +82,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **queryRequest** | [**QueryRequest**](QueryRequest.md) |  |  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -88,7 +89,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

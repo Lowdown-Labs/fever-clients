@@ -15,8 +15,6 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
-from typing import Optional
 from fever_client.models.export_request import ExportRequest
 from fever_client.models.export_result import ExportResult
 from fever_client.models.import_request import ImportRequest
@@ -44,7 +42,6 @@ class ExportApi:
     async def export_tenant(
         self,
         export_request: ExportRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -63,8 +60,6 @@ class ExportApi:
 
         :param export_request: (required)
         :type export_request: ExportRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -89,7 +84,6 @@ class ExportApi:
 
         _param = self._export_tenant_serialize(
             export_request=export_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -115,7 +109,6 @@ class ExportApi:
     async def export_tenant_with_http_info(
         self,
         export_request: ExportRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -134,8 +127,6 @@ class ExportApi:
 
         :param export_request: (required)
         :type export_request: ExportRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -160,7 +151,6 @@ class ExportApi:
 
         _param = self._export_tenant_serialize(
             export_request=export_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -186,7 +176,6 @@ class ExportApi:
     async def export_tenant_without_preload_content(
         self,
         export_request: ExportRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -205,8 +194,6 @@ class ExportApi:
 
         :param export_request: (required)
         :type export_request: ExportRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -231,7 +218,6 @@ class ExportApi:
 
         _param = self._export_tenant_serialize(
             export_request=export_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -252,7 +238,6 @@ class ExportApi:
     def _export_tenant_serialize(
         self,
         export_request,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -276,8 +261,6 @@ class ExportApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
         if export_request is not None:
@@ -308,6 +291,7 @@ class ExportApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(
@@ -332,7 +316,6 @@ class ExportApi:
     async def import_tenant(
         self,
         import_request: ImportRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -351,8 +334,6 @@ class ExportApi:
 
         :param import_request: (required)
         :type import_request: ImportRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -377,7 +358,6 @@ class ExportApi:
 
         _param = self._import_tenant_serialize(
             import_request=import_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -403,7 +383,6 @@ class ExportApi:
     async def import_tenant_with_http_info(
         self,
         import_request: ImportRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -422,8 +401,6 @@ class ExportApi:
 
         :param import_request: (required)
         :type import_request: ImportRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -448,7 +425,6 @@ class ExportApi:
 
         _param = self._import_tenant_serialize(
             import_request=import_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -474,7 +450,6 @@ class ExportApi:
     async def import_tenant_without_preload_content(
         self,
         import_request: ImportRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -493,8 +468,6 @@ class ExportApi:
 
         :param import_request: (required)
         :type import_request: ImportRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -519,7 +492,6 @@ class ExportApi:
 
         _param = self._import_tenant_serialize(
             import_request=import_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -540,7 +512,6 @@ class ExportApi:
     def _import_tenant_serialize(
         self,
         import_request,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -564,8 +535,6 @@ class ExportApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
         if import_request is not None:
@@ -596,6 +565,7 @@ class ExportApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(

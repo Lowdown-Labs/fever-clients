@@ -13,7 +13,7 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 ## `exportTenant()`
 
 ```php
-exportTenant($export_request, $authorization): \LowdownLabs\Fever\Model\ExportResult
+exportTenant($export_request): \LowdownLabs\Fever\Model\ExportResult
 ```
 
 Export the tenant's vectors and metadata to S3
@@ -25,17 +25,20 @@ Export the tenant's vectors and metadata to S3
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\ExportApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $export_request = new \LowdownLabs\Fever\Model\ExportRequest(); // \LowdownLabs\Fever\Model\ExportRequest
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->exportTenant($export_request, $authorization);
+    $result = $apiInstance->exportTenant($export_request);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ExportApi->exportTenant: ', $e->getMessage(), PHP_EOL;
@@ -47,7 +50,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **export_request** | [**\LowdownLabs\Fever\Model\ExportRequest**](../Model/ExportRequest.md)|  | |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -55,7 +57,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -69,7 +71,7 @@ No authorization required
 ## `importTenant()`
 
 ```php
-importTenant($import_request, $authorization): \LowdownLabs\Fever\Model\ImportResult
+importTenant($import_request): \LowdownLabs\Fever\Model\ImportResult
 ```
 
 Import vectors and metadata from a previous FEVER export in S3
@@ -81,17 +83,20 @@ Import vectors and metadata from a previous FEVER export in S3
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\ExportApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $import_request = new \LowdownLabs\Fever\Model\ImportRequest(); // \LowdownLabs\Fever\Model\ImportRequest
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->importTenant($import_request, $authorization);
+    $result = $apiInstance->importTenant($import_request);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling ExportApi->importTenant: ', $e->getMessage(), PHP_EOL;
@@ -103,7 +108,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **import_request** | [**\LowdownLabs\Fever\Model\ImportRequest**](../Model/ImportRequest.md)|  | |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -111,7 +115,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../../README.md#bearerAuth)
 
 ### HTTP request headers
 

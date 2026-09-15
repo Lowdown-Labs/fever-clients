@@ -22,7 +22,6 @@ module FeverClient
     # Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
     # Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\"s3_uri\": \"s3://bucket/key\", \"format\"?: \"csv|jsonl|parquet\"}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @option opts [File] :file 
     # @return [Object]
     def reassign_customers_bulk(opts = {})
@@ -33,7 +32,6 @@ module FeverClient
     # Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
     # Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @option opts [File] :file 
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def reassign_customers_bulk_with_http_info(opts = {})
@@ -55,7 +53,6 @@ module FeverClient
       if !content_type.nil?
           header_params['Content-Type'] = content_type
       end
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -68,7 +65,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'Object'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['adminToken']
 
       new_options = opts.merge(
         :operation => :"CustomersApi.reassign_customers_bulk",

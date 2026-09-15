@@ -36,7 +36,6 @@ describe 'KeysApi' do
   # Mint an API key for this appliance
   # @param create_key_request 
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [KeyReveal]
   describe 'create_key test' do
     it 'should work' do
@@ -47,7 +46,6 @@ describe 'KeysApi' do
   # unit tests for list_keys
   # List this appliance&#39;s API keys
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [Array<ApiKey>]
   describe 'list_keys test' do
     it 'should work' do
@@ -59,7 +57,6 @@ describe 'KeysApi' do
   # Revoke an API key
   # @param key_id 
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [Object]
   describe 'revoke_key test' do
     it 'should work' do

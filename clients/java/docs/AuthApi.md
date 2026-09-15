@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 
 ## whoami
 
-> Object whoami(authorization)
+> Object whoami()
 
 Report the calling key&#39;s role and customer scope
 
@@ -22,6 +22,7 @@ Report the calling key&#39;s role and customer scope
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.AuthApi;
 
@@ -29,11 +30,14 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         AuthApi apiInstance = new AuthApi(defaultClient);
-        String authorization = "authorization_example"; // String | 
         try {
-            Object result = apiInstance.whoami(authorization);
+            Object result = apiInstance.whoami();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AuthApi#whoami");
@@ -48,10 +52,7 @@ public class Example {
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **authorization** | **String**|  | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -60,7 +61,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -71,11 +72,10 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 ## whoamiWithHttpInfo
 
-> ApiResponse<Object> whoamiWithHttpInfo(authorization)
+> ApiResponse<Object> whoamiWithHttpInfo()
 
 Report the calling key&#39;s role and customer scope
 
@@ -87,6 +87,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.AuthApi;
 
@@ -94,11 +95,14 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         AuthApi apiInstance = new AuthApi(defaultClient);
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<Object> response = apiInstance.whoamiWithHttpInfo(authorization);
+            ApiResponse<Object> response = apiInstance.whoamiWithHttpInfo();
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -115,10 +119,7 @@ public class Example {
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **authorization** | **String**|  | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -127,7 +128,7 @@ ApiResponse<**Object**>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -138,5 +139,4 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 

@@ -49,9 +49,8 @@ public class ExportApiTest {
     @Test
     public void exportTenantTest() throws ApiException {
         ExportRequest exportRequest = null;
-        String authorization = null;
         ExportResult response = 
-        api.exportTenant(exportRequest, authorization);
+        api.exportTenant(exportRequest);
         
         // TODO: test validations
     }
@@ -67,9 +66,8 @@ public class ExportApiTest {
     @Test
     public void importTenantTest() throws ApiException {
         ImportRequest importRequest = null;
-        String authorization = null;
         ImportResult response = 
-        api.importTenant(importRequest, authorization);
+        api.importTenant(importRequest);
         
         // TODO: test validations
     }

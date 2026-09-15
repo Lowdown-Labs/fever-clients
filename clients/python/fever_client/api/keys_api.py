@@ -15,8 +15,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr
-from typing import Any, List, Optional
+from pydantic import StrictInt
+from typing import Any, List
 from fever_client.models.api_key import ApiKey
 from fever_client.models.create_key_request import CreateKeyRequest
 from fever_client.models.key_reveal import KeyReveal
@@ -43,7 +43,6 @@ class KeysApi:
     async def create_key(
         self,
         create_key_request: CreateKeyRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -62,8 +61,6 @@ class KeysApi:
 
         :param create_key_request: (required)
         :type create_key_request: CreateKeyRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -88,7 +85,6 @@ class KeysApi:
 
         _param = self._create_key_serialize(
             create_key_request=create_key_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -114,7 +110,6 @@ class KeysApi:
     async def create_key_with_http_info(
         self,
         create_key_request: CreateKeyRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -133,8 +128,6 @@ class KeysApi:
 
         :param create_key_request: (required)
         :type create_key_request: CreateKeyRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -159,7 +152,6 @@ class KeysApi:
 
         _param = self._create_key_serialize(
             create_key_request=create_key_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -185,7 +177,6 @@ class KeysApi:
     async def create_key_without_preload_content(
         self,
         create_key_request: CreateKeyRequest,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -204,8 +195,6 @@ class KeysApi:
 
         :param create_key_request: (required)
         :type create_key_request: CreateKeyRequest
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -230,7 +219,6 @@ class KeysApi:
 
         _param = self._create_key_serialize(
             create_key_request=create_key_request,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -251,7 +239,6 @@ class KeysApi:
     def _create_key_serialize(
         self,
         create_key_request,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -275,8 +262,6 @@ class KeysApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
         if create_key_request is not None:
@@ -307,6 +292,7 @@ class KeysApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'adminToken'
         ]
 
         return self.api_client.param_serialize(
@@ -330,7 +316,6 @@ class KeysApi:
     @validate_call
     async def list_keys(
         self,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -347,8 +332,6 @@ class KeysApi:
         """List this appliance's API keys
 
 
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -372,7 +355,6 @@ class KeysApi:
         """ # noqa: E501
 
         _param = self._list_keys_serialize(
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -381,7 +363,6 @@ class KeysApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[ApiKey]",
-            '422': "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -397,7 +378,6 @@ class KeysApi:
     @validate_call
     async def list_keys_with_http_info(
         self,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -414,8 +394,6 @@ class KeysApi:
         """List this appliance's API keys
 
 
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -439,7 +417,6 @@ class KeysApi:
         """ # noqa: E501
 
         _param = self._list_keys_serialize(
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -448,7 +425,6 @@ class KeysApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[ApiKey]",
-            '422': "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -464,7 +440,6 @@ class KeysApi:
     @validate_call
     async def list_keys_without_preload_content(
         self,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -481,8 +456,6 @@ class KeysApi:
         """List this appliance's API keys
 
 
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -506,7 +479,6 @@ class KeysApi:
         """ # noqa: E501
 
         _param = self._list_keys_serialize(
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -515,7 +487,6 @@ class KeysApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "List[ApiKey]",
-            '422': "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -526,7 +497,6 @@ class KeysApi:
 
     def _list_keys_serialize(
         self,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -550,8 +520,6 @@ class KeysApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -567,6 +535,7 @@ class KeysApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'adminToken'
         ]
 
         return self.api_client.param_serialize(
@@ -591,7 +560,6 @@ class KeysApi:
     async def revoke_key(
         self,
         key_id: StrictInt,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -610,8 +578,6 @@ class KeysApi:
 
         :param key_id: (required)
         :type key_id: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -636,7 +602,6 @@ class KeysApi:
 
         _param = self._revoke_key_serialize(
             key_id=key_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -662,7 +627,6 @@ class KeysApi:
     async def revoke_key_with_http_info(
         self,
         key_id: StrictInt,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -681,8 +645,6 @@ class KeysApi:
 
         :param key_id: (required)
         :type key_id: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -707,7 +669,6 @@ class KeysApi:
 
         _param = self._revoke_key_serialize(
             key_id=key_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -733,7 +694,6 @@ class KeysApi:
     async def revoke_key_without_preload_content(
         self,
         key_id: StrictInt,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -752,8 +712,6 @@ class KeysApi:
 
         :param key_id: (required)
         :type key_id: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -778,7 +736,6 @@ class KeysApi:
 
         _param = self._revoke_key_serialize(
             key_id=key_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -799,7 +756,6 @@ class KeysApi:
     def _revoke_key_serialize(
         self,
         key_id,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -825,8 +781,6 @@ class KeysApi:
             _path_params['key_id'] = key_id
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -842,6 +796,7 @@ class KeysApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'adminToken'
         ]
 
         return self.api_client.param_serialize(

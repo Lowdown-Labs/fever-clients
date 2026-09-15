@@ -9,7 +9,7 @@ All URIs are relative to *http://localhost*
 
 <a id="exporttenant"></a>
 # **ExportTenant**
-> ExportResult ExportTenant (ExportRequest exportRequest, string? authorization = null)
+> ExportResult ExportTenant (ExportRequest exportRequest)
 
 Export the tenant's vectors and metadata to S3
 
@@ -30,17 +30,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new ExportApi(httpClient, config, httpClientHandler);
             var exportRequest = new ExportRequest(); // ExportRequest | 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Export the tenant's vectors and metadata to S3
-                ExportResult result = apiInstance.ExportTenant(exportRequest, authorization);
+                ExportResult result = apiInstance.ExportTenant(exportRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -61,7 +63,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Export the tenant's vectors and metadata to S3
-    ApiResponse<ExportResult> response = apiInstance.ExportTenantWithHttpInfo(exportRequest, authorization);
+    ApiResponse<ExportResult> response = apiInstance.ExportTenantWithHttpInfo(exportRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -79,7 +81,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **exportRequest** | [**ExportRequest**](ExportRequest.md) |  |  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -87,7 +88,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -105,7 +106,7 @@ No authorization required
 
 <a id="importtenant"></a>
 # **ImportTenant**
-> ImportResult ImportTenant (ImportRequest importRequest, string? authorization = null)
+> ImportResult ImportTenant (ImportRequest importRequest)
 
 Import vectors and metadata from a previous FEVER export in S3
 
@@ -126,17 +127,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new ExportApi(httpClient, config, httpClientHandler);
             var importRequest = new ImportRequest(); // ImportRequest | 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Import vectors and metadata from a previous FEVER export in S3
-                ImportResult result = apiInstance.ImportTenant(importRequest, authorization);
+                ImportResult result = apiInstance.ImportTenant(importRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -157,7 +160,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Import vectors and metadata from a previous FEVER export in S3
-    ApiResponse<ImportResult> response = apiInstance.ImportTenantWithHttpInfo(importRequest, authorization);
+    ApiResponse<ImportResult> response = apiInstance.ImportTenantWithHttpInfo(importRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -175,7 +178,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **importRequest** | [**ImportRequest**](ImportRequest.md) |  |  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -183,7 +185,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

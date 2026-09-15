@@ -8,7 +8,7 @@ All URIs are relative to *http://localhost*
 
 <a id="whoami"></a>
 # **Whoami**
-> Object Whoami (string? authorization = null)
+> Object Whoami ()
 
 Report the calling key's role and customer scope
 
@@ -29,16 +29,18 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthApi(httpClient, config, httpClientHandler);
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Report the calling key's role and customer scope
-                Object result = apiInstance.Whoami(authorization);
+                Object result = apiInstance.Whoami();
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -59,7 +61,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Report the calling key's role and customer scope
-    ApiResponse<Object> response = apiInstance.WhoamiWithHttpInfo(authorization);
+    ApiResponse<Object> response = apiInstance.WhoamiWithHttpInfo();
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -73,18 +75,14 @@ catch (ApiException e)
 ```
 
 ### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **authorization** | **string?** |  | [optional]  |
-
+This endpoint does not need any parameter.
 ### Return type
 
 **Object**
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -96,7 +94,6 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

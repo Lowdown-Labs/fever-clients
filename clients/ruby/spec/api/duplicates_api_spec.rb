@@ -37,7 +37,6 @@ describe 'DuplicatesApi' do
   # Find near-duplicate clusters. Scoped to one customer, this reads the edge set maintained at ingest (millisecond answers; edges exist down to cosine 0.80). An admin key with no customer_id scans live across all customers; passing customer_ids narrows that live scan to a handful of accounts. Both admin shapes see cross-customer duplicates. No delete or keep recommendation is made: the clusters are yours to act on.
   # @param duplicates_request 
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [DuplicatesResponse]
   describe 'find_duplicates test' do
     it 'should work' do
@@ -49,7 +48,6 @@ describe 'DuplicatesApi' do
   # Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
   # @param [Hash] opts the optional parameters
   # @option opts [String] :customer_id 
-  # @option opts [String] :authorization 
   # @return [Object]
   describe 'suggested_dedup_threshold test' do
     it 'should work' do

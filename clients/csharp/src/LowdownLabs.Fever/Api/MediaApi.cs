@@ -37,9 +37,8 @@ namespace LowdownLabs.Fever.Api
         /// <param name="blobId"></param>
         /// <param name="maxDim"> (optional, default to 1280)</param>
         /// <param name="waveform"> (optional, default to 0)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        Object GetMediaBytes(int blobId, int? maxDim = default, int? waveform = default, string? authorization = default);
+        Object GetMediaBytes(int blobId, int? maxDim = default, int? waveform = default);
 
         /// <summary>
         /// Fetch an indexed media item&#39;s bytes (images normalized to JPEG)
@@ -51,9 +50,8 @@ namespace LowdownLabs.Fever.Api
         /// <param name="blobId"></param>
         /// <param name="maxDim"> (optional, default to 1280)</param>
         /// <param name="waveform"> (optional, default to 0)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        ApiResponse<Object> GetMediaBytesWithHttpInfo(int blobId, int? maxDim = default, int? waveform = default, string? authorization = default);
+        ApiResponse<Object> GetMediaBytesWithHttpInfo(int blobId, int? maxDim = default, int? waveform = default);
         /// <summary>
         /// Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
         /// </summary>
@@ -63,9 +61,8 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>MediaInfo</returns>
-        MediaInfo GetMediaInfo(int blobId, string? customerId = default, string? authorization = default);
+        MediaInfo GetMediaInfo(int blobId, string? customerId = default);
 
         /// <summary>
         /// Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
@@ -76,16 +73,14 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of MediaInfo</returns>
-        ApiResponse<MediaInfo> GetMediaInfoWithHttpInfo(int blobId, string? customerId = default, string? authorization = default);
+        ApiResponse<MediaInfo> GetMediaInfoWithHttpInfo(int blobId, string? customerId = default);
         /// <summary>
         /// Ingest capability: supported extensions per media family
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>MediaFormats</returns>
-        MediaFormats ListMediaFormats(string? authorization = default);
+        MediaFormats ListMediaFormats();
 
         /// <summary>
         /// Ingest capability: supported extensions per media family
@@ -94,18 +89,16 @@ namespace LowdownLabs.Fever.Api
         /// 
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of MediaFormats</returns>
-        ApiResponse<MediaFormats> ListMediaFormatsWithHttpInfo(string? authorization = default);
+        ApiResponse<MediaFormats> ListMediaFormatsWithHttpInfo();
         /// <summary>
         /// Sampled video frames for a parent blob
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>List&lt;MediaFrame&gt;</returns>
-        List<MediaFrame> ListMediaFrames(int blobId, string? customerId = default, string? authorization = default);
+        List<MediaFrame> ListMediaFrames(int blobId, string? customerId = default);
 
         /// <summary>
         /// Sampled video frames for a parent blob
@@ -116,18 +109,16 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of List&lt;MediaFrame&gt;</returns>
-        ApiResponse<List<MediaFrame>> ListMediaFramesWithHttpInfo(int blobId, string? customerId = default, string? authorization = default);
+        ApiResponse<List<MediaFrame>> ListMediaFramesWithHttpInfo(int blobId, string? customerId = default);
         /// <summary>
         /// Whisper transcript segments for a parent blob (audio or video)
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>List&lt;TranscriptSegment&gt;</returns>
-        List<TranscriptSegment> ListMediaTranscript(int blobId, string? customerId = default, string? authorization = default);
+        List<TranscriptSegment> ListMediaTranscript(int blobId, string? customerId = default);
 
         /// <summary>
         /// Whisper transcript segments for a parent blob (audio or video)
@@ -138,9 +129,8 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of List&lt;TranscriptSegment&gt;</returns>
-        ApiResponse<List<TranscriptSegment>> ListMediaTranscriptWithHttpInfo(int blobId, string? customerId = default, string? authorization = default);
+        ApiResponse<List<TranscriptSegment>> ListMediaTranscriptWithHttpInfo(int blobId, string? customerId = default);
         #endregion Synchronous Operations
     }
 
@@ -160,10 +150,9 @@ namespace LowdownLabs.Fever.Api
         /// <param name="blobId"></param>
         /// <param name="maxDim"> (optional, default to 1280)</param>
         /// <param name="waveform"> (optional, default to 0)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        System.Threading.Tasks.Task<Object> GetMediaBytesAsync(int blobId, int? maxDim = default, int? waveform = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<Object> GetMediaBytesAsync(int blobId, int? maxDim = default, int? waveform = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Fetch an indexed media item&#39;s bytes (images normalized to JPEG)
@@ -175,10 +164,9 @@ namespace LowdownLabs.Fever.Api
         /// <param name="blobId"></param>
         /// <param name="maxDim"> (optional, default to 1280)</param>
         /// <param name="waveform"> (optional, default to 0)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetMediaBytesWithHttpInfoAsync(int blobId, int? maxDim = default, int? waveform = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<Object>> GetMediaBytesWithHttpInfoAsync(int blobId, int? maxDim = default, int? waveform = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
         /// </summary>
@@ -188,10 +176,9 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MediaInfo</returns>
-        System.Threading.Tasks.Task<MediaInfo> GetMediaInfoAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<MediaInfo> GetMediaInfoAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
@@ -202,10 +189,9 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MediaInfo)</returns>
-        System.Threading.Tasks.Task<ApiResponse<MediaInfo>> GetMediaInfoWithHttpInfoAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<MediaInfo>> GetMediaInfoWithHttpInfoAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Ingest capability: supported extensions per media family
         /// </summary>
@@ -213,10 +199,9 @@ namespace LowdownLabs.Fever.Api
         /// 
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MediaFormats</returns>
-        System.Threading.Tasks.Task<MediaFormats> ListMediaFormatsAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<MediaFormats> ListMediaFormatsAsync(System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Ingest capability: supported extensions per media family
@@ -225,10 +210,9 @@ namespace LowdownLabs.Fever.Api
         /// 
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MediaFormats)</returns>
-        System.Threading.Tasks.Task<ApiResponse<MediaFormats>> ListMediaFormatsWithHttpInfoAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<MediaFormats>> ListMediaFormatsWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Sampled video frames for a parent blob
         /// </summary>
@@ -238,10 +222,9 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;MediaFrame&gt;</returns>
-        System.Threading.Tasks.Task<List<MediaFrame>> ListMediaFramesAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<List<MediaFrame>> ListMediaFramesAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Sampled video frames for a parent blob
@@ -252,10 +235,9 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;MediaFrame&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<MediaFrame>>> ListMediaFramesWithHttpInfoAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<List<MediaFrame>>> ListMediaFramesWithHttpInfoAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Whisper transcript segments for a parent blob (audio or video)
         /// </summary>
@@ -265,10 +247,9 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;TranscriptSegment&gt;</returns>
-        System.Threading.Tasks.Task<List<TranscriptSegment>> ListMediaTranscriptAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<List<TranscriptSegment>> ListMediaTranscriptAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Whisper transcript segments for a parent blob (audio or video)
@@ -279,10 +260,9 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;TranscriptSegment&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<TranscriptSegment>>> ListMediaTranscriptWithHttpInfoAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<List<TranscriptSegment>>> ListMediaTranscriptWithHttpInfoAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -503,11 +483,10 @@ namespace LowdownLabs.Fever.Api
         /// <param name="blobId"></param>
         /// <param name="maxDim"> (optional, default to 1280)</param>
         /// <param name="waveform"> (optional, default to 0)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        public Object GetMediaBytes(int blobId, int? maxDim = default, int? waveform = default, string? authorization = default)
+        public Object GetMediaBytes(int blobId, int? maxDim = default, int? waveform = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = GetMediaBytesWithHttpInfo(blobId, maxDim, waveform, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = GetMediaBytesWithHttpInfo(blobId, maxDim, waveform);
             return localVarResponse.Data;
         }
 
@@ -518,9 +497,8 @@ namespace LowdownLabs.Fever.Api
         /// <param name="blobId"></param>
         /// <param name="maxDim"> (optional, default to 1280)</param>
         /// <param name="waveform"> (optional, default to 0)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<Object> GetMediaBytesWithHttpInfo(int blobId, int? maxDim = default, int? waveform = default, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<Object> GetMediaBytesWithHttpInfo(int blobId, int? maxDim = default, int? waveform = default)
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -549,11 +527,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "waveform", waveform));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<Object>("/v1/media/{blob_id}/bytes", localVarRequestOptions, this.Configuration);
@@ -574,12 +554,11 @@ namespace LowdownLabs.Fever.Api
         /// <param name="blobId"></param>
         /// <param name="maxDim"> (optional, default to 1280)</param>
         /// <param name="waveform"> (optional, default to 0)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        public async System.Threading.Tasks.Task<Object> GetMediaBytesAsync(int blobId, int? maxDim = default, int? waveform = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<Object> GetMediaBytesAsync(int blobId, int? maxDim = default, int? waveform = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = await GetMediaBytesWithHttpInfoAsync(blobId, maxDim, waveform, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = await GetMediaBytesWithHttpInfoAsync(blobId, maxDim, waveform, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -590,10 +569,9 @@ namespace LowdownLabs.Fever.Api
         /// <param name="blobId"></param>
         /// <param name="maxDim"> (optional, default to 1280)</param>
         /// <param name="waveform"> (optional, default to 0)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Object>> GetMediaBytesWithHttpInfoAsync(int blobId, int? maxDim = default, int? waveform = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Object>> GetMediaBytesWithHttpInfoAsync(int blobId, int? maxDim = default, int? waveform = default, System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -624,11 +602,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "waveform", waveform));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 
@@ -649,11 +629,10 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>MediaInfo</returns>
-        public MediaInfo GetMediaInfo(int blobId, string? customerId = default, string? authorization = default)
+        public MediaInfo GetMediaInfo(int blobId, string? customerId = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<MediaInfo> localVarResponse = GetMediaInfoWithHttpInfo(blobId, customerId, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<MediaInfo> localVarResponse = GetMediaInfoWithHttpInfo(blobId, customerId);
             return localVarResponse.Data;
         }
 
@@ -663,9 +642,8 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of MediaInfo</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<MediaInfo> GetMediaInfoWithHttpInfo(int blobId, string? customerId = default, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<MediaInfo> GetMediaInfoWithHttpInfo(int blobId, string? customerId = default)
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -688,11 +666,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "customer_id", customerId));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<MediaInfo>("/v1/media/{blob_id}", localVarRequestOptions, this.Configuration);
@@ -712,12 +692,11 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MediaInfo</returns>
-        public async System.Threading.Tasks.Task<MediaInfo> GetMediaInfoAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<MediaInfo> GetMediaInfoAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<MediaInfo> localVarResponse = await GetMediaInfoWithHttpInfoAsync(blobId, customerId, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<MediaInfo> localVarResponse = await GetMediaInfoWithHttpInfoAsync(blobId, customerId, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -727,10 +706,9 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MediaInfo)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<MediaInfo>> GetMediaInfoWithHttpInfoAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<MediaInfo>> GetMediaInfoWithHttpInfoAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -755,11 +733,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "customer_id", customerId));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 
@@ -778,11 +758,10 @@ namespace LowdownLabs.Fever.Api
         /// Ingest capability: supported extensions per media family 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>MediaFormats</returns>
-        public MediaFormats ListMediaFormats(string? authorization = default)
+        public MediaFormats ListMediaFormats()
         {
-            LowdownLabs.Fever.Client.ApiResponse<MediaFormats> localVarResponse = ListMediaFormatsWithHttpInfo(authorization);
+            LowdownLabs.Fever.Client.ApiResponse<MediaFormats> localVarResponse = ListMediaFormatsWithHttpInfo();
             return localVarResponse.Data;
         }
 
@@ -790,9 +769,8 @@ namespace LowdownLabs.Fever.Api
         /// Ingest capability: supported extensions per media family 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of MediaFormats</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<MediaFormats> ListMediaFormatsWithHttpInfo(string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<MediaFormats> ListMediaFormatsWithHttpInfo()
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -810,11 +788,13 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<MediaFormats>("/v1/media/formats", localVarRequestOptions, this.Configuration);
@@ -832,12 +812,11 @@ namespace LowdownLabs.Fever.Api
         /// Ingest capability: supported extensions per media family 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of MediaFormats</returns>
-        public async System.Threading.Tasks.Task<MediaFormats> ListMediaFormatsAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<MediaFormats> ListMediaFormatsAsync(System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<MediaFormats> localVarResponse = await ListMediaFormatsWithHttpInfoAsync(authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<MediaFormats> localVarResponse = await ListMediaFormatsWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -845,10 +824,9 @@ namespace LowdownLabs.Fever.Api
         /// Ingest capability: supported extensions per media family 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (MediaFormats)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<MediaFormats>> ListMediaFormatsWithHttpInfoAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<MediaFormats>> ListMediaFormatsWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -868,11 +846,13 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 
@@ -893,11 +873,10 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>List&lt;MediaFrame&gt;</returns>
-        public List<MediaFrame> ListMediaFrames(int blobId, string? customerId = default, string? authorization = default)
+        public List<MediaFrame> ListMediaFrames(int blobId, string? customerId = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<List<MediaFrame>> localVarResponse = ListMediaFramesWithHttpInfo(blobId, customerId, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<List<MediaFrame>> localVarResponse = ListMediaFramesWithHttpInfo(blobId, customerId);
             return localVarResponse.Data;
         }
 
@@ -907,9 +886,8 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of List&lt;MediaFrame&gt;</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<List<MediaFrame>> ListMediaFramesWithHttpInfo(int blobId, string? customerId = default, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<List<MediaFrame>> ListMediaFramesWithHttpInfo(int blobId, string? customerId = default)
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -932,11 +910,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "customer_id", customerId));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<List<MediaFrame>>("/v1/media/{blob_id}/frames", localVarRequestOptions, this.Configuration);
@@ -956,12 +936,11 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;MediaFrame&gt;</returns>
-        public async System.Threading.Tasks.Task<List<MediaFrame>> ListMediaFramesAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<List<MediaFrame>> ListMediaFramesAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<List<MediaFrame>> localVarResponse = await ListMediaFramesWithHttpInfoAsync(blobId, customerId, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<List<MediaFrame>> localVarResponse = await ListMediaFramesWithHttpInfoAsync(blobId, customerId, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -971,10 +950,9 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;MediaFrame&gt;)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<List<MediaFrame>>> ListMediaFramesWithHttpInfoAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<List<MediaFrame>>> ListMediaFramesWithHttpInfoAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -999,11 +977,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "customer_id", customerId));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 
@@ -1024,11 +1004,10 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>List&lt;TranscriptSegment&gt;</returns>
-        public List<TranscriptSegment> ListMediaTranscript(int blobId, string? customerId = default, string? authorization = default)
+        public List<TranscriptSegment> ListMediaTranscript(int blobId, string? customerId = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<List<TranscriptSegment>> localVarResponse = ListMediaTranscriptWithHttpInfo(blobId, customerId, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<List<TranscriptSegment>> localVarResponse = ListMediaTranscriptWithHttpInfo(blobId, customerId);
             return localVarResponse.Data;
         }
 
@@ -1038,9 +1017,8 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of List&lt;TranscriptSegment&gt;</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<List<TranscriptSegment>> ListMediaTranscriptWithHttpInfo(int blobId, string? customerId = default, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<List<TranscriptSegment>> ListMediaTranscriptWithHttpInfo(int blobId, string? customerId = default)
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -1063,11 +1041,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "customer_id", customerId));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<List<TranscriptSegment>>("/v1/media/{blob_id}/transcript", localVarRequestOptions, this.Configuration);
@@ -1087,12 +1067,11 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;TranscriptSegment&gt;</returns>
-        public async System.Threading.Tasks.Task<List<TranscriptSegment>> ListMediaTranscriptAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<List<TranscriptSegment>> ListMediaTranscriptAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<List<TranscriptSegment>> localVarResponse = await ListMediaTranscriptWithHttpInfoAsync(blobId, customerId, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<List<TranscriptSegment>> localVarResponse = await ListMediaTranscriptWithHttpInfoAsync(blobId, customerId, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1102,10 +1081,9 @@ namespace LowdownLabs.Fever.Api
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="blobId"></param>
         /// <param name="customerId"> (optional)</param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;TranscriptSegment&gt;)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<List<TranscriptSegment>>> ListMediaTranscriptWithHttpInfoAsync(int blobId, string? customerId = default, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<List<TranscriptSegment>>> ListMediaTranscriptWithHttpInfoAsync(int blobId, string? customerId = default, System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -1130,11 +1108,13 @@ namespace LowdownLabs.Fever.Api
             {
                 localVarRequestOptions.QueryParameters.Add(LowdownLabs.Fever.Client.ClientUtils.ParameterToMultiMap("", "customer_id", customerId));
             }
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 

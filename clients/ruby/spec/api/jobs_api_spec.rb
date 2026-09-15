@@ -36,7 +36,6 @@ describe 'JobsApi' do
   # Cancel a pending or running ingest job
   # @param job_id 
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [Job]
   describe 'cancel_job test' do
     it 'should work' do
@@ -48,7 +47,6 @@ describe 'JobsApi' do
   # Get ingest job progress
   # @param job_id 
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [Job]
   describe 'get_job test' do
     it 'should work' do

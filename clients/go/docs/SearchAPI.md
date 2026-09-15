@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## Search
 
-> []SearchHit Search(ctx).SearchRequest(searchRequest).Authorization(authorization).Execute()
+> []SearchHit Search(ctx).SearchRequest(searchRequest).Execute()
 
 Search by text or image
 
@@ -30,11 +30,10 @@ import (
 
 func main() {
 	searchRequest := *openapiclient.NewSearchRequest() // SearchRequest | 
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SearchAPI.Search(context.Background()).SearchRequest(searchRequest).Authorization(authorization).Execute()
+	resp, r, err := apiClient.SearchAPI.Search(context.Background()).SearchRequest(searchRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SearchAPI.Search``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -56,7 +55,6 @@ Other parameters are passed through a pointer to a apiSearchRequest struct via t
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **searchRequest** | [**SearchRequest**](SearchRequest.md) |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -64,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

@@ -8,7 +8,7 @@ All URIs are relative to *http://localhost*
 
 <a id="search"></a>
 # **Search**
-> List&lt;SearchHit&gt; Search (SearchRequest searchRequest, string? authorization = null)
+> List&lt;SearchHit&gt; Search (SearchRequest searchRequest)
 
 Search by text or image
 
@@ -31,17 +31,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new SearchApi(httpClient, config, httpClientHandler);
             var searchRequest = new SearchRequest(); // SearchRequest | 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Search by text or image
-                List<SearchHit> result = apiInstance.Search(searchRequest, authorization);
+                List<SearchHit> result = apiInstance.Search(searchRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -62,7 +64,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Search by text or image
-    ApiResponse<List<SearchHit>> response = apiInstance.SearchWithHttpInfo(searchRequest, authorization);
+    ApiResponse<List<SearchHit>> response = apiInstance.SearchWithHttpInfo(searchRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -80,7 +82,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **searchRequest** | [**SearchRequest**](SearchRequest.md) |  |  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -88,7 +89,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

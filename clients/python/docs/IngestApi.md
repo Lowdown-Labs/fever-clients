@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **ingest_media**
-> IngestResult ingest_media(ingest_request, authorization=authorization)
+> IngestResult ingest_media(ingest_request)
 
 Ingest one or many media items
 
@@ -16,6 +16,7 @@ Throw 1..N media items over the wall. Small inline batches are embedded and inde
 
 ### Example
 
+* Bearer Authentication (bearerAuth):
 
 ```python
 import fever_client
@@ -30,17 +31,25 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.IngestApi(api_client)
     ingest_request = fever_client.IngestRequest() # IngestRequest | 
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Ingest one or many media items
-        api_response = await api_instance.ingest_media(ingest_request, authorization=authorization)
+        api_response = await api_instance.ingest_media(ingest_request)
         print("The response of IngestApi->ingest_media:\n")
         pprint(api_response)
     except Exception as e:
@@ -55,7 +64,6 @@ async with fever_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ingest_request** | [**IngestRequest**](IngestRequest.md)|  | 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -63,7 +71,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

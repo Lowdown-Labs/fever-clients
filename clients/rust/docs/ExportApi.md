@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## export_tenant
 
-> models::ExportResult export_tenant(export_request, authorization)
+> models::ExportResult export_tenant(export_request)
 Export the tenant's vectors and metadata to S3
 
 ### Parameters
@@ -20,7 +20,6 @@ Export the tenant's vectors and metadata to S3
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **export_request** | [**ExportRequest**](ExportRequest.md) |  | [required] |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -28,7 +27,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -40,7 +39,7 @@ No authorization required
 
 ## import_tenant
 
-> models::ImportResult import_tenant(import_request, authorization)
+> models::ImportResult import_tenant(import_request)
 Import vectors and metadata from a previous FEVER export in S3
 
 ### Parameters
@@ -49,7 +48,6 @@ Import vectors and metadata from a previous FEVER export in S3
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **import_request** | [**ImportRequest**](ImportRequest.md) |  | [required] |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -57,7 +55,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

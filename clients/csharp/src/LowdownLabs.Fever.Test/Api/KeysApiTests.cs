@@ -61,8 +61,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //CreateKeyRequest createKeyRequest = null;
-            //string? authorization = null;
-            //var response = instance.CreateKey(createKeyRequest, authorization);
+            //var response = instance.CreateKey(createKeyRequest);
             //Assert.IsType<KeyReveal>(response);
         }
 
@@ -73,8 +72,7 @@ namespace LowdownLabs.Fever.Test.Api
         public void ListKeysTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //string? authorization = null;
-            //var response = instance.ListKeys(authorization);
+            //var response = instance.ListKeys();
             //Assert.IsType<List<ApiKey>>(response);
         }
 
@@ -86,8 +84,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //int keyId = null;
-            //string? authorization = null;
-            //var response = instance.RevokeKey(keyId, authorization);
+            //var response = instance.RevokeKey(keyId);
             //Assert.IsType<Object>(response);
         }
     }

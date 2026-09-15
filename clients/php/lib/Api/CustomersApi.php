@@ -130,7 +130,6 @@ class CustomersApi
      *
      * Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
      *
-     * @param  string|null $authorization authorization (optional)
      * @param  \SplFileObject|null $file file (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reassignCustomersBulk'] to see the possible values for this operation
      *
@@ -138,9 +137,9 @@ class CustomersApi
      * @throws \InvalidArgumentException
      * @return mixed|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function reassignCustomersBulk($authorization = null, $file = null, string $contentType = self::contentTypes['reassignCustomersBulk'][0])
+    public function reassignCustomersBulk($file = null, string $contentType = self::contentTypes['reassignCustomersBulk'][0])
     {
-        list($response) = $this->reassignCustomersBulkWithHttpInfo($authorization, $file, $contentType);
+        list($response) = $this->reassignCustomersBulkWithHttpInfo($file, $contentType);
         return $response;
     }
 
@@ -149,7 +148,6 @@ class CustomersApi
      *
      * Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
      *
-     * @param  string|null $authorization (optional)
      * @param  \SplFileObject|null $file (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reassignCustomersBulk'] to see the possible values for this operation
      *
@@ -157,9 +155,9 @@ class CustomersApi
      * @throws \InvalidArgumentException
      * @return array of mixed|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function reassignCustomersBulkWithHttpInfo($authorization = null, $file = null, string $contentType = self::contentTypes['reassignCustomersBulk'][0])
+    public function reassignCustomersBulkWithHttpInfo($file = null, string $contentType = self::contentTypes['reassignCustomersBulk'][0])
     {
-        $request = $this->reassignCustomersBulkRequest($authorization, $file, $contentType);
+        $request = $this->reassignCustomersBulkRequest($file, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -249,16 +247,15 @@ class CustomersApi
      *
      * Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
      *
-     * @param  string|null $authorization (optional)
      * @param  \SplFileObject|null $file (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reassignCustomersBulk'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function reassignCustomersBulkAsync($authorization = null, $file = null, string $contentType = self::contentTypes['reassignCustomersBulk'][0])
+    public function reassignCustomersBulkAsync($file = null, string $contentType = self::contentTypes['reassignCustomersBulk'][0])
     {
-        return $this->reassignCustomersBulkAsyncWithHttpInfo($authorization, $file, $contentType)
+        return $this->reassignCustomersBulkAsyncWithHttpInfo($file, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -271,17 +268,16 @@ class CustomersApi
      *
      * Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
      *
-     * @param  string|null $authorization (optional)
      * @param  \SplFileObject|null $file (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reassignCustomersBulk'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function reassignCustomersBulkAsyncWithHttpInfo($authorization = null, $file = null, string $contentType = self::contentTypes['reassignCustomersBulk'][0])
+    public function reassignCustomersBulkAsyncWithHttpInfo($file = null, string $contentType = self::contentTypes['reassignCustomersBulk'][0])
     {
         $returnType = 'mixed';
-        $request = $this->reassignCustomersBulkRequest($authorization, $file, $contentType);
+        $request = $this->reassignCustomersBulkRequest($file, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -322,16 +318,14 @@ class CustomersApi
     /**
      * Create request for operation 'reassignCustomersBulk'
      *
-     * @param  string|null $authorization (optional)
      * @param  \SplFileObject|null $file (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['reassignCustomersBulk'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function reassignCustomersBulkRequest($authorization = null, $file = null, string $contentType = self::contentTypes['reassignCustomersBulk'][0])
+    public function reassignCustomersBulkRequest($file = null, string $contentType = self::contentTypes['reassignCustomersBulk'][0])
     {
-
 
 
 
@@ -343,10 +337,6 @@ class CustomersApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
         // form params
@@ -395,6 +385,10 @@ class CustomersApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

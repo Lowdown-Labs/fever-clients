@@ -43,16 +43,10 @@ type ApiSearchRequest struct {
 	ctx context.Context
 	ApiService SearchAPI
 	searchRequest *SearchRequest
-	authorization *string
 }
 
 func (r ApiSearchRequest) SearchRequest(searchRequest SearchRequest) ApiSearchRequest {
 	r.searchRequest = &searchRequest
-	return r
-}
-
-func (r ApiSearchRequest) Authorization(authorization string) ApiSearchRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -115,9 +109,6 @@ func (a *SearchAPIService) SearchExecute(r ApiSearchRequest) ([]SearchHit, *http
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
 	// body params
 	localVarPostBody = r.searchRequest

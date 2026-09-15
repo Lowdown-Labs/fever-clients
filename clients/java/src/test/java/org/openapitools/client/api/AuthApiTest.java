@@ -14,7 +14,6 @@
 package org.openapitools.client.api;
 
 import com.lowdownlabs.fever.ApiException;
-import org.openapitools.client.model.HTTPValidationError;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -44,9 +43,8 @@ public class AuthApiTest {
      */
     @Test
     public void whoamiTest() throws ApiException {
-        String authorization = null;
         Object response = 
-        api.whoami(authorization);
+        api.whoami();
         
         // TODO: test validations
     }

@@ -39,17 +39,6 @@ export interface CreateKeyOperationRequest {
      * 
      */
     createKeyRequest: CreateKeyRequest;
-    /**
-     * 
-     */
-    authorization?: string | null;
-}
-
-export interface ListKeysRequest {
-    /**
-     * 
-     */
-    authorization?: string | null;
 }
 
 export interface RevokeKeyRequest {
@@ -57,10 +46,6 @@ export interface RevokeKeyRequest {
      * 
      */
     keyId: number;
-    /**
-     * 
-     */
-    authorization?: string | null;
 }
 
 /**
@@ -85,10 +70,14 @@ export class KeysApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("adminToken", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/keys`;
 
@@ -122,15 +111,19 @@ export class KeysApi extends runtime.BaseAPI {
     /**
      * Creates request options for listKeys without sending the request
      */
-    async listKeysRequestOpts(requestParameters: ListKeysRequest): Promise<runtime.RequestOpts> {
+    async listKeysRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("adminToken", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/keys`;
 
@@ -145,8 +138,8 @@ export class KeysApi extends runtime.BaseAPI {
     /**
      * List this appliance\'s API keys
      */
-    async listKeysRaw(requestParameters: ListKeysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ApiKey>>> {
-        const requestOptions = await this.listKeysRequestOpts(requestParameters);
+    async listKeysRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ApiKey>>> {
+        const requestOptions = await this.listKeysRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ApiKeyFromJSON));
@@ -155,8 +148,8 @@ export class KeysApi extends runtime.BaseAPI {
     /**
      * List this appliance\'s API keys
      */
-    async listKeys(requestParameters: ListKeysRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ApiKey>> {
-        const response = await this.listKeysRaw(requestParameters, initOverrides);
+    async listKeys(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ApiKey>> {
+        const response = await this.listKeysRaw(initOverrides);
         return await response.value();
     }
 
@@ -175,10 +168,14 @@ export class KeysApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("adminToken", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/keys/{key_id}/revoke`;
         urlPath = urlPath.replace('{key_id}', encodeURIComponent(String(requestParameters['keyId'])));

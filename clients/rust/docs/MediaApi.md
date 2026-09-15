@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## get_media_bytes
 
-> serde_json::Value get_media_bytes(blob_id, max_dim, waveform, authorization)
+> serde_json::Value get_media_bytes(blob_id, max_dim, waveform)
 Fetch an indexed media item's bytes (images normalized to JPEG)
 
 Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw bytes). Scoped keys can only fetch their own customer's items; other customers' blobs are a 404 (never an existence leak).  ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.
@@ -27,7 +27,6 @@ Name | Type | Description  | Required | Notes
 **blob_id** | **i32** |  | [required] |
 **max_dim** | Option<**i32**> |  |  |[default to 1280]
 **waveform** | Option<**i32**> |  |  |[default to 0]
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -35,7 +34,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -47,7 +46,7 @@ No authorization required
 
 ## get_media_info
 
-> models::MediaInfo get_media_info(blob_id, customer_id, authorization)
+> models::MediaInfo get_media_info(blob_id, customer_id)
 Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 
 Unified record for a blob_id. Scoped keys can only read their own customer's blobs; other customers' blobs are a 404 (never an existence leak). Admin keys may narrow with ?customer_id=.
@@ -59,7 +58,6 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **blob_id** | **i32** |  | [required] |
 **customer_id** | Option<**String**> |  |  |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -67,7 +65,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -79,15 +77,12 @@ No authorization required
 
 ## list_media_formats
 
-> models::MediaFormats list_media_formats(authorization)
+> models::MediaFormats list_media_formats()
 Ingest capability: supported extensions per media family
 
 ### Parameters
 
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**authorization** | Option<**String**> |  |  |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -95,7 +90,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -107,7 +102,7 @@ No authorization required
 
 ## list_media_frames
 
-> Vec<models::MediaFrame> list_media_frames(blob_id, customer_id, authorization)
+> Vec<models::MediaFrame> list_media_frames(blob_id, customer_id)
 Sampled video frames for a parent blob
 
 ### Parameters
@@ -117,7 +112,6 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **blob_id** | **i32** |  | [required] |
 **customer_id** | Option<**String**> |  |  |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -125,7 +119,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -137,7 +131,7 @@ No authorization required
 
 ## list_media_transcript
 
-> Vec<models::TranscriptSegment> list_media_transcript(blob_id, customer_id, authorization)
+> Vec<models::TranscriptSegment> list_media_transcript(blob_id, customer_id)
 Whisper transcript segments for a parent blob (audio or video)
 
 ### Parameters
@@ -147,7 +141,6 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **blob_id** | **i32** |  | [required] |
 **customer_id** | Option<**String**> |  |  |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -155,7 +148,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 
 ## query
 
-> QueryResult query(queryRequest, authorization)
+> QueryResult query(queryRequest)
 
 Run a read-only SQL SELECT over the corpus tables
 
@@ -24,6 +24,7 @@ A mini SQL console over the appliance&#39;s corpus tables: as_blobs, annotations
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.QueryApi;
 
@@ -31,12 +32,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         QueryApi apiInstance = new QueryApi(defaultClient);
         QueryRequest queryRequest = new QueryRequest(); // QueryRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            QueryResult result = apiInstance.query(queryRequest, authorization);
+            QueryResult result = apiInstance.query(queryRequest);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling QueryApi#query");
@@ -55,7 +59,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **queryRequest** | [**QueryRequest**](QueryRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -64,7 +67,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -79,7 +82,7 @@ No authorization required
 
 ## queryWithHttpInfo
 
-> ApiResponse<QueryResult> queryWithHttpInfo(queryRequest, authorization)
+> ApiResponse<QueryResult> queryWithHttpInfo(queryRequest)
 
 Run a read-only SQL SELECT over the corpus tables
 
@@ -93,6 +96,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.QueryApi;
 
@@ -100,12 +104,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         QueryApi apiInstance = new QueryApi(defaultClient);
         QueryRequest queryRequest = new QueryRequest(); // QueryRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<QueryResult> response = apiInstance.queryWithHttpInfo(queryRequest, authorization);
+            ApiResponse<QueryResult> response = apiInstance.queryWithHttpInfo(queryRequest);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -126,7 +133,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **queryRequest** | [**QueryRequest**](QueryRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -135,7 +141,7 @@ ApiResponse<[**QueryResult**](QueryResult.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

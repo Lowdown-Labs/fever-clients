@@ -174,25 +174,23 @@ public class IngestApi {
    * Ingest one or many media items
    * Throw 1..N media items over the wall. Small inline batches are embedded and indexed synchronously and return blob ids; large batches or an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken from the API key.
    * @param ingestRequest  (required)
-   * @param authorization  (optional)
    * @return IngestResult
    * @throws ApiException if fails to make API call
    */
-  public IngestResult ingestMedia(@javax.annotation.Nonnull IngestRequest ingestRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return ingestMedia(ingestRequest, authorization, null);
+  public IngestResult ingestMedia(@javax.annotation.Nonnull IngestRequest ingestRequest) throws ApiException {
+    return ingestMedia(ingestRequest, null);
   }
 
   /**
    * Ingest one or many media items
    * Throw 1..N media items over the wall. Small inline batches are embedded and indexed synchronously and return blob ids; large batches or an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken from the API key.
    * @param ingestRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return IngestResult
    * @throws ApiException if fails to make API call
    */
-  public IngestResult ingestMedia(@javax.annotation.Nonnull IngestRequest ingestRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<IngestResult> localVarResponse = ingestMediaWithHttpInfo(ingestRequest, authorization, headers);
+  public IngestResult ingestMedia(@javax.annotation.Nonnull IngestRequest ingestRequest, Map<String, String> headers) throws ApiException {
+    ApiResponse<IngestResult> localVarResponse = ingestMediaWithHttpInfo(ingestRequest, headers);
     return localVarResponse.getData();
   }
 
@@ -200,25 +198,23 @@ public class IngestApi {
    * Ingest one or many media items
    * Throw 1..N media items over the wall. Small inline batches are embedded and indexed synchronously and return blob ids; large batches or an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken from the API key.
    * @param ingestRequest  (required)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;IngestResult&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<IngestResult> ingestMediaWithHttpInfo(@javax.annotation.Nonnull IngestRequest ingestRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return ingestMediaWithHttpInfo(ingestRequest, authorization, null);
+  public ApiResponse<IngestResult> ingestMediaWithHttpInfo(@javax.annotation.Nonnull IngestRequest ingestRequest) throws ApiException {
+    return ingestMediaWithHttpInfo(ingestRequest, null);
   }
 
   /**
    * Ingest one or many media items
    * Throw 1..N media items over the wall. Small inline batches are embedded and indexed synchronously and return blob ids; large batches or an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken from the API key.
    * @param ingestRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;IngestResult&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<IngestResult> ingestMediaWithHttpInfo(@javax.annotation.Nonnull IngestRequest ingestRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = ingestMediaRequestBuilder(ingestRequest, authorization, headers);
+  public ApiResponse<IngestResult> ingestMediaWithHttpInfo(@javax.annotation.Nonnull IngestRequest ingestRequest, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = ingestMediaRequestBuilder(ingestRequest, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -265,7 +261,7 @@ public class IngestApi {
     }
   }
 
-  private HttpRequest.Builder ingestMediaRequestBuilder(@javax.annotation.Nonnull IngestRequest ingestRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder ingestMediaRequestBuilder(@javax.annotation.Nonnull IngestRequest ingestRequest, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'ingestRequest' is set
     if (ingestRequest == null) {
       throw new ApiException(400, "Missing the required parameter 'ingestRequest' when calling ingestMedia");
@@ -277,9 +273,6 @@ public class IngestApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 

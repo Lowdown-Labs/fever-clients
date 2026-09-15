@@ -61,8 +61,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //DuplicatesRequest duplicatesRequest = null;
-            //string? authorization = null;
-            //var response = instance.FindDuplicates(duplicatesRequest, authorization);
+            //var response = instance.FindDuplicates(duplicatesRequest);
             //Assert.IsType<DuplicatesResponse>(response);
         }
 
@@ -74,8 +73,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string? customerId = null;
-            //string? authorization = null;
-            //var response = instance.SuggestedDedupThreshold(customerId, authorization);
+            //var response = instance.SuggestedDedupThreshold(customerId);
             //Assert.IsType<Object>(response);
         }
     }

@@ -22,7 +22,6 @@ module FeverClient
     # Export the tenant's vectors and metadata to S3
     # @param export_request [ExportRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [ExportResult]
     def export_tenant(export_request, opts = {})
       data, _status_code, _headers = export_tenant_with_http_info(export_request, opts)
@@ -32,7 +31,6 @@ module FeverClient
     # Export the tenant&#39;s vectors and metadata to S3
     # @param export_request [ExportRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(ExportResult, Integer, Hash)>] ExportResult data, response status code and response headers
     def export_tenant_with_http_info(export_request, opts = {})
       if @api_client.config.debugging
@@ -57,7 +55,6 @@ module FeverClient
       if !content_type.nil?
           header_params['Content-Type'] = content_type
       end
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -69,7 +66,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'ExportResult'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"ExportApi.export_tenant",
@@ -91,7 +88,6 @@ module FeverClient
     # Import vectors and metadata from a previous FEVER export in S3
     # @param import_request [ImportRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [ImportResult]
     def import_tenant(import_request, opts = {})
       data, _status_code, _headers = import_tenant_with_http_info(import_request, opts)
@@ -101,7 +97,6 @@ module FeverClient
     # Import vectors and metadata from a previous FEVER export in S3
     # @param import_request [ImportRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(ImportResult, Integer, Hash)>] ImportResult data, response status code and response headers
     def import_tenant_with_http_info(import_request, opts = {})
       if @api_client.config.debugging
@@ -126,7 +121,6 @@ module FeverClient
       if !content_type.nil?
           header_params['Content-Type'] = content_type
       end
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -138,7 +132,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'ImportResult'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"ExportApi.import_tenant",

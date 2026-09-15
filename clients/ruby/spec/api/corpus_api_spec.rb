@@ -36,7 +36,6 @@ describe 'CorpusApi' do
   # Corpus composition: per-kind counts and top autotags
   # @param [Hash] opts the optional parameters
   # @option opts [String] :customer_id 
-  # @option opts [String] :authorization 
   # @return [CorpusStats]
   describe 'corpus_stats test' do
     it 'should work' do

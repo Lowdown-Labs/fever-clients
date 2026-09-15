@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 
 ## search
 
-> List<SearchHit> search(searchRequest, authorization)
+> List<SearchHit> search(searchRequest)
 
 Search by text or image
 
@@ -24,6 +24,7 @@ text runs a meaning-based vector search fused with lexical full-text (RRF), rera
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.SearchApi;
 
@@ -31,12 +32,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         SearchApi apiInstance = new SearchApi(defaultClient);
         SearchRequest searchRequest = new SearchRequest(); // SearchRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            List<SearchHit> result = apiInstance.search(searchRequest, authorization);
+            List<SearchHit> result = apiInstance.search(searchRequest);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling SearchApi#search");
@@ -55,7 +59,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **searchRequest** | [**SearchRequest**](SearchRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -64,7 +67,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -79,7 +82,7 @@ No authorization required
 
 ## searchWithHttpInfo
 
-> ApiResponse<List<SearchHit>> searchWithHttpInfo(searchRequest, authorization)
+> ApiResponse<List<SearchHit>> searchWithHttpInfo(searchRequest)
 
 Search by text or image
 
@@ -93,6 +96,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.SearchApi;
 
@@ -100,12 +104,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         SearchApi apiInstance = new SearchApi(defaultClient);
         SearchRequest searchRequest = new SearchRequest(); // SearchRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<List<SearchHit>> response = apiInstance.searchWithHttpInfo(searchRequest, authorization);
+            ApiResponse<List<SearchHit>> response = apiInstance.searchWithHttpInfo(searchRequest);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -126,7 +133,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **searchRequest** | [**SearchRequest**](SearchRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -135,7 +141,7 @@ ApiResponse<[**List&lt;SearchHit&gt;**](SearchHit.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

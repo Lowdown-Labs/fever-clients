@@ -12,7 +12,7 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 ## `whoami()`
 
 ```php
-whoami($authorization): mixed
+whoami(): mixed
 ```
 
 Report the calling key's role and customer scope
@@ -24,16 +24,19 @@ Report the calling key's role and customer scope
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\AuthApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->whoami($authorization);
+    $result = $apiInstance->whoami();
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling AuthApi->whoami: ', $e->getMessage(), PHP_EOL;
@@ -42,9 +45,7 @@ try {
 
 ### Parameters
 
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **authorization** | **string**|  | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -52,7 +53,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../../README.md#bearerAuth)
 
 ### HTTP request headers
 

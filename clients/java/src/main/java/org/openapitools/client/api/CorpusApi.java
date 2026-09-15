@@ -167,25 +167,23 @@ public class CorpusApi {
    * Corpus composition: per-kind counts and top autotags
    * 
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @return CorpusStats
    * @throws ApiException if fails to make API call
    */
-  public CorpusStats corpusStats(@javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return corpusStats(customerId, authorization, null);
+  public CorpusStats corpusStats(@javax.annotation.Nullable String customerId) throws ApiException {
+    return corpusStats(customerId, null);
   }
 
   /**
    * Corpus composition: per-kind counts and top autotags
    * 
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return CorpusStats
    * @throws ApiException if fails to make API call
    */
-  public CorpusStats corpusStats(@javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<CorpusStats> localVarResponse = corpusStatsWithHttpInfo(customerId, authorization, headers);
+  public CorpusStats corpusStats(@javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
+    ApiResponse<CorpusStats> localVarResponse = corpusStatsWithHttpInfo(customerId, headers);
     return localVarResponse.getData();
   }
 
@@ -193,25 +191,23 @@ public class CorpusApi {
    * Corpus composition: per-kind counts and top autotags
    * 
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;CorpusStats&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<CorpusStats> corpusStatsWithHttpInfo(@javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return corpusStatsWithHttpInfo(customerId, authorization, null);
+  public ApiResponse<CorpusStats> corpusStatsWithHttpInfo(@javax.annotation.Nullable String customerId) throws ApiException {
+    return corpusStatsWithHttpInfo(customerId, null);
   }
 
   /**
    * Corpus composition: per-kind counts and top autotags
    * 
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;CorpusStats&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<CorpusStats> corpusStatsWithHttpInfo(@javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = corpusStatsRequestBuilder(customerId, authorization, headers);
+  public ApiResponse<CorpusStats> corpusStatsWithHttpInfo(@javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = corpusStatsRequestBuilder(customerId, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -258,7 +254,7 @@ public class CorpusApi {
     }
   }
 
-  private HttpRequest.Builder corpusStatsRequestBuilder(@javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder corpusStatsRequestBuilder(@javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -281,9 +277,6 @@ public class CorpusApi {
       localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
     }
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());

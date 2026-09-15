@@ -55,16 +55,10 @@ type ApiFindDuplicatesRequest struct {
 	ctx context.Context
 	ApiService DuplicatesAPI
 	duplicatesRequest *DuplicatesRequest
-	authorization *string
 }
 
 func (r ApiFindDuplicatesRequest) DuplicatesRequest(duplicatesRequest DuplicatesRequest) ApiFindDuplicatesRequest {
 	r.duplicatesRequest = &duplicatesRequest
-	return r
-}
-
-func (r ApiFindDuplicatesRequest) Authorization(authorization string) ApiFindDuplicatesRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -128,9 +122,6 @@ func (a *DuplicatesAPIService) FindDuplicatesExecute(r ApiFindDuplicatesRequest)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.duplicatesRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -184,16 +175,10 @@ type ApiSuggestedDedupThresholdRequest struct {
 	ctx context.Context
 	ApiService DuplicatesAPI
 	customerId *string
-	authorization *string
 }
 
 func (r ApiSuggestedDedupThresholdRequest) CustomerId(customerId string) ApiSuggestedDedupThresholdRequest {
 	r.customerId = &customerId
-	return r
-}
-
-func (r ApiSuggestedDedupThresholdRequest) Authorization(authorization string) ApiSuggestedDedupThresholdRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -254,9 +239,6 @@ func (a *DuplicatesAPIService) SuggestedDedupThresholdExecute(r ApiSuggestedDedu
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

@@ -35,9 +35,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ingestRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>IngestResult</returns>
-        IngestResult IngestMedia(IngestRequest ingestRequest, string? authorization = default);
+        IngestResult IngestMedia(IngestRequest ingestRequest);
 
         /// <summary>
         /// Ingest one or many media items
@@ -47,9 +46,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ingestRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of IngestResult</returns>
-        ApiResponse<IngestResult> IngestMediaWithHttpInfo(IngestRequest ingestRequest, string? authorization = default);
+        ApiResponse<IngestResult> IngestMediaWithHttpInfo(IngestRequest ingestRequest);
         #endregion Synchronous Operations
     }
 
@@ -67,10 +65,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ingestRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of IngestResult</returns>
-        System.Threading.Tasks.Task<IngestResult> IngestMediaAsync(IngestRequest ingestRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<IngestResult> IngestMediaAsync(IngestRequest ingestRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Ingest one or many media items
@@ -80,10 +77,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ingestRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (IngestResult)</returns>
-        System.Threading.Tasks.Task<ApiResponse<IngestResult>> IngestMediaWithHttpInfoAsync(IngestRequest ingestRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<IngestResult>> IngestMediaWithHttpInfoAsync(IngestRequest ingestRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -302,11 +298,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ingestRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>IngestResult</returns>
-        public IngestResult IngestMedia(IngestRequest ingestRequest, string? authorization = default)
+        public IngestResult IngestMedia(IngestRequest ingestRequest)
         {
-            LowdownLabs.Fever.Client.ApiResponse<IngestResult> localVarResponse = IngestMediaWithHttpInfo(ingestRequest, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<IngestResult> localVarResponse = IngestMediaWithHttpInfo(ingestRequest);
             return localVarResponse.Data;
         }
 
@@ -315,9 +310,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ingestRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of IngestResult</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<IngestResult> IngestMediaWithHttpInfo(IngestRequest ingestRequest, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<IngestResult> IngestMediaWithHttpInfo(IngestRequest ingestRequest)
         {
             // verify the required parameter 'ingestRequest' is set
             if (ingestRequest == null)
@@ -340,12 +334,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = ingestRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<IngestResult>("/v1/media", localVarRequestOptions, this.Configuration);
@@ -364,12 +360,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ingestRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of IngestResult</returns>
-        public async System.Threading.Tasks.Task<IngestResult> IngestMediaAsync(IngestRequest ingestRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<IngestResult> IngestMediaAsync(IngestRequest ingestRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<IngestResult> localVarResponse = await IngestMediaWithHttpInfoAsync(ingestRequest, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<IngestResult> localVarResponse = await IngestMediaWithHttpInfoAsync(ingestRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -378,10 +373,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="ingestRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (IngestResult)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<IngestResult>> IngestMediaWithHttpInfoAsync(IngestRequest ingestRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<IngestResult>> IngestMediaWithHttpInfoAsync(IngestRequest ingestRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'ingestRequest' is set
             if (ingestRequest == null)
@@ -406,12 +400,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = ingestRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 

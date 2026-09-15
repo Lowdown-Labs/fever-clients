@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 
 ## exportTenant
 
-> ExportResult exportTenant(exportRequest, authorization)
+> ExportResult exportTenant(exportRequest)
 
 Export the tenant\&#39;s vectors and metadata to S3
 
@@ -26,13 +26,15 @@ import type { ExportTenantRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new ExportApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ExportApi(config);
 
   const body = {
     // ExportRequest
     exportRequest: ...,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies ExportTenantRequest;
 
   try {
@@ -53,7 +55,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **exportRequest** | [ExportRequest](ExportRequest.md) |  | |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -61,7 +62,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -80,7 +81,7 @@ No authorization required
 
 ## importTenant
 
-> ImportResult importTenant(importRequest, authorization)
+> ImportResult importTenant(importRequest)
 
 Import vectors and metadata from a previous FEVER export in S3
 
@@ -95,13 +96,15 @@ import type { ImportTenantRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new ExportApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new ExportApi(config);
 
   const body = {
     // ImportRequest
     importRequest: ...,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies ImportTenantRequest;
 
   try {
@@ -122,7 +125,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **importRequest** | [ImportRequest](ImportRequest.md) |  | |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -130,7 +132,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

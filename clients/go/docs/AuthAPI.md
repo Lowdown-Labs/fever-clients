@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## Whoami
 
-> interface{} Whoami(ctx).Authorization(authorization).Execute()
+> interface{} Whoami(ctx).Execute()
 
 Report the calling key's role and customer scope
 
@@ -27,11 +27,10 @@ import (
 )
 
 func main() {
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.AuthAPI.Whoami(context.Background()).Authorization(authorization).Execute()
+	resp, r, err := apiClient.AuthAPI.Whoami(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthAPI.Whoami``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -43,16 +42,12 @@ func main() {
 
 ### Path Parameters
 
-
+This endpoint does not need any parameter.
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiWhoamiRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -60,7 +55,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

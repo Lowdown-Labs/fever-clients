@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## FindDuplicates
 
-> DuplicatesResponse FindDuplicates(ctx).DuplicatesRequest(duplicatesRequest).Authorization(authorization).Execute()
+> DuplicatesResponse FindDuplicates(ctx).DuplicatesRequest(duplicatesRequest).Execute()
 
 Find near-duplicate media clusters for a customer
 
@@ -31,11 +31,10 @@ import (
 
 func main() {
 	duplicatesRequest := *openapiclient.NewDuplicatesRequest() // DuplicatesRequest | 
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DuplicatesAPI.FindDuplicates(context.Background()).DuplicatesRequest(duplicatesRequest).Authorization(authorization).Execute()
+	resp, r, err := apiClient.DuplicatesAPI.FindDuplicates(context.Background()).DuplicatesRequest(duplicatesRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DuplicatesAPI.FindDuplicates``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -57,7 +56,6 @@ Other parameters are passed through a pointer to a apiFindDuplicatesRequest stru
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **duplicatesRequest** | [**DuplicatesRequest**](DuplicatesRequest.md) |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -65,7 +63,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -79,7 +77,7 @@ No authorization required
 
 ## SuggestedDedupThreshold
 
-> interface{} SuggestedDedupThreshold(ctx).CustomerId(customerId).Authorization(authorization).Execute()
+> interface{} SuggestedDedupThreshold(ctx).CustomerId(customerId).Execute()
 
 Suggest a duplicate-detection threshold from this customer's edge cosine distribution
 
@@ -97,11 +95,10 @@ import (
 
 func main() {
 	customerId := "customerId_example" // string |  (optional)
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DuplicatesAPI.SuggestedDedupThreshold(context.Background()).CustomerId(customerId).Authorization(authorization).Execute()
+	resp, r, err := apiClient.DuplicatesAPI.SuggestedDedupThreshold(context.Background()).CustomerId(customerId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DuplicatesAPI.SuggestedDedupThreshold``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -123,7 +120,6 @@ Other parameters are passed through a pointer to a apiSuggestedDedupThresholdReq
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **customerId** | **string** |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -131,7 +127,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

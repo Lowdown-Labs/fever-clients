@@ -134,16 +134,15 @@ class JobsApi
      * Cancel a pending or running ingest job
      *
      * @param  int $job_id job_id (required)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelJob'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\Job|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function cancelJob($job_id, $authorization = null, string $contentType = self::contentTypes['cancelJob'][0])
+    public function cancelJob($job_id, string $contentType = self::contentTypes['cancelJob'][0])
     {
-        list($response) = $this->cancelJobWithHttpInfo($job_id, $authorization, $contentType);
+        list($response) = $this->cancelJobWithHttpInfo($job_id, $contentType);
         return $response;
     }
 
@@ -153,16 +152,15 @@ class JobsApi
      * Cancel a pending or running ingest job
      *
      * @param  int $job_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelJob'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\Job|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function cancelJobWithHttpInfo($job_id, $authorization = null, string $contentType = self::contentTypes['cancelJob'][0])
+    public function cancelJobWithHttpInfo($job_id, string $contentType = self::contentTypes['cancelJob'][0])
     {
-        $request = $this->cancelJobRequest($job_id, $authorization, $contentType);
+        $request = $this->cancelJobRequest($job_id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -253,15 +251,14 @@ class JobsApi
      * Cancel a pending or running ingest job
      *
      * @param  int $job_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelJob'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function cancelJobAsync($job_id, $authorization = null, string $contentType = self::contentTypes['cancelJob'][0])
+    public function cancelJobAsync($job_id, string $contentType = self::contentTypes['cancelJob'][0])
     {
-        return $this->cancelJobAsyncWithHttpInfo($job_id, $authorization, $contentType)
+        return $this->cancelJobAsyncWithHttpInfo($job_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -275,16 +272,15 @@ class JobsApi
      * Cancel a pending or running ingest job
      *
      * @param  int $job_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelJob'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function cancelJobAsyncWithHttpInfo($job_id, $authorization = null, string $contentType = self::contentTypes['cancelJob'][0])
+    public function cancelJobAsyncWithHttpInfo($job_id, string $contentType = self::contentTypes['cancelJob'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\Job';
-        $request = $this->cancelJobRequest($job_id, $authorization, $contentType);
+        $request = $this->cancelJobRequest($job_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -326,13 +322,12 @@ class JobsApi
      * Create request for operation 'cancelJob'
      *
      * @param  int $job_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelJob'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function cancelJobRequest($job_id, $authorization = null, string $contentType = self::contentTypes['cancelJob'][0])
+    public function cancelJobRequest($job_id, string $contentType = self::contentTypes['cancelJob'][0])
     {
 
         // verify the required parameter 'job_id' is set
@@ -343,7 +338,6 @@ class JobsApi
         }
 
 
-
         $resourcePath = '/v1/jobs/{job_id}/cancel';
         $formParams = [];
         $queryParams = [];
@@ -352,10 +346,6 @@ class JobsApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
         // path params
         if ($job_id !== null) {
@@ -402,6 +392,10 @@ class JobsApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -430,16 +424,15 @@ class JobsApi
      * Get ingest job progress
      *
      * @param  int $job_id job_id (required)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getJob'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\Job|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function getJob($job_id, $authorization = null, string $contentType = self::contentTypes['getJob'][0])
+    public function getJob($job_id, string $contentType = self::contentTypes['getJob'][0])
     {
-        list($response) = $this->getJobWithHttpInfo($job_id, $authorization, $contentType);
+        list($response) = $this->getJobWithHttpInfo($job_id, $contentType);
         return $response;
     }
 
@@ -449,16 +442,15 @@ class JobsApi
      * Get ingest job progress
      *
      * @param  int $job_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getJob'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\Job|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getJobWithHttpInfo($job_id, $authorization = null, string $contentType = self::contentTypes['getJob'][0])
+    public function getJobWithHttpInfo($job_id, string $contentType = self::contentTypes['getJob'][0])
     {
-        $request = $this->getJobRequest($job_id, $authorization, $contentType);
+        $request = $this->getJobRequest($job_id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -549,15 +541,14 @@ class JobsApi
      * Get ingest job progress
      *
      * @param  int $job_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getJob'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getJobAsync($job_id, $authorization = null, string $contentType = self::contentTypes['getJob'][0])
+    public function getJobAsync($job_id, string $contentType = self::contentTypes['getJob'][0])
     {
-        return $this->getJobAsyncWithHttpInfo($job_id, $authorization, $contentType)
+        return $this->getJobAsyncWithHttpInfo($job_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -571,16 +562,15 @@ class JobsApi
      * Get ingest job progress
      *
      * @param  int $job_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getJob'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getJobAsyncWithHttpInfo($job_id, $authorization = null, string $contentType = self::contentTypes['getJob'][0])
+    public function getJobAsyncWithHttpInfo($job_id, string $contentType = self::contentTypes['getJob'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\Job';
-        $request = $this->getJobRequest($job_id, $authorization, $contentType);
+        $request = $this->getJobRequest($job_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -622,13 +612,12 @@ class JobsApi
      * Create request for operation 'getJob'
      *
      * @param  int $job_id (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getJob'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getJobRequest($job_id, $authorization = null, string $contentType = self::contentTypes['getJob'][0])
+    public function getJobRequest($job_id, string $contentType = self::contentTypes['getJob'][0])
     {
 
         // verify the required parameter 'job_id' is set
@@ -639,7 +628,6 @@ class JobsApi
         }
 
 
-
         $resourcePath = '/v1/jobs/{job_id}';
         $formParams = [];
         $queryParams = [];
@@ -648,10 +636,6 @@ class JobsApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
         // path params
         if ($job_id !== null) {
@@ -698,6 +682,10 @@ class JobsApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

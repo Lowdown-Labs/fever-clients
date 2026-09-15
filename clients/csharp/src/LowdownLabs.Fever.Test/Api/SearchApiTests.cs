@@ -61,8 +61,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //SearchRequest searchRequest = null;
-            //string? authorization = null;
-            //var response = instance.Search(searchRequest, authorization);
+            //var response = instance.Search(searchRequest);
             //Assert.IsType<List<SearchHit>>(response);
         }
     }

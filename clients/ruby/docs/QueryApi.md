@@ -9,7 +9,7 @@ All URIs are relative to *http://localhost*
 
 ## query
 
-> <QueryResult> query(query_request, opts)
+> <QueryResult> query(query_request)
 
 Run a read-only SQL SELECT over the corpus tables
 
@@ -20,16 +20,18 @@ A mini SQL console over the appliance's corpus tables: as_blobs, annotations, du
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::QueryApi.new
 query_request = FeverClient::QueryRequest.new({sql: 'sql_example'}) # QueryRequest | 
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # Run a read-only SQL SELECT over the corpus tables
-  result = api_instance.query(query_request, opts)
+  result = api_instance.query(query_request)
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling QueryApi->query: #{e}"
@@ -40,12 +42,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<QueryResult>, Integer, Hash)> query_with_http_info(query_request, opts)
+> <Array(<QueryResult>, Integer, Hash)> query_with_http_info(query_request)
 
 ```ruby
 begin
   # Run a read-only SQL SELECT over the corpus tables
-  data, status_code, headers = api_instance.query_with_http_info(query_request, opts)
+  data, status_code, headers = api_instance.query_with_http_info(query_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <QueryResult>
@@ -59,7 +61,6 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **query_request** | [**QueryRequest**](QueryRequest.md) |  |  |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -67,7 +68,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

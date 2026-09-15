@@ -12,7 +12,7 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 ## `search()`
 
 ```php
-search($search_request, $authorization): \LowdownLabs\Fever\Model\SearchHit[]
+search($search_request): \LowdownLabs\Fever\Model\SearchHit[]
 ```
 
 Search by text or image
@@ -26,17 +26,20 @@ text runs a meaning-based vector search fused with lexical full-text (RRF), rera
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\SearchApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $search_request = new \LowdownLabs\Fever\Model\SearchRequest(); // \LowdownLabs\Fever\Model\SearchRequest
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->search($search_request, $authorization);
+    $result = $apiInstance->search($search_request);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling SearchApi->search: ', $e->getMessage(), PHP_EOL;
@@ -48,7 +51,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **search_request** | [**\LowdownLabs\Fever\Model\SearchRequest**](../Model/SearchRequest.md)|  | |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -56,7 +58,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../../README.md#bearerAuth)
 
 ### HTTP request headers
 

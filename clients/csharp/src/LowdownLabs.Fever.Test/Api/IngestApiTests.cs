@@ -61,8 +61,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //IngestRequest ingestRequest = null;
-            //string? authorization = null;
-            //var response = instance.IngestMedia(ingestRequest, authorization);
+            //var response = instance.IngestMedia(ingestRequest);
             //Assert.IsType<IngestResult>(response);
         }
     }

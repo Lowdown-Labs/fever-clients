@@ -35,9 +35,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="searchRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>List&lt;SearchHit&gt;</returns>
-        List<SearchHit> Search(SearchRequest searchRequest, string? authorization = default);
+        List<SearchHit> Search(SearchRequest searchRequest);
 
         /// <summary>
         /// Search by text or image
@@ -47,9 +46,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="searchRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of List&lt;SearchHit&gt;</returns>
-        ApiResponse<List<SearchHit>> SearchWithHttpInfo(SearchRequest searchRequest, string? authorization = default);
+        ApiResponse<List<SearchHit>> SearchWithHttpInfo(SearchRequest searchRequest);
         #endregion Synchronous Operations
     }
 
@@ -67,10 +65,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="searchRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;SearchHit&gt;</returns>
-        System.Threading.Tasks.Task<List<SearchHit>> SearchAsync(SearchRequest searchRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<List<SearchHit>> SearchAsync(SearchRequest searchRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Search by text or image
@@ -80,10 +77,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="searchRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;SearchHit&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<SearchHit>>> SearchWithHttpInfoAsync(SearchRequest searchRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<List<SearchHit>>> SearchWithHttpInfoAsync(SearchRequest searchRequest, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -302,11 +298,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="searchRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>List&lt;SearchHit&gt;</returns>
-        public List<SearchHit> Search(SearchRequest searchRequest, string? authorization = default)
+        public List<SearchHit> Search(SearchRequest searchRequest)
         {
-            LowdownLabs.Fever.Client.ApiResponse<List<SearchHit>> localVarResponse = SearchWithHttpInfo(searchRequest, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<List<SearchHit>> localVarResponse = SearchWithHttpInfo(searchRequest);
             return localVarResponse.Data;
         }
 
@@ -315,9 +310,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="searchRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of List&lt;SearchHit&gt;</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<List<SearchHit>> SearchWithHttpInfo(SearchRequest searchRequest, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<List<SearchHit>> SearchWithHttpInfo(SearchRequest searchRequest)
         {
             // verify the required parameter 'searchRequest' is set
             if (searchRequest == null)
@@ -340,12 +334,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = searchRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<List<SearchHit>>("/v1/search", localVarRequestOptions, this.Configuration);
@@ -364,12 +360,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="searchRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;SearchHit&gt;</returns>
-        public async System.Threading.Tasks.Task<List<SearchHit>> SearchAsync(SearchRequest searchRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<List<SearchHit>> SearchAsync(SearchRequest searchRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<List<SearchHit>> localVarResponse = await SearchWithHttpInfoAsync(searchRequest, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<List<SearchHit>> localVarResponse = await SearchWithHttpInfoAsync(searchRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -378,10 +373,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="searchRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;SearchHit&gt;)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<List<SearchHit>>> SearchWithHttpInfoAsync(SearchRequest searchRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<List<SearchHit>>> SearchWithHttpInfoAsync(SearchRequest searchRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'searchRequest' is set
             if (searchRequest == null)
@@ -406,12 +400,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = searchRequest;
 
+            // authentication (bearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 

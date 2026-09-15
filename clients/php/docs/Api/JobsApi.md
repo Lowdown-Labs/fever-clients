@@ -13,7 +13,7 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 ## `cancelJob()`
 
 ```php
-cancelJob($job_id, $authorization): \LowdownLabs\Fever\Model\Job
+cancelJob($job_id): \LowdownLabs\Fever\Model\Job
 ```
 
 Cancel a pending or running ingest job
@@ -25,17 +25,20 @@ Cancel a pending or running ingest job
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\JobsApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $job_id = 56; // int
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->cancelJob($job_id, $authorization);
+    $result = $apiInstance->cancelJob($job_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling JobsApi->cancelJob: ', $e->getMessage(), PHP_EOL;
@@ -47,7 +50,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **job_id** | **int**|  | |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -55,7 +57,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -69,7 +71,7 @@ No authorization required
 ## `getJob()`
 
 ```php
-getJob($job_id, $authorization): \LowdownLabs\Fever\Model\Job
+getJob($job_id): \LowdownLabs\Fever\Model\Job
 ```
 
 Get ingest job progress
@@ -81,17 +83,20 @@ Get ingest job progress
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\JobsApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $job_id = 56; // int
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->getJob($job_id, $authorization);
+    $result = $apiInstance->getJob($job_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling JobsApi->getJob: ', $e->getMessage(), PHP_EOL;
@@ -103,7 +108,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **job_id** | **int**|  | |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -111,7 +115,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../../README.md#bearerAuth)
 
 ### HTTP request headers
 

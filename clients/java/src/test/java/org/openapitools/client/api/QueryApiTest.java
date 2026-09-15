@@ -47,9 +47,8 @@ public class QueryApiTest {
     @Test
     public void queryTest() throws ApiException {
         QueryRequest queryRequest = null;
-        String authorization = null;
         QueryResult response = 
-        api.query(queryRequest, authorization);
+        api.query(queryRequest);
         
         // TODO: test validations
     }

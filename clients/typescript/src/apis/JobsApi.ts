@@ -29,10 +29,6 @@ export interface CancelJobRequest {
      * 
      */
     jobId: number;
-    /**
-     * 
-     */
-    authorization?: string | null;
 }
 
 export interface GetJobRequest {
@@ -40,10 +36,6 @@ export interface GetJobRequest {
      * 
      */
     jobId: number;
-    /**
-     * 
-     */
-    authorization?: string | null;
 }
 
 /**
@@ -66,10 +58,14 @@ export class JobsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/jobs/{job_id}/cancel`;
         urlPath = urlPath.replace('{job_id}', encodeURIComponent(String(requestParameters['jobId'])));
@@ -115,10 +111,14 @@ export class JobsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/jobs/{job_id}`;
         urlPath = urlPath.replace('{job_id}', encodeURIComponent(String(requestParameters['jobId'])));

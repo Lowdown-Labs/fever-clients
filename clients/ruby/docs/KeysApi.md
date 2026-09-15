@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 
 ## create_key
 
-> <KeyReveal> create_key(create_key_request, opts)
+> <KeyReveal> create_key(create_key_request)
 
 Mint an API key for this appliance
 
@@ -20,16 +20,18 @@ Mint an API key for this appliance
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: adminToken
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::KeysApi.new
 create_key_request = FeverClient::CreateKeyRequest.new # CreateKeyRequest | 
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # Mint an API key for this appliance
-  result = api_instance.create_key(create_key_request, opts)
+  result = api_instance.create_key(create_key_request)
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling KeysApi->create_key: #{e}"
@@ -40,12 +42,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<KeyReveal>, Integer, Hash)> create_key_with_http_info(create_key_request, opts)
+> <Array(<KeyReveal>, Integer, Hash)> create_key_with_http_info(create_key_request)
 
 ```ruby
 begin
   # Mint an API key for this appliance
-  data, status_code, headers = api_instance.create_key_with_http_info(create_key_request, opts)
+  data, status_code, headers = api_instance.create_key_with_http_info(create_key_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <KeyReveal>
@@ -59,7 +61,6 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **create_key_request** | [**CreateKeyRequest**](CreateKeyRequest.md) |  |  |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -67,7 +68,7 @@ end
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -77,7 +78,7 @@ No authorization required
 
 ## list_keys
 
-> <Array<ApiKey>> list_keys(opts)
+> <Array<ApiKey>> list_keys
 
 List this appliance's API keys
 
@@ -86,15 +87,17 @@ List this appliance's API keys
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: adminToken
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::KeysApi.new
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # List this appliance's API keys
-  result = api_instance.list_keys(opts)
+  result = api_instance.list_keys
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling KeysApi->list_keys: #{e}"
@@ -105,12 +108,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Array<ApiKey>>, Integer, Hash)> list_keys_with_http_info(opts)
+> <Array(<Array<ApiKey>>, Integer, Hash)> list_keys_with_http_info
 
 ```ruby
 begin
   # List this appliance's API keys
-  data, status_code, headers = api_instance.list_keys_with_http_info(opts)
+  data, status_code, headers = api_instance.list_keys_with_http_info
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <Array<ApiKey>>
@@ -121,9 +124,7 @@ end
 
 ### Parameters
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **authorization** | **String** |  | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -131,7 +132,7 @@ end
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -141,7 +142,7 @@ No authorization required
 
 ## revoke_key
 
-> Object revoke_key(key_id, opts)
+> Object revoke_key(key_id)
 
 Revoke an API key
 
@@ -150,16 +151,18 @@ Revoke an API key
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: adminToken
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::KeysApi.new
 key_id = 56 # Integer | 
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # Revoke an API key
-  result = api_instance.revoke_key(key_id, opts)
+  result = api_instance.revoke_key(key_id)
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling KeysApi->revoke_key: #{e}"
@@ -170,12 +173,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(Object, Integer, Hash)> revoke_key_with_http_info(key_id, opts)
+> <Array(Object, Integer, Hash)> revoke_key_with_http_info(key_id)
 
 ```ruby
 begin
   # Revoke an API key
-  data, status_code, headers = api_instance.revoke_key_with_http_info(key_id, opts)
+  data, status_code, headers = api_instance.revoke_key_with_http_info(key_id)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => Object
@@ -189,7 +192,6 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **key_id** | **Integer** |  |  |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -197,7 +199,7 @@ end
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

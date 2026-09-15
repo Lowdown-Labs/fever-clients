@@ -12,7 +12,7 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 ## `ingestMedia()`
 
 ```php
-ingestMedia($ingest_request, $authorization): \LowdownLabs\Fever\Model\IngestResult
+ingestMedia($ingest_request): \LowdownLabs\Fever\Model\IngestResult
 ```
 
 Ingest one or many media items
@@ -26,17 +26,20 @@ Throw 1..N media items over the wall. Small inline batches are embedded and inde
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\IngestApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $ingest_request = new \LowdownLabs\Fever\Model\IngestRequest(); // \LowdownLabs\Fever\Model\IngestRequest
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->ingestMedia($ingest_request, $authorization);
+    $result = $apiInstance->ingestMedia($ingest_request);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling IngestApi->ingestMedia: ', $e->getMessage(), PHP_EOL;
@@ -48,7 +51,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **ingest_request** | [**\LowdownLabs\Fever\Model\IngestRequest**](../Model/IngestRequest.md)|  | |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -56,7 +58,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../../README.md#bearerAuth)
 
 ### HTTP request headers
 

@@ -23,7 +23,6 @@ module FeverClient
     # A mini SQL console over the appliance's corpus tables: as_blobs, annotations, dup_edges, video_frames, transcript_segments, embeddings, datasets, dataset_items (internal jobs/job_items stay queryable for compatibility but are bookkeeping, not data). Exactly one SELECT statement. Natural-language semantic search: an `<=>` comparison between a vec_prefix/vec_full column and fever_search('some text') is allowed in the statement ORDER BY (rank by meaning) or in the SELECT target list (project the raw cosine distance; similarity = 1.0 - distance), at most four distinct fever_search() texts per statement. Raw vector columns (embeddings.vec_*, video_frames.vec_*) are selectable with an admin key; scoped keys get a rejection instead. tsvector (annotations.fts, transcript_segments.fts) columns are excluded for everyone. Scoped api keys are automatically restricted to their own customer_id, which is why they may only submit a narrow statement shape: plain tables and JOINs of them, with a FROM clause, and no subqueries, CTEs or set operations at any depth (those are rejected rather than risk a partial rewrite - use an admin key for them). Admin keys parse unrestricted and see every customer's rows in their own tenant.
     # @param query_request [QueryRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [QueryResult]
     def query(query_request, opts = {})
       data, _status_code, _headers = query_with_http_info(query_request, opts)
@@ -34,7 +33,6 @@ module FeverClient
     # A mini SQL console over the appliance&#39;s corpus tables: as_blobs, annotations, dup_edges, video_frames, transcript_segments, embeddings, datasets, dataset_items (internal jobs/job_items stay queryable for compatibility but are bookkeeping, not data). Exactly one SELECT statement. Natural-language semantic search: an &#x60;&lt;&#x3D;&gt;&#x60; comparison between a vec_prefix/vec_full column and fever_search(&#39;some text&#39;) is allowed in the statement ORDER BY (rank by meaning) or in the SELECT target list (project the raw cosine distance; similarity &#x3D; 1.0 - distance), at most four distinct fever_search() texts per statement. Raw vector columns (embeddings.vec_*, video_frames.vec_*) are selectable with an admin key; scoped keys get a rejection instead. tsvector (annotations.fts, transcript_segments.fts) columns are excluded for everyone. Scoped api keys are automatically restricted to their own customer_id, which is why they may only submit a narrow statement shape: plain tables and JOINs of them, with a FROM clause, and no subqueries, CTEs or set operations at any depth (those are rejected rather than risk a partial rewrite - use an admin key for them). Admin keys parse unrestricted and see every customer&#39;s rows in their own tenant.
     # @param query_request [QueryRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(QueryResult, Integer, Hash)>] QueryResult data, response status code and response headers
     def query_with_http_info(query_request, opts = {})
       if @api_client.config.debugging
@@ -59,7 +57,6 @@ module FeverClient
       if !content_type.nil?
           header_params['Content-Type'] = content_type
       end
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -71,7 +68,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'QueryResult'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"QueryApi.query",

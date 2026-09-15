@@ -20,10 +20,14 @@ Associate already-ingested images to customers after the fact, at millions-of-ro
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: adminToken
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::CustomersApi.new
 opts = {
-  authorization: 'authorization_example', # String | 
   file: File.new('/path/to/some/file') # File | 
 }
 
@@ -58,7 +62,6 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **authorization** | **String** |  | [optional] |
 | **file** | **File** |  | [optional] |
 
 ### Return type
@@ -67,7 +70,7 @@ end
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

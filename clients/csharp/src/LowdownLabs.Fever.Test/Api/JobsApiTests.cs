@@ -61,8 +61,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //int jobId = null;
-            //string? authorization = null;
-            //var response = instance.CancelJob(jobId, authorization);
+            //var response = instance.CancelJob(jobId);
             //Assert.IsType<Job>(response);
         }
 
@@ -74,8 +73,7 @@ namespace LowdownLabs.Fever.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //int jobId = null;
-            //string? authorization = null;
-            //var response = instance.GetJob(jobId, authorization);
+            //var response = instance.GetJob(jobId);
             //Assert.IsType<Job>(response);
         }
     }

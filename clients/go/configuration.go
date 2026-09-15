@@ -28,6 +28,9 @@ func (c contextKey) String() string {
 }
 
 var (
+	// ContextAccessToken takes a string oauth2 access token as authentication for the request.
+	ContextAccessToken = contextKey("accesstoken")
+
 	// ContextServerIndex uses a server configuration from the index.
 	ContextServerIndex = contextKey("serverIndex")
 
@@ -86,7 +89,7 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader:    make(map[string]string),
-		UserAgent:        "OpenAPI-Generator/0.3.0/go",
+		UserAgent:        "OpenAPI-Generator/0.3.1/go",
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{

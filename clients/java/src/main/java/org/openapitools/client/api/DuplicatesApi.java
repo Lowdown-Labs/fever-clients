@@ -174,25 +174,23 @@ public class DuplicatesApi {
    * Find near-duplicate media clusters for a customer
    * Find near-duplicate clusters. Scoped to one customer, this reads the edge set maintained at ingest (millisecond answers; edges exist down to cosine 0.80). An admin key with no customer_id scans live across all customers; passing customer_ids narrows that live scan to a handful of accounts. Both admin shapes see cross-customer duplicates. No delete or keep recommendation is made: the clusters are yours to act on.
    * @param duplicatesRequest  (required)
-   * @param authorization  (optional)
    * @return DuplicatesResponse
    * @throws ApiException if fails to make API call
    */
-  public DuplicatesResponse findDuplicates(@javax.annotation.Nonnull DuplicatesRequest duplicatesRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return findDuplicates(duplicatesRequest, authorization, null);
+  public DuplicatesResponse findDuplicates(@javax.annotation.Nonnull DuplicatesRequest duplicatesRequest) throws ApiException {
+    return findDuplicates(duplicatesRequest, null);
   }
 
   /**
    * Find near-duplicate media clusters for a customer
    * Find near-duplicate clusters. Scoped to one customer, this reads the edge set maintained at ingest (millisecond answers; edges exist down to cosine 0.80). An admin key with no customer_id scans live across all customers; passing customer_ids narrows that live scan to a handful of accounts. Both admin shapes see cross-customer duplicates. No delete or keep recommendation is made: the clusters are yours to act on.
    * @param duplicatesRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return DuplicatesResponse
    * @throws ApiException if fails to make API call
    */
-  public DuplicatesResponse findDuplicates(@javax.annotation.Nonnull DuplicatesRequest duplicatesRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<DuplicatesResponse> localVarResponse = findDuplicatesWithHttpInfo(duplicatesRequest, authorization, headers);
+  public DuplicatesResponse findDuplicates(@javax.annotation.Nonnull DuplicatesRequest duplicatesRequest, Map<String, String> headers) throws ApiException {
+    ApiResponse<DuplicatesResponse> localVarResponse = findDuplicatesWithHttpInfo(duplicatesRequest, headers);
     return localVarResponse.getData();
   }
 
@@ -200,25 +198,23 @@ public class DuplicatesApi {
    * Find near-duplicate media clusters for a customer
    * Find near-duplicate clusters. Scoped to one customer, this reads the edge set maintained at ingest (millisecond answers; edges exist down to cosine 0.80). An admin key with no customer_id scans live across all customers; passing customer_ids narrows that live scan to a handful of accounts. Both admin shapes see cross-customer duplicates. No delete or keep recommendation is made: the clusters are yours to act on.
    * @param duplicatesRequest  (required)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;DuplicatesResponse&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<DuplicatesResponse> findDuplicatesWithHttpInfo(@javax.annotation.Nonnull DuplicatesRequest duplicatesRequest, @javax.annotation.Nullable String authorization) throws ApiException {
-    return findDuplicatesWithHttpInfo(duplicatesRequest, authorization, null);
+  public ApiResponse<DuplicatesResponse> findDuplicatesWithHttpInfo(@javax.annotation.Nonnull DuplicatesRequest duplicatesRequest) throws ApiException {
+    return findDuplicatesWithHttpInfo(duplicatesRequest, null);
   }
 
   /**
    * Find near-duplicate media clusters for a customer
    * Find near-duplicate clusters. Scoped to one customer, this reads the edge set maintained at ingest (millisecond answers; edges exist down to cosine 0.80). An admin key with no customer_id scans live across all customers; passing customer_ids narrows that live scan to a handful of accounts. Both admin shapes see cross-customer duplicates. No delete or keep recommendation is made: the clusters are yours to act on.
    * @param duplicatesRequest  (required)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;DuplicatesResponse&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<DuplicatesResponse> findDuplicatesWithHttpInfo(@javax.annotation.Nonnull DuplicatesRequest duplicatesRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = findDuplicatesRequestBuilder(duplicatesRequest, authorization, headers);
+  public ApiResponse<DuplicatesResponse> findDuplicatesWithHttpInfo(@javax.annotation.Nonnull DuplicatesRequest duplicatesRequest, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = findDuplicatesRequestBuilder(duplicatesRequest, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -265,7 +261,7 @@ public class DuplicatesApi {
     }
   }
 
-  private HttpRequest.Builder findDuplicatesRequestBuilder(@javax.annotation.Nonnull DuplicatesRequest duplicatesRequest, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder findDuplicatesRequestBuilder(@javax.annotation.Nonnull DuplicatesRequest duplicatesRequest, Map<String, String> headers) throws ApiException {
     // verify the required parameter 'duplicatesRequest' is set
     if (duplicatesRequest == null) {
       throw new ApiException(400, "Missing the required parameter 'duplicatesRequest' when calling findDuplicates");
@@ -277,9 +273,6 @@ public class DuplicatesApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Content-Type", "application/json");
     localVarRequestBuilder.header("Accept", "application/json");
 
@@ -304,25 +297,23 @@ public class DuplicatesApi {
    * Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
    * 
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object suggestedDedupThreshold(@javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return suggestedDedupThreshold(customerId, authorization, null);
+  public Object suggestedDedupThreshold(@javax.annotation.Nullable String customerId) throws ApiException {
+    return suggestedDedupThreshold(customerId, null);
   }
 
   /**
    * Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
    * 
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object suggestedDedupThreshold(@javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    ApiResponse<Object> localVarResponse = suggestedDedupThresholdWithHttpInfo(customerId, authorization, headers);
+  public Object suggestedDedupThreshold(@javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
+    ApiResponse<Object> localVarResponse = suggestedDedupThresholdWithHttpInfo(customerId, headers);
     return localVarResponse.getData();
   }
 
@@ -330,25 +321,23 @@ public class DuplicatesApi {
    * Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
    * 
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @return ApiResponse&lt;Object&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Object> suggestedDedupThresholdWithHttpInfo(@javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization) throws ApiException {
-    return suggestedDedupThresholdWithHttpInfo(customerId, authorization, null);
+  public ApiResponse<Object> suggestedDedupThresholdWithHttpInfo(@javax.annotation.Nullable String customerId) throws ApiException {
+    return suggestedDedupThresholdWithHttpInfo(customerId, null);
   }
 
   /**
    * Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
    * 
    * @param customerId  (optional)
-   * @param authorization  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;Object&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Object> suggestedDedupThresholdWithHttpInfo(@javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = suggestedDedupThresholdRequestBuilder(customerId, authorization, headers);
+  public ApiResponse<Object> suggestedDedupThresholdWithHttpInfo(@javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = suggestedDedupThresholdRequestBuilder(customerId, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -395,7 +384,7 @@ public class DuplicatesApi {
     }
   }
 
-  private HttpRequest.Builder suggestedDedupThresholdRequestBuilder(@javax.annotation.Nullable String customerId, @javax.annotation.Nullable String authorization, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder suggestedDedupThresholdRequestBuilder(@javax.annotation.Nullable String customerId, Map<String, String> headers) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -418,9 +407,6 @@ public class DuplicatesApi {
       localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
     }
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());

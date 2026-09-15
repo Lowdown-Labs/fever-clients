@@ -134,16 +134,15 @@ class ExportApi
      * Export the tenant&#39;s vectors and metadata to S3
      *
      * @param  \LowdownLabs\Fever\Model\ExportRequest $export_request export_request (required)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['exportTenant'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\ExportResult|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function exportTenant($export_request, $authorization = null, string $contentType = self::contentTypes['exportTenant'][0])
+    public function exportTenant($export_request, string $contentType = self::contentTypes['exportTenant'][0])
     {
-        list($response) = $this->exportTenantWithHttpInfo($export_request, $authorization, $contentType);
+        list($response) = $this->exportTenantWithHttpInfo($export_request, $contentType);
         return $response;
     }
 
@@ -153,16 +152,15 @@ class ExportApi
      * Export the tenant&#39;s vectors and metadata to S3
      *
      * @param  \LowdownLabs\Fever\Model\ExportRequest $export_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['exportTenant'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\ExportResult|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function exportTenantWithHttpInfo($export_request, $authorization = null, string $contentType = self::contentTypes['exportTenant'][0])
+    public function exportTenantWithHttpInfo($export_request, string $contentType = self::contentTypes['exportTenant'][0])
     {
-        $request = $this->exportTenantRequest($export_request, $authorization, $contentType);
+        $request = $this->exportTenantRequest($export_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -253,15 +251,14 @@ class ExportApi
      * Export the tenant&#39;s vectors and metadata to S3
      *
      * @param  \LowdownLabs\Fever\Model\ExportRequest $export_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['exportTenant'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function exportTenantAsync($export_request, $authorization = null, string $contentType = self::contentTypes['exportTenant'][0])
+    public function exportTenantAsync($export_request, string $contentType = self::contentTypes['exportTenant'][0])
     {
-        return $this->exportTenantAsyncWithHttpInfo($export_request, $authorization, $contentType)
+        return $this->exportTenantAsyncWithHttpInfo($export_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -275,16 +272,15 @@ class ExportApi
      * Export the tenant&#39;s vectors and metadata to S3
      *
      * @param  \LowdownLabs\Fever\Model\ExportRequest $export_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['exportTenant'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function exportTenantAsyncWithHttpInfo($export_request, $authorization = null, string $contentType = self::contentTypes['exportTenant'][0])
+    public function exportTenantAsyncWithHttpInfo($export_request, string $contentType = self::contentTypes['exportTenant'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\ExportResult';
-        $request = $this->exportTenantRequest($export_request, $authorization, $contentType);
+        $request = $this->exportTenantRequest($export_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -326,13 +322,12 @@ class ExportApi
      * Create request for operation 'exportTenant'
      *
      * @param  \LowdownLabs\Fever\Model\ExportRequest $export_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['exportTenant'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function exportTenantRequest($export_request, $authorization = null, string $contentType = self::contentTypes['exportTenant'][0])
+    public function exportTenantRequest($export_request, string $contentType = self::contentTypes['exportTenant'][0])
     {
 
         // verify the required parameter 'export_request' is set
@@ -343,7 +338,6 @@ class ExportApi
         }
 
 
-
         $resourcePath = '/v1/export';
         $formParams = [];
         $queryParams = [];
@@ -352,10 +346,6 @@ class ExportApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -405,6 +395,10 @@ class ExportApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -433,16 +427,15 @@ class ExportApi
      * Import vectors and metadata from a previous FEVER export in S3
      *
      * @param  \LowdownLabs\Fever\Model\ImportRequest $import_request import_request (required)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['importTenant'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\ImportResult|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function importTenant($import_request, $authorization = null, string $contentType = self::contentTypes['importTenant'][0])
+    public function importTenant($import_request, string $contentType = self::contentTypes['importTenant'][0])
     {
-        list($response) = $this->importTenantWithHttpInfo($import_request, $authorization, $contentType);
+        list($response) = $this->importTenantWithHttpInfo($import_request, $contentType);
         return $response;
     }
 
@@ -452,16 +445,15 @@ class ExportApi
      * Import vectors and metadata from a previous FEVER export in S3
      *
      * @param  \LowdownLabs\Fever\Model\ImportRequest $import_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['importTenant'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\ImportResult|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function importTenantWithHttpInfo($import_request, $authorization = null, string $contentType = self::contentTypes['importTenant'][0])
+    public function importTenantWithHttpInfo($import_request, string $contentType = self::contentTypes['importTenant'][0])
     {
-        $request = $this->importTenantRequest($import_request, $authorization, $contentType);
+        $request = $this->importTenantRequest($import_request, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -552,15 +544,14 @@ class ExportApi
      * Import vectors and metadata from a previous FEVER export in S3
      *
      * @param  \LowdownLabs\Fever\Model\ImportRequest $import_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['importTenant'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function importTenantAsync($import_request, $authorization = null, string $contentType = self::contentTypes['importTenant'][0])
+    public function importTenantAsync($import_request, string $contentType = self::contentTypes['importTenant'][0])
     {
-        return $this->importTenantAsyncWithHttpInfo($import_request, $authorization, $contentType)
+        return $this->importTenantAsyncWithHttpInfo($import_request, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -574,16 +565,15 @@ class ExportApi
      * Import vectors and metadata from a previous FEVER export in S3
      *
      * @param  \LowdownLabs\Fever\Model\ImportRequest $import_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['importTenant'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function importTenantAsyncWithHttpInfo($import_request, $authorization = null, string $contentType = self::contentTypes['importTenant'][0])
+    public function importTenantAsyncWithHttpInfo($import_request, string $contentType = self::contentTypes['importTenant'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\ImportResult';
-        $request = $this->importTenantRequest($import_request, $authorization, $contentType);
+        $request = $this->importTenantRequest($import_request, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -625,13 +615,12 @@ class ExportApi
      * Create request for operation 'importTenant'
      *
      * @param  \LowdownLabs\Fever\Model\ImportRequest $import_request (required)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['importTenant'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function importTenantRequest($import_request, $authorization = null, string $contentType = self::contentTypes['importTenant'][0])
+    public function importTenantRequest($import_request, string $contentType = self::contentTypes['importTenant'][0])
     {
 
         // verify the required parameter 'import_request' is set
@@ -642,7 +631,6 @@ class ExportApi
         }
 
 
-
         $resourcePath = '/v1/import';
         $formParams = [];
         $queryParams = [];
@@ -651,10 +639,6 @@ class ExportApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -704,6 +688,10 @@ class ExportApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

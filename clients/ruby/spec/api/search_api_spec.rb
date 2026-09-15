@@ -37,7 +37,6 @@ describe 'SearchApi' do
   # text runs a meaning-based vector search fused with lexical full-text (RRF), reranked and calibrated so min_score is a real match probability. image runs cosine similarity. customer_id and EXIF fields narrow the results.
   # @param search_request 
   # @param [Hash] opts the optional parameters
-  # @option opts [String] :authorization 
   # @return [Array<SearchHit>]
   describe 'search test' do
     it 'should work' do

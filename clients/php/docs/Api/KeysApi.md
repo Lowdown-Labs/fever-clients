@@ -14,7 +14,7 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 ## `createKey()`
 
 ```php
-createKey($create_key_request, $authorization): \LowdownLabs\Fever\Model\KeyReveal
+createKey($create_key_request): \LowdownLabs\Fever\Model\KeyReveal
 ```
 
 Mint an API key for this appliance
@@ -26,17 +26,20 @@ Mint an API key for this appliance
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: adminToken
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\KeysApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $create_key_request = new \LowdownLabs\Fever\Model\CreateKeyRequest(); // \LowdownLabs\Fever\Model\CreateKeyRequest
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->createKey($create_key_request, $authorization);
+    $result = $apiInstance->createKey($create_key_request);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling KeysApi->createKey: ', $e->getMessage(), PHP_EOL;
@@ -48,7 +51,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **create_key_request** | [**\LowdownLabs\Fever\Model\CreateKeyRequest**](../Model/CreateKeyRequest.md)|  | |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -56,7 +58,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[adminToken](../../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -70,7 +72,7 @@ No authorization required
 ## `listKeys()`
 
 ```php
-listKeys($authorization): \LowdownLabs\Fever\Model\ApiKey[]
+listKeys(): \LowdownLabs\Fever\Model\ApiKey[]
 ```
 
 List this appliance's API keys
@@ -82,16 +84,19 @@ List this appliance's API keys
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: adminToken
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\KeysApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->listKeys($authorization);
+    $result = $apiInstance->listKeys();
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling KeysApi->listKeys: ', $e->getMessage(), PHP_EOL;
@@ -100,9 +105,7 @@ try {
 
 ### Parameters
 
-| Name | Type | Description  | Notes |
-| ------------- | ------------- | ------------- | ------------- |
-| **authorization** | **string**|  | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -110,7 +113,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[adminToken](../../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -124,7 +127,7 @@ No authorization required
 ## `revokeKey()`
 
 ```php
-revokeKey($key_id, $authorization): mixed
+revokeKey($key_id): mixed
 ```
 
 Revoke an API key
@@ -136,17 +139,20 @@ Revoke an API key
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: adminToken
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\KeysApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $key_id = 56; // int
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->revokeKey($key_id, $authorization);
+    $result = $apiInstance->revokeKey($key_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling KeysApi->revokeKey: ', $e->getMessage(), PHP_EOL;
@@ -158,7 +164,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **key_id** | **int**|  | |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -166,7 +171,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[adminToken](../../README.md#adminToken)
 
 ### HTTP request headers
 

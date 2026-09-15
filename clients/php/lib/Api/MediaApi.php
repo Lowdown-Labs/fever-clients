@@ -145,16 +145,15 @@ class MediaApi
      * @param  int $blob_id blob_id (required)
      * @param  int|null $max_dim max_dim (optional, default to 1280)
      * @param  int|null $waveform waveform (optional, default to 0)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMediaBytes'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return mixed|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function getMediaBytes($blob_id, $max_dim = 1280, $waveform = 0, $authorization = null, string $contentType = self::contentTypes['getMediaBytes'][0])
+    public function getMediaBytes($blob_id, $max_dim = 1280, $waveform = 0, string $contentType = self::contentTypes['getMediaBytes'][0])
     {
-        list($response) = $this->getMediaBytesWithHttpInfo($blob_id, $max_dim, $waveform, $authorization, $contentType);
+        list($response) = $this->getMediaBytesWithHttpInfo($blob_id, $max_dim, $waveform, $contentType);
         return $response;
     }
 
@@ -166,16 +165,15 @@ class MediaApi
      * @param  int $blob_id (required)
      * @param  int|null $max_dim (optional, default to 1280)
      * @param  int|null $waveform (optional, default to 0)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMediaBytes'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of mixed|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getMediaBytesWithHttpInfo($blob_id, $max_dim = 1280, $waveform = 0, $authorization = null, string $contentType = self::contentTypes['getMediaBytes'][0])
+    public function getMediaBytesWithHttpInfo($blob_id, $max_dim = 1280, $waveform = 0, string $contentType = self::contentTypes['getMediaBytes'][0])
     {
-        $request = $this->getMediaBytesRequest($blob_id, $max_dim, $waveform, $authorization, $contentType);
+        $request = $this->getMediaBytesRequest($blob_id, $max_dim, $waveform, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -268,15 +266,14 @@ class MediaApi
      * @param  int $blob_id (required)
      * @param  int|null $max_dim (optional, default to 1280)
      * @param  int|null $waveform (optional, default to 0)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMediaBytes'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getMediaBytesAsync($blob_id, $max_dim = 1280, $waveform = 0, $authorization = null, string $contentType = self::contentTypes['getMediaBytes'][0])
+    public function getMediaBytesAsync($blob_id, $max_dim = 1280, $waveform = 0, string $contentType = self::contentTypes['getMediaBytes'][0])
     {
-        return $this->getMediaBytesAsyncWithHttpInfo($blob_id, $max_dim, $waveform, $authorization, $contentType)
+        return $this->getMediaBytesAsyncWithHttpInfo($blob_id, $max_dim, $waveform, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -292,16 +289,15 @@ class MediaApi
      * @param  int $blob_id (required)
      * @param  int|null $max_dim (optional, default to 1280)
      * @param  int|null $waveform (optional, default to 0)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMediaBytes'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getMediaBytesAsyncWithHttpInfo($blob_id, $max_dim = 1280, $waveform = 0, $authorization = null, string $contentType = self::contentTypes['getMediaBytes'][0])
+    public function getMediaBytesAsyncWithHttpInfo($blob_id, $max_dim = 1280, $waveform = 0, string $contentType = self::contentTypes['getMediaBytes'][0])
     {
         $returnType = 'mixed';
-        $request = $this->getMediaBytesRequest($blob_id, $max_dim, $waveform, $authorization, $contentType);
+        $request = $this->getMediaBytesRequest($blob_id, $max_dim, $waveform, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -345,13 +341,12 @@ class MediaApi
      * @param  int $blob_id (required)
      * @param  int|null $max_dim (optional, default to 1280)
      * @param  int|null $waveform (optional, default to 0)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMediaBytes'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getMediaBytesRequest($blob_id, $max_dim = 1280, $waveform = 0, $authorization = null, string $contentType = self::contentTypes['getMediaBytes'][0])
+    public function getMediaBytesRequest($blob_id, $max_dim = 1280, $waveform = 0, string $contentType = self::contentTypes['getMediaBytes'][0])
     {
 
         // verify the required parameter 'blob_id' is set
@@ -360,7 +355,6 @@ class MediaApi
                 'Missing the required parameter $blob_id when calling getMediaBytes'
             );
         }
-
 
 
 
@@ -391,10 +385,6 @@ class MediaApi
             false // required
         ) ?? []);
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
         // path params
         if ($blob_id !== null) {
@@ -441,6 +431,10 @@ class MediaApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -470,16 +464,15 @@ class MediaApi
      *
      * @param  int $blob_id blob_id (required)
      * @param  string|null $customer_id customer_id (optional)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMediaInfo'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\MediaInfo|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function getMediaInfo($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['getMediaInfo'][0])
+    public function getMediaInfo($blob_id, $customer_id = null, string $contentType = self::contentTypes['getMediaInfo'][0])
     {
-        list($response) = $this->getMediaInfoWithHttpInfo($blob_id, $customer_id, $authorization, $contentType);
+        list($response) = $this->getMediaInfoWithHttpInfo($blob_id, $customer_id, $contentType);
         return $response;
     }
 
@@ -490,16 +483,15 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMediaInfo'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\MediaInfo|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getMediaInfoWithHttpInfo($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['getMediaInfo'][0])
+    public function getMediaInfoWithHttpInfo($blob_id, $customer_id = null, string $contentType = self::contentTypes['getMediaInfo'][0])
     {
-        $request = $this->getMediaInfoRequest($blob_id, $customer_id, $authorization, $contentType);
+        $request = $this->getMediaInfoRequest($blob_id, $customer_id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -591,15 +583,14 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMediaInfo'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getMediaInfoAsync($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['getMediaInfo'][0])
+    public function getMediaInfoAsync($blob_id, $customer_id = null, string $contentType = self::contentTypes['getMediaInfo'][0])
     {
-        return $this->getMediaInfoAsyncWithHttpInfo($blob_id, $customer_id, $authorization, $contentType)
+        return $this->getMediaInfoAsyncWithHttpInfo($blob_id, $customer_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -614,16 +605,15 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMediaInfo'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getMediaInfoAsyncWithHttpInfo($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['getMediaInfo'][0])
+    public function getMediaInfoAsyncWithHttpInfo($blob_id, $customer_id = null, string $contentType = self::contentTypes['getMediaInfo'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\MediaInfo';
-        $request = $this->getMediaInfoRequest($blob_id, $customer_id, $authorization, $contentType);
+        $request = $this->getMediaInfoRequest($blob_id, $customer_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -666,13 +656,12 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getMediaInfo'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function getMediaInfoRequest($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['getMediaInfo'][0])
+    public function getMediaInfoRequest($blob_id, $customer_id = null, string $contentType = self::contentTypes['getMediaInfo'][0])
     {
 
         // verify the required parameter 'blob_id' is set
@@ -681,7 +670,6 @@ class MediaApi
                 'Missing the required parameter $blob_id when calling getMediaInfo'
             );
         }
-
 
 
 
@@ -702,10 +690,6 @@ class MediaApi
             false // required
         ) ?? []);
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
         // path params
         if ($blob_id !== null) {
@@ -752,6 +736,10 @@ class MediaApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -779,16 +767,15 @@ class MediaApi
      *
      * Ingest capability: supported extensions per media family
      *
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaFormats'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \LowdownLabs\Fever\Model\MediaFormats|\LowdownLabs\Fever\Model\HTTPValidationError
+     * @return \LowdownLabs\Fever\Model\MediaFormats
      */
-    public function listMediaFormats($authorization = null, string $contentType = self::contentTypes['listMediaFormats'][0])
+    public function listMediaFormats(string $contentType = self::contentTypes['listMediaFormats'][0])
     {
-        list($response) = $this->listMediaFormatsWithHttpInfo($authorization, $contentType);
+        list($response) = $this->listMediaFormatsWithHttpInfo($contentType);
         return $response;
     }
 
@@ -797,16 +784,15 @@ class MediaApi
      *
      * Ingest capability: supported extensions per media family
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaFormats'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \LowdownLabs\Fever\Model\MediaFormats|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \LowdownLabs\Fever\Model\MediaFormats, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listMediaFormatsWithHttpInfo($authorization = null, string $contentType = self::contentTypes['listMediaFormats'][0])
+    public function listMediaFormatsWithHttpInfo(string $contentType = self::contentTypes['listMediaFormats'][0])
     {
-        $request = $this->listMediaFormatsRequest($authorization, $contentType);
+        $request = $this->listMediaFormatsRequest($contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -835,12 +821,6 @@ class MediaApi
                 case 200:
                     return $this->handleResponseWithDataType(
                         '\LowdownLabs\Fever\Model\MediaFormats',
-                        $request,
-                        $response,
-                    );
-                case 422:
-                    return $this->handleResponseWithDataType(
-                        '\LowdownLabs\Fever\Model\HTTPValidationError',
                         $request,
                         $response,
                     );
@@ -876,14 +856,6 @@ class MediaApi
                     );
                     $e->setResponseObject($data);
                     throw $e;
-                case 422:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\LowdownLabs\Fever\Model\HTTPValidationError',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
             }
         
 
@@ -896,15 +868,14 @@ class MediaApi
      *
      * Ingest capability: supported extensions per media family
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaFormats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listMediaFormatsAsync($authorization = null, string $contentType = self::contentTypes['listMediaFormats'][0])
+    public function listMediaFormatsAsync(string $contentType = self::contentTypes['listMediaFormats'][0])
     {
-        return $this->listMediaFormatsAsyncWithHttpInfo($authorization, $contentType)
+        return $this->listMediaFormatsAsyncWithHttpInfo($contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -917,16 +888,15 @@ class MediaApi
      *
      * Ingest capability: supported extensions per media family
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaFormats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listMediaFormatsAsyncWithHttpInfo($authorization = null, string $contentType = self::contentTypes['listMediaFormats'][0])
+    public function listMediaFormatsAsyncWithHttpInfo(string $contentType = self::contentTypes['listMediaFormats'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\MediaFormats';
-        $request = $this->listMediaFormatsRequest($authorization, $contentType);
+        $request = $this->listMediaFormatsRequest($contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -967,15 +937,13 @@ class MediaApi
     /**
      * Create request for operation 'listMediaFormats'
      *
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaFormats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listMediaFormatsRequest($authorization = null, string $contentType = self::contentTypes['listMediaFormats'][0])
+    public function listMediaFormatsRequest(string $contentType = self::contentTypes['listMediaFormats'][0])
     {
-
 
 
         $resourcePath = '/v1/media/formats';
@@ -986,10 +954,6 @@ class MediaApi
         $multipart = false;
 
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -1028,6 +992,10 @@ class MediaApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1057,16 +1025,15 @@ class MediaApi
      *
      * @param  int $blob_id blob_id (required)
      * @param  string|null $customer_id customer_id (optional)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaFrames'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\MediaFrame[]|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function listMediaFrames($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['listMediaFrames'][0])
+    public function listMediaFrames($blob_id, $customer_id = null, string $contentType = self::contentTypes['listMediaFrames'][0])
     {
-        list($response) = $this->listMediaFramesWithHttpInfo($blob_id, $customer_id, $authorization, $contentType);
+        list($response) = $this->listMediaFramesWithHttpInfo($blob_id, $customer_id, $contentType);
         return $response;
     }
 
@@ -1077,16 +1044,15 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaFrames'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\MediaFrame[]|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listMediaFramesWithHttpInfo($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['listMediaFrames'][0])
+    public function listMediaFramesWithHttpInfo($blob_id, $customer_id = null, string $contentType = self::contentTypes['listMediaFrames'][0])
     {
-        $request = $this->listMediaFramesRequest($blob_id, $customer_id, $authorization, $contentType);
+        $request = $this->listMediaFramesRequest($blob_id, $customer_id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1178,15 +1144,14 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaFrames'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listMediaFramesAsync($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['listMediaFrames'][0])
+    public function listMediaFramesAsync($blob_id, $customer_id = null, string $contentType = self::contentTypes['listMediaFrames'][0])
     {
-        return $this->listMediaFramesAsyncWithHttpInfo($blob_id, $customer_id, $authorization, $contentType)
+        return $this->listMediaFramesAsyncWithHttpInfo($blob_id, $customer_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1201,16 +1166,15 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaFrames'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listMediaFramesAsyncWithHttpInfo($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['listMediaFrames'][0])
+    public function listMediaFramesAsyncWithHttpInfo($blob_id, $customer_id = null, string $contentType = self::contentTypes['listMediaFrames'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\MediaFrame[]';
-        $request = $this->listMediaFramesRequest($blob_id, $customer_id, $authorization, $contentType);
+        $request = $this->listMediaFramesRequest($blob_id, $customer_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1253,13 +1217,12 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaFrames'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listMediaFramesRequest($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['listMediaFrames'][0])
+    public function listMediaFramesRequest($blob_id, $customer_id = null, string $contentType = self::contentTypes['listMediaFrames'][0])
     {
 
         // verify the required parameter 'blob_id' is set
@@ -1268,7 +1231,6 @@ class MediaApi
                 'Missing the required parameter $blob_id when calling listMediaFrames'
             );
         }
-
 
 
 
@@ -1289,10 +1251,6 @@ class MediaApi
             false // required
         ) ?? []);
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
         // path params
         if ($blob_id !== null) {
@@ -1339,6 +1297,10 @@ class MediaApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -1368,16 +1330,15 @@ class MediaApi
      *
      * @param  int $blob_id blob_id (required)
      * @param  string|null $customer_id customer_id (optional)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaTranscript'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\TranscriptSegment[]|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function listMediaTranscript($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['listMediaTranscript'][0])
+    public function listMediaTranscript($blob_id, $customer_id = null, string $contentType = self::contentTypes['listMediaTranscript'][0])
     {
-        list($response) = $this->listMediaTranscriptWithHttpInfo($blob_id, $customer_id, $authorization, $contentType);
+        list($response) = $this->listMediaTranscriptWithHttpInfo($blob_id, $customer_id, $contentType);
         return $response;
     }
 
@@ -1388,16 +1349,15 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaTranscript'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\TranscriptSegment[]|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function listMediaTranscriptWithHttpInfo($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['listMediaTranscript'][0])
+    public function listMediaTranscriptWithHttpInfo($blob_id, $customer_id = null, string $contentType = self::contentTypes['listMediaTranscript'][0])
     {
-        $request = $this->listMediaTranscriptRequest($blob_id, $customer_id, $authorization, $contentType);
+        $request = $this->listMediaTranscriptRequest($blob_id, $customer_id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -1489,15 +1449,14 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaTranscript'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listMediaTranscriptAsync($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['listMediaTranscript'][0])
+    public function listMediaTranscriptAsync($blob_id, $customer_id = null, string $contentType = self::contentTypes['listMediaTranscript'][0])
     {
-        return $this->listMediaTranscriptAsyncWithHttpInfo($blob_id, $customer_id, $authorization, $contentType)
+        return $this->listMediaTranscriptAsyncWithHttpInfo($blob_id, $customer_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -1512,16 +1471,15 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaTranscript'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function listMediaTranscriptAsyncWithHttpInfo($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['listMediaTranscript'][0])
+    public function listMediaTranscriptAsyncWithHttpInfo($blob_id, $customer_id = null, string $contentType = self::contentTypes['listMediaTranscript'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\TranscriptSegment[]';
-        $request = $this->listMediaTranscriptRequest($blob_id, $customer_id, $authorization, $contentType);
+        $request = $this->listMediaTranscriptRequest($blob_id, $customer_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -1564,13 +1522,12 @@ class MediaApi
      *
      * @param  int $blob_id (required)
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['listMediaTranscript'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function listMediaTranscriptRequest($blob_id, $customer_id = null, $authorization = null, string $contentType = self::contentTypes['listMediaTranscript'][0])
+    public function listMediaTranscriptRequest($blob_id, $customer_id = null, string $contentType = self::contentTypes['listMediaTranscript'][0])
     {
 
         // verify the required parameter 'blob_id' is set
@@ -1579,7 +1536,6 @@ class MediaApi
                 'Missing the required parameter $blob_id when calling listMediaTranscript'
             );
         }
-
 
 
 
@@ -1600,10 +1556,6 @@ class MediaApi
             false // required
         ) ?? []);
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
         // path params
         if ($blob_id !== null) {
@@ -1650,6 +1602,10 @@ class MediaApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

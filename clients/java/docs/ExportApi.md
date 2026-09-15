@@ -13,7 +13,7 @@ All URIs are relative to *http://localhost*
 
 ## exportTenant
 
-> ExportResult exportTenant(exportRequest, authorization)
+> ExportResult exportTenant(exportRequest)
 
 Export the tenant&#39;s vectors and metadata to S3
 
@@ -24,6 +24,7 @@ Export the tenant&#39;s vectors and metadata to S3
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.ExportApi;
 
@@ -31,12 +32,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         ExportApi apiInstance = new ExportApi(defaultClient);
         ExportRequest exportRequest = new ExportRequest(); // ExportRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ExportResult result = apiInstance.exportTenant(exportRequest, authorization);
+            ExportResult result = apiInstance.exportTenant(exportRequest);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ExportApi#exportTenant");
@@ -55,7 +59,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **exportRequest** | [**ExportRequest**](ExportRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -64,7 +67,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -79,7 +82,7 @@ No authorization required
 
 ## exportTenantWithHttpInfo
 
-> ApiResponse<ExportResult> exportTenantWithHttpInfo(exportRequest, authorization)
+> ApiResponse<ExportResult> exportTenantWithHttpInfo(exportRequest)
 
 Export the tenant&#39;s vectors and metadata to S3
 
@@ -91,6 +94,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.ExportApi;
 
@@ -98,12 +102,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         ExportApi apiInstance = new ExportApi(defaultClient);
         ExportRequest exportRequest = new ExportRequest(); // ExportRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<ExportResult> response = apiInstance.exportTenantWithHttpInfo(exportRequest, authorization);
+            ApiResponse<ExportResult> response = apiInstance.exportTenantWithHttpInfo(exportRequest);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -124,7 +131,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **exportRequest** | [**ExportRequest**](ExportRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -133,7 +139,7 @@ ApiResponse<[**ExportResult**](ExportResult.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -149,7 +155,7 @@ No authorization required
 
 ## importTenant
 
-> ImportResult importTenant(importRequest, authorization)
+> ImportResult importTenant(importRequest)
 
 Import vectors and metadata from a previous FEVER export in S3
 
@@ -160,6 +166,7 @@ Import vectors and metadata from a previous FEVER export in S3
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.ExportApi;
 
@@ -167,12 +174,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         ExportApi apiInstance = new ExportApi(defaultClient);
         ImportRequest importRequest = new ImportRequest(); // ImportRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ImportResult result = apiInstance.importTenant(importRequest, authorization);
+            ImportResult result = apiInstance.importTenant(importRequest);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ExportApi#importTenant");
@@ -191,7 +201,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **importRequest** | [**ImportRequest**](ImportRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -200,7 +209,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -215,7 +224,7 @@ No authorization required
 
 ## importTenantWithHttpInfo
 
-> ApiResponse<ImportResult> importTenantWithHttpInfo(importRequest, authorization)
+> ApiResponse<ImportResult> importTenantWithHttpInfo(importRequest)
 
 Import vectors and metadata from a previous FEVER export in S3
 
@@ -227,6 +236,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.ExportApi;
 
@@ -234,12 +244,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         ExportApi apiInstance = new ExportApi(defaultClient);
         ImportRequest importRequest = new ImportRequest(); // ImportRequest | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<ImportResult> response = apiInstance.importTenantWithHttpInfo(importRequest, authorization);
+            ApiResponse<ImportResult> response = apiInstance.importTenantWithHttpInfo(importRequest);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -260,7 +273,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **importRequest** | [**ImportRequest**](ImportRequest.md)|  | |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -269,7 +281,7 @@ ApiResponse<[**ImportResult**](ImportResult.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

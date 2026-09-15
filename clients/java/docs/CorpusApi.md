@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 
 ## corpusStats
 
-> CorpusStats corpusStats(customerId, authorization)
+> CorpusStats corpusStats(customerId)
 
 Corpus composition: per-kind counts and top autotags
 
@@ -22,6 +22,7 @@ Corpus composition: per-kind counts and top autotags
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.CorpusApi;
 
@@ -29,12 +30,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         CorpusApi apiInstance = new CorpusApi(defaultClient);
         String customerId = "customerId_example"; // String | 
-        String authorization = "authorization_example"; // String | 
         try {
-            CorpusStats result = apiInstance.corpusStats(customerId, authorization);
+            CorpusStats result = apiInstance.corpusStats(customerId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CorpusApi#corpusStats");
@@ -53,7 +57,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **customerId** | **String**|  | [optional] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -62,7 +65,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -77,7 +80,7 @@ No authorization required
 
 ## corpusStatsWithHttpInfo
 
-> ApiResponse<CorpusStats> corpusStatsWithHttpInfo(customerId, authorization)
+> ApiResponse<CorpusStats> corpusStatsWithHttpInfo(customerId)
 
 Corpus composition: per-kind counts and top autotags
 
@@ -89,6 +92,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.CorpusApi;
 
@@ -96,12 +100,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         CorpusApi apiInstance = new CorpusApi(defaultClient);
         String customerId = "customerId_example"; // String | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<CorpusStats> response = apiInstance.corpusStatsWithHttpInfo(customerId, authorization);
+            ApiResponse<CorpusStats> response = apiInstance.corpusStatsWithHttpInfo(customerId);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -122,7 +129,6 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **customerId** | **String**|  | [optional] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -131,7 +137,7 @@ ApiResponse<[**CorpusStats**](CorpusStats.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

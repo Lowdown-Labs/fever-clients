@@ -17,8 +17,6 @@ using Xunit;
 
 using LowdownLabs.Fever.Client;
 using LowdownLabs.Fever.Api;
-// uncomment below to import models
-//using LowdownLabs.Fever.Model;
 
 namespace LowdownLabs.Fever.Test.Api
 {
@@ -60,8 +58,7 @@ namespace LowdownLabs.Fever.Test.Api
         public void WhoamiTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //string? authorization = null;
-            //var response = instance.Whoami(authorization);
+            //var response = instance.Whoami();
             //Assert.IsType<Object>(response);
         }
     }

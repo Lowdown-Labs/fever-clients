@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **reassign_customers_bulk**
-> object reassign_customers_bulk(authorization=authorization, file=file)
+> object reassign_customers_bulk(file=file)
 
 Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
 
@@ -16,6 +16,7 @@ Associate already-ingested images to customers after the fact, at millions-of-ro
 
 ### Example
 
+* Bearer Authentication (adminToken):
 
 ```python
 import fever_client
@@ -28,17 +29,25 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: adminToken
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.CustomersApi(api_client)
-    authorization = 'authorization_example' # str |  (optional)
     file = None # bytes |  (optional)
 
     try:
         # Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
-        api_response = await api_instance.reassign_customers_bulk(authorization=authorization, file=file)
+        api_response = await api_instance.reassign_customers_bulk(file=file)
         print("The response of CustomersApi->reassign_customers_bulk:\n")
         pprint(api_response)
     except Exception as e:
@@ -52,7 +61,6 @@ async with fever_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **authorization** | **str**|  | [optional] 
  **file** | **bytes**|  | [optional] 
 
 ### Return type
@@ -61,7 +69,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

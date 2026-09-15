@@ -25,10 +25,9 @@ pub enum IngestMediaError {
 
 
 /// Throw 1..N media items over the wall. Small inline batches are embedded and indexed synchronously and return blob ids; large batches or an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken from the API key.
-pub async fn ingest_media(configuration: &configuration::Configuration, ingest_request: models::IngestRequest, authorization: Option<&str>) -> Result<models::IngestResult, Error<IngestMediaError>> {
+pub async fn ingest_media(configuration: &configuration::Configuration, ingest_request: models::IngestRequest) -> Result<models::IngestResult, Error<IngestMediaError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_ingest_request = ingest_request;
-    let p_header_authorization = authorization;
 
     let uri_str = format!("{}/v1/media", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -36,9 +35,9 @@ pub async fn ingest_media(configuration: &configuration::Configuration, ingest_r
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_header_authorization {
-        req_builder = req_builder.header("authorization", param_value.to_string());
-    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
     req_builder = req_builder.json(&p_body_ingest_request);
 
     let req = req_builder.build()?;

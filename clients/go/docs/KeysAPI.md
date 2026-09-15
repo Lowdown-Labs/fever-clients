@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 ## CreateKey
 
-> KeyReveal CreateKey(ctx).CreateKeyRequest(createKeyRequest).Authorization(authorization).Execute()
+> KeyReveal CreateKey(ctx).CreateKeyRequest(createKeyRequest).Execute()
 
 Mint an API key for this appliance
 
@@ -30,11 +30,10 @@ import (
 
 func main() {
 	createKeyRequest := *openapiclient.NewCreateKeyRequest() // CreateKeyRequest | 
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.KeysAPI.CreateKey(context.Background()).CreateKeyRequest(createKeyRequest).Authorization(authorization).Execute()
+	resp, r, err := apiClient.KeysAPI.CreateKey(context.Background()).CreateKeyRequest(createKeyRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `KeysAPI.CreateKey``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -56,7 +55,6 @@ Other parameters are passed through a pointer to a apiCreateKeyRequest struct vi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **createKeyRequest** | [**CreateKeyRequest**](CreateKeyRequest.md) |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -64,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -78,7 +76,7 @@ No authorization required
 
 ## ListKeys
 
-> []ApiKey ListKeys(ctx).Authorization(authorization).Execute()
+> []ApiKey ListKeys(ctx).Execute()
 
 List this appliance's API keys
 
@@ -95,11 +93,10 @@ import (
 )
 
 func main() {
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.KeysAPI.ListKeys(context.Background()).Authorization(authorization).Execute()
+	resp, r, err := apiClient.KeysAPI.ListKeys(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `KeysAPI.ListKeys``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -111,16 +108,12 @@ func main() {
 
 ### Path Parameters
 
-
+This endpoint does not need any parameter.
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiListKeysRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -128,7 +121,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -142,7 +135,7 @@ No authorization required
 
 ## RevokeKey
 
-> interface{} RevokeKey(ctx, keyId).Authorization(authorization).Execute()
+> interface{} RevokeKey(ctx, keyId).Execute()
 
 Revoke an API key
 
@@ -160,11 +153,10 @@ import (
 
 func main() {
 	keyId := int32(56) // int32 | 
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.KeysAPI.RevokeKey(context.Background(), keyId).Authorization(authorization).Execute()
+	resp, r, err := apiClient.KeysAPI.RevokeKey(context.Background(), keyId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `KeysAPI.RevokeKey``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -190,7 +182,6 @@ Other parameters are passed through a pointer to a apiRevokeKeyRequest struct vi
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -198,7 +189,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

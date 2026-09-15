@@ -45,10 +45,9 @@ public class CustomersApiTest {
      */
     @Test
     public void reassignCustomersBulkTest() throws ApiException {
-        String authorization = null;
         File _file = null;
         Object response = 
-        api.reassignCustomersBulk(authorization, _file);
+        api.reassignCustomersBulk(_file);
         
         // TODO: test validations
     }

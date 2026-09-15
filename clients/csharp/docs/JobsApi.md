@@ -9,7 +9,7 @@ All URIs are relative to *http://localhost*
 
 <a id="canceljob"></a>
 # **CancelJob**
-> Job CancelJob (int jobId, string? authorization = null)
+> Job CancelJob (int jobId)
 
 Cancel a pending or running ingest job
 
@@ -30,17 +30,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new JobsApi(httpClient, config, httpClientHandler);
             var jobId = 56;  // int | 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Cancel a pending or running ingest job
-                Job result = apiInstance.CancelJob(jobId, authorization);
+                Job result = apiInstance.CancelJob(jobId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -61,7 +63,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Cancel a pending or running ingest job
-    ApiResponse<Job> response = apiInstance.CancelJobWithHttpInfo(jobId, authorization);
+    ApiResponse<Job> response = apiInstance.CancelJobWithHttpInfo(jobId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -79,7 +81,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **jobId** | **int** |  |  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -87,7 +88,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -105,7 +106,7 @@ No authorization required
 
 <a id="getjob"></a>
 # **GetJob**
-> Job GetJob (int jobId, string? authorization = null)
+> Job GetJob (int jobId)
 
 Get ingest job progress
 
@@ -126,17 +127,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new JobsApi(httpClient, config, httpClientHandler);
             var jobId = 56;  // int | 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Get ingest job progress
-                Job result = apiInstance.GetJob(jobId, authorization);
+                Job result = apiInstance.GetJob(jobId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -157,7 +160,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get ingest job progress
-    ApiResponse<Job> response = apiInstance.GetJobWithHttpInfo(jobId, authorization);
+    ApiResponse<Job> response = apiInstance.GetJobWithHttpInfo(jobId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -175,7 +178,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **jobId** | **int** |  |  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -183,7 +185,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

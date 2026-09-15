@@ -47,9 +47,8 @@ public class DuplicatesApiTest {
     @Test
     public void findDuplicatesTest() throws ApiException {
         DuplicatesRequest duplicatesRequest = null;
-        String authorization = null;
         DuplicatesResponse response = 
-        api.findDuplicates(duplicatesRequest, authorization);
+        api.findDuplicates(duplicatesRequest);
         
         // TODO: test validations
     }
@@ -65,9 +64,8 @@ public class DuplicatesApiTest {
     @Test
     public void suggestedDedupThresholdTest() throws ApiException {
         String customerId = null;
-        String authorization = null;
         Object response = 
-        api.suggestedDedupThreshold(customerId, authorization);
+        api.suggestedDedupThreshold(customerId);
         
         // TODO: test validations
     }

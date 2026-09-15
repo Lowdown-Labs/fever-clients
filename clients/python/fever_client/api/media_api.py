@@ -46,7 +46,6 @@ class MediaApi:
         blob_id: StrictInt,
         max_dim: Optional[StrictInt] = None,
         waveform: Optional[StrictInt] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -70,8 +69,6 @@ class MediaApi:
         :type max_dim: int
         :param waveform:
         :type waveform: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -98,7 +95,6 @@ class MediaApi:
             blob_id=blob_id,
             max_dim=max_dim,
             waveform=waveform,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -126,7 +122,6 @@ class MediaApi:
         blob_id: StrictInt,
         max_dim: Optional[StrictInt] = None,
         waveform: Optional[StrictInt] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -150,8 +145,6 @@ class MediaApi:
         :type max_dim: int
         :param waveform:
         :type waveform: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -178,7 +171,6 @@ class MediaApi:
             blob_id=blob_id,
             max_dim=max_dim,
             waveform=waveform,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -206,7 +198,6 @@ class MediaApi:
         blob_id: StrictInt,
         max_dim: Optional[StrictInt] = None,
         waveform: Optional[StrictInt] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -230,8 +221,6 @@ class MediaApi:
         :type max_dim: int
         :param waveform:
         :type waveform: int
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -258,7 +247,6 @@ class MediaApi:
             blob_id=blob_id,
             max_dim=max_dim,
             waveform=waveform,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -281,7 +269,6 @@ class MediaApi:
         blob_id,
         max_dim,
         waveform,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -315,8 +302,6 @@ class MediaApi:
             _query_params.append(('waveform', waveform))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -334,6 +319,7 @@ class MediaApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(
@@ -359,7 +345,6 @@ class MediaApi:
         self,
         blob_id: StrictInt,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -381,8 +366,6 @@ class MediaApi:
         :type blob_id: int
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -408,7 +391,6 @@ class MediaApi:
         _param = self._get_media_info_serialize(
             blob_id=blob_id,
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -435,7 +417,6 @@ class MediaApi:
         self,
         blob_id: StrictInt,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -457,8 +438,6 @@ class MediaApi:
         :type blob_id: int
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -484,7 +463,6 @@ class MediaApi:
         _param = self._get_media_info_serialize(
             blob_id=blob_id,
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -511,7 +489,6 @@ class MediaApi:
         self,
         blob_id: StrictInt,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -533,8 +510,6 @@ class MediaApi:
         :type blob_id: int
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -560,7 +535,6 @@ class MediaApi:
         _param = self._get_media_info_serialize(
             blob_id=blob_id,
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -582,7 +556,6 @@ class MediaApi:
         self,
         blob_id,
         customer_id,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -612,8 +585,6 @@ class MediaApi:
             _query_params.append(('customer_id', customer_id))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -629,6 +600,7 @@ class MediaApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(
@@ -652,7 +624,6 @@ class MediaApi:
     @validate_call
     async def list_media_formats(
         self,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -669,8 +640,6 @@ class MediaApi:
         """Ingest capability: supported extensions per media family
 
 
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -694,7 +663,6 @@ class MediaApi:
         """ # noqa: E501
 
         _param = self._list_media_formats_serialize(
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -703,7 +671,6 @@ class MediaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MediaFormats",
-            '422': "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -719,7 +686,6 @@ class MediaApi:
     @validate_call
     async def list_media_formats_with_http_info(
         self,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -736,8 +702,6 @@ class MediaApi:
         """Ingest capability: supported extensions per media family
 
 
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -761,7 +725,6 @@ class MediaApi:
         """ # noqa: E501
 
         _param = self._list_media_formats_serialize(
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -770,7 +733,6 @@ class MediaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MediaFormats",
-            '422': "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -786,7 +748,6 @@ class MediaApi:
     @validate_call
     async def list_media_formats_without_preload_content(
         self,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -803,8 +764,6 @@ class MediaApi:
         """Ingest capability: supported extensions per media family
 
 
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -828,7 +787,6 @@ class MediaApi:
         """ # noqa: E501
 
         _param = self._list_media_formats_serialize(
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -837,7 +795,6 @@ class MediaApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MediaFormats",
-            '422': "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -848,7 +805,6 @@ class MediaApi:
 
     def _list_media_formats_serialize(
         self,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -872,8 +828,6 @@ class MediaApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -889,6 +843,7 @@ class MediaApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(
@@ -914,7 +869,6 @@ class MediaApi:
         self,
         blob_id: StrictInt,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -935,8 +889,6 @@ class MediaApi:
         :type blob_id: int
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -962,7 +914,6 @@ class MediaApi:
         _param = self._list_media_frames_serialize(
             blob_id=blob_id,
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -989,7 +940,6 @@ class MediaApi:
         self,
         blob_id: StrictInt,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1010,8 +960,6 @@ class MediaApi:
         :type blob_id: int
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1037,7 +985,6 @@ class MediaApi:
         _param = self._list_media_frames_serialize(
             blob_id=blob_id,
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1064,7 +1011,6 @@ class MediaApi:
         self,
         blob_id: StrictInt,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1085,8 +1031,6 @@ class MediaApi:
         :type blob_id: int
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1112,7 +1056,6 @@ class MediaApi:
         _param = self._list_media_frames_serialize(
             blob_id=blob_id,
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1134,7 +1077,6 @@ class MediaApi:
         self,
         blob_id,
         customer_id,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -1164,8 +1106,6 @@ class MediaApi:
             _query_params.append(('customer_id', customer_id))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -1181,6 +1121,7 @@ class MediaApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(
@@ -1206,7 +1147,6 @@ class MediaApi:
         self,
         blob_id: StrictInt,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1227,8 +1167,6 @@ class MediaApi:
         :type blob_id: int
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1254,7 +1192,6 @@ class MediaApi:
         _param = self._list_media_transcript_serialize(
             blob_id=blob_id,
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1281,7 +1218,6 @@ class MediaApi:
         self,
         blob_id: StrictInt,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1302,8 +1238,6 @@ class MediaApi:
         :type blob_id: int
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1329,7 +1263,6 @@ class MediaApi:
         _param = self._list_media_transcript_serialize(
             blob_id=blob_id,
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1356,7 +1289,6 @@ class MediaApi:
         self,
         blob_id: StrictInt,
         customer_id: Optional[StrictStr] = None,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1377,8 +1309,6 @@ class MediaApi:
         :type blob_id: int
         :param customer_id:
         :type customer_id: str
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1404,7 +1334,6 @@ class MediaApi:
         _param = self._list_media_transcript_serialize(
             blob_id=blob_id,
             customer_id=customer_id,
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1426,7 +1355,6 @@ class MediaApi:
         self,
         blob_id,
         customer_id,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -1456,8 +1384,6 @@ class MediaApi:
             _query_params.append(('customer_id', customer_id))
             
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -1473,6 +1399,7 @@ class MediaApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(

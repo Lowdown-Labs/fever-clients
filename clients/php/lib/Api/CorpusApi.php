@@ -131,16 +131,15 @@ class CorpusApi
      * Corpus composition: per-kind counts and top autotags
      *
      * @param  string|null $customer_id customer_id (optional)
-     * @param  string|null $authorization authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['corpusStats'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return \LowdownLabs\Fever\Model\CorpusStats|\LowdownLabs\Fever\Model\HTTPValidationError
      */
-    public function corpusStats($customer_id = null, $authorization = null, string $contentType = self::contentTypes['corpusStats'][0])
+    public function corpusStats($customer_id = null, string $contentType = self::contentTypes['corpusStats'][0])
     {
-        list($response) = $this->corpusStatsWithHttpInfo($customer_id, $authorization, $contentType);
+        list($response) = $this->corpusStatsWithHttpInfo($customer_id, $contentType);
         return $response;
     }
 
@@ -150,16 +149,15 @@ class CorpusApi
      * Corpus composition: per-kind counts and top autotags
      *
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['corpusStats'] to see the possible values for this operation
      *
      * @throws \LowdownLabs\Fever\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
      * @return array of \LowdownLabs\Fever\Model\CorpusStats|\LowdownLabs\Fever\Model\HTTPValidationError, HTTP status code, HTTP response headers (array of strings)
      */
-    public function corpusStatsWithHttpInfo($customer_id = null, $authorization = null, string $contentType = self::contentTypes['corpusStats'][0])
+    public function corpusStatsWithHttpInfo($customer_id = null, string $contentType = self::contentTypes['corpusStats'][0])
     {
-        $request = $this->corpusStatsRequest($customer_id, $authorization, $contentType);
+        $request = $this->corpusStatsRequest($customer_id, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -250,15 +248,14 @@ class CorpusApi
      * Corpus composition: per-kind counts and top autotags
      *
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['corpusStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function corpusStatsAsync($customer_id = null, $authorization = null, string $contentType = self::contentTypes['corpusStats'][0])
+    public function corpusStatsAsync($customer_id = null, string $contentType = self::contentTypes['corpusStats'][0])
     {
-        return $this->corpusStatsAsyncWithHttpInfo($customer_id, $authorization, $contentType)
+        return $this->corpusStatsAsyncWithHttpInfo($customer_id, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -272,16 +269,15 @@ class CorpusApi
      * Corpus composition: per-kind counts and top autotags
      *
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['corpusStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function corpusStatsAsyncWithHttpInfo($customer_id = null, $authorization = null, string $contentType = self::contentTypes['corpusStats'][0])
+    public function corpusStatsAsyncWithHttpInfo($customer_id = null, string $contentType = self::contentTypes['corpusStats'][0])
     {
         $returnType = '\LowdownLabs\Fever\Model\CorpusStats';
-        $request = $this->corpusStatsRequest($customer_id, $authorization, $contentType);
+        $request = $this->corpusStatsRequest($customer_id, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -323,15 +319,13 @@ class CorpusApi
      * Create request for operation 'corpusStats'
      *
      * @param  string|null $customer_id (optional)
-     * @param  string|null $authorization (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['corpusStats'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function corpusStatsRequest($customer_id = null, $authorization = null, string $contentType = self::contentTypes['corpusStats'][0])
+    public function corpusStatsRequest($customer_id = null, string $contentType = self::contentTypes['corpusStats'][0])
     {
-
 
 
 
@@ -352,10 +346,6 @@ class CorpusApi
             false // required
         ) ?? []);
 
-        // header params
-        if ($authorization !== null) {
-            $headerParams['authorization'] = ObjectSerializer::toHeaderValue($authorization);
-        }
 
 
 
@@ -394,6 +384,10 @@ class CorpusApi
             }
         }
 
+        // this endpoint requires Bearer authentication (access token)
+        if (!empty($this->config->getAccessToken())) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {

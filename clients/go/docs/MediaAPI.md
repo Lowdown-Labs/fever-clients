@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## GetMediaBytes
 
-> interface{} GetMediaBytes(ctx, blobId).MaxDim(maxDim).Waveform(waveform).Authorization(authorization).Execute()
+> interface{} GetMediaBytes(ctx, blobId).MaxDim(maxDim).Waveform(waveform).Execute()
 
 Fetch an indexed media item's bytes (images normalized to JPEG)
 
@@ -36,11 +36,10 @@ func main() {
 	blobId := int32(56) // int32 | 
 	maxDim := int32(56) // int32 |  (optional) (default to 1280)
 	waveform := int32(56) // int32 |  (optional) (default to 0)
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.MediaAPI.GetMediaBytes(context.Background(), blobId).MaxDim(maxDim).Waveform(waveform).Authorization(authorization).Execute()
+	resp, r, err := apiClient.MediaAPI.GetMediaBytes(context.Background(), blobId).MaxDim(maxDim).Waveform(waveform).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `MediaAPI.GetMediaBytes``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -68,7 +67,6 @@ Name | Type | Description  | Notes
 
  **maxDim** | **int32** |  | [default to 1280]
  **waveform** | **int32** |  | [default to 0]
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -76,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -90,7 +88,7 @@ No authorization required
 
 ## GetMediaInfo
 
-> MediaInfo GetMediaInfo(ctx, blobId).CustomerId(customerId).Authorization(authorization).Execute()
+> MediaInfo GetMediaInfo(ctx, blobId).CustomerId(customerId).Execute()
 
 Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 
@@ -111,11 +109,10 @@ import (
 func main() {
 	blobId := int32(56) // int32 | 
 	customerId := "customerId_example" // string |  (optional)
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.MediaAPI.GetMediaInfo(context.Background(), blobId).CustomerId(customerId).Authorization(authorization).Execute()
+	resp, r, err := apiClient.MediaAPI.GetMediaInfo(context.Background(), blobId).CustomerId(customerId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `MediaAPI.GetMediaInfo``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -142,7 +139,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **customerId** | **string** |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -150,7 +146,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -164,7 +160,7 @@ No authorization required
 
 ## ListMediaFormats
 
-> MediaFormats ListMediaFormats(ctx).Authorization(authorization).Execute()
+> MediaFormats ListMediaFormats(ctx).Execute()
 
 Ingest capability: supported extensions per media family
 
@@ -181,11 +177,10 @@ import (
 )
 
 func main() {
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.MediaAPI.ListMediaFormats(context.Background()).Authorization(authorization).Execute()
+	resp, r, err := apiClient.MediaAPI.ListMediaFormats(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `MediaAPI.ListMediaFormats``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -197,16 +192,12 @@ func main() {
 
 ### Path Parameters
 
-
+This endpoint does not need any parameter.
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiListMediaFormatsRequest struct via the builder pattern
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -214,7 +205,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -228,7 +219,7 @@ No authorization required
 
 ## ListMediaFrames
 
-> []MediaFrame ListMediaFrames(ctx, blobId).CustomerId(customerId).Authorization(authorization).Execute()
+> []MediaFrame ListMediaFrames(ctx, blobId).CustomerId(customerId).Execute()
 
 Sampled video frames for a parent blob
 
@@ -247,11 +238,10 @@ import (
 func main() {
 	blobId := int32(56) // int32 | 
 	customerId := "customerId_example" // string |  (optional)
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.MediaAPI.ListMediaFrames(context.Background(), blobId).CustomerId(customerId).Authorization(authorization).Execute()
+	resp, r, err := apiClient.MediaAPI.ListMediaFrames(context.Background(), blobId).CustomerId(customerId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `MediaAPI.ListMediaFrames``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -278,7 +268,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **customerId** | **string** |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -286,7 +275,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -300,7 +289,7 @@ No authorization required
 
 ## ListMediaTranscript
 
-> []TranscriptSegment ListMediaTranscript(ctx, blobId).CustomerId(customerId).Authorization(authorization).Execute()
+> []TranscriptSegment ListMediaTranscript(ctx, blobId).CustomerId(customerId).Execute()
 
 Whisper transcript segments for a parent blob (audio or video)
 
@@ -319,11 +308,10 @@ import (
 func main() {
 	blobId := int32(56) // int32 | 
 	customerId := "customerId_example" // string |  (optional)
-	authorization := "authorization_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.MediaAPI.ListMediaTranscript(context.Background(), blobId).CustomerId(customerId).Authorization(authorization).Execute()
+	resp, r, err := apiClient.MediaAPI.ListMediaTranscript(context.Background(), blobId).CustomerId(customerId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `MediaAPI.ListMediaTranscript``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -350,7 +338,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
  **customerId** | **string** |  | 
- **authorization** | **string** |  | 
 
 ### Return type
 
@@ -358,7 +345,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

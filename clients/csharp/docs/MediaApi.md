@@ -12,7 +12,7 @@ All URIs are relative to *http://localhost*
 
 <a id="getmediabytes"></a>
 # **GetMediaBytes**
-> Object GetMediaBytes (int blobId, int? maxDim = null, int? waveform = null, string? authorization = null)
+> Object GetMediaBytes (int blobId, int? maxDim = null, int? waveform = null)
 
 Fetch an indexed media item's bytes (images normalized to JPEG)
 
@@ -35,6 +35,9 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
@@ -42,12 +45,11 @@ namespace Example
             var blobId = 56;  // int | 
             var maxDim = 1280;  // int? |  (optional)  (default to 1280)
             var waveform = 0;  // int? |  (optional)  (default to 0)
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Fetch an indexed media item's bytes (images normalized to JPEG)
-                Object result = apiInstance.GetMediaBytes(blobId, maxDim, waveform, authorization);
+                Object result = apiInstance.GetMediaBytes(blobId, maxDim, waveform);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -68,7 +70,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Fetch an indexed media item's bytes (images normalized to JPEG)
-    ApiResponse<Object> response = apiInstance.GetMediaBytesWithHttpInfo(blobId, maxDim, waveform, authorization);
+    ApiResponse<Object> response = apiInstance.GetMediaBytesWithHttpInfo(blobId, maxDim, waveform);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -88,7 +90,6 @@ catch (ApiException e)
 | **blobId** | **int** |  |  |
 | **maxDim** | **int?** |  | [optional] [default to 1280] |
 | **waveform** | **int?** |  | [optional] [default to 0] |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -96,7 +97,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -114,7 +115,7 @@ No authorization required
 
 <a id="getmediainfo"></a>
 # **GetMediaInfo**
-> MediaInfo GetMediaInfo (int blobId, string? customerId = null, string? authorization = null)
+> MediaInfo GetMediaInfo (int blobId, string? customerId = null)
 
 Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 
@@ -137,18 +138,20 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new MediaApi(httpClient, config, httpClientHandler);
             var blobId = 56;  // int | 
             var customerId = "customerId_example";  // string? |  (optional) 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
-                MediaInfo result = apiInstance.GetMediaInfo(blobId, customerId, authorization);
+                MediaInfo result = apiInstance.GetMediaInfo(blobId, customerId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -169,7 +172,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
-    ApiResponse<MediaInfo> response = apiInstance.GetMediaInfoWithHttpInfo(blobId, customerId, authorization);
+    ApiResponse<MediaInfo> response = apiInstance.GetMediaInfoWithHttpInfo(blobId, customerId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -188,7 +191,6 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **blobId** | **int** |  |  |
 | **customerId** | **string?** |  | [optional]  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -196,7 +198,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -214,7 +216,7 @@ No authorization required
 
 <a id="listmediaformats"></a>
 # **ListMediaFormats**
-> MediaFormats ListMediaFormats (string? authorization = null)
+> MediaFormats ListMediaFormats ()
 
 Ingest capability: supported extensions per media family
 
@@ -235,16 +237,18 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new MediaApi(httpClient, config, httpClientHandler);
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Ingest capability: supported extensions per media family
-                MediaFormats result = apiInstance.ListMediaFormats(authorization);
+                MediaFormats result = apiInstance.ListMediaFormats();
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -265,7 +269,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Ingest capability: supported extensions per media family
-    ApiResponse<MediaFormats> response = apiInstance.ListMediaFormatsWithHttpInfo(authorization);
+    ApiResponse<MediaFormats> response = apiInstance.ListMediaFormatsWithHttpInfo();
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -279,18 +283,14 @@ catch (ApiException e)
 ```
 
 ### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **authorization** | **string?** |  | [optional]  |
-
+This endpoint does not need any parameter.
 ### Return type
 
 [**MediaFormats**](MediaFormats.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -302,13 +302,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="listmediaframes"></a>
 # **ListMediaFrames**
-> List&lt;MediaFrame&gt; ListMediaFrames (int blobId, string? customerId = null, string? authorization = null)
+> List&lt;MediaFrame&gt; ListMediaFrames (int blobId, string? customerId = null)
 
 Sampled video frames for a parent blob
 
@@ -329,18 +328,20 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new MediaApi(httpClient, config, httpClientHandler);
             var blobId = 56;  // int | 
             var customerId = "customerId_example";  // string? |  (optional) 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Sampled video frames for a parent blob
-                List<MediaFrame> result = apiInstance.ListMediaFrames(blobId, customerId, authorization);
+                List<MediaFrame> result = apiInstance.ListMediaFrames(blobId, customerId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -361,7 +362,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Sampled video frames for a parent blob
-    ApiResponse<List<MediaFrame>> response = apiInstance.ListMediaFramesWithHttpInfo(blobId, customerId, authorization);
+    ApiResponse<List<MediaFrame>> response = apiInstance.ListMediaFramesWithHttpInfo(blobId, customerId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -380,7 +381,6 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **blobId** | **int** |  |  |
 | **customerId** | **string?** |  | [optional]  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -388,7 +388,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -406,7 +406,7 @@ No authorization required
 
 <a id="listmediatranscript"></a>
 # **ListMediaTranscript**
-> List&lt;TranscriptSegment&gt; ListMediaTranscript (int blobId, string? customerId = null, string? authorization = null)
+> List&lt;TranscriptSegment&gt; ListMediaTranscript (int blobId, string? customerId = null)
 
 Whisper transcript segments for a parent blob (audio or video)
 
@@ -427,18 +427,20 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new MediaApi(httpClient, config, httpClientHandler);
             var blobId = 56;  // int | 
             var customerId = "customerId_example";  // string? |  (optional) 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Whisper transcript segments for a parent blob (audio or video)
-                List<TranscriptSegment> result = apiInstance.ListMediaTranscript(blobId, customerId, authorization);
+                List<TranscriptSegment> result = apiInstance.ListMediaTranscript(blobId, customerId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -459,7 +461,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Whisper transcript segments for a parent blob (audio or video)
-    ApiResponse<List<TranscriptSegment>> response = apiInstance.ListMediaTranscriptWithHttpInfo(blobId, customerId, authorization);
+    ApiResponse<List<TranscriptSegment>> response = apiInstance.ListMediaTranscriptWithHttpInfo(blobId, customerId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -478,7 +480,6 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **blobId** | **int** |  |  |
 | **customerId** | **string?** |  | [optional]  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -486,7 +487,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

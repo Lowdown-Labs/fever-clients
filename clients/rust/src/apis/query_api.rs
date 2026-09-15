@@ -25,10 +25,9 @@ pub enum QueryError {
 
 
 /// A mini SQL console over the appliance's corpus tables: as_blobs, annotations, dup_edges, video_frames, transcript_segments, embeddings, datasets, dataset_items (internal jobs/job_items stay queryable for compatibility but are bookkeeping, not data). Exactly one SELECT statement. Natural-language semantic search: an `<=>` comparison between a vec_prefix/vec_full column and fever_search('some text') is allowed in the statement ORDER BY (rank by meaning) or in the SELECT target list (project the raw cosine distance; similarity = 1.0 - distance), at most four distinct fever_search() texts per statement. Raw vector columns (embeddings.vec_*, video_frames.vec_*) are selectable with an admin key; scoped keys get a rejection instead. tsvector (annotations.fts, transcript_segments.fts) columns are excluded for everyone. Scoped api keys are automatically restricted to their own customer_id, which is why they may only submit a narrow statement shape: plain tables and JOINs of them, with a FROM clause, and no subqueries, CTEs or set operations at any depth (those are rejected rather than risk a partial rewrite - use an admin key for them). Admin keys parse unrestricted and see every customer's rows in their own tenant.
-pub async fn query(configuration: &configuration::Configuration, query_request: models::QueryRequest, authorization: Option<&str>) -> Result<models::QueryResult, Error<QueryError>> {
+pub async fn query(configuration: &configuration::Configuration, query_request: models::QueryRequest) -> Result<models::QueryResult, Error<QueryError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_query_request = query_request;
-    let p_header_authorization = authorization;
 
     let uri_str = format!("{}/v1/query", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -36,9 +35,9 @@ pub async fn query(configuration: &configuration::Configuration, query_request: 
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_header_authorization {
-        req_builder = req_builder.header("authorization", param_value.to_string());
-    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
     req_builder = req_builder.json(&p_body_query_request);
 
     let req = req_builder.build()?;

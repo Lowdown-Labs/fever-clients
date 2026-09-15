@@ -33,10 +33,9 @@ pub enum SuggestedDedupThresholdError {
 
 
 /// Find near-duplicate clusters. Scoped to one customer, this reads the edge set maintained at ingest (millisecond answers; edges exist down to cosine 0.80). An admin key with no customer_id scans live across all customers; passing customer_ids narrows that live scan to a handful of accounts. Both admin shapes see cross-customer duplicates. No delete or keep recommendation is made: the clusters are yours to act on.
-pub async fn find_duplicates(configuration: &configuration::Configuration, duplicates_request: models::DuplicatesRequest, authorization: Option<&str>) -> Result<models::DuplicatesResponse, Error<FindDuplicatesError>> {
+pub async fn find_duplicates(configuration: &configuration::Configuration, duplicates_request: models::DuplicatesRequest) -> Result<models::DuplicatesResponse, Error<FindDuplicatesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_body_duplicates_request = duplicates_request;
-    let p_header_authorization = authorization;
 
     let uri_str = format!("{}/v1/duplicates", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -44,9 +43,9 @@ pub async fn find_duplicates(configuration: &configuration::Configuration, dupli
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_header_authorization {
-        req_builder = req_builder.header("authorization", param_value.to_string());
-    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
     req_builder = req_builder.json(&p_body_duplicates_request);
 
     let req = req_builder.build()?;
@@ -74,10 +73,9 @@ pub async fn find_duplicates(configuration: &configuration::Configuration, dupli
     }
 }
 
-pub async fn suggested_dedup_threshold(configuration: &configuration::Configuration, customer_id: Option<&str>, authorization: Option<&str>) -> Result<serde_json::Value, Error<SuggestedDedupThresholdError>> {
+pub async fn suggested_dedup_threshold(configuration: &configuration::Configuration, customer_id: Option<&str>) -> Result<serde_json::Value, Error<SuggestedDedupThresholdError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_query_customer_id = customer_id;
-    let p_header_authorization = authorization;
 
     let uri_str = format!("{}/v1/duplicates/suggested-threshold", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -88,9 +86,9 @@ pub async fn suggested_dedup_threshold(configuration: &configuration::Configurat
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_header_authorization {
-        req_builder = req_builder.header("authorization", param_value.to_string());
-    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

@@ -248,6 +248,20 @@ module FeverClient
     # Returns Auth Settings hash for api client.
     def auth_settings
       {
+        'adminToken' =>
+          {
+            type: 'bearer',
+            in: 'header',
+            key: 'Authorization',
+            value: "Bearer #{access_token_with_refresh}"
+          },
+        'bearerAuth' =>
+          {
+            type: 'bearer',
+            in: 'header',
+            key: 'Authorization',
+            value: "Bearer #{access_token_with_refresh}"
+          },
       }
     end
 

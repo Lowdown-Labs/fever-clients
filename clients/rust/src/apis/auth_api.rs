@@ -19,14 +19,11 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum WhoamiError {
-    Status422(models::HttpValidationError),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn whoami(configuration: &configuration::Configuration, authorization: Option<&str>) -> Result<serde_json::Value, Error<WhoamiError>> {
-    // add a prefix to parameters to efficiently prevent name collisions
-    let p_header_authorization = authorization;
+pub async fn whoami(configuration: &configuration::Configuration, ) -> Result<serde_json::Value, Error<WhoamiError>> {
 
     let uri_str = format!("{}/v1/whoami", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -34,9 +31,9 @@ pub async fn whoami(configuration: &configuration::Configuration, authorization:
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
-    if let Some(param_value) = p_header_authorization {
-        req_builder = req_builder.header("authorization", param_value.to_string());
-    }
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;

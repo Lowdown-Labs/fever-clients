@@ -13,18 +13,6 @@
  */
 
 import * as runtime from '../runtime';
-import {
-    type HTTPValidationError,
-    HTTPValidationErrorFromJSON,
-    HTTPValidationErrorToJSON,
-} from '../models/HTTPValidationError';
-
-export interface WhoamiRequest {
-    /**
-     * 
-     */
-    authorization?: string | null;
-}
 
 /**
  * 
@@ -34,15 +22,19 @@ export class AuthApi extends runtime.BaseAPI {
     /**
      * Creates request options for whoami without sending the request
      */
-    async whoamiRequestOpts(requestParameters: WhoamiRequest): Promise<runtime.RequestOpts> {
+    async whoamiRequestOpts(): Promise<runtime.RequestOpts> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/whoami`;
 
@@ -57,8 +49,8 @@ export class AuthApi extends runtime.BaseAPI {
     /**
      * Report the calling key\'s role and customer scope
      */
-    async whoamiRaw(requestParameters: WhoamiRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
-        const requestOptions = await this.whoamiRequestOpts(requestParameters);
+    async whoamiRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const requestOptions = await this.whoamiRequestOpts();
         const response = await this.request(requestOptions, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {
@@ -71,8 +63,8 @@ export class AuthApi extends runtime.BaseAPI {
     /**
      * Report the calling key\'s role and customer scope
      */
-    async whoami(requestParameters: WhoamiRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
-        const response = await this.whoamiRaw(requestParameters, initOverrides);
+    async whoami(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.whoamiRaw(initOverrides);
         return await response.value();
     }
 

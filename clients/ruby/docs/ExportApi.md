@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## export_tenant
 
-> <ExportResult> export_tenant(export_request, opts)
+> <ExportResult> export_tenant(export_request)
 
 Export the tenant's vectors and metadata to S3
 
@@ -19,16 +19,18 @@ Export the tenant's vectors and metadata to S3
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::ExportApi.new
 export_request = FeverClient::ExportRequest.new({s3_uri: 's3_uri_example'}) # ExportRequest | 
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # Export the tenant's vectors and metadata to S3
-  result = api_instance.export_tenant(export_request, opts)
+  result = api_instance.export_tenant(export_request)
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling ExportApi->export_tenant: #{e}"
@@ -39,12 +41,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<ExportResult>, Integer, Hash)> export_tenant_with_http_info(export_request, opts)
+> <Array(<ExportResult>, Integer, Hash)> export_tenant_with_http_info(export_request)
 
 ```ruby
 begin
   # Export the tenant's vectors and metadata to S3
-  data, status_code, headers = api_instance.export_tenant_with_http_info(export_request, opts)
+  data, status_code, headers = api_instance.export_tenant_with_http_info(export_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <ExportResult>
@@ -58,7 +60,6 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **export_request** | [**ExportRequest**](ExportRequest.md) |  |  |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -66,7 +67,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -76,7 +77,7 @@ No authorization required
 
 ## import_tenant
 
-> <ImportResult> import_tenant(import_request, opts)
+> <ImportResult> import_tenant(import_request)
 
 Import vectors and metadata from a previous FEVER export in S3
 
@@ -85,16 +86,18 @@ Import vectors and metadata from a previous FEVER export in S3
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::ExportApi.new
 import_request = FeverClient::ImportRequest.new({s3_uri: 's3_uri_example'}) # ImportRequest | 
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # Import vectors and metadata from a previous FEVER export in S3
-  result = api_instance.import_tenant(import_request, opts)
+  result = api_instance.import_tenant(import_request)
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling ExportApi->import_tenant: #{e}"
@@ -105,12 +108,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<ImportResult>, Integer, Hash)> import_tenant_with_http_info(import_request, opts)
+> <Array(<ImportResult>, Integer, Hash)> import_tenant_with_http_info(import_request)
 
 ```ruby
 begin
   # Import vectors and metadata from a previous FEVER export in S3
-  data, status_code, headers = api_instance.import_tenant_with_http_info(import_request, opts)
+  data, status_code, headers = api_instance.import_tenant_with_http_info(import_request)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <ImportResult>
@@ -124,7 +127,6 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **import_request** | [**ImportRequest**](ImportRequest.md) |  |  |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -132,7 +134,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

@@ -172,52 +172,48 @@ public class CustomersApi {
   /**
    * Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
    * Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
-   * @param authorization  (optional)
    * @param _file  (optional)
    * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object reassignCustomersBulk(@javax.annotation.Nullable String authorization, @javax.annotation.Nullable File _file) throws ApiException {
-    return reassignCustomersBulk(authorization, _file, null);
+  public Object reassignCustomersBulk(@javax.annotation.Nullable File _file) throws ApiException {
+    return reassignCustomersBulk(_file, null);
   }
 
   /**
    * Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
    * Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
-   * @param authorization  (optional)
    * @param _file  (optional)
    * @param headers Optional headers to include in the request
    * @return Object
    * @throws ApiException if fails to make API call
    */
-  public Object reassignCustomersBulk(@javax.annotation.Nullable String authorization, @javax.annotation.Nullable File _file, Map<String, String> headers) throws ApiException {
-    ApiResponse<Object> localVarResponse = reassignCustomersBulkWithHttpInfo(authorization, _file, headers);
+  public Object reassignCustomersBulk(@javax.annotation.Nullable File _file, Map<String, String> headers) throws ApiException {
+    ApiResponse<Object> localVarResponse = reassignCustomersBulkWithHttpInfo(_file, headers);
     return localVarResponse.getData();
   }
 
   /**
    * Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
    * Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
-   * @param authorization  (optional)
    * @param _file  (optional)
    * @return ApiResponse&lt;Object&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Object> reassignCustomersBulkWithHttpInfo(@javax.annotation.Nullable String authorization, @javax.annotation.Nullable File _file) throws ApiException {
-    return reassignCustomersBulkWithHttpInfo(authorization, _file, null);
+  public ApiResponse<Object> reassignCustomersBulkWithHttpInfo(@javax.annotation.Nullable File _file) throws ApiException {
+    return reassignCustomersBulkWithHttpInfo(_file, null);
   }
 
   /**
    * Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
    * Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
-   * @param authorization  (optional)
    * @param _file  (optional)
    * @param headers Optional headers to include in the request
    * @return ApiResponse&lt;Object&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<Object> reassignCustomersBulkWithHttpInfo(@javax.annotation.Nullable String authorization, @javax.annotation.Nullable File _file, Map<String, String> headers) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = reassignCustomersBulkRequestBuilder(authorization, _file, headers);
+  public ApiResponse<Object> reassignCustomersBulkWithHttpInfo(@javax.annotation.Nullable File _file, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = reassignCustomersBulkRequestBuilder(_file, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -264,7 +260,7 @@ public class CustomersApi {
     }
   }
 
-  private HttpRequest.Builder reassignCustomersBulkRequestBuilder(@javax.annotation.Nullable String authorization, @javax.annotation.Nullable File _file, Map<String, String> headers) throws ApiException {
+  private HttpRequest.Builder reassignCustomersBulkRequestBuilder(@javax.annotation.Nullable File _file, Map<String, String> headers) throws ApiException {
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -272,9 +268,6 @@ public class CustomersApi {
 
     localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
 
-    if (authorization != null) {
-      localVarRequestBuilder.header("authorization", authorization.toString());
-    }
     localVarRequestBuilder.header("Accept", "application/json");
 
     MultipartEntityBuilder multiPartBuilder = MultipartEntityBuilder.create();

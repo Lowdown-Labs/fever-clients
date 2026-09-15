@@ -32,9 +32,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createKeyRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>KeyReveal</returns>
-        KeyReveal CreateKey(CreateKeyRequest createKeyRequest, string? authorization = default);
+        KeyReveal CreateKey(CreateKeyRequest createKeyRequest);
 
         /// <summary>
         /// Mint an API key for this appliance
@@ -44,16 +43,14 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createKeyRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of KeyReveal</returns>
-        ApiResponse<KeyReveal> CreateKeyWithHttpInfo(CreateKeyRequest createKeyRequest, string? authorization = default);
+        ApiResponse<KeyReveal> CreateKeyWithHttpInfo(CreateKeyRequest createKeyRequest);
         /// <summary>
         /// List this appliance&#39;s API keys
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>List&lt;ApiKey&gt;</returns>
-        List<ApiKey> ListKeys(string? authorization = default);
+        List<ApiKey> ListKeys();
 
         /// <summary>
         /// List this appliance&#39;s API keys
@@ -62,17 +59,15 @@ namespace LowdownLabs.Fever.Api
         /// 
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of List&lt;ApiKey&gt;</returns>
-        ApiResponse<List<ApiKey>> ListKeysWithHttpInfo(string? authorization = default);
+        ApiResponse<List<ApiKey>> ListKeysWithHttpInfo();
         /// <summary>
         /// Revoke an API key
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="keyId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        Object RevokeKey(int keyId, string? authorization = default);
+        Object RevokeKey(int keyId);
 
         /// <summary>
         /// Revoke an API key
@@ -82,9 +77,8 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="keyId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        ApiResponse<Object> RevokeKeyWithHttpInfo(int keyId, string? authorization = default);
+        ApiResponse<Object> RevokeKeyWithHttpInfo(int keyId);
         #endregion Synchronous Operations
     }
 
@@ -102,10 +96,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createKeyRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of KeyReveal</returns>
-        System.Threading.Tasks.Task<KeyReveal> CreateKeyAsync(CreateKeyRequest createKeyRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<KeyReveal> CreateKeyAsync(CreateKeyRequest createKeyRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Mint an API key for this appliance
@@ -115,10 +108,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createKeyRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (KeyReveal)</returns>
-        System.Threading.Tasks.Task<ApiResponse<KeyReveal>> CreateKeyWithHttpInfoAsync(CreateKeyRequest createKeyRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<KeyReveal>> CreateKeyWithHttpInfoAsync(CreateKeyRequest createKeyRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// List this appliance&#39;s API keys
         /// </summary>
@@ -126,10 +118,9 @@ namespace LowdownLabs.Fever.Api
         /// 
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;ApiKey&gt;</returns>
-        System.Threading.Tasks.Task<List<ApiKey>> ListKeysAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<List<ApiKey>> ListKeysAsync(System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List this appliance&#39;s API keys
@@ -138,10 +129,9 @@ namespace LowdownLabs.Fever.Api
         /// 
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;ApiKey&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<ApiKey>>> ListKeysWithHttpInfoAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<List<ApiKey>>> ListKeysWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Revoke an API key
         /// </summary>
@@ -150,10 +140,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="keyId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        System.Threading.Tasks.Task<Object> RevokeKeyAsync(int keyId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<Object> RevokeKeyAsync(int keyId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Revoke an API key
@@ -163,10 +152,9 @@ namespace LowdownLabs.Fever.Api
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="keyId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> RevokeKeyWithHttpInfoAsync(int keyId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<Object>> RevokeKeyWithHttpInfoAsync(int keyId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -385,11 +373,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createKeyRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>KeyReveal</returns>
-        public KeyReveal CreateKey(CreateKeyRequest createKeyRequest, string? authorization = default)
+        public KeyReveal CreateKey(CreateKeyRequest createKeyRequest)
         {
-            LowdownLabs.Fever.Client.ApiResponse<KeyReveal> localVarResponse = CreateKeyWithHttpInfo(createKeyRequest, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<KeyReveal> localVarResponse = CreateKeyWithHttpInfo(createKeyRequest);
             return localVarResponse.Data;
         }
 
@@ -398,9 +385,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createKeyRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of KeyReveal</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<KeyReveal> CreateKeyWithHttpInfo(CreateKeyRequest createKeyRequest, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<KeyReveal> CreateKeyWithHttpInfo(CreateKeyRequest createKeyRequest)
         {
             // verify the required parameter 'createKeyRequest' is set
             if (createKeyRequest == null)
@@ -423,12 +409,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = createKeyRequest;
 
+            // authentication (adminToken) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<KeyReveal>("/v1/keys", localVarRequestOptions, this.Configuration);
@@ -447,12 +435,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createKeyRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of KeyReveal</returns>
-        public async System.Threading.Tasks.Task<KeyReveal> CreateKeyAsync(CreateKeyRequest createKeyRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<KeyReveal> CreateKeyAsync(CreateKeyRequest createKeyRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<KeyReveal> localVarResponse = await CreateKeyWithHttpInfoAsync(createKeyRequest, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<KeyReveal> localVarResponse = await CreateKeyWithHttpInfoAsync(createKeyRequest, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -461,10 +448,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="createKeyRequest"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (KeyReveal)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<KeyReveal>> CreateKeyWithHttpInfoAsync(CreateKeyRequest createKeyRequest, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<KeyReveal>> CreateKeyWithHttpInfoAsync(CreateKeyRequest createKeyRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'createKeyRequest' is set
             if (createKeyRequest == null)
@@ -489,12 +475,14 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             localVarRequestOptions.Data = createKeyRequest;
 
+            // authentication (adminToken) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 
@@ -513,11 +501,10 @@ namespace LowdownLabs.Fever.Api
         /// List this appliance&#39;s API keys 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>List&lt;ApiKey&gt;</returns>
-        public List<ApiKey> ListKeys(string? authorization = default)
+        public List<ApiKey> ListKeys()
         {
-            LowdownLabs.Fever.Client.ApiResponse<List<ApiKey>> localVarResponse = ListKeysWithHttpInfo(authorization);
+            LowdownLabs.Fever.Client.ApiResponse<List<ApiKey>> localVarResponse = ListKeysWithHttpInfo();
             return localVarResponse.Data;
         }
 
@@ -525,9 +512,8 @@ namespace LowdownLabs.Fever.Api
         /// List this appliance&#39;s API keys 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of List&lt;ApiKey&gt;</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<List<ApiKey>> ListKeysWithHttpInfo(string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<List<ApiKey>> ListKeysWithHttpInfo()
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -545,11 +531,13 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (adminToken) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Get<List<ApiKey>>("/v1/keys", localVarRequestOptions, this.Configuration);
@@ -567,12 +555,11 @@ namespace LowdownLabs.Fever.Api
         /// List this appliance&#39;s API keys 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;ApiKey&gt;</returns>
-        public async System.Threading.Tasks.Task<List<ApiKey>> ListKeysAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<List<ApiKey>> ListKeysAsync(System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<List<ApiKey>> localVarResponse = await ListKeysWithHttpInfoAsync(authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<List<ApiKey>> localVarResponse = await ListKeysWithHttpInfoAsync(cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -580,10 +567,9 @@ namespace LowdownLabs.Fever.Api
         /// List this appliance&#39;s API keys 
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;ApiKey&gt;)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<List<ApiKey>>> ListKeysWithHttpInfoAsync(string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<List<ApiKey>>> ListKeysWithHttpInfoAsync(System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -603,11 +589,13 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (adminToken) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 
@@ -627,11 +615,10 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="keyId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        public Object RevokeKey(int keyId, string? authorization = default)
+        public Object RevokeKey(int keyId)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = RevokeKeyWithHttpInfo(keyId, authorization);
+            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = RevokeKeyWithHttpInfo(keyId);
             return localVarResponse.Data;
         }
 
@@ -640,9 +627,8 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="keyId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<Object> RevokeKeyWithHttpInfo(int keyId, string? authorization = default)
+        public LowdownLabs.Fever.Client.ApiResponse<Object> RevokeKeyWithHttpInfo(int keyId)
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -661,11 +647,13 @@ namespace LowdownLabs.Fever.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("key_id", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(keyId)); // path parameter
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (adminToken) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Object>("/v1/keys/{key_id}/revoke", localVarRequestOptions, this.Configuration);
@@ -684,12 +672,11 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="keyId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        public async System.Threading.Tasks.Task<Object> RevokeKeyAsync(int keyId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<Object> RevokeKeyAsync(int keyId, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = await RevokeKeyWithHttpInfoAsync(keyId, authorization, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = await RevokeKeyWithHttpInfoAsync(keyId, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -698,10 +685,9 @@ namespace LowdownLabs.Fever.Api
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="keyId"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Object>> RevokeKeyWithHttpInfoAsync(int keyId, string? authorization = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Object>> RevokeKeyWithHttpInfoAsync(int keyId, System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -722,11 +708,13 @@ namespace LowdownLabs.Fever.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("key_id", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(keyId)); // path parameter
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
 
+            // authentication (adminToken) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 

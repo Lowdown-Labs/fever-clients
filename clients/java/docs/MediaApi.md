@@ -19,7 +19,7 @@ All URIs are relative to *http://localhost*
 
 ## getMediaBytes
 
-> Object getMediaBytes(blobId, maxDim, waveform, authorization)
+> Object getMediaBytes(blobId, maxDim, waveform)
 
 Fetch an indexed media item&#39;s bytes (images normalized to JPEG)
 
@@ -32,6 +32,7 @@ Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 &#x3D; raw bytes)
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.MediaApi;
 
@@ -39,14 +40,17 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         MediaApi apiInstance = new MediaApi(defaultClient);
         Integer blobId = 56; // Integer | 
         Integer maxDim = 1280; // Integer | 
         Integer waveform = 0; // Integer | 
-        String authorization = "authorization_example"; // String | 
         try {
-            Object result = apiInstance.getMediaBytes(blobId, maxDim, waveform, authorization);
+            Object result = apiInstance.getMediaBytes(blobId, maxDim, waveform);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MediaApi#getMediaBytes");
@@ -67,7 +71,6 @@ public class Example {
 | **blobId** | **Integer**|  | |
 | **maxDim** | **Integer**|  | [optional] [default to 1280] |
 | **waveform** | **Integer**|  | [optional] [default to 0] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -76,7 +79,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -91,7 +94,7 @@ No authorization required
 
 ## getMediaBytesWithHttpInfo
 
-> ApiResponse<Object> getMediaBytesWithHttpInfo(blobId, maxDim, waveform, authorization)
+> ApiResponse<Object> getMediaBytesWithHttpInfo(blobId, maxDim, waveform)
 
 Fetch an indexed media item&#39;s bytes (images normalized to JPEG)
 
@@ -105,6 +108,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.MediaApi;
 
@@ -112,14 +116,17 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         MediaApi apiInstance = new MediaApi(defaultClient);
         Integer blobId = 56; // Integer | 
         Integer maxDim = 1280; // Integer | 
         Integer waveform = 0; // Integer | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<Object> response = apiInstance.getMediaBytesWithHttpInfo(blobId, maxDim, waveform, authorization);
+            ApiResponse<Object> response = apiInstance.getMediaBytesWithHttpInfo(blobId, maxDim, waveform);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -142,7 +149,6 @@ public class Example {
 | **blobId** | **Integer**|  | |
 | **maxDim** | **Integer**|  | [optional] [default to 1280] |
 | **waveform** | **Integer**|  | [optional] [default to 0] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -151,7 +157,7 @@ ApiResponse<**Object**>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -167,7 +173,7 @@ No authorization required
 
 ## getMediaInfo
 
-> MediaInfo getMediaInfo(blobId, customerId, authorization)
+> MediaInfo getMediaInfo(blobId, customerId)
 
 Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 
@@ -180,6 +186,7 @@ Unified record for a blob_id. Scoped keys can only read their own customer&#39;s
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.MediaApi;
 
@@ -187,13 +194,16 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         MediaApi apiInstance = new MediaApi(defaultClient);
         Integer blobId = 56; // Integer | 
         String customerId = "customerId_example"; // String | 
-        String authorization = "authorization_example"; // String | 
         try {
-            MediaInfo result = apiInstance.getMediaInfo(blobId, customerId, authorization);
+            MediaInfo result = apiInstance.getMediaInfo(blobId, customerId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MediaApi#getMediaInfo");
@@ -213,7 +223,6 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **blobId** | **Integer**|  | |
 | **customerId** | **String**|  | [optional] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -222,7 +231,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -237,7 +246,7 @@ No authorization required
 
 ## getMediaInfoWithHttpInfo
 
-> ApiResponse<MediaInfo> getMediaInfoWithHttpInfo(blobId, customerId, authorization)
+> ApiResponse<MediaInfo> getMediaInfoWithHttpInfo(blobId, customerId)
 
 Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 
@@ -251,6 +260,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.MediaApi;
 
@@ -258,13 +268,16 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         MediaApi apiInstance = new MediaApi(defaultClient);
         Integer blobId = 56; // Integer | 
         String customerId = "customerId_example"; // String | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<MediaInfo> response = apiInstance.getMediaInfoWithHttpInfo(blobId, customerId, authorization);
+            ApiResponse<MediaInfo> response = apiInstance.getMediaInfoWithHttpInfo(blobId, customerId);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -286,7 +299,6 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **blobId** | **Integer**|  | |
 | **customerId** | **String**|  | [optional] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -295,7 +307,7 @@ ApiResponse<[**MediaInfo**](MediaInfo.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -311,7 +323,7 @@ No authorization required
 
 ## listMediaFormats
 
-> MediaFormats listMediaFormats(authorization)
+> MediaFormats listMediaFormats()
 
 Ingest capability: supported extensions per media family
 
@@ -322,6 +334,7 @@ Ingest capability: supported extensions per media family
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.MediaApi;
 
@@ -329,11 +342,14 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         MediaApi apiInstance = new MediaApi(defaultClient);
-        String authorization = "authorization_example"; // String | 
         try {
-            MediaFormats result = apiInstance.listMediaFormats(authorization);
+            MediaFormats result = apiInstance.listMediaFormats();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MediaApi#listMediaFormats");
@@ -348,10 +364,7 @@ public class Example {
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **authorization** | **String**|  | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -360,7 +373,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -371,11 +384,10 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 ## listMediaFormatsWithHttpInfo
 
-> ApiResponse<MediaFormats> listMediaFormatsWithHttpInfo(authorization)
+> ApiResponse<MediaFormats> listMediaFormatsWithHttpInfo()
 
 Ingest capability: supported extensions per media family
 
@@ -387,6 +399,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.MediaApi;
 
@@ -394,11 +407,14 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         MediaApi apiInstance = new MediaApi(defaultClient);
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<MediaFormats> response = apiInstance.listMediaFormatsWithHttpInfo(authorization);
+            ApiResponse<MediaFormats> response = apiInstance.listMediaFormatsWithHttpInfo();
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -415,10 +431,7 @@ public class Example {
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **authorization** | **String**|  | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -427,7 +440,7 @@ ApiResponse<[**MediaFormats**](MediaFormats.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -438,12 +451,11 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 
 ## listMediaFrames
 
-> List<MediaFrame> listMediaFrames(blobId, customerId, authorization)
+> List<MediaFrame> listMediaFrames(blobId, customerId)
 
 Sampled video frames for a parent blob
 
@@ -454,6 +466,7 @@ Sampled video frames for a parent blob
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.MediaApi;
 
@@ -461,13 +474,16 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         MediaApi apiInstance = new MediaApi(defaultClient);
         Integer blobId = 56; // Integer | 
         String customerId = "customerId_example"; // String | 
-        String authorization = "authorization_example"; // String | 
         try {
-            List<MediaFrame> result = apiInstance.listMediaFrames(blobId, customerId, authorization);
+            List<MediaFrame> result = apiInstance.listMediaFrames(blobId, customerId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MediaApi#listMediaFrames");
@@ -487,7 +503,6 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **blobId** | **Integer**|  | |
 | **customerId** | **String**|  | [optional] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -496,7 +511,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -511,7 +526,7 @@ No authorization required
 
 ## listMediaFramesWithHttpInfo
 
-> ApiResponse<List<MediaFrame>> listMediaFramesWithHttpInfo(blobId, customerId, authorization)
+> ApiResponse<List<MediaFrame>> listMediaFramesWithHttpInfo(blobId, customerId)
 
 Sampled video frames for a parent blob
 
@@ -523,6 +538,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.MediaApi;
 
@@ -530,13 +546,16 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         MediaApi apiInstance = new MediaApi(defaultClient);
         Integer blobId = 56; // Integer | 
         String customerId = "customerId_example"; // String | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<List<MediaFrame>> response = apiInstance.listMediaFramesWithHttpInfo(blobId, customerId, authorization);
+            ApiResponse<List<MediaFrame>> response = apiInstance.listMediaFramesWithHttpInfo(blobId, customerId);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -558,7 +577,6 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **blobId** | **Integer**|  | |
 | **customerId** | **String**|  | [optional] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -567,7 +585,7 @@ ApiResponse<[**List&lt;MediaFrame&gt;**](MediaFrame.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -583,7 +601,7 @@ No authorization required
 
 ## listMediaTranscript
 
-> List<TranscriptSegment> listMediaTranscript(blobId, customerId, authorization)
+> List<TranscriptSegment> listMediaTranscript(blobId, customerId)
 
 Whisper transcript segments for a parent blob (audio or video)
 
@@ -594,6 +612,7 @@ Whisper transcript segments for a parent blob (audio or video)
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.MediaApi;
 
@@ -601,13 +620,16 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         MediaApi apiInstance = new MediaApi(defaultClient);
         Integer blobId = 56; // Integer | 
         String customerId = "customerId_example"; // String | 
-        String authorization = "authorization_example"; // String | 
         try {
-            List<TranscriptSegment> result = apiInstance.listMediaTranscript(blobId, customerId, authorization);
+            List<TranscriptSegment> result = apiInstance.listMediaTranscript(blobId, customerId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MediaApi#listMediaTranscript");
@@ -627,7 +649,6 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **blobId** | **Integer**|  | |
 | **customerId** | **String**|  | [optional] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -636,7 +657,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -651,7 +672,7 @@ No authorization required
 
 ## listMediaTranscriptWithHttpInfo
 
-> ApiResponse<List<TranscriptSegment>> listMediaTranscriptWithHttpInfo(blobId, customerId, authorization)
+> ApiResponse<List<TranscriptSegment>> listMediaTranscriptWithHttpInfo(blobId, customerId)
 
 Whisper transcript segments for a parent blob (audio or video)
 
@@ -663,6 +684,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.MediaApi;
 
@@ -670,13 +692,16 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
 
         MediaApi apiInstance = new MediaApi(defaultClient);
         Integer blobId = 56; // Integer | 
         String customerId = "customerId_example"; // String | 
-        String authorization = "authorization_example"; // String | 
         try {
-            ApiResponse<List<TranscriptSegment>> response = apiInstance.listMediaTranscriptWithHttpInfo(blobId, customerId, authorization);
+            ApiResponse<List<TranscriptSegment>> response = apiInstance.listMediaTranscriptWithHttpInfo(blobId, customerId);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -698,7 +723,6 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **blobId** | **Integer**|  | |
 | **customerId** | **String**|  | [optional] |
-| **authorization** | **String**|  | [optional] |
 
 ### Return type
 
@@ -707,7 +731,7 @@ ApiResponse<[**List&lt;TranscriptSegment&gt;**](TranscriptSegment.md)>
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

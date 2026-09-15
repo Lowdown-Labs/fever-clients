@@ -12,7 +12,7 @@ All URIs are relative to *http://localhost*
 
 ## createKey
 
-> KeyReveal createKey(createKeyRequest, authorization)
+> KeyReveal createKey(createKeyRequest)
 
 Mint an API key for this appliance
 
@@ -27,13 +27,15 @@ import type { CreateKeyOperationRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new KeysApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: adminToken
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new KeysApi(config);
 
   const body = {
     // CreateKeyRequest
     createKeyRequest: ...,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies CreateKeyOperationRequest;
 
   try {
@@ -54,7 +56,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **createKeyRequest** | [CreateKeyRequest](CreateKeyRequest.md) |  | |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -62,7 +63,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -81,7 +82,7 @@ No authorization required
 
 ## listKeys
 
-> Array&lt;ApiKey&gt; listKeys(authorization)
+> Array&lt;ApiKey&gt; listKeys()
 
 List this appliance\&#39;s API keys
 
@@ -96,15 +97,14 @@ import type { ListKeysRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new KeysApi();
-
-  const body = {
-    // string (optional)
-    authorization: authorization_example,
-  } satisfies ListKeysRequest;
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: adminToken
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new KeysApi(config);
 
   try {
-    const data = await api.listKeys(body);
+    const data = await api.listKeys();
     console.log(data);
   } catch (error) {
     console.error(error);
@@ -117,10 +117,7 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -128,7 +125,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -140,14 +137,13 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## revokeKey
 
-> any revokeKey(keyId, authorization)
+> any revokeKey(keyId)
 
 Revoke an API key
 
@@ -162,13 +158,15 @@ import type { RevokeKeyRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new KeysApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: adminToken
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new KeysApi(config);
 
   const body = {
     // number
     keyId: 56,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies RevokeKeyRequest;
 
   try {
@@ -189,7 +187,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **keyId** | `number` |  | [Defaults to `undefined`] |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -197,7 +194,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

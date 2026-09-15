@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## reassign_customers_bulk
 
-> serde_json::Value reassign_customers_bulk(authorization, file)
+> serde_json::Value reassign_customers_bulk(file)
 Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
 
 Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\"s3_uri\": \"s3://bucket/key\", \"format\"?: \"csv|jsonl|parquet\"}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
@@ -20,7 +20,6 @@ Associate already-ingested images to customers after the fact, at millions-of-ro
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**authorization** | Option<**String**> |  |  |
 **file** | Option<**std::path::PathBuf**> |  |  |
 
 ### Return type
@@ -29,7 +28,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

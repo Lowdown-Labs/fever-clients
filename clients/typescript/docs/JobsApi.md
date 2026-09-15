@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 
 ## cancelJob
 
-> Job cancelJob(jobId, authorization)
+> Job cancelJob(jobId)
 
 Cancel a pending or running ingest job
 
@@ -26,13 +26,15 @@ import type { CancelJobRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new JobsApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new JobsApi(config);
 
   const body = {
     // number
     jobId: 56,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies CancelJobRequest;
 
   try {
@@ -53,7 +55,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **jobId** | `number` |  | [Defaults to `undefined`] |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -61,7 +62,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -80,7 +81,7 @@ No authorization required
 
 ## getJob
 
-> Job getJob(jobId, authorization)
+> Job getJob(jobId)
 
 Get ingest job progress
 
@@ -95,13 +96,15 @@ import type { GetJobRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new JobsApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new JobsApi(config);
 
   const body = {
     // number
     jobId: 56,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies GetJobRequest;
 
   try {
@@ -122,7 +125,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **jobId** | `number` |  | [Defaults to `undefined`] |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -130,7 +132,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

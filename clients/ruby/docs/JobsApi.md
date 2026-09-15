@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## cancel_job
 
-> <Job> cancel_job(job_id, opts)
+> <Job> cancel_job(job_id)
 
 Cancel a pending or running ingest job
 
@@ -19,16 +19,18 @@ Cancel a pending or running ingest job
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::JobsApi.new
 job_id = 56 # Integer | 
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # Cancel a pending or running ingest job
-  result = api_instance.cancel_job(job_id, opts)
+  result = api_instance.cancel_job(job_id)
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling JobsApi->cancel_job: #{e}"
@@ -39,12 +41,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Job>, Integer, Hash)> cancel_job_with_http_info(job_id, opts)
+> <Array(<Job>, Integer, Hash)> cancel_job_with_http_info(job_id)
 
 ```ruby
 begin
   # Cancel a pending or running ingest job
-  data, status_code, headers = api_instance.cancel_job_with_http_info(job_id, opts)
+  data, status_code, headers = api_instance.cancel_job_with_http_info(job_id)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <Job>
@@ -58,7 +60,6 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **job_id** | **Integer** |  |  |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -66,7 +67,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -76,7 +77,7 @@ No authorization required
 
 ## get_job
 
-> <Job> get_job(job_id, opts)
+> <Job> get_job(job_id)
 
 Get ingest job progress
 
@@ -85,16 +86,18 @@ Get ingest job progress
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::JobsApi.new
 job_id = 56 # Integer | 
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # Get ingest job progress
-  result = api_instance.get_job(job_id, opts)
+  result = api_instance.get_job(job_id)
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling JobsApi->get_job: #{e}"
@@ -105,12 +108,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<Job>, Integer, Hash)> get_job_with_http_info(job_id, opts)
+> <Array(<Job>, Integer, Hash)> get_job_with_http_info(job_id)
 
 ```ruby
 begin
   # Get ingest job progress
-  data, status_code, headers = api_instance.get_job_with_http_info(job_id, opts)
+  data, status_code, headers = api_instance.get_job_with_http_info(job_id)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => <Job>
@@ -124,7 +127,6 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **job_id** | **Integer** |  |  |
-| **authorization** | **String** |  | [optional] |
 
 ### Return type
 
@@ -132,7 +134,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

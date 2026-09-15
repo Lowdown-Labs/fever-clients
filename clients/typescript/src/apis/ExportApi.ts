@@ -44,10 +44,6 @@ export interface ExportTenantRequest {
      * 
      */
     exportRequest: ExportRequest;
-    /**
-     * 
-     */
-    authorization?: string | null;
 }
 
 export interface ImportTenantRequest {
@@ -55,10 +51,6 @@ export interface ImportTenantRequest {
      * 
      */
     importRequest: ImportRequest;
-    /**
-     * 
-     */
-    authorization?: string | null;
 }
 
 /**
@@ -83,10 +75,14 @@ export class ExportApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/export`;
 
@@ -134,10 +130,14 @@ export class ExportApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters['authorization'] != null) {
-            headerParameters['authorization'] = String(requestParameters['authorization']);
-        }
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
 
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
 
         let urlPath = `/v1/import`;
 

@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 
 ## reassignCustomersBulk
 
-> Object reassignCustomersBulk(authorization, _file)
+> Object reassignCustomersBulk(_file)
 
 Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
 
@@ -24,6 +24,7 @@ Associate already-ingested images to customers after the fact, at millions-of-ro
 import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.CustomersApi;
 
@@ -31,12 +32,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: adminToken
+        HttpBearerAuth adminToken = (HttpBearerAuth) defaultClient.getAuthentication("adminToken");
+        adminToken.setBearerToken("BEARER TOKEN");
 
         CustomersApi apiInstance = new CustomersApi(defaultClient);
-        String authorization = "authorization_example"; // String | 
         File _file = new File("/path/to/file"); // File | 
         try {
-            Object result = apiInstance.reassignCustomersBulk(authorization, _file);
+            Object result = apiInstance.reassignCustomersBulk(_file);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CustomersApi#reassignCustomersBulk");
@@ -54,7 +58,6 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **authorization** | **String**|  | [optional] |
 | **_file** | **File**|  | [optional] |
 
 ### Return type
@@ -64,7 +67,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -79,7 +82,7 @@ No authorization required
 
 ## reassignCustomersBulkWithHttpInfo
 
-> ApiResponse<Object> reassignCustomersBulkWithHttpInfo(authorization, _file)
+> ApiResponse<Object> reassignCustomersBulkWithHttpInfo(_file)
 
 Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
 
@@ -93,6 +96,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
 import org.openapitools.client.api.CustomersApi;
 
@@ -100,12 +104,15 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: adminToken
+        HttpBearerAuth adminToken = (HttpBearerAuth) defaultClient.getAuthentication("adminToken");
+        adminToken.setBearerToken("BEARER TOKEN");
 
         CustomersApi apiInstance = new CustomersApi(defaultClient);
-        String authorization = "authorization_example"; // String | 
         File _file = new File("/path/to/file"); // File | 
         try {
-            ApiResponse<Object> response = apiInstance.reassignCustomersBulkWithHttpInfo(authorization, _file);
+            ApiResponse<Object> response = apiInstance.reassignCustomersBulkWithHttpInfo(_file);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -125,7 +132,6 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **authorization** | **String**|  | [optional] |
 | **_file** | **File**|  | [optional] |
 
 ### Return type
@@ -135,7 +141,7 @@ ApiResponse<**Object**>
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

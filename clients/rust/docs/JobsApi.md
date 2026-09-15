@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## cancel_job
 
-> models::Job cancel_job(job_id, authorization)
+> models::Job cancel_job(job_id)
 Cancel a pending or running ingest job
 
 ### Parameters
@@ -20,7 +20,6 @@ Cancel a pending or running ingest job
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **job_id** | **i32** |  | [required] |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -28,7 +27,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -40,7 +39,7 @@ No authorization required
 
 ## get_job
 
-> models::Job get_job(job_id, authorization)
+> models::Job get_job(job_id)
 Get ingest job progress
 
 ### Parameters
@@ -49,7 +48,6 @@ Get ingest job progress
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **job_id** | **i32** |  | [required] |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -57,7 +55,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

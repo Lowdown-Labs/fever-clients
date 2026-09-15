@@ -13,7 +13,7 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 ## `findDuplicates()`
 
 ```php
-findDuplicates($duplicates_request, $authorization): \LowdownLabs\Fever\Model\DuplicatesResponse
+findDuplicates($duplicates_request): \LowdownLabs\Fever\Model\DuplicatesResponse
 ```
 
 Find near-duplicate media clusters for a customer
@@ -27,17 +27,20 @@ Find near-duplicate clusters. Scoped to one customer, this reads the edge set ma
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\DuplicatesApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $duplicates_request = new \LowdownLabs\Fever\Model\DuplicatesRequest(); // \LowdownLabs\Fever\Model\DuplicatesRequest
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->findDuplicates($duplicates_request, $authorization);
+    $result = $apiInstance->findDuplicates($duplicates_request);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling DuplicatesApi->findDuplicates: ', $e->getMessage(), PHP_EOL;
@@ -49,7 +52,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **duplicates_request** | [**\LowdownLabs\Fever\Model\DuplicatesRequest**](../Model/DuplicatesRequest.md)|  | |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -57,7 +59,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -71,7 +73,7 @@ No authorization required
 ## `suggestedDedupThreshold()`
 
 ```php
-suggestedDedupThreshold($customer_id, $authorization): mixed
+suggestedDedupThreshold($customer_id): mixed
 ```
 
 Suggest a duplicate-detection threshold from this customer's edge cosine distribution
@@ -83,17 +85,20 @@ Suggest a duplicate-detection threshold from this customer's edge cosine distrib
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
 
 $apiInstance = new LowdownLabs\Fever\Api\DuplicatesApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client()
+    new GuzzleHttp\Client(),
+    $config
 );
 $customer_id = 'customer_id_example'; // string
-$authorization = 'authorization_example'; // string
 
 try {
-    $result = $apiInstance->suggestedDedupThreshold($customer_id, $authorization);
+    $result = $apiInstance->suggestedDedupThreshold($customer_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling DuplicatesApi->suggestedDedupThreshold: ', $e->getMessage(), PHP_EOL;
@@ -105,7 +110,6 @@ try {
 | Name | Type | Description  | Notes |
 | ------------- | ------------- | ------------- | ------------- |
 | **customer_id** | **string**|  | [optional] |
-| **authorization** | **string**|  | [optional] |
 
 ### Return type
 
@@ -113,7 +117,7 @@ try {
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../../README.md#bearerAuth)
 
 ### HTTP request headers
 

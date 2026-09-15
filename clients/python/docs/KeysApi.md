@@ -10,12 +10,13 @@ Method | HTTP request | Description
 
 
 # **create_key**
-> KeyReveal create_key(create_key_request, authorization=authorization)
+> KeyReveal create_key(create_key_request)
 
 Mint an API key for this appliance
 
 ### Example
 
+* Bearer Authentication (adminToken):
 
 ```python
 import fever_client
@@ -30,17 +31,25 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: adminToken
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.KeysApi(api_client)
     create_key_request = fever_client.CreateKeyRequest() # CreateKeyRequest | 
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Mint an API key for this appliance
-        api_response = await api_instance.create_key(create_key_request, authorization=authorization)
+        api_response = await api_instance.create_key(create_key_request)
         print("The response of KeysApi->create_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -55,7 +64,6 @@ async with fever_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **create_key_request** | [**CreateKeyRequest**](CreateKeyRequest.md)|  | 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -63,7 +71,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -80,12 +88,13 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_keys**
-> List[ApiKey] list_keys(authorization=authorization)
+> List[ApiKey] list_keys()
 
 List this appliance's API keys
 
 ### Example
 
+* Bearer Authentication (adminToken):
 
 ```python
 import fever_client
@@ -99,16 +108,24 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: adminToken
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.KeysApi(api_client)
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # List this appliance's API keys
-        api_response = await api_instance.list_keys(authorization=authorization)
+        api_response = await api_instance.list_keys()
         print("The response of KeysApi->list_keys:\n")
         pprint(api_response)
     except Exception as e:
@@ -119,10 +136,7 @@ async with fever_client.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **authorization** | **str**|  | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -130,7 +144,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 
@@ -142,17 +156,17 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **revoke_key**
-> object revoke_key(key_id, authorization=authorization)
+> object revoke_key(key_id)
 
 Revoke an API key
 
 ### Example
 
+* Bearer Authentication (adminToken):
 
 ```python
 import fever_client
@@ -165,17 +179,25 @@ configuration = fever_client.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: adminToken
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 async with fever_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fever_client.KeysApi(api_client)
     key_id = 56 # int | 
-    authorization = 'authorization_example' # str |  (optional)
 
     try:
         # Revoke an API key
-        api_response = await api_instance.revoke_key(key_id, authorization=authorization)
+        api_response = await api_instance.revoke_key(key_id)
         print("The response of KeysApi->revoke_key:\n")
         pprint(api_response)
     except Exception as e:
@@ -190,7 +212,6 @@ async with fever_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **key_id** | **int**|  | 
- **authorization** | **str**|  | [optional] 
 
 ### Return type
 
@@ -198,7 +219,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[adminToken](../README.md#adminToken)
 
 ### HTTP request headers
 

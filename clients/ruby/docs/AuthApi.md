@@ -9,7 +9,7 @@ All URIs are relative to *http://localhost*
 
 ## whoami
 
-> Object whoami(opts)
+> Object whoami
 
 Report the calling key's role and customer scope
 
@@ -18,15 +18,17 @@ Report the calling key's role and customer scope
 ```ruby
 require 'time'
 require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
 
 api_instance = FeverClient::AuthApi.new
-opts = {
-  authorization: 'authorization_example' # String | 
-}
 
 begin
   # Report the calling key's role and customer scope
-  result = api_instance.whoami(opts)
+  result = api_instance.whoami
   p result
 rescue FeverClient::ApiError => e
   puts "Error when calling AuthApi->whoami: #{e}"
@@ -37,12 +39,12 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(Object, Integer, Hash)> whoami_with_http_info(opts)
+> <Array(Object, Integer, Hash)> whoami_with_http_info
 
 ```ruby
 begin
   # Report the calling key's role and customer scope
-  data, status_code, headers = api_instance.whoami_with_http_info(opts)
+  data, status_code, headers = api_instance.whoami_with_http_info
   p status_code # => 2xx
   p headers # => { ... }
   p data # => Object
@@ -53,9 +55,7 @@ end
 
 ### Parameters
 
-| Name | Type | Description | Notes |
-| ---- | ---- | ----------- | ----- |
-| **authorization** | **String** |  | [optional] |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -63,7 +63,7 @@ end
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

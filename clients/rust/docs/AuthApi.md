@@ -10,15 +10,12 @@ Method | HTTP request | Description
 
 ## whoami
 
-> serde_json::Value whoami(authorization)
+> serde_json::Value whoami()
 Report the calling key's role and customer scope
 
 ### Parameters
 
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**authorization** | Option<**String**> |  |  |
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -26,7 +23,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

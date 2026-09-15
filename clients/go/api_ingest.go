@@ -43,16 +43,10 @@ type ApiIngestMediaRequest struct {
 	ctx context.Context
 	ApiService IngestAPI
 	ingestRequest *IngestRequest
-	authorization *string
 }
 
 func (r ApiIngestMediaRequest) IngestRequest(ingestRequest IngestRequest) ApiIngestMediaRequest {
 	r.ingestRequest = &ingestRequest
-	return r
-}
-
-func (r ApiIngestMediaRequest) Authorization(authorization string) ApiIngestMediaRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -115,9 +109,6 @@ func (a *IngestAPIService) IngestMediaExecute(r ApiIngestMediaRequest) (*IngestR
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
 	// body params
 	localVarPostBody = r.ingestRequest

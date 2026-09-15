@@ -53,16 +53,10 @@ type ApiExportTenantRequest struct {
 	ctx context.Context
 	ApiService ExportAPI
 	exportRequest *ExportRequest
-	authorization *string
 }
 
 func (r ApiExportTenantRequest) ExportRequest(exportRequest ExportRequest) ApiExportTenantRequest {
 	r.exportRequest = &exportRequest
-	return r
-}
-
-func (r ApiExportTenantRequest) Authorization(authorization string) ApiExportTenantRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -124,9 +118,6 @@ func (a *ExportAPIService) ExportTenantExecute(r ApiExportTenantRequest) (*Expor
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
-	}
 	// body params
 	localVarPostBody = r.exportRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
@@ -180,16 +171,10 @@ type ApiImportTenantRequest struct {
 	ctx context.Context
 	ApiService ExportAPI
 	importRequest *ImportRequest
-	authorization *string
 }
 
 func (r ApiImportTenantRequest) ImportRequest(importRequest ImportRequest) ApiImportTenantRequest {
 	r.importRequest = &importRequest
-	return r
-}
-
-func (r ApiImportTenantRequest) Authorization(authorization string) ApiImportTenantRequest {
-	r.authorization = &authorization
 	return r
 }
 
@@ -250,9 +235,6 @@ func (a *ExportAPIService) ImportTenantExecute(r ApiImportTenantRequest) (*Impor
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.authorization != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "authorization", r.authorization, "simple", "")
 	}
 	// body params
 	localVarPostBody = r.importRequest

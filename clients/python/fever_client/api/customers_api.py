@@ -39,7 +39,6 @@ class CustomersApi:
     @validate_call
     async def reassign_customers_bulk(
         self,
-        authorization: Optional[StrictStr] = None,
         file: Optional[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]] = None,
         _request_timeout: Union[
             None,
@@ -58,8 +57,6 @@ class CustomersApi:
 
         Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\"s3_uri\": \"s3://bucket/key\", \"format\"?: \"csv|jsonl|parquet\"}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
 
-        :param authorization:
-        :type authorization: str
         :param file:
         :type file: bytes
         :param _request_timeout: timeout setting for this request. If one
@@ -85,7 +82,6 @@ class CustomersApi:
         """ # noqa: E501
 
         _param = self._reassign_customers_bulk_serialize(
-            authorization=authorization,
             file=file,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -111,7 +107,6 @@ class CustomersApi:
     @validate_call
     async def reassign_customers_bulk_with_http_info(
         self,
-        authorization: Optional[StrictStr] = None,
         file: Optional[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]] = None,
         _request_timeout: Union[
             None,
@@ -130,8 +125,6 @@ class CustomersApi:
 
         Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\"s3_uri\": \"s3://bucket/key\", \"format\"?: \"csv|jsonl|parquet\"}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
 
-        :param authorization:
-        :type authorization: str
         :param file:
         :type file: bytes
         :param _request_timeout: timeout setting for this request. If one
@@ -157,7 +150,6 @@ class CustomersApi:
         """ # noqa: E501
 
         _param = self._reassign_customers_bulk_serialize(
-            authorization=authorization,
             file=file,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -183,7 +175,6 @@ class CustomersApi:
     @validate_call
     async def reassign_customers_bulk_without_preload_content(
         self,
-        authorization: Optional[StrictStr] = None,
         file: Optional[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]] = None,
         _request_timeout: Union[
             None,
@@ -202,8 +193,6 @@ class CustomersApi:
 
         Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\"s3_uri\": \"s3://bucket/key\", \"format\"?: \"csv|jsonl|parquet\"}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
 
-        :param authorization:
-        :type authorization: str
         :param file:
         :type file: bytes
         :param _request_timeout: timeout setting for this request. If one
@@ -229,7 +218,6 @@ class CustomersApi:
         """ # noqa: E501
 
         _param = self._reassign_customers_bulk_serialize(
-            authorization=authorization,
             file=file,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -250,7 +238,6 @@ class CustomersApi:
 
     def _reassign_customers_bulk_serialize(
         self,
-        authorization,
         file,
         _request_auth,
         _content_type,
@@ -275,8 +262,6 @@ class CustomersApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         if file is not None:
             _files['file'] = file
@@ -307,6 +292,7 @@ class CustomersApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'adminToken'
         ]
 
         return self.api_client.param_serialize(

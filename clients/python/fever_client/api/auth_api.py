@@ -15,8 +15,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
-from typing import Any, Optional
+from typing import Any
 
 from fever_client.api_client import ApiClient, RequestSerialized
 from fever_client.api_response import ApiResponse
@@ -39,7 +38,6 @@ class AuthApi:
     @validate_call
     async def whoami(
         self,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -56,8 +54,6 @@ class AuthApi:
         """Report the calling key's role and customer scope
 
 
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -81,7 +77,6 @@ class AuthApi:
         """ # noqa: E501
 
         _param = self._whoami_serialize(
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -90,7 +85,6 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
-            '422': "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -106,7 +100,6 @@ class AuthApi:
     @validate_call
     async def whoami_with_http_info(
         self,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -123,8 +116,6 @@ class AuthApi:
         """Report the calling key's role and customer scope
 
 
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -148,7 +139,6 @@ class AuthApi:
         """ # noqa: E501
 
         _param = self._whoami_serialize(
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -157,7 +147,6 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
-            '422': "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -173,7 +162,6 @@ class AuthApi:
     @validate_call
     async def whoami_without_preload_content(
         self,
-        authorization: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -190,8 +178,6 @@ class AuthApi:
         """Report the calling key's role and customer scope
 
 
-        :param authorization:
-        :type authorization: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -215,7 +201,6 @@ class AuthApi:
         """ # noqa: E501
 
         _param = self._whoami_serialize(
-            authorization=authorization,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -224,7 +209,6 @@ class AuthApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "object",
-            '422': "HTTPValidationError",
         }
         response_data = await self.api_client.call_api(
             *_param,
@@ -235,7 +219,6 @@ class AuthApi:
 
     def _whoami_serialize(
         self,
-        authorization,
         _request_auth,
         _content_type,
         _headers,
@@ -259,8 +242,6 @@ class AuthApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if authorization is not None:
-            _header_params['authorization'] = authorization
         # process the form parameters
         # process the body parameter
 
@@ -276,6 +257,7 @@ class AuthApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'bearerAuth'
         ]
 
         return self.api_client.param_serialize(

@@ -23,7 +23,6 @@ module FeverClient
     # text runs a meaning-based vector search fused with lexical full-text (RRF), reranked and calibrated so min_score is a real match probability. image runs cosine similarity. customer_id and EXIF fields narrow the results.
     # @param search_request [SearchRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<SearchHit>]
     def search(search_request, opts = {})
       data, _status_code, _headers = search_with_http_info(search_request, opts)
@@ -34,7 +33,6 @@ module FeverClient
     # text runs a meaning-based vector search fused with lexical full-text (RRF), reranked and calibrated so min_score is a real match probability. image runs cosine similarity. customer_id and EXIF fields narrow the results.
     # @param search_request [SearchRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(Array<SearchHit>, Integer, Hash)>] Array<SearchHit> data, response status code and response headers
     def search_with_http_info(search_request, opts = {})
       if @api_client.config.debugging
@@ -59,7 +57,6 @@ module FeverClient
       if !content_type.nil?
           header_params['Content-Type'] = content_type
       end
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -71,7 +68,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'Array<SearchHit>'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"SearchApi.search",

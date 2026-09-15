@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 
 ## corpusStats
 
-> CorpusStats corpusStats(customerId, authorization)
+> CorpusStats corpusStats(customerId)
 
 Corpus composition: per-kind counts and top autotags
 
@@ -25,13 +25,15 @@ import type { CorpusStatsRequest } from 'fever-client';
 
 async function example() {
   console.log("🚀 Testing fever-client SDK...");
-  const api = new CorpusApi();
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new CorpusApi(config);
 
   const body = {
     // string (optional)
     customerId: customerId_example,
-    // string (optional)
-    authorization: authorization_example,
   } satisfies CorpusStatsRequest;
 
   try {
@@ -52,7 +54,6 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **customerId** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **authorization** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -60,7 +61,7 @@ example().catch(console.error);
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

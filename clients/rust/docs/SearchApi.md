@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## search
 
-> Vec<models::SearchHit> search(search_request, authorization)
+> Vec<models::SearchHit> search(search_request)
 Search by text or image
 
 text runs a meaning-based vector search fused with lexical full-text (RRF), reranked and calibrated so min_score is a real match probability. image runs cosine similarity. customer_id and EXIF fields narrow the results.
@@ -21,7 +21,6 @@ text runs a meaning-based vector search fused with lexical full-text (RRF), rera
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **search_request** | [**SearchRequest**](SearchRequest.md) |  | [required] |
-**authorization** | Option<**String**> |  |  |
 
 ### Return type
 
@@ -29,7 +28,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

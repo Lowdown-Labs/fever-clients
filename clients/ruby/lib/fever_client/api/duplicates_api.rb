@@ -23,7 +23,6 @@ module FeverClient
     # Find near-duplicate clusters. Scoped to one customer, this reads the edge set maintained at ingest (millisecond answers; edges exist down to cosine 0.80). An admin key with no customer_id scans live across all customers; passing customer_ids narrows that live scan to a handful of accounts. Both admin shapes see cross-customer duplicates. No delete or keep recommendation is made: the clusters are yours to act on.
     # @param duplicates_request [DuplicatesRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [DuplicatesResponse]
     def find_duplicates(duplicates_request, opts = {})
       data, _status_code, _headers = find_duplicates_with_http_info(duplicates_request, opts)
@@ -34,7 +33,6 @@ module FeverClient
     # Find near-duplicate clusters. Scoped to one customer, this reads the edge set maintained at ingest (millisecond answers; edges exist down to cosine 0.80). An admin key with no customer_id scans live across all customers; passing customer_ids narrows that live scan to a handful of accounts. Both admin shapes see cross-customer duplicates. No delete or keep recommendation is made: the clusters are yours to act on.
     # @param duplicates_request [DuplicatesRequest] 
     # @param [Hash] opts the optional parameters
-    # @option opts [String] :authorization 
     # @return [Array<(DuplicatesResponse, Integer, Hash)>] DuplicatesResponse data, response status code and response headers
     def find_duplicates_with_http_info(duplicates_request, opts = {})
       if @api_client.config.debugging
@@ -59,7 +57,6 @@ module FeverClient
       if !content_type.nil?
           header_params['Content-Type'] = content_type
       end
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -71,7 +68,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'DuplicatesResponse'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"DuplicatesApi.find_duplicates",
@@ -93,7 +90,6 @@ module FeverClient
     # Suggest a duplicate-detection threshold from this customer's edge cosine distribution
     # @param [Hash] opts the optional parameters
     # @option opts [String] :customer_id 
-    # @option opts [String] :authorization 
     # @return [Object]
     def suggested_dedup_threshold(opts = {})
       data, _status_code, _headers = suggested_dedup_threshold_with_http_info(opts)
@@ -103,7 +99,6 @@ module FeverClient
     # Suggest a duplicate-detection threshold from this customer&#39;s edge cosine distribution
     # @param [Hash] opts the optional parameters
     # @option opts [String] :customer_id 
-    # @option opts [String] :authorization 
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def suggested_dedup_threshold_with_http_info(opts = {})
       if @api_client.config.debugging
@@ -120,7 +115,6 @@ module FeverClient
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      header_params[:'authorization'] = opts[:'authorization'] if !opts[:'authorization'].nil?
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -132,7 +126,7 @@ module FeverClient
       return_type = opts[:debug_return_type] || 'Object'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || []
+      auth_names = opts[:debug_auth_names] || ['bearerAuth']
 
       new_options = opts.merge(
         :operation => :"DuplicatesApi.suggested_dedup_threshold",

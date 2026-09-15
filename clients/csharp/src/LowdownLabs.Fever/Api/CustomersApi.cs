@@ -34,10 +34,9 @@ namespace LowdownLabs.Fever.Api
         /// Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="file"> (optional)</param>
         /// <returns>Object</returns>
-        Object ReassignCustomersBulk(string? authorization = default, FileParameter? file = default);
+        Object ReassignCustomersBulk(FileParameter? file = default);
 
         /// <summary>
         /// Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
@@ -46,10 +45,9 @@ namespace LowdownLabs.Fever.Api
         /// Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="file"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        ApiResponse<Object> ReassignCustomersBulkWithHttpInfo(string? authorization = default, FileParameter? file = default);
+        ApiResponse<Object> ReassignCustomersBulkWithHttpInfo(FileParameter? file = default);
         #endregion Synchronous Operations
     }
 
@@ -66,11 +64,10 @@ namespace LowdownLabs.Fever.Api
         /// Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="file"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        System.Threading.Tasks.Task<Object> ReassignCustomersBulkAsync(string? authorization = default, FileParameter? file = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<Object> ReassignCustomersBulkAsync(FileParameter? file = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
@@ -79,11 +76,10 @@ namespace LowdownLabs.Fever.Api
         /// Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
         /// </remarks>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="file"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> ReassignCustomersBulkWithHttpInfoAsync(string? authorization = default, FileParameter? file = default, System.Threading.CancellationToken cancellationToken = default);
+        System.Threading.Tasks.Task<ApiResponse<Object>> ReassignCustomersBulkWithHttpInfoAsync(FileParameter? file = default, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -301,12 +297,11 @@ namespace LowdownLabs.Fever.Api
         /// Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="file"> (optional)</param>
         /// <returns>Object</returns>
-        public Object ReassignCustomersBulk(string? authorization = default, FileParameter? file = default)
+        public Object ReassignCustomersBulk(FileParameter? file = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = ReassignCustomersBulkWithHttpInfo(authorization, file);
+            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = ReassignCustomersBulkWithHttpInfo(file);
             return localVarResponse.Data;
         }
 
@@ -314,10 +309,9 @@ namespace LowdownLabs.Fever.Api
         /// Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="file"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        public LowdownLabs.Fever.Client.ApiResponse<Object> ReassignCustomersBulkWithHttpInfo(string? authorization = default, FileParameter? file = default)
+        public LowdownLabs.Fever.Client.ApiResponse<Object> ReassignCustomersBulkWithHttpInfo(FileParameter? file = default)
         {
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
 
@@ -336,15 +330,17 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             if (file != null)
             {
                 localVarRequestOptions.FileParameters.Add("file", file);
             }
 
+            // authentication (adminToken) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
             var localVarResponse = this.Client.Post<Object>("/v1/customers/reassign-bulk", localVarRequestOptions, this.Configuration);
@@ -362,13 +358,12 @@ namespace LowdownLabs.Fever.Api
         /// Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="file"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of Object</returns>
-        public async System.Threading.Tasks.Task<Object> ReassignCustomersBulkAsync(string? authorization = default, FileParameter? file = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<Object> ReassignCustomersBulkAsync(FileParameter? file = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = await ReassignCustomersBulkWithHttpInfoAsync(authorization, file, cancellationToken).ConfigureAwait(false);
+            LowdownLabs.Fever.Client.ApiResponse<Object> localVarResponse = await ReassignCustomersBulkWithHttpInfoAsync(file, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -376,11 +371,10 @@ namespace LowdownLabs.Fever.Api
         /// Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\&quot;s3_uri\&quot;: \&quot;s3://bucket/key\&quot;, \&quot;format\&quot;?: \&quot;csv|jsonl|parquet\&quot;}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.
         /// </summary>
         /// <exception cref="LowdownLabs.Fever.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="file"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Object>> ReassignCustomersBulkWithHttpInfoAsync(string? authorization = default, FileParameter? file = default, System.Threading.CancellationToken cancellationToken = default)
+        public async System.Threading.Tasks.Task<LowdownLabs.Fever.Client.ApiResponse<Object>> ReassignCustomersBulkWithHttpInfoAsync(FileParameter? file = default, System.Threading.CancellationToken cancellationToken = default)
         {
 
             LowdownLabs.Fever.Client.RequestOptions localVarRequestOptions = new LowdownLabs.Fever.Client.RequestOptions();
@@ -401,15 +395,17 @@ namespace LowdownLabs.Fever.Api
             var localVarAccept = LowdownLabs.Fever.Client.ClientUtils.SelectHeaderAccept(_accepts);
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
-            if (authorization != null)
-            {
-                localVarRequestOptions.HeaderParameters.Add("authorization", LowdownLabs.Fever.Client.ClientUtils.ParameterToString(authorization)); // header parameter
-            }
             if (file != null)
             {
                 localVarRequestOptions.FileParameters.Add("file", file);
             }
 
+            // authentication (adminToken) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
 
             // make the HTTP request
 

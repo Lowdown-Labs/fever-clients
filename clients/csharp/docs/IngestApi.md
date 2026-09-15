@@ -8,7 +8,7 @@ All URIs are relative to *http://localhost*
 
 <a id="ingestmedia"></a>
 # **IngestMedia**
-> IngestResult IngestMedia (IngestRequest ingestRequest, string? authorization = null)
+> IngestResult IngestMedia (IngestRequest ingestRequest)
 
 Ingest one or many media items
 
@@ -31,17 +31,19 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
             // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new IngestApi(httpClient, config, httpClientHandler);
             var ingestRequest = new IngestRequest(); // IngestRequest | 
-            var authorization = "authorization_example";  // string? |  (optional) 
 
             try
             {
                 // Ingest one or many media items
-                IngestResult result = apiInstance.IngestMedia(ingestRequest, authorization);
+                IngestResult result = apiInstance.IngestMedia(ingestRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -62,7 +64,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Ingest one or many media items
-    ApiResponse<IngestResult> response = apiInstance.IngestMediaWithHttpInfo(ingestRequest, authorization);
+    ApiResponse<IngestResult> response = apiInstance.IngestMediaWithHttpInfo(ingestRequest);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -80,7 +82,6 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **ingestRequest** | [**IngestRequest**](IngestRequest.md) |  |  |
-| **authorization** | **string?** |  | [optional]  |
 
 ### Return type
 
@@ -88,7 +89,7 @@ catch (ApiException e)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
