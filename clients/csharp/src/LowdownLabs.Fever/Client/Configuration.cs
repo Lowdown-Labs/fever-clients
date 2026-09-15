@@ -33,7 +33,7 @@ namespace LowdownLabs.Fever.Client
         /// Version of the package.
         /// </summary>
         /// <value>Version of the package.</value>
-        public const string Version = "0.3.0";
+        public const string Version = "0.0.0-dev";
 
         /// <summary>
         /// Identifier for ISO 8601 DateTime Format
@@ -117,7 +117,7 @@ namespace LowdownLabs.Fever.Client
         public Configuration()
         {
             Proxy = null;
-            UserAgent = WebUtility.UrlEncode("OpenAPI-Generator/0.3.0/csharp");
+            UserAgent = WebUtility.UrlEncode("OpenAPI-Generator/0.0.0-dev/csharp");
             BasePath = "http://localhost";
             DefaultHeaders = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
@@ -540,7 +540,7 @@ namespace LowdownLabs.Fever.Client
             report += "    OS: " + System.Environment.OSVersion + "\n";
             report += "    .NET Framework Version: " + System.Environment.Version  + "\n";
             report += "    Version of the API: 0.3.0\n";
-            report += "    SDK Package Version: 0.3.0\n";
+            report += "    SDK Package Version: 0.0.0-dev\n";
 
             return report;
         }

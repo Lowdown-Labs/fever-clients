@@ -11,5 +11,5 @@ Generator version: 7.25.0
 =end
 
 module FeverClient
-  VERSION = '0.3.0'
+  VERSION = '0.0.0-dev'
 end

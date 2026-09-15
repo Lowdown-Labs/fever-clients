@@ -5,7 +5,7 @@
     <artifactId>fever-client</artifactId>
     <packaging>jar</packaging>
     <name>fever-client</name>
-    <version>0.0.0</version>
+    <version>0.0.0-dev</version>
     <url>https://github.com/Lowdown-Labs/fever-clients</url>
     <description>OpenAPI Java</description>
     <scm>
