@@ -1,0 +1,11 @@
+# openapi-generator config for the C# client (nuget: LowdownLabs.Fever).
+generatorName: csharp
+outputDir: /local/clients/csharp
+inputSpec: /local/spec/openapi.json
+packageName: LowdownLabs.Fever
+packageVersion: "0.0.0"
+additionalProperties:
+  library: httpclient
+  targetFramework: net8.0
+  packageHomepage: https://github.com/Lowdown-Labs/fever-clients
+  hideGenerationTimestamp: true

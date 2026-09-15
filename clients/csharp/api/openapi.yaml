@@ -1,0 +1,2017 @@
+openapi: 3.1.0
+info:
+  description: "The multimodal media database. Images, video, and audio in one table:\
+    \ hybrid vector + full-text search, dedupe, seek-to-moment video hits, whisper\
+    \ transcript spans. Tenancy, scale, and isolation are automatic; the tenant is\
+    \ taken from the API key."
+  title: FEVER Retrieval
+  version: 0.3.0
+servers:
+- url: /
+tags:
+- description: "Ingest one or many media items (images, video, audio, PDFs) - inline,\
+    \ staged, or S3 source."
+  name: ingest
+- description: "Media parents: unified info, raw bytes, sampled video frames, whisper\
+    \ transcript segments, supported formats."
+  name: media
+- description: Poll ingest / backfill progress.
+  name: jobs
+- description: "Search by text (hybrid + rerank) or image (cosine), with video seek\
+    \ and transcript spans."
+  name: search
+- description: Find near-duplicate clusters for a customer.
+  name: duplicates
+- description: Dump a tenant's vectors and metadata to S3.
+  name: export
+- description: Read-only SQL over the whitelisted corpus tables.
+  name: query
+- description: "Admin-gated API key management for this appliance: mint, list, revoke."
+  name: keys
+- description: Key identity and scope resolution.
+  name: auth
+- description: "Admin-gated per-customer index maintenance: reassign, clear, wipe."
+  name: customers
+- description: Corpus composition for dashboards and the demo page.
+  name: corpus
+paths:
+  /healthz:
+    get:
+      operationId: healthz_healthz_get
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Healthz
+  /v1/corpus:
+    get:
+      operationId: corpus_stats
+      parameters:
+      - explode: true
+        in: query
+        name: customer_id
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: form
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CorpusStats"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: "Corpus composition: per-kind counts and top autotags"
+      tags:
+      - corpus
+  /v1/customers/reassign-bulk:
+    post:
+      description: "Associate already-ingested images to customers after the fact,\
+        \ at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl,\
+        \ .parquet) or a JSON body {\"s3_uri\": \"s3://bucket/key\", \"format\"?:\
+        \ \"csv|jsonl|parquet\"}. Each row maps a key (exact blob key) or filename\
+        \ to a customer_id; key is preferred when both are present. Rows are loaded\
+        \ with COPY and moved with one set-based UPDATE per table, so a million-row\
+        \ file completes in seconds. Reports matched/updated/noop/unmatched/conflict\
+        \ counts; filename fanout moves every match."
+      operationId: reassign_customers_bulk
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/BulkReassignUpload"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
+      tags:
+      - customers
+  /v1/duplicates:
+    post:
+      description: "Find near-duplicate clusters. Scoped to one customer, this reads\
+        \ the edge set maintained at ingest (millisecond answers; edges exist down\
+        \ to cosine 0.80). An admin key with no customer_id scans live across all\
+        \ customers; passing customer_ids narrows that live scan to a handful of accounts.\
+        \ Both admin shapes see cross-customer duplicates. No delete or keep recommendation\
+        \ is made: the clusters are yours to act on."
+      operationId: find_duplicates
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DuplicatesRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DuplicatesResponse"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Find near-duplicate media clusters for a customer
+      tags:
+      - duplicates
+  /v1/duplicates/suggested-threshold:
+    get:
+      operationId: suggested_dedup_threshold
+      parameters:
+      - explode: true
+        in: query
+        name: customer_id
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: form
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Suggest a duplicate-detection threshold from this customer's edge cosine
+        distribution
+      tags:
+      - duplicates
+  /v1/export:
+    post:
+      operationId: export_tenant
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExportRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExportResult"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Export the tenant's vectors and metadata to S3
+      tags:
+      - export
+  /v1/health:
+    get:
+      operationId: health
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Health"
+          description: Successful Response
+      summary: Health check
+  /v1/import:
+    post:
+      operationId: import_tenant
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ImportRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImportResult"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Import vectors and metadata from a previous FEVER export in S3
+      tags:
+      - export
+  /v1/jobs/{job_id}:
+    get:
+      operationId: get_job
+      parameters:
+      - explode: false
+        in: path
+        name: job_id
+        required: true
+        schema:
+          title: Job Id
+          type: integer
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Get ingest job progress
+      tags:
+      - jobs
+  /v1/jobs/{job_id}/cancel:
+    post:
+      operationId: cancel_job
+      parameters:
+      - explode: false
+        in: path
+        name: job_id
+        required: true
+        schema:
+          title: Job Id
+          type: integer
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Cancel a pending or running ingest job
+      tags:
+      - jobs
+  /v1/keys:
+    get:
+      operationId: list_keys
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/ApiKey"
+                title: Response List Keys
+                type: array
+                default: null
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: List this appliance's API keys
+      tags:
+      - keys
+    post:
+      operationId: create_key
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateKeyRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KeyReveal"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Mint an API key for this appliance
+      tags:
+      - keys
+  /v1/keys/{key_id}/revoke:
+    post:
+      operationId: revoke_key
+      parameters:
+      - explode: false
+        in: path
+        name: key_id
+        required: true
+        schema:
+          title: Key Id
+          type: integer
+        style: simple
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Revoke an API key
+      tags:
+      - keys
+  /v1/media:
+    post:
+      description: "Throw 1..N media items over the wall. Small inline batches are\
+        \ embedded and indexed synchronously and return blob ids; large batches or\
+        \ an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken\
+        \ from the API key."
+      operationId: ingest_media
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IngestRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IngestResult"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Ingest one or many media items
+      tags:
+      - ingest
+  /v1/media/formats:
+    get:
+      operationId: list_media_formats
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MediaFormats"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: "Ingest capability: supported extensions per media family"
+      tags:
+      - media
+  /v1/media/{blob_id}:
+    get:
+      description: |-
+        Unified record for a blob_id. Scoped keys can only read their own
+        customer's blobs; other customers' blobs are a 404 (never an existence
+        leak). Admin keys may narrow with ?customer_id=.
+      operationId: get_media_info
+      parameters:
+      - explode: false
+        in: path
+        name: blob_id
+        required: true
+        schema:
+          title: Blob Id
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: customer_id
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: form
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MediaInfo"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: "Everything known about a blob: annotations, EXIF summary, media kind,\
+        \ derived artifact counts"
+      tags:
+      - media
+  /v1/media/{blob_id}/bytes:
+    get:
+      description: |-
+        Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw
+        bytes). Scoped keys can only fetch their own customer's items; other
+        customers' blobs are a 404 (never an existence leak).
+
+        ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic)
+        so clients can show a real visual for audio hits without decoding the clip
+        in the browser.
+      operationId: get_media_bytes
+      parameters:
+      - explode: false
+        in: path
+        name: blob_id
+        required: true
+        schema:
+          title: Blob Id
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: max_dim
+        required: false
+        schema:
+          default: 1280
+          title: Max Dim
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: waveform
+        required: false
+        schema:
+          default: 0
+          title: Waveform
+          type: integer
+        style: form
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+            image/jpeg: {}
+            image/png: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Fetch an indexed media item's bytes (images normalized to JPEG)
+      tags:
+      - media
+  /v1/media/{blob_id}/frames:
+    get:
+      operationId: list_media_frames
+      parameters:
+      - explode: false
+        in: path
+        name: blob_id
+        required: true
+        schema:
+          title: Blob Id
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: customer_id
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: form
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/MediaFrame"
+                title: Response List Media Frames
+                type: array
+                default: null
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Sampled video frames for a parent blob
+      tags:
+      - media
+  /v1/media/{blob_id}/transcript:
+    get:
+      operationId: list_media_transcript
+      parameters:
+      - explode: false
+        in: path
+        name: blob_id
+        required: true
+        schema:
+          title: Blob Id
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: customer_id
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: form
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/TranscriptSegment"
+                title: Response List Media Transcript
+                type: array
+                default: null
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Whisper transcript segments for a parent blob (audio or video)
+      tags:
+      - media
+  /v1/query:
+    post:
+      description: "A mini SQL console over the appliance's corpus tables: as_blobs,\
+        \ annotations, dup_edges, video_frames, transcript_segments, embeddings, datasets,\
+        \ dataset_items (internal jobs/job_items stay queryable for compatibility\
+        \ but are bookkeeping, not data). Exactly one SELECT statement. Natural-language\
+        \ semantic search: an `<=>` comparison between a vec_prefix/vec_full column\
+        \ and fever_search('some text') is allowed in the statement ORDER BY (rank\
+        \ by meaning) or in the SELECT target list (project the raw cosine distance;\
+        \ similarity = 1.0 - distance), at most four distinct fever_search() texts\
+        \ per statement. Raw vector columns (embeddings.vec_*, video_frames.vec_*)\
+        \ are selectable with an admin key; scoped keys get a rejection instead. tsvector\
+        \ (annotations.fts, transcript_segments.fts) columns are excluded for everyone.\
+        \ Scoped api keys are automatically restricted to their own customer_id, which\
+        \ is why they may only submit a narrow statement shape: plain tables and JOINs\
+        \ of them, with a FROM clause, and no subqueries, CTEs or set operations at\
+        \ any depth (those are rejected rather than risk a partial rewrite - use an\
+        \ admin key for them). Admin keys parse unrestricted and see every customer's\
+        \ rows in their own tenant."
+      operationId: query
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QueryRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QueryResult"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Run a read-only SQL SELECT over the corpus tables
+      tags:
+      - query
+  /v1/search:
+    post:
+      description: "text runs a meaning-based vector search fused with lexical full-text\
+        \ (RRF), reranked and calibrated so min_score is a real match probability.\
+        \ image runs cosine similarity. customer_id and EXIF fields narrow the results."
+      operationId: search
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/SearchHit"
+                title: Response Search
+                type: array
+                default: null
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Search by text or image
+      tags:
+      - search
+  /v1/whoami:
+    get:
+      operationId: whoami
+      parameters:
+      - explode: false
+        in: header
+        name: authorization
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      summary: Report the calling key's role and customer scope
+      tags:
+      - auth
+components:
+  schemas:
+    ApiKey:
+      example:
+        created_at: created_at
+        customer_id: customer_id
+        id: 0
+        name: name
+        revoked: false
+        role: scoped
+      properties:
+        created_at:
+          nullable: true
+          type: string
+        customer_id:
+          nullable: true
+          type: string
+        id:
+          title: Id
+          type: integer
+        name:
+          nullable: true
+          type: string
+        revoked:
+          default: false
+          title: Revoked
+          type: boolean
+        role:
+          default: scoped
+          title: Role
+          type: string
+      required:
+      - id
+      title: ApiKey
+    BulkReassignUpload:
+      properties:
+        file:
+          format: binary
+          nullable: true
+          type: string
+      title: BulkReassignUpload
+    CorpusStats:
+      example:
+        kinds:
+          key: 0
+        top_tags:
+        - count: 6
+          tag: tag
+        - count: 6
+          tag: tag
+      properties:
+        kinds:
+          additionalProperties:
+            type: integer
+          title: Kinds
+          type: object
+        top_tags:
+          items:
+            $ref: "#/components/schemas/CorpusTag"
+          title: Top Tags
+          type: array
+          default: null
+      required:
+      - kinds
+      - top_tags
+      title: CorpusStats
+    CorpusTag:
+      example:
+        count: 6
+        tag: tag
+      properties:
+        count:
+          title: Count
+          type: integer
+        tag:
+          title: Tag
+          type: string
+      required:
+      - count
+      - tag
+      title: CorpusTag
+    CreateKeyRequest:
+      example:
+        customer_id: customer_id
+        name: name
+        role: admin
+      properties:
+        customer_id:
+          description: "For a scoped key, the single customer_id every request with\
+            \ this key is forced to. Must be empty for an admin key."
+          nullable: true
+          type: string
+        name:
+          description: Optional label for this API key (e.g. which app or integration
+            uses it).
+          nullable: true
+          type: string
+        role:
+          description: "'admin' keys search/ingest across all customers and may pass\
+            \ any customer_id; 'scoped' keys are locked server-side to one customer_id.\
+            \ If omitted it is inferred from customer_id (present means scoped, absent\
+            \ means admin)."
+          enum:
+          - admin
+          - scoped
+          nullable: true
+          type: string
+      title: CreateKeyRequest
+    DuplicateCluster:
+      example:
+        member_customers:
+        - member_customers
+        - member_customers
+        members:
+        - 6
+        - 6
+        size: 1
+        tightness: 5.962133916683182
+      properties:
+        member_customers:
+          description: "customer_id of each member, parallel to members; a cluster\
+            \ whose distinct customer count exceeds 1 is duplicated across accounts."
+          items:
+            nullable: true
+            type: string
+          title: Member Customers
+          type: array
+          default: null
+        members:
+          description: blob_ids of the items in this cluster.
+          items:
+            type: integer
+          title: Members
+          type: array
+          default: null
+        size:
+          description: Number of items in this near-duplicate cluster.
+          title: Size
+          type: integer
+        tightness:
+          description: Minimum pairwise cosine similarity across the cluster.
+          title: Tightness
+          type: number
+      required:
+      - members
+      - size
+      - tightness
+      title: DuplicateCluster
+    DuplicatesRequest:
+      example:
+        customer_id: customer_id
+        customer_ids:
+        - customer_ids
+        - customer_ids
+        limit: 401
+        threshold: 0.6027456183070403
+      properties:
+        customer_id:
+          description: Restrict the scan to media tagged with this customer_id. A
+            scoped key is always forced to its own customer_id; an admin key may pass
+            any customer_id or none (all customers).
+          nullable: true
+          type: string
+        customer_ids:
+          description: "Admin only: restrict the scan to this set of customers. Spanning\
+            \ more than one customer is how cross-account duplicates (the same item\
+            \ submitted under different accounts) are found. Ignored for scoped keys,\
+            \ which stay pinned."
+          items:
+            type: string
+          nullable: true
+          type: array
+          default: null
+        limit:
+          default: 500
+          description: Max items to scan for near-duplicates.
+          maximum: 5000.0
+          minimum: 1.0
+          title: Limit
+          type: integer
+        threshold:
+          default: 0.92
+          description: Similarity cutoff 0..1; higher is stricter (1.0 = near-identical).
+          maximum: 1.0
+          minimum: 0.0
+          title: Threshold
+          type: number
+      title: DuplicatesRequest
+    DuplicatesResponse:
+      example:
+        clusters: 0
+        duplicate_clusters:
+        - member_customers:
+          - member_customers
+          - member_customers
+          members:
+          - 6
+          - 6
+          size: 1
+          tightness: 5.962133916683182
+        - member_customers:
+          - member_customers
+          - member_customers
+          members:
+          - 6
+          - 6
+          size: 1
+          tightness: 5.962133916683182
+        total_duplicates: 5
+      properties:
+        clusters:
+          description: Number of near-duplicate clusters found.
+          title: Clusters
+          type: integer
+        duplicate_clusters:
+          description: "The near-duplicate clusters, largest and tightest first."
+          items:
+            $ref: "#/components/schemas/DuplicateCluster"
+          title: Duplicate Clusters
+          type: array
+          default: null
+        total_duplicates:
+          description: Count of items that fall in any cluster of size >= 2.
+          title: Total Duplicates
+          type: integer
+      required:
+      - clusters
+      - total_duplicates
+      title: DuplicatesResponse
+    ExportRequest:
+      example:
+        customer_id: customer_id
+        format: ndjson
+        kind: image
+        s3_uri: s3_uri
+        tag: tag
+      properties:
+        customer_id:
+          description: Export only media tagged with this customer_id.
+          nullable: true
+          type: string
+        format:
+          default: ndjson
+          description: "'ndjson' (default) is the full vector-bearing backup format\
+            \ /v1/import restores from. 'parquet' is a metadata-only dataset export\
+            \ (blob_id, customer_id, media_ref, kind, caption, tags - no vectors)\
+            \ for analysis in DuckDB/pandas/Spark; it is not importable."
+          enum:
+          - ndjson
+          - parquet
+          title: Format
+          type: string
+        kind:
+          description: Export only blobs of this media kind.
+          enum:
+          - image
+          - video
+          - audio
+          - pdf
+          - doc
+          - note
+          nullable: true
+          type: string
+        s3_uri:
+          description: s3://bucket/prefix to write the export to.
+          title: S3 Uri
+          type: string
+        tag:
+          description: Export only blobs whose annotation tags contain this tag.
+          nullable: true
+          type: string
+      required:
+      - s3_uri
+      title: ExportRequest
+    ExportResult:
+      example:
+        exported: 0
+        s3_uri: s3_uri
+      properties:
+        exported:
+          title: Exported
+          type: integer
+        s3_uri:
+          title: S3 Uri
+          type: string
+      required:
+      - exported
+      - s3_uri
+      title: ExportResult
+    HTTPValidationError:
+      example:
+        detail:
+        - ctx: "{}"
+          input: ""
+          loc:
+          - Location_inner
+          - Location_inner
+          msg: msg
+          type: type
+        - ctx: "{}"
+          input: ""
+          loc:
+          - Location_inner
+          - Location_inner
+          msg: msg
+          type: type
+      properties:
+        detail:
+          items:
+            $ref: "#/components/schemas/ValidationError"
+          title: Detail
+          type: array
+          default: null
+      title: HTTPValidationError
+    Health:
+      example:
+        status: ok
+      properties:
+        status:
+          default: ok
+          title: Status
+          type: string
+      title: Health
+    ImportRequest:
+      example:
+        customer_id: customer_id
+        s3_uri: s3_uri
+      properties:
+        customer_id:
+          description: "Tag every imported row with this customer_id (admin default:\
+            \ preserve the file's own)."
+          nullable: true
+          type: string
+        s3_uri:
+          description: s3://bucket/prefix of a previous FEVER export (manifest.json
+            + shard NDJSON).
+          title: S3 Uri
+          type: string
+      required:
+      - s3_uri
+      title: ImportRequest
+    ImportResult:
+      example:
+        imported: 0
+        s3_uri: s3_uri
+      properties:
+        imported:
+          title: Imported
+          type: integer
+        s3_uri:
+          title: S3 Uri
+          type: string
+      required:
+      - imported
+      - s3_uri
+      title: ImportResult
+    IngestMedia:
+      example:
+        caption: caption
+        customer_id: customer_id
+        data: data
+        metadata:
+          key: ""
+        strip_exif: false
+        tags:
+        - tags
+        - tags
+        url: url
+      properties:
+        caption:
+          description: Optional caption/keywords; indexed at the highest text-search
+            weight.
+          nullable: true
+          type: string
+        customer_id:
+          description: Optional tag attributing this item to one of your customers;
+            filterable at search time.
+          nullable: true
+          type: string
+        data:
+          description: Base64-encoded media item bytes.
+          nullable: true
+          type: string
+        metadata:
+          additionalProperties: true
+          description: Opaque JSON returned with search hits.
+          nullable: true
+          type: object
+        strip_exif:
+          default: false
+          description: Skip EXIF extraction/retention for this item.
+          title: Strip Exif
+          type: boolean
+        tags:
+          description: Optional tags for this item; indexed for text search and returned
+            on hits. Merged with the appliance's zero-shot autotags.
+          items:
+            type: string
+          nullable: true
+          type: array
+          default: null
+        url:
+          description: "An s3:// URI to one media item you already store, instead\
+            \ of inline bytes."
+          nullable: true
+          type: string
+      title: IngestMedia
+    IngestRequest:
+      example:
+        media:
+        - caption: caption
+          customer_id: customer_id
+          data: data
+          metadata:
+            key: ""
+          strip_exif: false
+          tags:
+          - tags
+          - tags
+          url: url
+        - caption: caption
+          customer_id: customer_id
+          data: data
+          metadata:
+            key: ""
+          strip_exif: false
+          tags:
+          - tags
+          - tags
+          url: url
+        overwrite: false
+        source: ""
+        target_res: 386
+      properties:
+        media:
+          description: 1..N media items to ingest inline.
+          items:
+            $ref: "#/components/schemas/IngestMedia"
+          nullable: true
+          type: array
+          default: null
+        overwrite:
+          default: false
+          description: "Re-embed and update items already indexed (clobber). Default\
+            \ false = delta ingest: content already indexed is skipped, so re-running\
+            \ an ingest only processes new items."
+          title: Overwrite
+          type: boolean
+        source:
+          allOf:
+          - $ref: "#/components/schemas/IngestSource"
+          description: Ingest every media item under an S3 prefix instead of sending
+            bytes.
+          nullable: true
+        target_res:
+          description: "Resolution to index this batch at, in pixels (rounded to a\
+            \ multiple of 16). Images are resized to this before embedding; higher\
+            \ means more detail but slower. Leave unset for the fast production default\
+            \ (64), which retains most of the search quality at a fraction of the\
+            \ cost."
+          maximum: 4096.0
+          minimum: 64.0
+          nullable: true
+          type: integer
+      title: IngestRequest
+    IngestResult:
+      example:
+        existing:
+        - blob_id: 0
+          external_ref: external_ref
+        - blob_id: 0
+          external_ref: external_ref
+        ingested:
+        - blob_id: 0
+          external_ref: external_ref
+        - blob_id: 0
+          external_ref: external_ref
+        job: ""
+      properties:
+        existing:
+          description: "Items skipped by delta ingest because they were already indexed,\
+            \ returned with their current blob_ids (only when overwrite=false)."
+          items:
+            $ref: "#/components/schemas/IngestedMedia"
+          title: Existing
+          type: array
+          default: null
+        ingested:
+          description: Media items processed inline (small requests).
+          items:
+            $ref: "#/components/schemas/IngestedMedia"
+          title: Ingested
+          type: array
+          default: null
+        job:
+          allOf:
+          - $ref: "#/components/schemas/Job"
+          description: "For large or bucket-source ingests, poll this job for progress."
+          nullable: true
+      title: IngestResult
+    IngestSource:
+      properties:
+        customer_id:
+          description: Tag every vacuumed item with this customer_id.
+          nullable: true
+          type: string
+        s3_uri:
+          description: s3://bucket/prefix in your VPC to vacuum every media item under.
+          title: S3 Uri
+          type: string
+        target_res:
+          description: "Resolution to index at, in pixels (rounded to a multiple of\
+            \ 16). Images are resized to this before embedding; higher means more\
+            \ detail but slower. Leave unset for the fast production default (64)."
+          maximum: 4096.0
+          minimum: 64.0
+          nullable: true
+          type: integer
+      required:
+      - s3_uri
+      title: IngestSource
+    IngestedMedia:
+      example:
+        blob_id: 0
+        external_ref: external_ref
+      properties:
+        blob_id:
+          title: Blob Id
+          type: integer
+        external_ref:
+          nullable: true
+          type: string
+      required:
+      - blob_id
+      title: IngestedMedia
+    Job:
+      example:
+        done: 0
+        error: error
+        id: 6
+        skipped: 1
+        status: status
+        total: 5
+      properties:
+        done:
+          default: 0
+          title: Done
+          type: integer
+        error:
+          nullable: true
+          type: string
+        id:
+          title: Id
+          type: integer
+        skipped:
+          default: 0
+          description: Items skipped by delta ingest because their content was already
+            indexed (overwrite=false).
+          title: Skipped
+          type: integer
+        status:
+          title: Status
+          type: string
+        total:
+          default: 0
+          title: Total
+          type: integer
+      required:
+      - id
+      - status
+      title: Job
+    KeyReveal:
+      example:
+        api_key: api_key
+        customer_id: customer_id
+        id: 0
+        name: name
+        role: scoped
+      properties:
+        api_key:
+          description: "Bearer token for this appliance, shown ONCE. Store it now."
+          title: Api Key
+          type: string
+        customer_id:
+          nullable: true
+          type: string
+        id:
+          title: Id
+          type: integer
+        name:
+          nullable: true
+          type: string
+        role:
+          default: scoped
+          title: Role
+          type: string
+      required:
+      - api_key
+      - id
+      title: KeyReveal
+    MediaFormats:
+      example:
+        audio:
+        - audio
+        - audio
+        document:
+        - document
+        - document
+        image:
+        - image
+        - image
+        video:
+        - video
+        - video
+      properties:
+        audio:
+          items:
+            type: string
+          title: Audio
+          type: array
+          default: null
+        document:
+          items:
+            type: string
+          title: Document
+          type: array
+          default: null
+        image:
+          items:
+            type: string
+          title: Image
+          type: array
+          default: null
+        video:
+          items:
+            type: string
+          title: Video
+          type: array
+          default: null
+      required:
+      - audio
+      - document
+      - image
+      - video
+      title: MediaFormats
+    MediaFrame:
+      example:
+        frame_no: 0
+        ts_ms: 6
+      properties:
+        frame_no:
+          title: Frame No
+          type: integer
+        ts_ms:
+          title: Ts Ms
+          type: integer
+      required:
+      - frame_no
+      - ts_ms
+      title: MediaFrame
+    MediaInfo:
+      example:
+        blob_id: 0
+        caption: caption
+        captured_at: 2000-01-23T04:56:07.000+00:00
+        customer_id: customer_id
+        device: device
+        external_ref: external_ref
+        frame_count: 6
+        gps_lat: 1.4658129805029452
+        gps_lon: 5.962133916683182
+        kind: image
+        metadata:
+          key: ""
+        ocr_text: ocr_text
+        synthetic: 5.637376656633329
+        tags:
+        - tags
+        - tags
+        transcript_segments: 2
+      properties:
+        blob_id:
+          title: Blob Id
+          type: integer
+        caption:
+          description: The user_text caption/keywords supplied at ingest.
+          nullable: true
+          type: string
+        captured_at:
+          description: EXIF capture time.
+          format: date-time
+          nullable: true
+          type: string
+        customer_id:
+          nullable: true
+          type: string
+        device:
+          description: EXIF camera make/model.
+          nullable: true
+          type: string
+        external_ref:
+          description: s3:// URI of the stored original.
+          nullable: true
+          type: string
+        frame_count:
+          default: 0
+          description: Sampled video frames derived from this blob.
+          title: Frame Count
+          type: integer
+        gps_lat:
+          nullable: true
+          type: number
+        gps_lon:
+          nullable: true
+          type: number
+        kind:
+          description: Media kind of this blob (image/video/audio/pdf/doc/note).
+          enum:
+          - image
+          - video
+          - audio
+          - pdf
+          - doc
+          - note
+          nullable: true
+          type: string
+        metadata:
+          additionalProperties: true
+          nullable: true
+          type: object
+        ocr_text:
+          description: "Text OCR'd out of the item (PDF pages always, photos when\
+            \ enabled)."
+          nullable: true
+          type: string
+        synthetic:
+          description: "Likely-AI score in [0,1] (FEVER_SYNTHETIC), when scored."
+          nullable: true
+          type: number
+        tags:
+          description: Client-supplied tags merged with zero-shot autotags.
+          items:
+            type: string
+          title: Tags
+          type: array
+          default: null
+        transcript_segments:
+          default: 0
+          description: Whisper transcript segments derived from this blob.
+          title: Transcript Segments
+          type: integer
+      required:
+      - blob_id
+      title: MediaInfo
+    MediaSpan:
+      description: |-
+        The transcript span that matched: where in the audio/video the hit is.
+        Includes the literal segment text so the UI can highlight it.
+      properties:
+        end_ms:
+          title: End Ms
+          type: integer
+        start_ms:
+          title: Start Ms
+          type: integer
+        text:
+          nullable: true
+          type: string
+      required:
+      - end_ms
+      - start_ms
+      title: MediaSpan
+    QueryRequest:
+      example:
+        row_limit: 81
+        sql: sql
+      properties:
+        row_limit:
+          default: 200
+          description: "Max rows to return; capped at 1000 regardless of what's requested.\
+            \ A LIMIT already in the sql, if smaller, is honored instead."
+          maximum: 1000.0
+          minimum: 1.0
+          title: Row Limit
+          type: integer
+        sql:
+          description: "A single read-only SELECT over the corpus tables (as_blobs,\
+            \ annotations, dup_edges, video_frames, transcript_segments, embeddings,\
+            \ datasets, dataset_items; internal jobs/job_items stay queryable but\
+            \ are bookkeeping). Raw vector columns (vec_prefix, vec_full) are selectable\
+            \ with an admin key, rejected for scoped keys; tsvector columns (fts)\
+            \ are excluded for everyone. Natural-language search: an `e.vec_full <=>\
+            \ fever_search('text')` comparison may sit in ORDER BY (ranking) or the\
+            \ SELECT target list (raw cosine distance; similarity = 1.0 - distance),\
+            \ with at most four distinct texts per statement."
+          title: Sql
+          type: string
+      required:
+      - sql
+      title: QueryRequest
+    QueryResult:
+      example:
+        columns:
+        - columns
+        - columns
+        rows:
+        - - ""
+          - ""
+        - - ""
+          - ""
+        truncated: true
+      properties:
+        columns:
+          description: "Result column names, in order."
+          items:
+            type: string
+          title: Columns
+          type: array
+          default: null
+        rows:
+          description: "Result rows, each a list of values in column order. Timestamps/bytes\
+            \ are JSON-safe (ISO strings / hex)."
+          items:
+            items: {}
+            type: array
+            default: null
+          title: Rows
+          type: array
+          default: null
+        truncated:
+          description: True when more rows matched than were returned (hit the row
+            cap).
+          title: Truncated
+          type: boolean
+      required:
+      - columns
+      - rows
+      - truncated
+      title: QueryResult
+    SearchHit:
+      example:
+        blob_id: 0
+        caption: caption
+        customer_id: customer_id
+        duplicate_count: 6
+        duplicates:
+        - 1
+        - 1
+        geo_label: geo_label
+        headline: headline
+        height: 5
+        kind: image
+        media_ref: media_ref
+        metadata:
+          key: ""
+        score: 5.637376656633329
+        score_type: cosine
+        seek_ms: 2
+        span: ""
+        span_headline: span_headline
+        tags:
+        - tags
+        - tags
+        width: 7
+      properties:
+        blob_id:
+          title: Blob Id
+          type: integer
+        caption:
+          nullable: true
+          type: string
+        customer_id:
+          nullable: true
+          type: string
+        duplicate_count:
+          default: 0
+          description: Number of near-duplicates collapsed into this hit.
+          title: Duplicate Count
+          type: integer
+        duplicates:
+          description: blob_ids of near-duplicates collapsed into this hit.
+          items:
+            type: integer
+          title: Duplicates
+          type: array
+          default: null
+        geo_label:
+          description: "Reverse-geocode label from EXIF GPS (e.g. 'Lisbon, PT'), when\
+            \ the asset carries intact camera coordinates (the geo:<label> tag rides\
+            \ alongside)."
+          nullable: true
+          type: string
+        headline:
+          description: Lexical FTS highlight (ts_headline) when the hit came via full-text
+            search.
+          nullable: true
+          type: string
+        height:
+          description: "Stored media height in pixels, when known."
+          nullable: true
+          type: integer
+        kind:
+          description: Media kind of this hit's parent blob.
+          enum:
+          - image
+          - video
+          - audio
+          - pdf
+          - doc
+          - note
+          nullable: true
+          type: string
+        media_ref:
+          description: s3:// URI of the matched media item.
+          nullable: true
+          type: string
+        metadata:
+          additionalProperties: true
+          nullable: true
+          type: object
+        score:
+          description: "For score_type 'rerank' this is the model's match probability\
+            \ in [0,1] (a calibrated confidence); 'cosine' is vector similarity; 'rrf'\
+            \ is a lexical rank score."
+          title: Score
+          type: number
+        score_type:
+          enum:
+          - cosine
+          - cosine+lex
+          - rrf
+          - rerank
+          title: Score Type
+          type: string
+        seek_ms:
+          description: "For video hits: timestamp of the winning frame, for seek-to-moment\
+            \ playback."
+          nullable: true
+          type: integer
+        span:
+          allOf:
+          - $ref: "#/components/schemas/MediaSpan"
+          description: "For transcript hits: the matching whisper segment, with literal\
+            \ text for highlighting."
+          nullable: true
+        span_headline:
+          description: Lexical FTS highlight (ts_headline) of the winning transcript
+            segment.
+          nullable: true
+          type: string
+        tags:
+          description: "Tags on this item: client-supplied at ingest and/or the appliance's\
+            \ zero-shot autotags."
+          items:
+            type: string
+          title: Tags
+          type: array
+          default: null
+        width:
+          description: "Stored media width in pixels, when known."
+          nullable: true
+          type: integer
+      required:
+      - blob_id
+      - score
+      - score_type
+      title: SearchHit
+    SearchRequest:
+      example:
+        after: after
+        before: before
+        collapse_duplicates: true
+        customer_id: customer_id
+        device: device
+        dupe_threshold: 0.8008281904610115
+        exclude_tags:
+        - exclude_tags
+        - exclude_tags
+        image: image
+        image_blob_id: 6
+        include_tags:
+        - include_tags
+        - include_tags
+        indexed_res: 1
+        k: 5
+        kind: image
+        max_height: 5
+        max_width: 2
+        min_score: 7.061401241503109
+        near:
+        - 9.301444243932576
+        - 9.301444243932576
+        sort: relevance
+        text: text
+      properties:
+        after:
+          description: EXIF capture time >= this ISO datetime.
+          nullable: true
+          type: string
+        before:
+          description: EXIF capture time <= this ISO datetime.
+          nullable: true
+          type: string
+        collapse_duplicates:
+          default: true
+          description: Collapse near-duplicate items so each result is a distinct
+            representative; the folded-in duplicates are listed on each hit.
+          title: Collapse Duplicates
+          type: boolean
+        customer_id:
+          description: Restrict results to media tagged with this customer_id.
+          nullable: true
+          type: string
+        device:
+          description: EXIF camera make/model substring.
+          nullable: true
+          type: string
+        dupe_threshold:
+          description: Cosine similarity cutoff 0..1 for treating two items as duplicates;
+            higher is stricter. Defaults to the appliance setting when omitted.
+          nullable: true
+          type: number
+        exclude_tags:
+          description: "Exclude blobs carrying any of these tags (ingest tags and/or\
+            \ zero-shot autotags), e.g. ['people'] to build a no-people dataset."
+          items:
+            type: string
+          nullable: true
+          type: array
+          default: null
+        image:
+          description: Base64 image for image-to-image search / dedup.
+          nullable: true
+          type: string
+        image_blob_id:
+          description: "Search with the vector of an already-indexed image (no re-upload,\
+            \ no re-embed)."
+          nullable: true
+          type: integer
+        include_tags:
+          description: "Only blobs carrying at least one of these tags (ANY semantics:\
+            \ e.g. a list of geo:<place> tags an integrator's UI offers). Combine\
+            \ with exclude_tags as you like."
+          items:
+            type: string
+          nullable: true
+          type: array
+          default: null
+        indexed_res:
+          description: Restrict results to blobs indexed at exactly this resolution
+            (pixels; see IngestRequest.target_res). Blobs ingested before this filter
+            existed have no recorded resolution and are excluded whenever this is
+            set.
+          nullable: true
+          type: integer
+        k:
+          default: 10
+          description: Max results.
+          title: K
+          type: integer
+        kind:
+          description: Constrain results to one media kind; unset scans every kind.
+            Video hits attach seek_ms; audio/transcript hits attach span.
+          enum:
+          - image
+          - video
+          - audio
+          - pdf
+          - doc
+          - note
+          nullable: true
+          type: string
+        max_height:
+          description: Restrict results to blobs at most this many pixels tall (stored
+            media dimensions; blobs with unknown dimensions are excluded whenever
+            this is set).
+          nullable: true
+          type: integer
+        max_width:
+          description: Restrict results to blobs at most this many pixels wide (stored
+            media dimensions; blobs with unknown dimensions are excluded whenever
+            this is set).
+          nullable: true
+          type: integer
+        min_score:
+          default: 0.0
+          description: Confidence cutoff 0..1; for text this is the reranker's match
+            probability.
+          title: Min Score
+          type: number
+        near:
+          description: "Geo filter [lat, lon, radius_km] from EXIF GPS."
+          items:
+            type: number
+          nullable: true
+          type: array
+          default: null
+        sort:
+          description: "'relevance' (default) is the fused/calibrated ordering; 'distance'\
+            \ reorders results nearest-first and requires the near filter - e.g. an\
+            \ integrator's map view. An explicit ordering knob, not another relevance\
+            \ signal."
+          enum:
+          - relevance
+          - distance
+          nullable: true
+          type: string
+        text:
+          description: "Text query (meaning-based, not keyword)."
+          nullable: true
+          type: string
+      title: SearchRequest
+    TranscriptSegment:
+      example:
+        end_ms: 0
+        seq: 6
+        start_ms: 1
+        text: text
+      properties:
+        end_ms:
+          nullable: true
+          type: integer
+        seq:
+          title: Seq
+          type: integer
+        start_ms:
+          nullable: true
+          type: integer
+        text:
+          nullable: true
+          type: string
+      required:
+      - end_ms
+      - seq
+      - start_ms
+      - text
+      title: TranscriptSegment
+    ValidationError:
+      example:
+        ctx: "{}"
+        input: ""
+        loc:
+        - Location_inner
+        - Location_inner
+        msg: msg
+        type: type
+      properties:
+        ctx:
+          title: Context
+          type: object
+        input:
+          title: Input
+        loc:
+          items:
+            $ref: "#/components/schemas/Location_inner"
+          title: Location
+          type: array
+          default: null
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Location_inner:
+      anyOf:
+      - type: string
+      - type: integer
+

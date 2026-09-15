@@ -1,0 +1,115 @@
+# =============================================================================
+# fever-clients CI — proves on every PR/push that:
+#   1. spec/openapi.json parses and is client-generatable (pinned generator).
+#   2. clients/ is regenerable and IN SYNC with the spec — unless this change
+#      is itself a spec update, in which case release.yml regenerates on merge
+#      (drift is the point of a spec PR; it is forbidden everywhere else).
+#   3. Every generated client assembles (compile/build smoke, no live
+#      appliance needed).
+#
+# Required secrets: NONE.
+# =============================================================================
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-spec:
+    name: Validate OpenAPI spec
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate with pinned openapi-generator
+        run: |
+          docker run --rm -v "$PWD:/local" \
+            openapitools/openapi-generator-cli:v7.25.0@sha256:2ab0a9680222de65dc9d3baf861aa02b99e1b80c211d8221ebf3ae8f8a102524 \
+            validate -i /local/spec/openapi.json --recommend
+
+  drift:
+    name: clients/ in sync with spec/
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # for git describe (last release tag)
+      - name: Detect spec change in this change set
+        id: spec
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            base="${{ github.event.pull_request.base.sha }}"
+          else
+            base="${{ github.event.before }}"
+          fi
+          if git diff --name-only "$base" HEAD -- 2>/dev/null | grep -q '^spec/'; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Regenerate all clients
+        if: steps.spec.outputs.changed == 'false'
+        run: |
+          VERSION="$(git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || true)"
+          VERSION="${VERSION:-0.0.0-dev}" scripts/generate.sh
+      - name: Fail on drift
+        if: steps.spec.outputs.changed == 'false'
+        run: |
+          if ! git diff --exit-code -- clients/; then
+            echo "::error::clients/ is stale or was hand-edited. Generated code is"
+            echo "::error::never edited by hand — change the spec or generator config."
+            exit 1
+          fi
+      - name: Spec-change PR — release.yml will regenerate on merge
+        if: steps.spec.outputs.changed == 'true'
+        run: echo "spec/ touched; skipping drift check (regeneration happens at release)."
+
+  smoke:
+    name: "smoke: ${{ matrix.lang }}"
+    runs-on: ubuntu-latest
+    needs: validate-spec
+    strategy:
+      fail-fast: false
+      matrix:
+        lang: [python, typescript, go, ruby, java, rust, php, csharp]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        if: matrix.lang == 'python'
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        if: matrix.lang == 'typescript'
+        with:
+          node-version: "22"
+      - uses: actions/setup-go@v5
+        if: matrix.lang == 'go'
+        with:
+          go-version: "1.24"
+      - uses: ruby/setup-ruby@v1
+        if: matrix.lang == 'ruby'
+        with:
+          ruby-version: "3.4"
+      - uses: actions/setup-java@v4
+        if: matrix.lang == 'java'
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        if: matrix.lang == 'rust'
+      - uses: shivammathur/setup-php@v2
+        if: matrix.lang == 'php'
+        with:
+          php-version: "8.4"
+          tools: composer
+      - uses: actions/setup-dotnet@v4
+        if: matrix.lang == 'csharp'
+        with:
+          dotnet-version: "8.0.x"
+      - name: Smoke build
+        run: scripts/smoke.sh ${{ matrix.lang }}

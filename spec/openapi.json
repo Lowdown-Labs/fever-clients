@@ -1,0 +1,2935 @@
+{
+  "components": {
+    "schemas": {
+      "ApiKey": {
+        "properties": {
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer Id"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "revoked": {
+            "default": false,
+            "title": "Revoked",
+            "type": "boolean"
+          },
+          "role": {
+            "default": "scoped",
+            "title": "Role",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "ApiKey",
+        "type": "object"
+      },
+      "BulkReassignUpload": {
+        "properties": {
+          "file": {
+            "anyOf": [
+              {
+                "contentMediaType": "application/octet-stream",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File"
+          }
+        },
+        "title": "BulkReassignUpload",
+        "type": "object"
+      },
+      "CorpusStats": {
+        "properties": {
+          "kinds": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Kinds",
+            "type": "object"
+          },
+          "top_tags": {
+            "items": {
+              "$ref": "#/components/schemas/CorpusTag"
+            },
+            "title": "Top Tags",
+            "type": "array"
+          }
+        },
+        "required": [
+          "kinds",
+          "top_tags"
+        ],
+        "title": "CorpusStats",
+        "type": "object"
+      },
+      "CorpusTag": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "tag": {
+            "title": "Tag",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tag",
+          "count"
+        ],
+        "title": "CorpusTag",
+        "type": "object"
+      },
+      "CreateKeyRequest": {
+        "properties": {
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For a scoped key, the single customer_id every request with this key is forced to. Must be empty for an admin key.",
+            "title": "Customer Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional label for this API key (e.g. which app or integration uses it).",
+            "title": "Name"
+          },
+          "role": {
+            "anyOf": [
+              {
+                "enum": [
+                  "admin",
+                  "scoped"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "'admin' keys search/ingest across all customers and may pass any customer_id; 'scoped' keys are locked server-side to one customer_id. If omitted it is inferred from customer_id (present means scoped, absent means admin).",
+            "title": "Role"
+          }
+        },
+        "title": "CreateKeyRequest",
+        "type": "object"
+      },
+      "DuplicateCluster": {
+        "properties": {
+          "member_customers": {
+            "description": "customer_id of each member, parallel to members; a cluster whose distinct customer count exceeds 1 is duplicated across accounts.",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Member Customers",
+            "type": "array"
+          },
+          "members": {
+            "description": "blob_ids of the items in this cluster.",
+            "items": {
+              "type": "integer"
+            },
+            "title": "Members",
+            "type": "array"
+          },
+          "size": {
+            "description": "Number of items in this near-duplicate cluster.",
+            "title": "Size",
+            "type": "integer"
+          },
+          "tightness": {
+            "description": "Minimum pairwise cosine similarity across the cluster.",
+            "title": "Tightness",
+            "type": "number"
+          }
+        },
+        "required": [
+          "size",
+          "tightness",
+          "members"
+        ],
+        "title": "DuplicateCluster",
+        "type": "object"
+      },
+      "DuplicatesRequest": {
+        "properties": {
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Restrict the scan to media tagged with this customer_id. A scoped key is always forced to its own customer_id; an admin key may pass any customer_id or none (all customers).",
+            "title": "Customer Id"
+          },
+          "customer_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Admin only: restrict the scan to this set of customers. Spanning more than one customer is how cross-account duplicates (the same item submitted under different accounts) are found. Ignored for scoped keys, which stay pinned.",
+            "title": "Customer Ids"
+          },
+          "limit": {
+            "default": 500,
+            "description": "Max items to scan for near-duplicates.",
+            "maximum": 5000.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "threshold": {
+            "default": 0.92,
+            "description": "Similarity cutoff 0..1; higher is stricter (1.0 = near-identical).",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Threshold",
+            "type": "number"
+          }
+        },
+        "title": "DuplicatesRequest",
+        "type": "object"
+      },
+      "DuplicatesResponse": {
+        "properties": {
+          "clusters": {
+            "description": "Number of near-duplicate clusters found.",
+            "title": "Clusters",
+            "type": "integer"
+          },
+          "duplicate_clusters": {
+            "description": "The near-duplicate clusters, largest and tightest first.",
+            "items": {
+              "$ref": "#/components/schemas/DuplicateCluster"
+            },
+            "title": "Duplicate Clusters",
+            "type": "array"
+          },
+          "total_duplicates": {
+            "description": "Count of items that fall in any cluster of size >= 2.",
+            "title": "Total Duplicates",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total_duplicates",
+          "clusters"
+        ],
+        "title": "DuplicatesResponse",
+        "type": "object"
+      },
+      "ExportRequest": {
+        "properties": {
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Export only media tagged with this customer_id.",
+            "title": "Customer Id"
+          },
+          "format": {
+            "default": "ndjson",
+            "description": "'ndjson' (default) is the full vector-bearing backup format /v1/import restores from. 'parquet' is a metadata-only dataset export (blob_id, customer_id, media_ref, kind, caption, tags - no vectors) for analysis in DuckDB/pandas/Spark; it is not importable.",
+            "enum": [
+              "ndjson",
+              "parquet"
+            ],
+            "title": "Format",
+            "type": "string"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "image",
+                  "video",
+                  "audio",
+                  "pdf",
+                  "doc",
+                  "note"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Export only blobs of this media kind.",
+            "title": "Kind"
+          },
+          "s3_uri": {
+            "description": "s3://bucket/prefix to write the export to.",
+            "title": "S3 Uri",
+            "type": "string"
+          },
+          "tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Export only blobs whose annotation tags contain this tag.",
+            "title": "Tag"
+          }
+        },
+        "required": [
+          "s3_uri"
+        ],
+        "title": "ExportRequest",
+        "type": "object"
+      },
+      "ExportResult": {
+        "properties": {
+          "exported": {
+            "title": "Exported",
+            "type": "integer"
+          },
+          "s3_uri": {
+            "title": "S3 Uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "exported",
+          "s3_uri"
+        ],
+        "title": "ExportResult",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "Health": {
+        "properties": {
+          "status": {
+            "default": "ok",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "title": "Health",
+        "type": "object"
+      },
+      "ImportRequest": {
+        "properties": {
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Tag every imported row with this customer_id (admin default: preserve the file's own).",
+            "title": "Customer Id"
+          },
+          "s3_uri": {
+            "description": "s3://bucket/prefix of a previous FEVER export (manifest.json + shard NDJSON).",
+            "title": "S3 Uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "s3_uri"
+        ],
+        "title": "ImportRequest",
+        "type": "object"
+      },
+      "ImportResult": {
+        "properties": {
+          "imported": {
+            "title": "Imported",
+            "type": "integer"
+          },
+          "s3_uri": {
+            "title": "S3 Uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "imported",
+          "s3_uri"
+        ],
+        "title": "ImportResult",
+        "type": "object"
+      },
+      "IngestMedia": {
+        "properties": {
+          "caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional caption/keywords; indexed at the highest text-search weight.",
+            "title": "Caption"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional tag attributing this item to one of your customers; filterable at search time.",
+            "title": "Customer Id"
+          },
+          "data": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Base64-encoded media item bytes.",
+            "title": "Data"
+          },
+          "metadata": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Opaque JSON returned with search hits.",
+            "title": "Metadata"
+          },
+          "strip_exif": {
+            "default": false,
+            "description": "Skip EXIF extraction/retention for this item.",
+            "title": "Strip Exif",
+            "type": "boolean"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional tags for this item; indexed for text search and returned on hits. Merged with the appliance's zero-shot autotags.",
+            "title": "Tags"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "An s3:// URI to one media item you already store, instead of inline bytes.",
+            "title": "Url"
+          }
+        },
+        "title": "IngestMedia",
+        "type": "object"
+      },
+      "IngestRequest": {
+        "properties": {
+          "media": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/IngestMedia"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "1..N media items to ingest inline.",
+            "title": "Media"
+          },
+          "overwrite": {
+            "default": false,
+            "description": "Re-embed and update items already indexed (clobber). Default false = delta ingest: content already indexed is skipped, so re-running an ingest only processes new items.",
+            "title": "Overwrite",
+            "type": "boolean"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IngestSource"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Ingest every media item under an S3 prefix instead of sending bytes."
+          },
+          "target_res": {
+            "anyOf": [
+              {
+                "maximum": 4096.0,
+                "minimum": 64.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Resolution to index this batch at, in pixels (rounded to a multiple of 16). Images are resized to this before embedding; higher means more detail but slower. Leave unset for the fast production default (64), which retains most of the search quality at a fraction of the cost.",
+            "title": "Target Res"
+          }
+        },
+        "title": "IngestRequest",
+        "type": "object"
+      },
+      "IngestResult": {
+        "properties": {
+          "existing": {
+            "description": "Items skipped by delta ingest because they were already indexed, returned with their current blob_ids (only when overwrite=false).",
+            "items": {
+              "$ref": "#/components/schemas/IngestedMedia"
+            },
+            "title": "Existing",
+            "type": "array"
+          },
+          "ingested": {
+            "description": "Media items processed inline (small requests).",
+            "items": {
+              "$ref": "#/components/schemas/IngestedMedia"
+            },
+            "title": "Ingested",
+            "type": "array"
+          },
+          "job": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Job"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For large or bucket-source ingests, poll this job for progress."
+          }
+        },
+        "title": "IngestResult",
+        "type": "object"
+      },
+      "IngestSource": {
+        "properties": {
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Tag every vacuumed item with this customer_id.",
+            "title": "Customer Id"
+          },
+          "s3_uri": {
+            "description": "s3://bucket/prefix in your VPC to vacuum every media item under.",
+            "title": "S3 Uri",
+            "type": "string"
+          },
+          "target_res": {
+            "anyOf": [
+              {
+                "maximum": 4096.0,
+                "minimum": 64.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Resolution to index at, in pixels (rounded to a multiple of 16). Images are resized to this before embedding; higher means more detail but slower. Leave unset for the fast production default (64).",
+            "title": "Target Res"
+          }
+        },
+        "required": [
+          "s3_uri"
+        ],
+        "title": "IngestSource",
+        "type": "object"
+      },
+      "IngestedMedia": {
+        "properties": {
+          "blob_id": {
+            "title": "Blob Id",
+            "type": "integer"
+          },
+          "external_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "External Ref"
+          }
+        },
+        "required": [
+          "blob_id"
+        ],
+        "title": "IngestedMedia",
+        "type": "object"
+      },
+      "Job": {
+        "properties": {
+          "done": {
+            "default": 0,
+            "title": "Done",
+            "type": "integer"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "skipped": {
+            "default": 0,
+            "description": "Items skipped by delta ingest because their content was already indexed (overwrite=false).",
+            "title": "Skipped",
+            "type": "integer"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "total": {
+            "default": 0,
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "status"
+        ],
+        "title": "Job",
+        "type": "object"
+      },
+      "KeyReveal": {
+        "properties": {
+          "api_key": {
+            "description": "Bearer token for this appliance, shown ONCE. Store it now.",
+            "title": "Api Key",
+            "type": "string"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer Id"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "role": {
+            "default": "scoped",
+            "title": "Role",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "api_key"
+        ],
+        "title": "KeyReveal",
+        "type": "object"
+      },
+      "MediaFormats": {
+        "properties": {
+          "audio": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Audio",
+            "type": "array"
+          },
+          "document": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Document",
+            "type": "array"
+          },
+          "image": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Image",
+            "type": "array"
+          },
+          "video": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Video",
+            "type": "array"
+          }
+        },
+        "required": [
+          "image",
+          "video",
+          "audio",
+          "document"
+        ],
+        "title": "MediaFormats",
+        "type": "object"
+      },
+      "MediaFrame": {
+        "properties": {
+          "frame_no": {
+            "title": "Frame No",
+            "type": "integer"
+          },
+          "ts_ms": {
+            "title": "Ts Ms",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "frame_no",
+          "ts_ms"
+        ],
+        "title": "MediaFrame",
+        "type": "object"
+      },
+      "MediaInfo": {
+        "properties": {
+          "blob_id": {
+            "title": "Blob Id",
+            "type": "integer"
+          },
+          "caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The user_text caption/keywords supplied at ingest.",
+            "title": "Caption"
+          },
+          "captured_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "EXIF capture time.",
+            "title": "Captured At"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer Id"
+          },
+          "device": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "EXIF camera make/model.",
+            "title": "Device"
+          },
+          "external_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "s3:// URI of the stored original.",
+            "title": "External Ref"
+          },
+          "frame_count": {
+            "default": 0,
+            "description": "Sampled video frames derived from this blob.",
+            "title": "Frame Count",
+            "type": "integer"
+          },
+          "gps_lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gps Lat"
+          },
+          "gps_lon": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gps Lon"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "image",
+                  "video",
+                  "audio",
+                  "pdf",
+                  "doc",
+                  "note"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Media kind of this blob (image/video/audio/pdf/doc/note).",
+            "title": "Kind"
+          },
+          "metadata": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metadata"
+          },
+          "ocr_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Text OCR'd out of the item (PDF pages always, photos when enabled).",
+            "title": "Ocr Text"
+          },
+          "synthetic": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Likely-AI score in [0,1] (FEVER_SYNTHETIC), when scored.",
+            "title": "Synthetic"
+          },
+          "tags": {
+            "description": "Client-supplied tags merged with zero-shot autotags.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "transcript_segments": {
+            "default": 0,
+            "description": "Whisper transcript segments derived from this blob.",
+            "title": "Transcript Segments",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "blob_id"
+        ],
+        "title": "MediaInfo",
+        "type": "object"
+      },
+      "MediaSpan": {
+        "description": "The transcript span that matched: where in the audio/video the hit is.\nIncludes the literal segment text so the UI can highlight it.",
+        "properties": {
+          "end_ms": {
+            "title": "End Ms",
+            "type": "integer"
+          },
+          "start_ms": {
+            "title": "Start Ms",
+            "type": "integer"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          }
+        },
+        "required": [
+          "start_ms",
+          "end_ms"
+        ],
+        "title": "MediaSpan",
+        "type": "object"
+      },
+      "QueryRequest": {
+        "properties": {
+          "row_limit": {
+            "default": 200,
+            "description": "Max rows to return; capped at 1000 regardless of what's requested. A LIMIT already in the sql, if smaller, is honored instead.",
+            "maximum": 1000.0,
+            "minimum": 1.0,
+            "title": "Row Limit",
+            "type": "integer"
+          },
+          "sql": {
+            "description": "A single read-only SELECT over the corpus tables (as_blobs, annotations, dup_edges, video_frames, transcript_segments, embeddings, datasets, dataset_items; internal jobs/job_items stay queryable but are bookkeeping). Raw vector columns (vec_prefix, vec_full) are selectable with an admin key, rejected for scoped keys; tsvector columns (fts) are excluded for everyone. Natural-language search: an `e.vec_full <=> fever_search('text')` comparison may sit in ORDER BY (ranking) or the SELECT target list (raw cosine distance; similarity = 1.0 - distance), with at most four distinct texts per statement.",
+            "title": "Sql",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sql"
+        ],
+        "title": "QueryRequest",
+        "type": "object"
+      },
+      "QueryResult": {
+        "properties": {
+          "columns": {
+            "description": "Result column names, in order.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Columns",
+            "type": "array"
+          },
+          "rows": {
+            "description": "Result rows, each a list of values in column order. Timestamps/bytes are JSON-safe (ISO strings / hex).",
+            "items": {
+              "items": {},
+              "type": "array"
+            },
+            "title": "Rows",
+            "type": "array"
+          },
+          "truncated": {
+            "description": "True when more rows matched than were returned (hit the row cap).",
+            "title": "Truncated",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "columns",
+          "rows",
+          "truncated"
+        ],
+        "title": "QueryResult",
+        "type": "object"
+      },
+      "SearchHit": {
+        "properties": {
+          "blob_id": {
+            "title": "Blob Id",
+            "type": "integer"
+          },
+          "caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Caption"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer Id"
+          },
+          "duplicate_count": {
+            "default": 0,
+            "description": "Number of near-duplicates collapsed into this hit.",
+            "title": "Duplicate Count",
+            "type": "integer"
+          },
+          "duplicates": {
+            "description": "blob_ids of near-duplicates collapsed into this hit.",
+            "items": {
+              "type": "integer"
+            },
+            "title": "Duplicates",
+            "type": "array"
+          },
+          "geo_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Reverse-geocode label from EXIF GPS (e.g. 'Lisbon, PT'), when the asset carries intact camera coordinates (the geo:<label> tag rides alongside).",
+            "title": "Geo Label"
+          },
+          "headline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Lexical FTS highlight (ts_headline) when the hit came via full-text search.",
+            "title": "Headline"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Stored media height in pixels, when known.",
+            "title": "Height"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "image",
+                  "video",
+                  "audio",
+                  "pdf",
+                  "doc",
+                  "note"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Media kind of this hit's parent blob.",
+            "title": "Kind"
+          },
+          "media_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "s3:// URI of the matched media item.",
+            "title": "Media Ref"
+          },
+          "metadata": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Metadata"
+          },
+          "score": {
+            "description": "For score_type 'rerank' this is the model's match probability in [0,1] (a calibrated confidence); 'cosine' is vector similarity; 'rrf' is a lexical rank score.",
+            "title": "Score",
+            "type": "number"
+          },
+          "score_type": {
+            "enum": [
+              "cosine",
+              "cosine+lex",
+              "rrf",
+              "rerank"
+            ],
+            "title": "Score Type",
+            "type": "string"
+          },
+          "seek_ms": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For video hits: timestamp of the winning frame, for seek-to-moment playback.",
+            "title": "Seek Ms"
+          },
+          "span": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MediaSpan"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For transcript hits: the matching whisper segment, with literal text for highlighting."
+          },
+          "span_headline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Lexical FTS highlight (ts_headline) of the winning transcript segment.",
+            "title": "Span Headline"
+          },
+          "tags": {
+            "description": "Tags on this item: client-supplied at ingest and/or the appliance's zero-shot autotags.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Stored media width in pixels, when known.",
+            "title": "Width"
+          }
+        },
+        "required": [
+          "blob_id",
+          "score",
+          "score_type"
+        ],
+        "title": "SearchHit",
+        "type": "object"
+      },
+      "SearchRequest": {
+        "properties": {
+          "after": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "EXIF capture time >= this ISO datetime.",
+            "title": "After"
+          },
+          "before": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "EXIF capture time <= this ISO datetime.",
+            "title": "Before"
+          },
+          "collapse_duplicates": {
+            "default": true,
+            "description": "Collapse near-duplicate items so each result is a distinct representative; the folded-in duplicates are listed on each hit.",
+            "title": "Collapse Duplicates",
+            "type": "boolean"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Restrict results to media tagged with this customer_id.",
+            "title": "Customer Id"
+          },
+          "device": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "EXIF camera make/model substring.",
+            "title": "Device"
+          },
+          "dupe_threshold": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Cosine similarity cutoff 0..1 for treating two items as duplicates; higher is stricter. Defaults to the appliance setting when omitted.",
+            "title": "Dupe Threshold"
+          },
+          "exclude_tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Exclude blobs carrying any of these tags (ingest tags and/or zero-shot autotags), e.g. ['people'] to build a no-people dataset.",
+            "title": "Exclude Tags"
+          },
+          "image": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Base64 image for image-to-image search / dedup.",
+            "title": "Image"
+          },
+          "image_blob_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Search with the vector of an already-indexed image (no re-upload, no re-embed).",
+            "title": "Image Blob Id"
+          },
+          "include_tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Only blobs carrying at least one of these tags (ANY semantics: e.g. a list of geo:<place> tags an integrator's UI offers). Combine with exclude_tags as you like.",
+            "title": "Include Tags"
+          },
+          "indexed_res": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Restrict results to blobs indexed at exactly this resolution (pixels; see IngestRequest.target_res). Blobs ingested before this filter existed have no recorded resolution and are excluded whenever this is set.",
+            "title": "Indexed Res"
+          },
+          "k": {
+            "default": 10,
+            "description": "Max results.",
+            "title": "K",
+            "type": "integer"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "image",
+                  "video",
+                  "audio",
+                  "pdf",
+                  "doc",
+                  "note"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Constrain results to one media kind; unset scans every kind. Video hits attach seek_ms; audio/transcript hits attach span.",
+            "title": "Kind"
+          },
+          "max_height": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Restrict results to blobs at most this many pixels tall (stored media dimensions; blobs with unknown dimensions are excluded whenever this is set).",
+            "title": "Max Height"
+          },
+          "max_width": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Restrict results to blobs at most this many pixels wide (stored media dimensions; blobs with unknown dimensions are excluded whenever this is set).",
+            "title": "Max Width"
+          },
+          "min_score": {
+            "default": 0.0,
+            "description": "Confidence cutoff 0..1; for text this is the reranker's match probability.",
+            "title": "Min Score",
+            "type": "number"
+          },
+          "near": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Geo filter [lat, lon, radius_km] from EXIF GPS.",
+            "title": "Near"
+          },
+          "sort": {
+            "anyOf": [
+              {
+                "enum": [
+                  "relevance",
+                  "distance"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "'relevance' (default) is the fused/calibrated ordering; 'distance' reorders results nearest-first and requires the near filter - e.g. an integrator's map view. An explicit ordering knob, not another relevance signal.",
+            "title": "Sort"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Text query (meaning-based, not keyword).",
+            "title": "Text"
+          }
+        },
+        "title": "SearchRequest",
+        "type": "object"
+      },
+      "TranscriptSegment": {
+        "properties": {
+          "end_ms": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Ms"
+          },
+          "seq": {
+            "title": "Seq",
+            "type": "integer"
+          },
+          "start_ms": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Ms"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          }
+        },
+        "required": [
+          "seq",
+          "start_ms",
+          "end_ms",
+          "text"
+        ],
+        "title": "TranscriptSegment",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "The multimodal media database. Images, video, and audio in one table: hybrid vector + full-text search, dedupe, seek-to-moment video hits, whisper transcript spans. Tenancy, scale, and isolation are automatic; the tenant is taken from the API key.",
+    "title": "FEVER Retrieval",
+    "version": "0.3.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/healthz": {
+      "get": {
+        "operationId": "healthz_healthz_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Healthz"
+      }
+    },
+    "/v1/corpus": {
+      "get": {
+        "operationId": "corpus_stats",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "customer_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Customer Id"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CorpusStats"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Corpus composition: per-kind counts and top autotags",
+        "tags": [
+          "corpus"
+        ]
+      }
+    },
+    "/v1/customers/reassign-bulk": {
+      "post": {
+        "description": "Associate already-ingested images to customers after the fact, at millions-of-rows scale. Accepts a multipart file upload (.csv, .jsonl, .parquet) or a JSON body {\"s3_uri\": \"s3://bucket/key\", \"format\"?: \"csv|jsonl|parquet\"}. Each row maps a key (exact blob key) or filename to a customer_id; key is preferred when both are present. Rows are loaded with COPY and moved with one set-based UPDATE per table, so a million-row file completes in seconds. Reports matched/updated/noop/unmatched/conflict counts; filename fanout moves every match.",
+        "operationId": "reassign_customers_bulk",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkReassignUpload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping",
+        "tags": [
+          "customers"
+        ]
+      }
+    },
+    "/v1/duplicates": {
+      "post": {
+        "description": "Find near-duplicate clusters. Scoped to one customer, this reads the edge set maintained at ingest (millisecond answers; edges exist down to cosine 0.80). An admin key with no customer_id scans live across all customers; passing customer_ids narrows that live scan to a handful of accounts. Both admin shapes see cross-customer duplicates. No delete or keep recommendation is made: the clusters are yours to act on.",
+        "operationId": "find_duplicates",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DuplicatesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuplicatesResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Find near-duplicate media clusters for a customer",
+        "tags": [
+          "duplicates"
+        ]
+      }
+    },
+    "/v1/duplicates/suggested-threshold": {
+      "get": {
+        "operationId": "suggested_dedup_threshold",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "customer_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Customer Id"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Suggest a duplicate-detection threshold from this customer's edge cosine distribution",
+        "tags": [
+          "duplicates"
+        ]
+      }
+    },
+    "/v1/export": {
+      "post": {
+        "operationId": "export_tenant",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Export the tenant's vectors and metadata to S3",
+        "tags": [
+          "export"
+        ]
+      }
+    },
+    "/v1/health": {
+      "get": {
+        "operationId": "health",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health check"
+      }
+    },
+    "/v1/import": {
+      "post": {
+        "operationId": "import_tenant",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Import vectors and metadata from a previous FEVER export in S3",
+        "tags": [
+          "export"
+        ]
+      }
+    },
+    "/v1/jobs/{job_id}": {
+      "get": {
+        "operationId": "get_job",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get ingest job progress",
+        "tags": [
+          "jobs"
+        ]
+      }
+    },
+    "/v1/jobs/{job_id}/cancel": {
+      "post": {
+        "operationId": "cancel_job",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Cancel a pending or running ingest job",
+        "tags": [
+          "jobs"
+        ]
+      }
+    },
+    "/v1/keys": {
+      "get": {
+        "operationId": "list_keys",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ApiKey"
+                  },
+                  "title": "Response List Keys",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List this appliance's API keys",
+        "tags": [
+          "keys"
+        ]
+      },
+      "post": {
+        "operationId": "create_key",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKeyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KeyReveal"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Mint an API key for this appliance",
+        "tags": [
+          "keys"
+        ]
+      }
+    },
+    "/v1/keys/{key_id}/revoke": {
+      "post": {
+        "operationId": "revoke_key",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "key_id",
+            "required": true,
+            "schema": {
+              "title": "Key Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Revoke an API key",
+        "tags": [
+          "keys"
+        ]
+      }
+    },
+    "/v1/media": {
+      "post": {
+        "description": "Throw 1..N media items over the wall. Small inline batches are embedded and indexed synchronously and return blob ids; large batches or an s3:// source return a Job you poll at /v1/jobs/{id}. Tenant is taken from the API key.",
+        "operationId": "ingest_media",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IngestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IngestResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Ingest one or many media items",
+        "tags": [
+          "ingest"
+        ]
+      }
+    },
+    "/v1/media/formats": {
+      "get": {
+        "operationId": "list_media_formats",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaFormats"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Ingest capability: supported extensions per media family",
+        "tags": [
+          "media"
+        ]
+      }
+    },
+    "/v1/media/{blob_id}": {
+      "get": {
+        "description": "Unified record for a blob_id. Scoped keys can only read their own\ncustomer's blobs; other customers' blobs are a 404 (never an existence\nleak). Admin keys may narrow with ?customer_id=.",
+        "operationId": "get_media_info",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "blob_id",
+            "required": true,
+            "schema": {
+              "title": "Blob Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "customer_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Customer Id"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaInfo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts",
+        "tags": [
+          "media"
+        ]
+      }
+    },
+    "/v1/media/{blob_id}/bytes": {
+      "get": {
+        "description": "Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw\nbytes). Scoped keys can only fetch their own customer's items; other\ncustomers' blobs are a 404 (never an existence leak).\n\n?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic)\nso clients can show a real visual for audio hits without decoding the clip\nin the browser.",
+        "operationId": "get_media_bytes",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "blob_id",
+            "required": true,
+            "schema": {
+              "title": "Blob Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "max_dim",
+            "required": false,
+            "schema": {
+              "default": 1280,
+              "title": "Max Dim",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "waveform",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "title": "Waveform",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              },
+              "image/jpeg": {},
+              "image/png": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Fetch an indexed media item's bytes (images normalized to JPEG)",
+        "tags": [
+          "media"
+        ]
+      }
+    },
+    "/v1/media/{blob_id}/frames": {
+      "get": {
+        "operationId": "list_media_frames",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "blob_id",
+            "required": true,
+            "schema": {
+              "title": "Blob Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "customer_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Customer Id"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MediaFrame"
+                  },
+                  "title": "Response List Media Frames",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Sampled video frames for a parent blob",
+        "tags": [
+          "media"
+        ]
+      }
+    },
+    "/v1/media/{blob_id}/transcript": {
+      "get": {
+        "operationId": "list_media_transcript",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "blob_id",
+            "required": true,
+            "schema": {
+              "title": "Blob Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "customer_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Customer Id"
+            }
+          },
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TranscriptSegment"
+                  },
+                  "title": "Response List Media Transcript",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Whisper transcript segments for a parent blob (audio or video)",
+        "tags": [
+          "media"
+        ]
+      }
+    },
+    "/v1/query": {
+      "post": {
+        "description": "A mini SQL console over the appliance's corpus tables: as_blobs, annotations, dup_edges, video_frames, transcript_segments, embeddings, datasets, dataset_items (internal jobs/job_items stay queryable for compatibility but are bookkeeping, not data). Exactly one SELECT statement. Natural-language semantic search: an `<=>` comparison between a vec_prefix/vec_full column and fever_search('some text') is allowed in the statement ORDER BY (rank by meaning) or in the SELECT target list (project the raw cosine distance; similarity = 1.0 - distance), at most four distinct fever_search() texts per statement. Raw vector columns (embeddings.vec_*, video_frames.vec_*) are selectable with an admin key; scoped keys get a rejection instead. tsvector (annotations.fts, transcript_segments.fts) columns are excluded for everyone. Scoped api keys are automatically restricted to their own customer_id, which is why they may only submit a narrow statement shape: plain tables and JOINs of them, with a FROM clause, and no subqueries, CTEs or set operations at any depth (those are rejected rather than risk a partial rewrite - use an admin key for them). Admin keys parse unrestricted and see every customer's rows in their own tenant.",
+        "operationId": "query",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Run a read-only SQL SELECT over the corpus tables",
+        "tags": [
+          "query"
+        ]
+      }
+    },
+    "/v1/search": {
+      "post": {
+        "description": "text runs a meaning-based vector search fused with lexical full-text (RRF), reranked and calibrated so min_score is a real match probability. image runs cosine similarity. customer_id and EXIF fields narrow the results.",
+        "operationId": "search",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SearchHit"
+                  },
+                  "title": "Response Search",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Search by text or image",
+        "tags": [
+          "search"
+        ]
+      }
+    },
+    "/v1/whoami": {
+      "get": {
+        "operationId": "whoami",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Report the calling key's role and customer scope",
+        "tags": [
+          "auth"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "description": "Ingest one or many media items (images, video, audio, PDFs) - inline, staged, or S3 source.",
+      "name": "ingest"
+    },
+    {
+      "description": "Media parents: unified info, raw bytes, sampled video frames, whisper transcript segments, supported formats.",
+      "name": "media"
+    },
+    {
+      "description": "Poll ingest / backfill progress.",
+      "name": "jobs"
+    },
+    {
+      "description": "Search by text (hybrid + rerank) or image (cosine), with video seek and transcript spans.",
+      "name": "search"
+    },
+    {
+      "description": "Find near-duplicate clusters for a customer.",
+      "name": "duplicates"
+    },
+    {
+      "description": "Dump a tenant's vectors and metadata to S3.",
+      "name": "export"
+    },
+    {
+      "description": "Read-only SQL over the whitelisted corpus tables.",
+      "name": "query"
+    },
+    {
+      "description": "Admin-gated API key management for this appliance: mint, list, revoke.",
+      "name": "keys"
+    },
+    {
+      "description": "Key identity and scope resolution.",
+      "name": "auth"
+    },
+    {
+      "description": "Admin-gated per-customer index maintenance: reassign, clear, wipe.",
+      "name": "customers"
+    },
+    {
+      "description": "Corpus composition for dashboards and the demo page.",
+      "name": "corpus"
+    }
+  ]
+}

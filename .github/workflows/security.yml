@@ -1,0 +1,94 @@
+# =============================================================================
+# fever-clients security gate — runs on every PR/push and weekly (fresh CVE
+# feeds even when nothing changed). Nothing merges or releases red:
+#
+#   secrets      — gitleaks over full history
+#   trivy        — filesystem scan of every client's dependency manifest
+#                  (requirements.txt, package.json, go.mod, Gemfile, pom.xml,
+#                  Cargo.toml, composer.json, *.csproj), failing on fixable
+#                  HIGH/CRITICAL vulns — same posture as the appliance's gate
+#   python-audit — pip-audit against the generated requirements.txt
+#   node-audit   — npm audit against a resolved package-lock
+#   go-audit     — govulncheck against go.mod
+#
+# Note: SARIF/code-scanning upload is intentionally absent — it needs GitHub
+# Advanced Security on private repos. Jobs fail loudly instead; when this repo
+# goes public, flip uploads on (see SECURITY.md).
+#
+# Required secrets: NONE.
+# =============================================================================
+name: Security
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "23 5 * * 1" # Mondays 05:23 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  secrets:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2.3.9
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  trivy:
+    name: Trivy filesystem scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          severity: HIGH,CRITICAL
+          exit-code: "1"
+          ignore-unfixed: true
+          scanners: vuln,secret
+          skip-dirs: clients/java/target,clients/typescript/node_modules
+
+  python-audit:
+    name: pip-audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install pip-audit
+      - run: pip-audit -r clients/python/requirements.txt
+
+  node-audit:
+    name: npm audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: |
+          cd clients/typescript
+          npm install --package-lock-only --no-audit --no-fund
+          npm audit --omit=dev --audit-level=high
+
+  go-audit:
+    name: govulncheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+      - run: go install golang.org/x/vuln/cmd/govulncheck@latest
+      - run: cd clients/go && govulncheck ./...

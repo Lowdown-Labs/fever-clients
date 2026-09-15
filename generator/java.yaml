@@ -1,0 +1,14 @@
+# openapi-generator config for the Java client.
+# library=native: JDK 11+ HttpClient, minimal dependency footprint.
+generatorName: java
+outputDir: /local/clients/java
+inputSpec: /local/spec/openapi.json
+groupId: com.lowdownlabs
+artifactId: fever-client
+artifactVersion: "0.0.0"
+invokerPackage: com.lowdownlabs.fever
+additionalProperties:
+  library: native
+  artifactUrl: https://github.com/Lowdown-Labs/fever-clients
+  dateLibrary: java8
+  hideGenerationTimestamp: true

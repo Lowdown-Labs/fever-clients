@@ -1,0 +1,166 @@
+# \MediaApi
+
+All URIs are relative to *http://localhost*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**get_media_bytes**](MediaApi.md#get_media_bytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item's bytes (images normalized to JPEG)
+[**get_media_info**](MediaApi.md#get_media_info) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
+[**list_media_formats**](MediaApi.md#list_media_formats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family
+[**list_media_frames**](MediaApi.md#list_media_frames) | **GET** /v1/media/{blob_id}/frames | Sampled video frames for a parent blob
+[**list_media_transcript**](MediaApi.md#list_media_transcript) | **GET** /v1/media/{blob_id}/transcript | Whisper transcript segments for a parent blob (audio or video)
+
+
+
+## get_media_bytes
+
+> serde_json::Value get_media_bytes(blob_id, max_dim, waveform, authorization)
+Fetch an indexed media item's bytes (images normalized to JPEG)
+
+Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw bytes). Scoped keys can only fetch their own customer's items; other customers' blobs are a 404 (never an existence leak).  ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**blob_id** | **i32** |  | [required] |
+**max_dim** | Option<**i32**> |  |  |[default to 1280]
+**waveform** | Option<**i32**> |  |  |[default to 0]
+**authorization** | Option<**String**> |  |  |
+
+### Return type
+
+[**serde_json::Value**](serde_json::Value.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, image/jpeg, image/png
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## get_media_info
+
+> models::MediaInfo get_media_info(blob_id, customer_id, authorization)
+Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
+
+Unified record for a blob_id. Scoped keys can only read their own customer's blobs; other customers' blobs are a 404 (never an existence leak). Admin keys may narrow with ?customer_id=.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**blob_id** | **i32** |  | [required] |
+**customer_id** | Option<**String**> |  |  |
+**authorization** | Option<**String**> |  |  |
+
+### Return type
+
+[**models::MediaInfo**](MediaInfo.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## list_media_formats
+
+> models::MediaFormats list_media_formats(authorization)
+Ingest capability: supported extensions per media family
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**authorization** | Option<**String**> |  |  |
+
+### Return type
+
+[**models::MediaFormats**](MediaFormats.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## list_media_frames
+
+> Vec<models::MediaFrame> list_media_frames(blob_id, customer_id, authorization)
+Sampled video frames for a parent blob
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**blob_id** | **i32** |  | [required] |
+**customer_id** | Option<**String**> |  |  |
+**authorization** | Option<**String**> |  |  |
+
+### Return type
+
+[**Vec<models::MediaFrame>**](MediaFrame.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## list_media_transcript
+
+> Vec<models::TranscriptSegment> list_media_transcript(blob_id, customer_id, authorization)
+Whisper transcript segments for a parent blob (audio or video)
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**blob_id** | **i32** |  | [required] |
+**customer_id** | Option<**String**> |  |  |
+**authorization** | Option<**String**> |  |  |
+
+### Return type
+
+[**Vec<models::TranscriptSegment>**](TranscriptSegment.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

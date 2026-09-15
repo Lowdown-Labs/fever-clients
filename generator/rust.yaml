@@ -1,0 +1,10 @@
+# openapi-generator config for the Rust client (crate: fever-client).
+# library=reqwest: the maintained, async-capable transport.
+generatorName: rust
+outputDir: /local/clients/rust
+inputSpec: /local/spec/openapi.json
+packageName: fever-client
+packageVersion: "0.0.0"
+additionalProperties:
+  library: reqwest
+  homePage: https://github.com/Lowdown-Labs/fever-clients

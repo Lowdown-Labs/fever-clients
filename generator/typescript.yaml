@@ -1,0 +1,11 @@
+# openapi-generator config for the TypeScript client (npm package: fever-client).
+# typescript-fetch: zero runtime deps beyond the Fetch API.
+generatorName: typescript-fetch
+outputDir: /local/clients/typescript
+inputSpec: /local/spec/openapi.json
+additionalProperties:
+  npmName: fever-client
+  npmVersion: "0.0.0"
+  npmRepository: https://github.com/Lowdown-Labs/fever-clients
+  supportsES6: true
+  typescriptThreePlus: true

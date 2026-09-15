@@ -1,0 +1,11 @@
+# openapi-generator config for the Python client (package: fever-client).
+# Version is injected at release time by scripts/generate.sh (--package-version).
+generatorName: python
+outputDir: /local/clients/python
+inputSpec: /local/spec/openapi.json
+packageName: fever_client
+projectName: fever-client
+packageVersion: "0.0.0"
+additionalProperties:
+  packageUrl: https://github.com/Lowdown-Labs/fever-clients
+  library: asyncio

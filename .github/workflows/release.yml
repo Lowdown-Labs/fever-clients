@@ -1,0 +1,153 @@
+# =============================================================================
+# fever-clients release cut — fires when spec/openapi.json lands on main (the
+# spec-sync PR from lowdown_lab merging) or on manual dispatch.
+#
+# Pipeline: version → regenerate ALL clients stamped with that version →
+# smoke-build every language → commit the regenerated tree back to main
+# ([skip ci]) → tag → build installable artifacts → SBOM + checksums →
+# GitHub Release.
+#
+# Versioning: base is the spec's info.version; if that tag is taken the patch
+# bumps until free (all clients move together, one tag per spec change —
+# same convention as the FEVER appliance releases).
+#
+# Artifacts attached per release (registries come later; installs run off
+# these directly — see README):
+#   fever_client-<v>-py3-none-any.whl + .tar.gz   (pip install <url>)
+#   fever-client-<v>.tgz                          (npm install <url>)
+#   fever_client-<v>.gem                          (gem install <url>)
+#   fever-client-<v>.jar                          (maven: jitpack/system scope)
+#   LowdownLabs.Fever.<v>.nupkg                   (dotnet add package source)
+#   fever-clients-go|rust|php-<v>.tar.gz          (source drops)
+#   sbom.spdx.json + checksums.txt                (supply chain)
+#
+# Required secrets: NONE (GITHUB_TOKEN only).
+# =============================================================================
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "spec/openapi.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Cut release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute version
+        id: ver
+        run: |
+          base="$(jq -r .info.version spec/openapi.json)"
+          v="$base"
+          while git rev-parse -q --verify "refs/tags/v${v}" >/dev/null; do
+            v="$(echo "$v" | awk -F. '{printf "%d.%d.%d", $1, $2, $3+1}')"
+          done
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "Releasing v${v} (spec base ${base})"
+
+      - name: Toolchains
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          tools: composer
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Regenerate all clients
+        run: VERSION="${{ steps.ver.outputs.version }}" scripts/generate.sh
+
+      - name: Smoke every client
+        run: |
+          for lang in python typescript go ruby java rust php csharp; do
+            scripts/smoke.sh "$lang"
+          done
+
+      - name: Commit regenerated clients
+        run: |
+          git config user.name "fever-clients-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add clients/
+          if git diff --cached --quiet; then
+            echo "clients unchanged after regeneration"
+          else
+            git commit -m "CHANGES [skip ci]"
+          fi
+          git tag "v${{ steps.ver.outputs.version }}"
+          git push origin main --tags
+
+      - name: Build artifacts
+        run: |
+          set -euo pipefail
+          v="${{ steps.ver.outputs.version }}"
+          mkdir -p dist
+          # python: smoke already produced dist/ inside the client
+          cp clients/python/dist/* dist/
+          # typescript
+          (cd clients/typescript && npm pack --pack-destination "$OLDPWD/dist")
+          # ruby
+          cp clients/ruby/fever_client.gem "dist/fever_client-${v}.gem"
+          # java
+          cp clients/java/target/fever-client-${v}.jar dist/
+          # csharp
+          (cd clients/csharp && dotnet pack --configuration Release --output "$OLDPWD/dist")
+          # source drops
+          for lang in go rust php; do
+            tar --exclude='target' -czf "dist/fever-clients-${lang}-${v}.tar.gz" -C clients "$lang"
+          done
+          (cd dist && sha256sum * > checksums.txt)
+          ls -la dist/
+
+      - name: SBOM
+        uses: anchore/sbom-action@v0.24.2
+        with:
+          path: .
+          format: spdx-json
+          output-file: dist/sbom.spdx.json
+
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v3.0.3
+        with:
+          tag_name: "v${{ steps.ver.outputs.version }}"
+          name: "fever-clients v${{ steps.ver.outputs.version }}"
+          body: |
+            Autogenerated from spec/openapi.json (FEVER Retrieval v${{ steps.ver.outputs.version }}).
+
+            Clients: python · typescript · go · ruby · java · rust · php · csharp
+            Install directly from the attached artifacts until registry
+            publication lands — see README.md ("Installing from releases").
+
+            Verify: sha256sum -c checksums.txt. Provenance inputs: pinned
+            generator image (see scripts/generate.sh) + SBOM (sbom.spdx.json).
+          files: dist/*

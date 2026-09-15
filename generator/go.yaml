@@ -1,0 +1,12 @@
+# openapi-generator config for the Go client.
+# Import path: github.com/Lowdown-Labs/fever-clients/clients/go
+generatorName: go
+outputDir: /local/clients/go
+inputSpec: /local/spec/openapi.json
+packageName: fever
+packageVersion: "0.0.0"
+gitUserId: Lowdown-Labs
+gitRepoId: fever-clients/clients/go
+additionalProperties:
+  withGoMod: true
+  generateInterfaces: true

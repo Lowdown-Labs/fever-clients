@@ -1,0 +1,13 @@
+# Build outputs from smoke/release runs
+dist/
+clients/*/dist/
+clients/*/target/
+clients/*/node_modules/
+clients/*/.openapi-generator/
+clients/ruby/*.gem
+clients/typescript/package-lock.json
+
+# OS / editor
+.DS_Store
+.idea/
+*.swp

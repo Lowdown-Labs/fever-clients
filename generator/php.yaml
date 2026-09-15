@@ -1,0 +1,11 @@
+# openapi-generator config for the PHP client (composer: lowdownlabs/fever-client).
+generatorName: php
+outputDir: /local/clients/php
+inputSpec: /local/spec/openapi.json
+invokerPackage: LowdownLabs\Fever
+packageVersion: "0.0.0"
+additionalProperties:
+  composerVendorName: lowdownlabs
+  composerProjectName: fever-client
+  developerOrganization: Lowdown Labs
+  developerOrganizationUrl: https://github.com/Lowdown-Labs/fever-clients
