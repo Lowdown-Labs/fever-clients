@@ -90,7 +90,7 @@ jobs:
       - uses: actions/setup-go@v5
         if: matrix.lang == 'go'
         with:
-          go-version: "1.24"
+          go-version: "1.26"
       - uses: ruby/setup-ruby@v1
         if: matrix.lang == 'ruby'
         with:

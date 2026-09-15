@@ -68,7 +68,7 @@ jobs:
           node-version: "22"
       - uses: actions/setup-go@v5
         with:
-          go-version: "1.24"
+          go-version: "1.26"
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.4"
@@ -105,6 +105,9 @@ jobs:
             git commit -m "CHANGES [skip ci]"
           fi
           git tag "v${{ steps.ver.outputs.version }}"
+          # Main may have moved while we regenerated (a docs/config push
+          # landing mid-run) — rebase rather than fail the whole cut.
+          git pull --rebase origin main
           git push origin main --tags
 
       - name: Build artifacts

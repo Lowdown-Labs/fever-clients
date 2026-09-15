@@ -42,6 +42,7 @@ clean_generator_noise() {
     "$1/.openapi-generator" \
     "$1/.travis.yml" \
     "$1/.gitlab-ci.yml" \
+    "$1/appveyor.yml" \
     "$1/git_push.sh" \
     "$1/.github" \
     "$1/openapitools.json"
@@ -71,6 +72,18 @@ for lang in "${LANGS[@]}"; do
       # The generated *_test.go files import testify, which the generated
       # go.mod omits — resolve module files once, here, so CI builds clean.
       (cd "$out" && go mod tidy)
+      ;;
+    csharp)
+      # The generator re-rolls the .sln project GUID on every run, which is
+      # pure churn against the drift check. Pin it to a constant (the GUID is
+      # referenced only inside the .sln itself).
+      sln=$(ls "$out"/*.sln 2>/dev/null | head -1 || true)
+      if [ -n "$sln" ]; then
+        guid=$(grep -m1 '^Project(' "$sln" | grep -oP '\{[0-9A-Fa-f-]{36}\}' | sed -n 2p || true)
+        if [ -n "$guid" ]; then
+          sed -i "s/${guid}/{A15A1A01-5AFE-4AFE-8AFE-FE7C11E70001}/g" "$sln"
+        fi
+      fi
       ;;
   esac
 done
