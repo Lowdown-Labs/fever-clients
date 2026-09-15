@@ -81,7 +81,7 @@ jobs:
         with:
           php-version: "8.4"
           tools: composer
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "8.0.x"
 
