@@ -1,6 +1,6 @@
 [project]
 name = "fever_client"
-version = "0.0.0-dev"
+version = "0.3.0"
 description = "FEVER Retrieval"
 authors = [
   {name = "OpenAPI Generator Community",email = "team@openapitools.org"},

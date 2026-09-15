@@ -42,7 +42,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.lowdownlabs</groupId>
   <artifactId>fever-client</artifactId>
-  <version>0.0.0-dev</version>
+  <version>0.3.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -52,7 +52,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.lowdownlabs:fever-client:0.0.0-dev"
+compile "com.lowdownlabs:fever-client:0.3.0"
 ```
 
 ### Others
@@ -65,7 +65,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-- `target/fever-client-0.0.0-dev.jar`
+- `target/fever-client-0.3.0.jar`
 - `target/lib/*.jar`
 
 ## Getting Started

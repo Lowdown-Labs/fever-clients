@@ -1,6 +1,6 @@
 [package]
 name = "fever-client"
-version = "0.0.0-de"
+version = "0.3.0"
 authors = ["OpenAPI Generator team and contributors"]
 description = "The multimodal media database. Images, video, and audio in one table: hybrid vector + full-text search, dedupe, seek-to-moment video hits, whisper transcript spans. Tenancy, scale, and isolation are automatic; the tenant is taken from the API key."
 # Override this license by providing a License Object in the OpenAPI.
