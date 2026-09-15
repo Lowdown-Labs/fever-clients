@@ -121,8 +121,8 @@ jobs:
           (cd clients/typescript && npm pack --pack-destination "$OLDPWD/dist")
           # ruby
           cp clients/ruby/fever_client.gem "dist/fever_client-${v}.gem"
-          # java
-          cp clients/java/target/fever-client-${v}.jar dist/
+          # java (single jar from mvn package; glob beats assuming the name)
+          find clients/java/target -maxdepth 1 -name '*.jar' -exec cp {} dist/ \;
           # csharp
           (cd clients/csharp && dotnet pack --configuration Release --output "$OLDPWD/dist")
           # source drops

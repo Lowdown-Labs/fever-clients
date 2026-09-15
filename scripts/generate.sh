@@ -25,14 +25,14 @@ else
   LANGS=("${ALL_LANGS[@]}")
 fi
 
-# Each generator family names its version knob differently.
-version_key() {
-  case "$1" in
-    typescript) echo npmVersion ;;
-    ruby)       echo gemVersion ;;
-    java)       echo artifactVersion ;;
-    *)          echo packageVersion ;;
-  esac
+# Each generator family names its version knob differently, and -p overrides
+# do NOT beat the config file for all of them (java keeps the file's
+# artifactVersion). So the version is stamped into a temp copy of the config —
+# one mechanism that works for every generator.
+stamp_config() {
+  local src="$1" dst="$2"
+  sed -E "s/^([[:space:]]*)(packageVersion|gemVersion|npmVersion|artifactVersion): .*/\1\2: \"${VERSION}\"/" \
+    "$src" > "$dst"
 }
 
 # Files the generator emits that we never commit: its own CI, VCS helpers,
@@ -57,12 +57,14 @@ for lang in "${LANGS[@]}"; do
   mkdir -p "$out"
 
   echo "==> ${lang} (${GENERATOR_IMAGE})"
+  tmpconfig="generator/.tmp-${lang}.yaml"
+  stamp_config "$config" "$tmpconfig"
   docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "${REPO_ROOT}:/local" \
     "$GENERATOR_IMAGE" generate \
-      --config "/local/${config}" \
-      --additional-properties "$(version_key "$lang")=${VERSION}"
+      --config "/local/${tmpconfig}"
+  rm -f "$tmpconfig"
 
   clean_generator_noise "$out"
 
