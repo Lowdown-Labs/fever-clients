@@ -7,6 +7,8 @@ groupId: com.lowdownlabs
 artifactId: fever-client
 artifactVersion: "0.0.0"
 invokerPackage: com.lowdownlabs.fever
+apiPackage: com.lowdownlabs.fever.api
+modelPackage: com.lowdownlabs.fever.model
 additionalProperties:
   library: native
   artifactUrl: https://github.com/Lowdown-Labs/fever-clients

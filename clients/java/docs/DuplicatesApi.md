@@ -28,7 +28,7 @@ import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
 import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
-import org.openapitools.client.api.DuplicatesApi;
+import com.lowdownlabs.fever.api.DuplicatesApi;
 
 public class Example {
     public static void main(String[] args) {
@@ -100,7 +100,7 @@ import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
 import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
-import org.openapitools.client.api.DuplicatesApi;
+import com.lowdownlabs.fever.api.DuplicatesApi;
 
 public class Example {
     public static void main(String[] args) {
@@ -172,7 +172,7 @@ import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
 import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
-import org.openapitools.client.api.DuplicatesApi;
+import com.lowdownlabs.fever.api.DuplicatesApi;
 
 public class Example {
     public static void main(String[] args) {
@@ -242,7 +242,7 @@ import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
 import com.lowdownlabs.fever.auth.*;
 import com.lowdownlabs.fever.models.*;
-import org.openapitools.client.api.DuplicatesApi;
+import com.lowdownlabs.fever.api.DuplicatesApi;
 
 public class Example {
     public static void main(String[] args) {

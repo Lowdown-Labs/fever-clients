@@ -9,9 +9,9 @@
 ## Example
 ```java
 // Import classes:
-import org.openapitools.client.model.LocationInner;
-import org.openapitools.client.model.Integer;
-import org.openapitools.client.model.String;
+import com.lowdownlabs.fever.model.LocationInner;
+import com.lowdownlabs.fever.model.Integer;
+import com.lowdownlabs.fever.model.String;
 
 public class Example {
     public static void main(String[] args) {

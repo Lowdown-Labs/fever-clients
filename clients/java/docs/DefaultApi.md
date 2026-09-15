@@ -25,7 +25,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
 import com.lowdownlabs.fever.models.*;
-import org.openapitools.client.api.DefaultApi;
+import com.lowdownlabs.fever.api.DefaultApi;
 
 public class Example {
     public static void main(String[] args) {
@@ -85,7 +85,7 @@ import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
 import com.lowdownlabs.fever.models.*;
-import org.openapitools.client.api.DefaultApi;
+import com.lowdownlabs.fever.api.DefaultApi;
 
 public class Example {
     public static void main(String[] args) {
@@ -147,7 +147,7 @@ import com.lowdownlabs.fever.ApiClient;
 import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.Configuration;
 import com.lowdownlabs.fever.models.*;
-import org.openapitools.client.api.DefaultApi;
+import com.lowdownlabs.fever.api.DefaultApi;
 
 public class Example {
     public static void main(String[] args) {
@@ -207,7 +207,7 @@ import com.lowdownlabs.fever.ApiException;
 import com.lowdownlabs.fever.ApiResponse;
 import com.lowdownlabs.fever.Configuration;
 import com.lowdownlabs.fever.models.*;
-import org.openapitools.client.api.DefaultApi;
+import com.lowdownlabs.fever.api.DefaultApi;
 
 public class Example {
     public static void main(String[] args) {
