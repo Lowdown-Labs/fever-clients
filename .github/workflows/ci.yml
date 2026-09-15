@@ -100,7 +100,7 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - uses: actions-rust-lang/setup-rust-toolchain@v2
         if: matrix.lang == 'rust'
       - uses: shivammathur/setup-php@v2
         if: matrix.lang == 'php'
