@@ -25,7 +25,7 @@ jobs:
     name: Validate OpenAPI spec
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Validate with pinned openapi-generator
         run: |
           docker run --rm -v "$PWD:/local" \
@@ -36,7 +36,7 @@ jobs:
     name: clients/ in sync with spec/
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # for git describe (last release tag)
       - name: Detect spec change in this change set
@@ -78,7 +78,7 @@ jobs:
       matrix:
         lang: [python, typescript, go, ruby, java, rust, php, csharp]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         if: matrix.lang == 'python'
         with:
