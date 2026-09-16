@@ -27,6 +27,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN || github.token }}
 
       - name: Compute version
         id: ver
@@ -131,6 +132,7 @@ jobs:
       - name: GitHub Release
         uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64
         with:
+          token: ${{ secrets.RELEASE_TOKEN || github.token }}
           tag_name: "v${{ steps.ver.outputs.version }}"
           name: "fever-clients v${{ steps.ver.outputs.version }}"
           body: |
