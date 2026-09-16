@@ -57,6 +57,36 @@
         "title": "ApiKey",
         "type": "object"
       },
+      "AssociateRequest": {
+        "properties": {
+          "collection_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Set/update the collection grouping for this blob.",
+            "title": "Collection Id"
+          },
+          "parent_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Set/update the pointer to this blob's related parent asset (its external_ref, key, or blob_id).",
+            "title": "Parent Ref"
+          }
+        },
+        "title": "AssociateRequest",
+        "type": "object"
+      },
       "BulkReassignUpload": {
         "properties": {
           "file": {
@@ -317,7 +347,8 @@
                   "audio",
                   "pdf",
                   "doc",
-                  "note"
+                  "note",
+                  "lidar"
                 ],
                 "type": "string"
               },
@@ -452,6 +483,18 @@
             "description": "Optional caption/keywords; indexed at the highest text-search weight.",
             "title": "Caption"
           },
+          "collection_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional grouping you own (project, case, site - FEVER stores and filters it, never interprets it). Filterable at search time; returned on hits.",
+            "title": "Collection Id"
+          },
           "customer_id": {
             "anyOf": [
               {
@@ -476,6 +519,18 @@
             "description": "Base64-encoded media item bytes.",
             "title": "Data"
           },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original file name. Drives format detection for inline documents and LiDAR (extensions like .csv or .las - office formats are recognized by their bytes alone) and is stored on the blob for media info and attachment listings.",
+            "title": "Filename"
+          },
           "metadata": {
             "anyOf": [
               {
@@ -488,6 +543,18 @@
             ],
             "description": "Opaque JSON returned with search hits.",
             "title": "Metadata"
+          },
+          "parent_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional pointer to a related parent asset (its external_ref, key, or blob_id). Non-searchable companions such as LiDAR scans declare the photo or video they belong to; the parent's record lists them back as attachments.",
+            "title": "Parent Ref"
           },
           "strip_exif": {
             "default": false,
@@ -613,6 +680,18 @@
       },
       "IngestSource": {
         "properties": {
+          "collection_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Tag every vacuumed item with this collection_id.",
+            "title": "Collection Id"
+          },
           "customer_id": {
             "anyOf": [
               {
@@ -766,6 +845,72 @@
         "title": "KeyReveal",
         "type": "object"
       },
+      "MediaAttachment": {
+        "properties": {
+          "blob_id": {
+            "title": "Blob Id",
+            "type": "integer"
+          },
+          "byte_size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Byte Size"
+          },
+          "content_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content Type"
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "image",
+                  "video",
+                  "audio",
+                  "pdf",
+                  "doc",
+                  "note",
+                  "lidar"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kind"
+          }
+        },
+        "required": [
+          "blob_id"
+        ],
+        "title": "MediaAttachment",
+        "type": "object"
+      },
       "MediaFormats": {
         "properties": {
           "audio": {
@@ -789,6 +934,13 @@
             "title": "Image",
             "type": "array"
           },
+          "lidar": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Lidar",
+            "type": "array"
+          },
           "video": {
             "items": {
               "type": "string"
@@ -801,7 +953,8 @@
           "image",
           "video",
           "audio",
-          "document"
+          "document",
+          "lidar"
         ],
         "title": "MediaFormats",
         "type": "object"
@@ -826,6 +979,14 @@
       },
       "MediaInfo": {
         "properties": {
+          "attachments": {
+            "description": "Related items pointing at this blob via parent_ref (e.g. a LiDAR scan attached to the photo or video it belongs to).",
+            "items": {
+              "$ref": "#/components/schemas/MediaAttachment"
+            },
+            "title": "Attachments",
+            "type": "array"
+          },
           "blob_id": {
             "title": "Blob Id",
             "type": "integer"
@@ -854,6 +1015,18 @@
             ],
             "description": "EXIF capture time.",
             "title": "Captured At"
+          },
+          "collection_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Collection this item was grouped under at ingest, if any.",
+            "title": "Collection Id"
           },
           "customer_id": {
             "anyOf": [
@@ -927,7 +1100,8 @@
                   "audio",
                   "pdf",
                   "doc",
-                  "note"
+                  "note",
+                  "lidar"
                 ],
                 "type": "string"
               },
@@ -935,7 +1109,7 @@
                 "type": "null"
               }
             ],
-            "description": "Media kind of this blob (image/video/audio/pdf/doc/note).",
+            "description": "Media kind of this blob (image/video/audio/pdf/doc/note/lidar).",
             "title": "Kind"
           },
           "metadata": {
@@ -961,6 +1135,18 @@
             ],
             "description": "Text OCR'd out of the item (PDF pages always, photos when enabled).",
             "title": "Ocr Text"
+          },
+          "parent_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pointer to this item's related parent asset, if declared.",
+            "title": "Parent Ref"
           },
           "synthetic": {
             "anyOf": [
@@ -1097,6 +1283,18 @@
             ],
             "title": "Caption"
           },
+          "collection_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Collection this item was grouped under at ingest, if any.",
+            "title": "Collection Id"
+          },
           "customer_id": {
             "anyOf": [
               {
@@ -1167,7 +1365,8 @@
                   "audio",
                   "pdf",
                   "doc",
-                  "note"
+                  "note",
+                  "lidar"
                 ],
                 "type": "string"
               },
@@ -1201,6 +1400,18 @@
               }
             ],
             "title": "Metadata"
+          },
+          "parent_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pointer to this item's related parent asset, if declared.",
+            "title": "Parent Ref"
           },
           "score": {
             "description": "For score_type 'rerank' this is the model's match probability in [0,1] (a calibrated confidence); 'cosine' is vector similarity; 'rrf' is a lexical rank score.",
@@ -1312,6 +1523,18 @@
             "description": "Collapse near-duplicate items so each result is a distinct representative; the folded-in duplicates are listed on each hit.",
             "title": "Collapse Duplicates",
             "type": "boolean"
+          },
+          "collection_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Restrict results to media tagged with this collection_id.",
+            "title": "Collection Id"
           },
           "customer_id": {
             "anyOf": [
@@ -1430,7 +1653,8 @@
                   "audio",
                   "pdf",
                   "doc",
-                  "note"
+                  "note",
+                  "lidar"
                 ],
                 "type": "string"
               },
@@ -1622,9 +1846,9 @@
     }
   },
   "info": {
-    "description": "The multimodal media database. Images, video, and audio in one table: hybrid vector + full-text search, dedupe, seek-to-moment video hits, whisper transcript spans. Tenancy, scale, and isolation are automatic; the tenant is taken from the API key.",
+    "description": "The multimodal media database. Images, video, audio, office documents, and LiDAR in one table: hybrid vector + full-text search, dedupe, seek-to-moment video hits, whisper transcript spans, collection grouping, and asset-to-asset attachments. Tenancy, scale, and isolation are automatic; the tenant is taken from the API key.",
     "title": "FEVER Retrieval",
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -2296,6 +2520,80 @@
           }
         ],
         "summary": "Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts",
+        "tags": [
+          "media"
+        ]
+      }
+    },
+    "/v1/media/{blob_id}/associate": {
+      "post": {
+        "description": "Fill the relational columns after ingest (the SOR-driven import flow):\ncollection_id groups assets under a client-owned project; parent_ref ties a\ncompanion asset (LiDAR, transcript, alternate capture) to its parent. Values\nare COALESCE-updates - present fields win, omitted fields stay. Re-ingesting\nthe same content with the fields set does the same thing through the upsert.",
+        "operationId": "associate_media",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "blob_id",
+            "required": true,
+            "schema": {
+              "title": "Blob Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "customer_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Customer Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssociateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaInfo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Set a blob's collection and/or parent association (e.g. attach a LiDAR scan to its source photo)",
         "tags": [
           "media"
         ]
