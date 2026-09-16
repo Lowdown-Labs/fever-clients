@@ -7,8 +7,6 @@ cd "$REPO_ROOT"
 GENERATOR_IMAGE="${GENERATOR_IMAGE:-openapitools/openapi-generator-cli:v7.25.0@sha256:2ab0a9680222de65dc9d3baf861aa02b99e1b80c211d8221ebf3ae8f8a102524}"
 VERSION="${VERSION:-0.0.0-dev}"
 
-command -v python3 >/dev/null || { echo "python3 is required for the comment strip pass" >&2; exit 1; }
-
 ALL_LANGS=(python typescript go ruby java rust php csharp)
 if [ "$#" -gt 0 ]; then
   LANGS=("$@")
@@ -52,7 +50,6 @@ for lang in "${LANGS[@]}"; do
   rm -f "$tmpconfig"
 
   clean_generator_noise "$out"
-  python3 "${REPO_ROOT}/scripts/strip_comments.py" "$out"
 
   case "$lang" in
     go)

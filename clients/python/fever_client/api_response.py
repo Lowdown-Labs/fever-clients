@@ -1,3 +1,5 @@
+"""API response object."""
+
 from __future__ import annotations
 from typing import Optional, Generic, Mapping, TypeVar
 from pydantic import Field, StrictInt, StrictBytes, BaseModel
@@ -5,6 +7,9 @@ from pydantic import Field, StrictInt, StrictBytes, BaseModel
 T = TypeVar("T")
 
 class ApiResponse(BaseModel, Generic[T]):
+    """
+    API response object
+    """
 
     status_code: StrictInt = Field(description="HTTP status code")
     headers: Optional[Mapping[str, str]] = Field(None, description="HTTP headers")

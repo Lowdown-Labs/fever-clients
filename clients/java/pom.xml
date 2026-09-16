@@ -13,6 +13,7 @@
         <developerConnection>scm:git:git@github.com:openapitools/openapi-generator.git</developerConnection>
         <url>https://github.com/openapitools/openapi-generator</url>
     </scm>
+
     <licenses>
         <license>
             <name>Unlicense</name>
@@ -20,6 +21,7 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
     <developers>
         <developer>
             <name>OpenAPI-Generator Contributors</name>
@@ -28,6 +30,7 @@
             <organizationUrl>http://openapitools.org</organizationUrl>
         </developer>
     </developers>
+
     <build>
         <plugins>
             <plugin>
@@ -79,6 +82,8 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- attach test jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -122,25 +127,36 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- Use spotless plugin to automatically format code, remove unused import, etc
+                 To apply changes directly to the file, run `mvn spotless:apply`
+                 Ref: https://github.com/diffplug/spotless/tree/main/plugin-maven
+            -->
             <plugin>
               <groupId>com.diffplug.spotless</groupId>
               <artifactId>spotless-maven-plugin</artifactId>
               <version>${spotless.version}</version>
               <configuration>
                 <formats>
+                  <!-- you can define as many formats as you want, each is independent -->
                   <format>
+                    <!-- define the files to apply to -->
                     <includes>
                       <include>.gitignore</include>
                     </includes>
+                    <!-- define the steps to apply to those files -->
                     <trimTrailingWhitespace/>
                     <endWithNewline/>
                     <indent>
-                      <spaces>true</spaces>
-                      <spacesPerTab>4</spacesPerTab>
+                      <spaces>true</spaces> <!-- or <tabs>true</tabs> -->
+                      <spacesPerTab>4</spacesPerTab> <!-- optional, default is 4 -->
                     </indent>
                   </format>
                 </formats>
+                <!-- define a language-specific format -->
                 <java>
+                  <!-- no need to specify files, inferred automatically, but you can if you want -->
+
+                  <!-- apply a specific flavor of google-java-format and reflow long strings -->
                   <googleJavaFormat>
                     <version>1.8</version>
                     <style>AOSP</style>
@@ -153,6 +169,7 @@
             </plugin>
         </plugins>
     </build>
+
     <profiles>
         <profile>
             <id>sign-artifacts</id>
@@ -175,7 +192,10 @@
             </build>
         </profile>
     </profiles>
+
     <dependencies>
+
+        <!-- JSON processing: jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -201,6 +221,8 @@
             <artifactId>jackson-databind-nullable</artifactId>
             <version>${jackson-databind-nullable-version}</version>
         </dependency>
+
+        <!-- @Nullable annotation -->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
@@ -217,6 +239,8 @@
             <artifactId>httpmime</artifactId>
             <version>${httpmime-version}</version>
         </dependency>
+
+        <!-- test dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -224,6 +248,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
