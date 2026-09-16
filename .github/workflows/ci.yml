@@ -1,14 +1,3 @@
-# =============================================================================
-# fever-clients CI — proves on every PR/push that:
-#   1. spec/openapi.json parses and is client-generatable (pinned generator).
-#   2. clients/ is regenerable and IN SYNC with the spec — unless this change
-#      is itself a spec update, in which case release.yml regenerates on merge
-#      (drift is the point of a spec PR; it is forbidden everywhere else).
-#   3. Every generated client assembles (compile/build smoke, no live
-#      appliance needed).
-#
-# Required secrets: NONE.
-# =============================================================================
 name: CI
 
 on:
@@ -25,7 +14,7 @@ jobs:
     name: Validate OpenAPI spec
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Validate with pinned openapi-generator
         run: |
           docker run --rm -v "$PWD:/local" \
@@ -36,9 +25,9 @@ jobs:
     name: clients/ in sync with spec/
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          fetch-depth: 0 # for git describe (last release tag)
+          fetch-depth: 0
       - name: Detect spec change in this change set
         id: spec
         run: |
@@ -62,10 +51,10 @@ jobs:
         run: |
           if ! git diff --exit-code -- clients/; then
             echo "::error::clients/ is stale or was hand-edited. Generated code is"
-            echo "::error::never edited by hand — change the spec or generator config."
+            echo "::error::never edited by hand - change the spec or generator config."
             exit 1
           fi
-      - name: Spec-change PR — release.yml will regenerate on merge
+      - name: Spec-change PR - release.yml will regenerate on merge
         if: steps.spec.outputs.changed == 'true'
         run: echo "spec/ touched; skipping drift check (regeneration happens at release)."
 
@@ -78,36 +67,36 @@ jobs:
       matrix:
         lang: [python, typescript, go, ruby, java, rust, php, csharp]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         if: matrix.lang == 'python'
         with:
           python-version: "3.13"
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         if: matrix.lang == 'typescript'
         with:
           node-version: "22"
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
         if: matrix.lang == 'go'
         with:
           go-version: "1.26"
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@984c0c890880bbf811283d6f09c4607c62d210a4
         if: matrix.lang == 'ruby'
         with:
           ruby-version: "3.4"
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
         if: matrix.lang == 'java'
         with:
           distribution: temurin
           java-version: "21"
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659
         if: matrix.lang == 'rust'
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240
         if: matrix.lang == 'php'
         with:
           php-version: "8.4"
           tools: composer
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
         if: matrix.lang == 'csharp'
         with:
           dotnet-version: "8.0.x"

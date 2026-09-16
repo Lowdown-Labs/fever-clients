@@ -1,5 +1,3 @@
-# openapi-generator config for the Java client.
-# library=native: JDK 11+ HttpClient, minimal dependency footprint.
 generatorName: java
 outputDir: /local/clients/java
 inputSpec: /local/spec/openapi.json

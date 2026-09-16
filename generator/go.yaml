@@ -1,5 +1,3 @@
-# openapi-generator config for the Go client.
-# Import path: github.com/Lowdown-Labs/fever-clients/clients/go
 generatorName: go
 outputDir: /local/clients/go
 inputSpec: /local/spec/openapi.json

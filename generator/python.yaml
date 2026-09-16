@@ -1,5 +1,3 @@
-# openapi-generator config for the Python client (package: fever-client).
-# Version is injected at release time by scripts/generate.sh (--package-version).
 generatorName: python
 outputDir: /local/clients/python
 inputSpec: /local/spec/openapi.json

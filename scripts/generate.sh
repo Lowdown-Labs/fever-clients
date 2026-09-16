@@ -1,15 +1,4 @@
 #!/usr/bin/env bash
-# Regenerate the SDK clients from spec/openapi.json.
-#
-# The generator image is pinned by digest: what generates the code you ship is
-# exactly what generated the code that was reviewed. Bump deliberately.
-#
-#   scripts/generate.sh              # all languages, dev version stamp
-#   scripts/generate.sh python go    # subset
-#   VERSION=1.2.3 scripts/generate.sh # stamp package manifests with a version
-#
-# After running, `git status` shows the drift. CI runs this and fails on diff,
-# so clients/ is always provably in sync with spec/openapi.json.
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -25,18 +14,12 @@ else
   LANGS=("${ALL_LANGS[@]}")
 fi
 
-# Each generator family names its version knob differently, and -p overrides
-# do NOT beat the config file for all of them (java keeps the file's
-# artifactVersion). So the version is stamped into a temp copy of the config —
-# one mechanism that works for every generator.
 stamp_config() {
   local src="$1" dst="$2"
   sed -E "s/^([[:space:]]*)(packageVersion|gemVersion|npmVersion|artifactVersion): .*/\1\2: \"${VERSION}\"/" \
     "$src" > "$dst"
 }
 
-# Files the generator emits that we never commit: its own CI, VCS helpers,
-# bookkeeping. Our repo supplies all of that itself.
 clean_generator_noise() {
   rm -rf \
     "$1/.openapi-generator" \
@@ -68,17 +51,11 @@ for lang in "${LANGS[@]}"; do
 
   clean_generator_noise "$out"
 
-  # Per-language post-fixups: make the generated tree self-consistent.
   case "$lang" in
     go)
-      # The generated *_test.go files import testify, which the generated
-      # go.mod omits — resolve module files once, here, so CI builds clean.
       (cd "$out" && go mod tidy)
       ;;
     csharp)
-      # The generator re-rolls the .sln project GUID on every run, which is
-      # pure churn against the drift check. Pin it to a constant (the GUID is
-      # referenced only inside the .sln itself).
       sln=$(ls "$out"/*.sln 2>/dev/null | head -1 || true)
       if [ -n "$sln" ]; then
         guid=$(grep -m1 '^Project(' "$sln" | grep -oP '\{[0-9A-Fa-f-]{36}\}' | sed -n 2p || true)
