@@ -1,6 +1,5 @@
 # flake8: noqa
 
-# import apis into api package
 from fever_client.api.auth_api import AuthApi
 from fever_client.api.corpus_api import CorpusApi
 from fever_client.api.customers_api import CustomersApi

@@ -1,4 +1,3 @@
-# openapi-generator config for the Ruby client (gem: fever_client).
 generatorName: ruby
 outputDir: /local/clients/ruby
 inputSpec: /local/spec/openapi.json

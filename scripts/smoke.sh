@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# Build/compile smoke for one generated client: proves the artifact assembles,
-# without needing a live appliance. Run by CI per language; also what
-# release.yml calls before attaching artifacts.
-#
-#   scripts/smoke.sh python
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

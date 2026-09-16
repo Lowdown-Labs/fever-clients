@@ -1,28 +1,3 @@
-# =============================================================================
-# fever-clients release cut — fires when spec/openapi.json lands on main (the
-# spec-sync PR from lowdown_lab merging) or on manual dispatch.
-#
-# Pipeline: version → regenerate ALL clients stamped with that version →
-# smoke-build every language → commit the regenerated tree back to main
-# ([skip ci]) → tag → build installable artifacts → SBOM + checksums →
-# GitHub Release.
-#
-# Versioning: base is the spec's info.version; if that tag is taken the patch
-# bumps until free (all clients move together, one tag per spec change —
-# same convention as the FEVER appliance releases).
-#
-# Artifacts attached per release (registries come later; installs run off
-# these directly — see README):
-#   fever_client-<v>-py3-none-any.whl + .tar.gz   (pip install <url>)
-#   fever-client-<v>.tgz                          (npm install <url>)
-#   fever_client-<v>.gem                          (gem install <url>)
-#   fever-client-<v>.jar                          (maven: jitpack/system scope)
-#   LowdownLabs.Fever.<v>.nupkg                   (dotnet add package source)
-#   fever-clients-go|rust|php-<v>.tar.gz          (source drops)
-#   sbom.spdx.json + checksums.txt                (supply chain)
-#
-# Required secrets: NONE (GITHUB_TOKEN only).
-# =============================================================================
 name: Release
 
 on:
@@ -34,6 +9,8 @@ on:
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 
 concurrency:
   group: release
@@ -43,8 +20,11 @@ jobs:
   release:
     name: Cut release
     runs-on: ubuntu-latest
+    env:
+      GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+      GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 0
 
@@ -60,28 +40,28 @@ jobs:
           echo "Releasing v${v} (spec base ${base})"
 
       - name: Toolchains
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: "3.13"
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: "22"
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
         with:
           go-version: "1.26"
-      - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@984c0c890880bbf811283d6f09c4607c62d210a4
         with:
           ruby-version: "3.4"
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
         with:
           distribution: temurin
           java-version: "21"
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
-      - uses: shivammathur/setup-php@v2
+      - uses: actions-rust-lang/setup-rust-toolchain@166cdcfd11aee3cb47222f9ddb555ce30ddb9659
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240
         with:
           php-version: "8.4"
           tools: composer
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
         with:
           dotnet-version: "8.0.x"
 
@@ -94,6 +74,13 @@ jobs:
             scripts/smoke.sh "$lang"
           done
 
+      - name: Import GPG key
+        if: env.GPG_PRIVATE_KEY != ''
+        uses: crazy-max/ghaction-import-gpg@e89d40939c28e39f97cf32126055eeae86ba74ec
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
       - name: Commit regenerated clients
         run: |
           git config user.name "fever-clients-bot"
@@ -104,9 +91,12 @@ jobs:
           else
             git commit -m "CHANGES [skip ci]"
           fi
-          git tag "v${{ steps.ver.outputs.version }}"
-          # Main may have moved while we regenerated (a docs/config push
-          # landing mid-run) — rebase rather than fail the whole cut.
+          v="${{ steps.ver.outputs.version }}"
+          if [ -n "${GPG_PRIVATE_KEY:-}" ]; then
+            git tag -s "v${v}" -m "fever-clients v${v}"
+          else
+            git tag -a "v${v}" -m "fever-clients v${v}"
+          fi
           git pull --rebase origin main
           git push origin main --tags
 
@@ -115,17 +105,11 @@ jobs:
           set -euo pipefail
           v="${{ steps.ver.outputs.version }}"
           mkdir -p dist
-          # python: smoke already produced dist/ inside the client
           cp clients/python/dist/* dist/
-          # typescript
           (cd clients/typescript && npm pack --pack-destination "$OLDPWD/dist")
-          # ruby
           cp clients/ruby/fever_client.gem "dist/fever_client-${v}.gem"
-          # java (single jar from mvn package; glob beats assuming the name)
           find clients/java/target -maxdepth 1 -name '*.jar' -exec cp {} dist/ \;
-          # csharp
           (cd clients/csharp && dotnet pack --configuration Release --output "$OLDPWD/dist")
-          # source drops
           for lang in go rust php; do
             tar --exclude='target' -czf "dist/fever-clients-${lang}-${v}.tar.gz" -C clients "$lang"
           done
@@ -133,14 +117,19 @@ jobs:
           ls -la dist/
 
       - name: SBOM
-        uses: anchore/sbom-action@v0.24.2
+        uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26
         with:
           path: .
           format: spdx-json
           output-file: dist/sbom.spdx.json
 
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be
+        with:
+          subject-path: dist/*
+
       - name: GitHub Release
-        uses: softprops/action-gh-release@v3.0.3
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64
         with:
           tag_name: "v${{ steps.ver.outputs.version }}"
           name: "fever-clients v${{ steps.ver.outputs.version }}"
@@ -149,8 +138,10 @@ jobs:
 
             Clients: python · typescript · go · ruby · java · rust · php · csharp
             Install directly from the attached artifacts until registry
-            publication lands — see README.md ("Installing from releases").
+            publication lands - see README.md ("Installing from releases").
 
-            Verify: sha256sum -c checksums.txt. Provenance inputs: pinned
-            generator image (see scripts/generate.sh) + SBOM (sbom.spdx.json).
+            Verify: sha256sum -c checksums.txt, then
+            gh attestation verify <file> --repo Lowdown-Labs/fever-clients.
+            Provenance inputs: pinned generator image (see scripts/generate.sh)
+            + SBOM (sbom.spdx.json).
           files: dist/*
