@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **blob_id** | **int** |  | 
 **caption** | **str** |  | [optional] 
+**collection_id** | **str** | Collection this item was grouped under at ingest, if any. | [optional] 
 **customer_id** | **str** |  | [optional] 
 **duplicate_count** | **int** | Number of near-duplicates collapsed into this hit. | [optional] [default to 0]
 **duplicates** | **List[int]** | blob_ids of near-duplicates collapsed into this hit. | [optional] 
@@ -16,6 +17,7 @@ Name | Type | Description | Notes
 **kind** | **str** | Media kind of this hit&#39;s parent blob. | [optional] 
 **media_ref** | **str** | s3:// URI of the matched media item. | [optional] 
 **metadata** | **Dict[str, object]** |  | [optional] 
+**parent_ref** | **str** | Pointer to this item&#39;s related parent asset, if declared. | [optional] 
 **score** | **float** | For score_type &#39;rerank&#39; this is the model&#39;s match probability in [0,1] (a calibrated confidence); &#39;cosine&#39; is vector similarity; &#39;rrf&#39; is a lexical rank score. | 
 **score_type** | **str** |  | 
 **seek_ms** | **int** | For video hits: timestamp of the winning frame, for seek-to-moment playback. | [optional] 

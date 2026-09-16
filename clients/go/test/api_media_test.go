@@ -22,6 +22,20 @@ func Test_fever_MediaAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test MediaAPIService AssociateMedia", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var blobId int32
+
+		resp, httpRes, err := apiClient.MediaAPI.AssociateMedia(context.Background(), blobId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test MediaAPIService GetMediaBytes", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

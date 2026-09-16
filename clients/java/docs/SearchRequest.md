@@ -10,6 +10,7 @@
 |**after** | **String** | EXIF capture time &gt;&#x3D; this ISO datetime. |  [optional] |
 |**before** | **String** | EXIF capture time &lt;&#x3D; this ISO datetime. |  [optional] |
 |**collapseDuplicates** | **Boolean** | Collapse near-duplicate items so each result is a distinct representative; the folded-in duplicates are listed on each hit. |  [optional] |
+|**collectionId** | **String** | Restrict results to media tagged with this collection_id. |  [optional] |
 |**customerId** | **String** | Restrict results to media tagged with this customer_id. |  [optional] |
 |**device** | **String** | EXIF camera make/model substring. |  [optional] |
 |**dupeThreshold** | **BigDecimal** | Cosine similarity cutoff 0..1 for treating two items as duplicates; higher is stricter. Defaults to the appliance setting when omitted. |  [optional] |
@@ -39,6 +40,7 @@
 | PDF | &quot;pdf&quot; |
 | DOC | &quot;doc&quot; |
 | NOTE | &quot;note&quot; |
+| LIDAR | &quot;lidar&quot; |
 
 
 

@@ -5,9 +5,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Caption** | Pointer to **NullableString** | Optional caption/keywords; indexed at the highest text-search weight. | [optional] 
+**CollectionId** | Pointer to **NullableString** | Optional grouping you own (project, case, site - FEVER stores and filters it, never interprets it). Filterable at search time; returned on hits. | [optional] 
 **CustomerId** | Pointer to **NullableString** | Optional tag attributing this item to one of your customers; filterable at search time. | [optional] 
 **Data** | Pointer to **NullableString** | Base64-encoded media item bytes. | [optional] 
+**Filename** | Pointer to **NullableString** | Original file name. Drives format detection for inline documents and LiDAR (extensions like .csv or .las - office formats are recognized by their bytes alone) and is stored on the blob for media info and attachment listings. | [optional] 
 **Metadata** | Pointer to **map[string]interface{}** | Opaque JSON returned with search hits. | [optional] 
+**ParentRef** | Pointer to **NullableString** | Optional pointer to a related parent asset (its external_ref, key, or blob_id). Non-searchable companions such as LiDAR scans declare the photo or video they belong to; the parent&#39;s record lists them back as attachments. | [optional] 
 **StripExif** | Pointer to **bool** | Skip EXIF extraction/retention for this item. | [optional] [default to false]
 **Tags** | Pointer to **[]string** | Optional tags for this item; indexed for text search and returned on hits. Merged with the appliance&#39;s zero-shot autotags. | [optional] 
 **Url** | Pointer to **NullableString** | An s3:// URI to one media item you already store, instead of inline bytes. | [optional] 
@@ -66,6 +69,41 @@ HasCaption returns a boolean if a field has been set.
 `func (o *IngestMedia) UnsetCaption()`
 
 UnsetCaption ensures that no value is present for Caption, not even an explicit nil
+### GetCollectionId
+
+`func (o *IngestMedia) GetCollectionId() string`
+
+GetCollectionId returns the CollectionId field if non-nil, zero value otherwise.
+
+### GetCollectionIdOk
+
+`func (o *IngestMedia) GetCollectionIdOk() (*string, bool)`
+
+GetCollectionIdOk returns a tuple with the CollectionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCollectionId
+
+`func (o *IngestMedia) SetCollectionId(v string)`
+
+SetCollectionId sets CollectionId field to given value.
+
+### HasCollectionId
+
+`func (o *IngestMedia) HasCollectionId() bool`
+
+HasCollectionId returns a boolean if a field has been set.
+
+### SetCollectionIdNil
+
+`func (o *IngestMedia) SetCollectionIdNil(b bool)`
+
+ SetCollectionIdNil sets the value for CollectionId to be an explicit nil
+
+### UnsetCollectionId
+`func (o *IngestMedia) UnsetCollectionId()`
+
+UnsetCollectionId ensures that no value is present for CollectionId, not even an explicit nil
 ### GetCustomerId
 
 `func (o *IngestMedia) GetCustomerId() string`
@@ -136,6 +174,41 @@ HasData returns a boolean if a field has been set.
 `func (o *IngestMedia) UnsetData()`
 
 UnsetData ensures that no value is present for Data, not even an explicit nil
+### GetFilename
+
+`func (o *IngestMedia) GetFilename() string`
+
+GetFilename returns the Filename field if non-nil, zero value otherwise.
+
+### GetFilenameOk
+
+`func (o *IngestMedia) GetFilenameOk() (*string, bool)`
+
+GetFilenameOk returns a tuple with the Filename field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilename
+
+`func (o *IngestMedia) SetFilename(v string)`
+
+SetFilename sets Filename field to given value.
+
+### HasFilename
+
+`func (o *IngestMedia) HasFilename() bool`
+
+HasFilename returns a boolean if a field has been set.
+
+### SetFilenameNil
+
+`func (o *IngestMedia) SetFilenameNil(b bool)`
+
+ SetFilenameNil sets the value for Filename to be an explicit nil
+
+### UnsetFilename
+`func (o *IngestMedia) UnsetFilename()`
+
+UnsetFilename ensures that no value is present for Filename, not even an explicit nil
 ### GetMetadata
 
 `func (o *IngestMedia) GetMetadata() map[string]interface{}`
@@ -171,6 +244,41 @@ HasMetadata returns a boolean if a field has been set.
 `func (o *IngestMedia) UnsetMetadata()`
 
 UnsetMetadata ensures that no value is present for Metadata, not even an explicit nil
+### GetParentRef
+
+`func (o *IngestMedia) GetParentRef() string`
+
+GetParentRef returns the ParentRef field if non-nil, zero value otherwise.
+
+### GetParentRefOk
+
+`func (o *IngestMedia) GetParentRefOk() (*string, bool)`
+
+GetParentRefOk returns a tuple with the ParentRef field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentRef
+
+`func (o *IngestMedia) SetParentRef(v string)`
+
+SetParentRef sets ParentRef field to given value.
+
+### HasParentRef
+
+`func (o *IngestMedia) HasParentRef() bool`
+
+HasParentRef returns a boolean if a field has been set.
+
+### SetParentRefNil
+
+`func (o *IngestMedia) SetParentRefNil(b bool)`
+
+ SetParentRefNil sets the value for ParentRef to be an explicit nil
+
+### UnsetParentRef
+`func (o *IngestMedia) UnsetParentRef()`
+
+UnsetParentRef ensures that no value is present for ParentRef, not even an explicit nil
 ### GetStripExif
 
 `func (o *IngestMedia) GetStripExif() bool`

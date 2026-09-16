@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**CollectionId** | Pointer to **NullableString** | Tag every vacuumed item with this collection_id. | [optional] 
 **CustomerId** | Pointer to **NullableString** | Tag every vacuumed item with this customer_id. | [optional] 
 **S3Uri** | **string** | s3://bucket/prefix in your VPC to vacuum every media item under. | 
 **TargetRes** | Pointer to **NullableInt32** | Resolution to index at, in pixels (rounded to a multiple of 16). Images are resized to this before embedding; higher means more detail but slower. Leave unset for the fast production default (64). | [optional] 
@@ -27,6 +28,41 @@ NewIngestSourceWithDefaults instantiates a new IngestSource object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetCollectionId
+
+`func (o *IngestSource) GetCollectionId() string`
+
+GetCollectionId returns the CollectionId field if non-nil, zero value otherwise.
+
+### GetCollectionIdOk
+
+`func (o *IngestSource) GetCollectionIdOk() (*string, bool)`
+
+GetCollectionIdOk returns a tuple with the CollectionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCollectionId
+
+`func (o *IngestSource) SetCollectionId(v string)`
+
+SetCollectionId sets CollectionId field to given value.
+
+### HasCollectionId
+
+`func (o *IngestSource) HasCollectionId() bool`
+
+HasCollectionId returns a boolean if a field has been set.
+
+### SetCollectionIdNil
+
+`func (o *IngestSource) SetCollectionIdNil(b bool)`
+
+ SetCollectionIdNil sets the value for CollectionId to be an explicit nil
+
+### UnsetCollectionId
+`func (o *IngestSource) UnsetCollectionId()`
+
+UnsetCollectionId ensures that no value is present for CollectionId, not even an explicit nil
 ### GetCustomerId
 
 `func (o *IngestSource) GetCustomerId() string`

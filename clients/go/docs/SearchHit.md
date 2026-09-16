@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **BlobId** | **int32** |  | 
 **Caption** | Pointer to **NullableString** |  | [optional] 
+**CollectionId** | Pointer to **NullableString** | Collection this item was grouped under at ingest, if any. | [optional] 
 **CustomerId** | Pointer to **NullableString** |  | [optional] 
 **DuplicateCount** | Pointer to **int32** | Number of near-duplicates collapsed into this hit. | [optional] [default to 0]
 **Duplicates** | Pointer to **[]int32** | blob_ids of near-duplicates collapsed into this hit. | [optional] 
@@ -15,6 +16,7 @@ Name | Type | Description | Notes
 **Kind** | Pointer to **NullableString** | Media kind of this hit&#39;s parent blob. | [optional] 
 **MediaRef** | Pointer to **NullableString** | s3:// URI of the matched media item. | [optional] 
 **Metadata** | Pointer to **map[string]interface{}** |  | [optional] 
+**ParentRef** | Pointer to **NullableString** | Pointer to this item&#39;s related parent asset, if declared. | [optional] 
 **Score** | **float32** | For score_type &#39;rerank&#39; this is the model&#39;s match probability in [0,1] (a calibrated confidence); &#39;cosine&#39; is vector similarity; &#39;rrf&#39; is a lexical rank score. | 
 **ScoreType** | **string** |  | 
 **SeekMs** | Pointer to **NullableInt32** | For video hits: timestamp of the winning frame, for seek-to-moment playback. | [optional] 
@@ -97,6 +99,41 @@ HasCaption returns a boolean if a field has been set.
 `func (o *SearchHit) UnsetCaption()`
 
 UnsetCaption ensures that no value is present for Caption, not even an explicit nil
+### GetCollectionId
+
+`func (o *SearchHit) GetCollectionId() string`
+
+GetCollectionId returns the CollectionId field if non-nil, zero value otherwise.
+
+### GetCollectionIdOk
+
+`func (o *SearchHit) GetCollectionIdOk() (*string, bool)`
+
+GetCollectionIdOk returns a tuple with the CollectionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCollectionId
+
+`func (o *SearchHit) SetCollectionId(v string)`
+
+SetCollectionId sets CollectionId field to given value.
+
+### HasCollectionId
+
+`func (o *SearchHit) HasCollectionId() bool`
+
+HasCollectionId returns a boolean if a field has been set.
+
+### SetCollectionIdNil
+
+`func (o *SearchHit) SetCollectionIdNil(b bool)`
+
+ SetCollectionIdNil sets the value for CollectionId to be an explicit nil
+
+### UnsetCollectionId
+`func (o *SearchHit) UnsetCollectionId()`
+
+UnsetCollectionId ensures that no value is present for CollectionId, not even an explicit nil
 ### GetCustomerId
 
 `func (o *SearchHit) GetCustomerId() string`
@@ -392,6 +429,41 @@ HasMetadata returns a boolean if a field has been set.
 `func (o *SearchHit) UnsetMetadata()`
 
 UnsetMetadata ensures that no value is present for Metadata, not even an explicit nil
+### GetParentRef
+
+`func (o *SearchHit) GetParentRef() string`
+
+GetParentRef returns the ParentRef field if non-nil, zero value otherwise.
+
+### GetParentRefOk
+
+`func (o *SearchHit) GetParentRefOk() (*string, bool)`
+
+GetParentRefOk returns a tuple with the ParentRef field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentRef
+
+`func (o *SearchHit) SetParentRef(v string)`
+
+SetParentRef sets ParentRef field to given value.
+
+### HasParentRef
+
+`func (o *SearchHit) HasParentRef() bool`
+
+HasParentRef returns a boolean if a field has been set.
+
+### SetParentRefNil
+
+`func (o *SearchHit) SetParentRefNil(b bool)`
+
+ SetParentRefNil sets the value for ParentRef to be an explicit nil
+
+### UnsetParentRef
+`func (o *SearchHit) UnsetParentRef()`
+
+UnsetParentRef ensures that no value is present for ParentRef, not even an explicit nil
 ### GetScore
 
 `func (o *SearchHit) GetScore() float32`

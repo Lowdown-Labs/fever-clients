@@ -1,11 +1,12 @@
 openapi: 3.1.0
 info:
-  description: "The multimodal media database. Images, video, and audio in one table:\
-    \ hybrid vector + full-text search, dedupe, seek-to-moment video hits, whisper\
-    \ transcript spans. Tenancy, scale, and isolation are automatic; the tenant is\
-    \ taken from the API key."
+  description: "The multimodal media database. Images, video, audio, office documents,\
+    \ and LiDAR in one table: hybrid vector + full-text search, dedupe, seek-to-moment\
+    \ video hits, whisper transcript spans, collection grouping, and asset-to-asset\
+    \ attachments. Tenancy, scale, and isolation are automatic; the tenant is taken\
+    \ from the API key."
   title: FEVER Retrieval
-  version: 0.3.0
+  version: 0.4.0
 servers:
 - url: /
 tags:
@@ -497,6 +498,60 @@ paths:
       - media
       x-accepts:
       - application/json
+  /v1/media/{blob_id}/associate:
+    post:
+      description: |-
+        Fill the relational columns after ingest (the SOR-driven import flow):
+        collection_id groups assets under a client-owned project; parent_ref ties a
+        companion asset (LiDAR, transcript, alternate capture) to its parent. Values
+        are COALESCE-updates - present fields win, omitted fields stay. Re-ingesting
+        the same content with the fields set does the same thing through the upsert.
+      operationId: associate_media
+      parameters:
+      - explode: false
+        in: path
+        name: blob_id
+        required: true
+        schema:
+          title: Blob Id
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: customer_id
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssociateRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MediaInfo"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      security:
+      - bearerAuth: []
+      summary: Set a blob's collection and/or parent association (e.g. attach a LiDAR
+        scan to its source photo)
+      tags:
+      - media
+      x-content-type: application/json
+      x-accepts:
+      - application/json
   /v1/media/{blob_id}/bytes:
     get:
       description: |-
@@ -780,6 +835,21 @@ components:
       required:
       - id
       title: ApiKey
+    AssociateRequest:
+      example:
+        collection_id: collection_id
+        parent_ref: parent_ref
+      properties:
+        collection_id:
+          description: Set/update the collection grouping for this blob.
+          nullable: true
+          type: string
+        parent_ref:
+          description: "Set/update the pointer to this blob's related parent asset\
+            \ (its external_ref, key, or blob_id)."
+          nullable: true
+          type: string
+      title: AssociateRequest
     BulkReassignUpload:
       properties:
         file:
@@ -1007,6 +1077,7 @@ components:
           - pdf
           - doc
           - note
+          - lidar
           nullable: true
           type: string
         s3_uri:
@@ -1105,10 +1176,13 @@ components:
     IngestMedia:
       example:
         caption: caption
+        collection_id: collection_id
         customer_id: customer_id
         data: data
+        filename: filename
         metadata:
           key: ""
+        parent_ref: parent_ref
         strip_exif: false
         tags:
         - tags
@@ -1120,6 +1194,12 @@ components:
             weight.
           nullable: true
           type: string
+        collection_id:
+          description: "Optional grouping you own (project, case, site - FEVER stores\
+            \ and filters it, never interprets it). Filterable at search time; returned\
+            \ on hits."
+          nullable: true
+          type: string
         customer_id:
           description: Optional tag attributing this item to one of your customers;
             filterable at search time.
@@ -1129,11 +1209,25 @@ components:
           description: Base64-encoded media item bytes.
           nullable: true
           type: string
+        filename:
+          description: Original file name. Drives format detection for inline documents
+            and LiDAR (extensions like .csv or .las - office formats are recognized
+            by their bytes alone) and is stored on the blob for media info and attachment
+            listings.
+          nullable: true
+          type: string
         metadata:
           additionalProperties: true
           description: Opaque JSON returned with search hits.
           nullable: true
           type: object
+        parent_ref:
+          description: "Optional pointer to a related parent asset (its external_ref,\
+            \ key, or blob_id). Non-searchable companions such as LiDAR scans declare\
+            \ the photo or video they belong to; the parent's record lists them back\
+            \ as attachments."
+          nullable: true
+          type: string
         strip_exif:
           default: false
           description: Skip EXIF extraction/retention for this item.
@@ -1157,20 +1251,26 @@ components:
       example:
         media:
         - caption: caption
+          collection_id: collection_id
           customer_id: customer_id
           data: data
+          filename: filename
           metadata:
             key: ""
+          parent_ref: parent_ref
           strip_exif: false
           tags:
           - tags
           - tags
           url: url
         - caption: caption
+          collection_id: collection_id
           customer_id: customer_id
           data: data
+          filename: filename
           metadata:
             key: ""
+          parent_ref: parent_ref
           strip_exif: false
           tags:
           - tags
@@ -1248,6 +1348,10 @@ components:
       title: IngestResult
     IngestSource:
       properties:
+        collection_id:
+          description: Tag every vacuumed item with this collection_id.
+          nullable: true
+          type: string
         customer_id:
           description: Tag every vacuumed item with this customer_id.
           nullable: true
@@ -1346,6 +1450,40 @@ components:
       - api_key
       - id
       title: KeyReveal
+    MediaAttachment:
+      example:
+        blob_id: 0
+        byte_size: 6
+        content_type: content_type
+        filename: filename
+        kind: image
+      properties:
+        blob_id:
+          title: Blob Id
+          type: integer
+        byte_size:
+          nullable: true
+          type: integer
+        content_type:
+          nullable: true
+          type: string
+        filename:
+          nullable: true
+          type: string
+        kind:
+          enum:
+          - image
+          - video
+          - audio
+          - pdf
+          - doc
+          - note
+          - lidar
+          nullable: true
+          type: string
+      required:
+      - blob_id
+      title: MediaAttachment
     MediaFormats:
       example:
         audio:
@@ -1357,6 +1495,9 @@ components:
         image:
         - image
         - image
+        lidar:
+        - lidar
+        - lidar
         video:
         - video
         - video
@@ -1379,6 +1520,12 @@ components:
           title: Image
           type: array
           default: null
+        lidar:
+          items:
+            type: string
+          title: Lidar
+          type: array
+          default: null
         video:
           items:
             type: string
@@ -1389,6 +1536,7 @@ components:
       - audio
       - document
       - image
+      - lidar
       - video
       title: MediaFormats
     MediaFrame:
@@ -1408,25 +1556,46 @@ components:
       title: MediaFrame
     MediaInfo:
       example:
-        blob_id: 0
+        attachments:
+        - blob_id: 0
+          byte_size: 6
+          content_type: content_type
+          filename: filename
+          kind: image
+        - blob_id: 0
+          byte_size: 6
+          content_type: content_type
+          filename: filename
+          kind: image
+        blob_id: 1
         caption: caption
         captured_at: 2000-01-23T04:56:07.000+00:00
+        collection_id: collection_id
         customer_id: customer_id
         device: device
         external_ref: external_ref
-        frame_count: 6
-        gps_lat: 1.4658129805029452
-        gps_lon: 5.962133916683182
+        frame_count: 5
+        gps_lat: 5.637376656633329
+        gps_lon: 2.3021358869347655
         kind: image
         metadata:
           key: ""
         ocr_text: ocr_text
-        synthetic: 5.637376656633329
+        parent_ref: parent_ref
+        synthetic: 7.061401241503109
         tags:
         - tags
         - tags
-        transcript_segments: 2
+        transcript_segments: 9
       properties:
+        attachments:
+          description: Related items pointing at this blob via parent_ref (e.g. a
+            LiDAR scan attached to the photo or video it belongs to).
+          items:
+            $ref: "#/components/schemas/MediaAttachment"
+          title: Attachments
+          type: array
+          default: null
         blob_id:
           title: Blob Id
           type: integer
@@ -1437,6 +1606,10 @@ components:
         captured_at:
           description: EXIF capture time.
           format: date-time
+          nullable: true
+          type: string
+        collection_id:
+          description: "Collection this item was grouped under at ingest, if any."
           nullable: true
           type: string
         customer_id:
@@ -1462,7 +1635,7 @@ components:
           nullable: true
           type: number
         kind:
-          description: Media kind of this blob (image/video/audio/pdf/doc/note).
+          description: Media kind of this blob (image/video/audio/pdf/doc/note/lidar).
           enum:
           - image
           - video
@@ -1470,6 +1643,7 @@ components:
           - pdf
           - doc
           - note
+          - lidar
           nullable: true
           type: string
         metadata:
@@ -1479,6 +1653,10 @@ components:
         ocr_text:
           description: "Text OCR'd out of the item (PDF pages always, photos when\
             \ enabled)."
+          nullable: true
+          type: string
+        parent_ref:
+          description: "Pointer to this item's related parent asset, if declared."
           nullable: true
           type: string
         synthetic:
@@ -1589,6 +1767,7 @@ components:
       example:
         blob_id: 0
         caption: caption
+        collection_id: collection_id
         customer_id: customer_id
         duplicate_count: 6
         duplicates:
@@ -1601,6 +1780,7 @@ components:
         media_ref: media_ref
         metadata:
           key: ""
+        parent_ref: parent_ref
         score: 5.637376656633329
         score_type: cosine
         seek_ms: 2
@@ -1615,6 +1795,10 @@ components:
           title: Blob Id
           type: integer
         caption:
+          nullable: true
+          type: string
+        collection_id:
+          description: "Collection this item was grouped under at ingest, if any."
           nullable: true
           type: string
         customer_id:
@@ -1656,6 +1840,7 @@ components:
           - pdf
           - doc
           - note
+          - lidar
           nullable: true
           type: string
         media_ref:
@@ -1666,6 +1851,10 @@ components:
           additionalProperties: true
           nullable: true
           type: object
+        parent_ref:
+          description: "Pointer to this item's related parent asset, if declared."
+          nullable: true
+          type: string
         score:
           description: "For score_type 'rerank' this is the model's match probability\
             \ in [0,1] (a calibrated confidence); 'cosine' is vector similarity; 'rrf'\
@@ -1718,6 +1907,7 @@ components:
         after: after
         before: before
         collapse_duplicates: true
+        collection_id: collection_id
         customer_id: customer_id
         device: device
         dupe_threshold: 0.8008281904610115
@@ -1755,6 +1945,10 @@ components:
             representative; the folded-in duplicates are listed on each hit.
           title: Collapse Duplicates
           type: boolean
+        collection_id:
+          description: Restrict results to media tagged with this collection_id.
+          nullable: true
+          type: string
         customer_id:
           description: Restrict results to media tagged with this customer_id.
           nullable: true
@@ -1816,6 +2010,7 @@ components:
           - pdf
           - doc
           - note
+          - lidar
           nullable: true
           type: string
         max_height:

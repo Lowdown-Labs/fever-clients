@@ -7,6 +7,7 @@
 | **after** | **String** | EXIF capture time &gt;&#x3D; this ISO datetime. | [optional] |
 | **before** | **String** | EXIF capture time &lt;&#x3D; this ISO datetime. | [optional] |
 | **collapse_duplicates** | **Boolean** | Collapse near-duplicate items so each result is a distinct representative; the folded-in duplicates are listed on each hit. | [optional][default to true] |
+| **collection_id** | **String** | Restrict results to media tagged with this collection_id. | [optional] |
 | **customer_id** | **String** | Restrict results to media tagged with this customer_id. | [optional] |
 | **device** | **String** | EXIF camera make/model substring. | [optional] |
 | **dupe_threshold** | **Float** | Cosine similarity cutoff 0..1 for treating two items as duplicates; higher is stricter. Defaults to the appliance setting when omitted. | [optional] |
@@ -33,6 +34,7 @@ instance = FeverClient::SearchRequest.new(
   after: null,
   before: null,
   collapse_duplicates: null,
+  collection_id: null,
   customer_id: null,
   device: null,
   dupe_threshold: null,

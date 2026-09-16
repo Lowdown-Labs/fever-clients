@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **After** | **string** | EXIF capture time &gt;&#x3D; this ISO datetime. | [optional] 
 **Before** | **string** | EXIF capture time &lt;&#x3D; this ISO datetime. | [optional] 
 **CollapseDuplicates** | **bool** | Collapse near-duplicate items so each result is a distinct representative; the folded-in duplicates are listed on each hit. | [optional] [default to true]
+**CollectionId** | **string** | Restrict results to media tagged with this collection_id. | [optional] 
 **CustomerId** | **string** | Restrict results to media tagged with this customer_id. | [optional] 
 **Device** | **string** | EXIF camera make/model substring. | [optional] 
 **DupeThreshold** | **decimal?** | Cosine similarity cutoff 0..1 for treating two items as duplicates; higher is stricter. Defaults to the appliance setting when omitted. | [optional] 

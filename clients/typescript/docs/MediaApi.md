@@ -4,12 +4,91 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**associateMedia**](MediaApi.md#associatemedia) | **POST** /v1/media/{blob_id}/associate | Set a blob\&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo) |
 | [**getMediaBytes**](MediaApi.md#getmediabytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item\&#39;s bytes (images normalized to JPEG) |
 | [**getMediaInfo**](MediaApi.md#getmediainfo) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts |
 | [**listMediaFormats**](MediaApi.md#listmediaformats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family |
 | [**listMediaFrames**](MediaApi.md#listmediaframes) | **GET** /v1/media/{blob_id}/frames | Sampled video frames for a parent blob |
 | [**listMediaTranscript**](MediaApi.md#listmediatranscript) | **GET** /v1/media/{blob_id}/transcript | Whisper transcript segments for a parent blob (audio or video) |
 
+
+
+## associateMedia
+
+> MediaInfo associateMedia(blobId, associateRequest, customerId)
+
+Set a blob\&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+
+Fill the relational columns after ingest (the SOR-driven import flow): collection_id groups assets under a client-owned project; parent_ref ties a companion asset (LiDAR, transcript, alternate capture) to its parent. Values are COALESCE-updates - present fields win, omitted fields stay. Re-ingesting the same content with the fields set does the same thing through the upsert.
+
+### Example
+
+```ts
+import {
+  Configuration,
+  MediaApi,
+} from 'fever-client';
+import type { AssociateMediaRequest } from 'fever-client';
+
+async function example() {
+  console.log("🚀 Testing fever-client SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new MediaApi(config);
+
+  const body = {
+    // number
+    blobId: 56,
+    // AssociateRequest
+    associateRequest: ...,
+    // string (optional)
+    customerId: customerId_example,
+  } satisfies AssociateMediaRequest;
+
+  try {
+    const data = await api.associateMedia(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **blobId** | `number` |  | [Defaults to `undefined`] |
+| **associateRequest** | [AssociateRequest](AssociateRequest.md) |  | |
+| **customerId** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+[**MediaInfo**](MediaInfo.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## getMediaBytes

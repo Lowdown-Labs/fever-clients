@@ -4,18 +4,21 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Attachments** | Pointer to [**[]MediaAttachment**](MediaAttachment.md) | Related items pointing at this blob via parent_ref (e.g. a LiDAR scan attached to the photo or video it belongs to). | [optional] 
 **BlobId** | **int32** |  | 
 **Caption** | Pointer to **NullableString** | The user_text caption/keywords supplied at ingest. | [optional] 
 **CapturedAt** | Pointer to **NullableTime** | EXIF capture time. | [optional] 
+**CollectionId** | Pointer to **NullableString** | Collection this item was grouped under at ingest, if any. | [optional] 
 **CustomerId** | Pointer to **NullableString** |  | [optional] 
 **Device** | Pointer to **NullableString** | EXIF camera make/model. | [optional] 
 **ExternalRef** | Pointer to **NullableString** | s3:// URI of the stored original. | [optional] 
 **FrameCount** | Pointer to **int32** | Sampled video frames derived from this blob. | [optional] [default to 0]
 **GpsLat** | Pointer to **NullableFloat32** |  | [optional] 
 **GpsLon** | Pointer to **NullableFloat32** |  | [optional] 
-**Kind** | Pointer to **NullableString** | Media kind of this blob (image/video/audio/pdf/doc/note). | [optional] 
+**Kind** | Pointer to **NullableString** | Media kind of this blob (image/video/audio/pdf/doc/note/lidar). | [optional] 
 **Metadata** | Pointer to **map[string]interface{}** |  | [optional] 
 **OcrText** | Pointer to **NullableString** | Text OCR&#39;d out of the item (PDF pages always, photos when enabled). | [optional] 
+**ParentRef** | Pointer to **NullableString** | Pointer to this item&#39;s related parent asset, if declared. | [optional] 
 **Synthetic** | Pointer to **NullableFloat32** | Likely-AI score in [0,1] (FEVER_SYNTHETIC), when scored. | [optional] 
 **Tags** | Pointer to **[]string** | Client-supplied tags merged with zero-shot autotags. | [optional] 
 **TranscriptSegments** | Pointer to **int32** | Whisper transcript segments derived from this blob. | [optional] [default to 0]
@@ -38,6 +41,31 @@ will change when the set of required properties is changed
 NewMediaInfoWithDefaults instantiates a new MediaInfo object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetAttachments
+
+`func (o *MediaInfo) GetAttachments() []MediaAttachment`
+
+GetAttachments returns the Attachments field if non-nil, zero value otherwise.
+
+### GetAttachmentsOk
+
+`func (o *MediaInfo) GetAttachmentsOk() (*[]MediaAttachment, bool)`
+
+GetAttachmentsOk returns a tuple with the Attachments field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAttachments
+
+`func (o *MediaInfo) SetAttachments(v []MediaAttachment)`
+
+SetAttachments sets Attachments field to given value.
+
+### HasAttachments
+
+`func (o *MediaInfo) HasAttachments() bool`
+
+HasAttachments returns a boolean if a field has been set.
 
 ### GetBlobId
 
@@ -129,6 +157,41 @@ HasCapturedAt returns a boolean if a field has been set.
 `func (o *MediaInfo) UnsetCapturedAt()`
 
 UnsetCapturedAt ensures that no value is present for CapturedAt, not even an explicit nil
+### GetCollectionId
+
+`func (o *MediaInfo) GetCollectionId() string`
+
+GetCollectionId returns the CollectionId field if non-nil, zero value otherwise.
+
+### GetCollectionIdOk
+
+`func (o *MediaInfo) GetCollectionIdOk() (*string, bool)`
+
+GetCollectionIdOk returns a tuple with the CollectionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCollectionId
+
+`func (o *MediaInfo) SetCollectionId(v string)`
+
+SetCollectionId sets CollectionId field to given value.
+
+### HasCollectionId
+
+`func (o *MediaInfo) HasCollectionId() bool`
+
+HasCollectionId returns a boolean if a field has been set.
+
+### SetCollectionIdNil
+
+`func (o *MediaInfo) SetCollectionIdNil(b bool)`
+
+ SetCollectionIdNil sets the value for CollectionId to be an explicit nil
+
+### UnsetCollectionId
+`func (o *MediaInfo) UnsetCollectionId()`
+
+UnsetCollectionId ensures that no value is present for CollectionId, not even an explicit nil
 ### GetCustomerId
 
 `func (o *MediaInfo) GetCustomerId() string`
@@ -434,6 +497,41 @@ HasOcrText returns a boolean if a field has been set.
 `func (o *MediaInfo) UnsetOcrText()`
 
 UnsetOcrText ensures that no value is present for OcrText, not even an explicit nil
+### GetParentRef
+
+`func (o *MediaInfo) GetParentRef() string`
+
+GetParentRef returns the ParentRef field if non-nil, zero value otherwise.
+
+### GetParentRefOk
+
+`func (o *MediaInfo) GetParentRefOk() (*string, bool)`
+
+GetParentRefOk returns a tuple with the ParentRef field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetParentRef
+
+`func (o *MediaInfo) SetParentRef(v string)`
+
+SetParentRef sets ParentRef field to given value.
+
+### HasParentRef
+
+`func (o *MediaInfo) HasParentRef() bool`
+
+HasParentRef returns a boolean if a field has been set.
+
+### SetParentRefNil
+
+`func (o *MediaInfo) SetParentRefNil(b bool)`
+
+ SetParentRefNil sets the value for ParentRef to be an explicit nil
+
+### UnsetParentRef
+`func (o *MediaInfo) UnsetParentRef()`
+
+UnsetParentRef ensures that no value is present for ParentRef, not even an explicit nil
 ### GetSynthetic
 
 `func (o *MediaInfo) GetSynthetic() float32`

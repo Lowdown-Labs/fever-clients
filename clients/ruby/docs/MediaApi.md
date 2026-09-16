@@ -4,11 +4,87 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
+| [**associate_media**](MediaApi.md#associate_media) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo) |
 | [**get_media_bytes**](MediaApi.md#get_media_bytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG) |
 | [**get_media_info**](MediaApi.md#get_media_info) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts |
 | [**list_media_formats**](MediaApi.md#list_media_formats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family |
 | [**list_media_frames**](MediaApi.md#list_media_frames) | **GET** /v1/media/{blob_id}/frames | Sampled video frames for a parent blob |
 | [**list_media_transcript**](MediaApi.md#list_media_transcript) | **GET** /v1/media/{blob_id}/transcript | Whisper transcript segments for a parent blob (audio or video) |
+
+
+## associate_media
+
+> <MediaInfo> associate_media(blob_id, associate_request, opts)
+
+Set a blob's collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+
+Fill the relational columns after ingest (the SOR-driven import flow): collection_id groups assets under a client-owned project; parent_ref ties a companion asset (LiDAR, transcript, alternate capture) to its parent. Values are COALESCE-updates - present fields win, omitted fields stay. Re-ingesting the same content with the fields set does the same thing through the upsert.
+
+### Examples
+
+```ruby
+require 'time'
+require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = FeverClient::MediaApi.new
+blob_id = 56 # Integer | 
+associate_request = FeverClient::AssociateRequest.new # AssociateRequest | 
+opts = {
+  customer_id: 'customer_id_example' # String | 
+}
+
+begin
+  # Set a blob's collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+  result = api_instance.associate_media(blob_id, associate_request, opts)
+  p result
+rescue FeverClient::ApiError => e
+  puts "Error when calling MediaApi->associate_media: #{e}"
+end
+```
+
+#### Using the associate_media_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<MediaInfo>, Integer, Hash)> associate_media_with_http_info(blob_id, associate_request, opts)
+
+```ruby
+begin
+  # Set a blob's collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+  data, status_code, headers = api_instance.associate_media_with_http_info(blob_id, associate_request, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <MediaInfo>
+rescue FeverClient::ApiError => e
+  puts "Error when calling MediaApi->associate_media_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **blob_id** | **Integer** |  |  |
+| **associate_request** | [**AssociateRequest**](AssociateRequest.md) |  |  |
+| **customer_id** | **String** |  | [optional] |
+
+### Return type
+
+[**MediaInfo**](MediaInfo.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 
 ## get_media_bytes

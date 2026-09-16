@@ -9,6 +9,7 @@
 |------------ | ------------- | ------------- | -------------|
 |**blobId** | **Integer** |  |  |
 |**caption** | **String** |  |  [optional] |
+|**collectionId** | **String** | Collection this item was grouped under at ingest, if any. |  [optional] |
 |**customerId** | **String** |  |  [optional] |
 |**duplicateCount** | **Integer** | Number of near-duplicates collapsed into this hit. |  [optional] |
 |**duplicates** | **List&lt;Integer&gt;** | blob_ids of near-duplicates collapsed into this hit. |  [optional] |
@@ -18,6 +19,7 @@
 |**kind** | [**KindEnum**](#KindEnum) | Media kind of this hit&#39;s parent blob. |  [optional] |
 |**mediaRef** | **String** | s3:// URI of the matched media item. |  [optional] |
 |**metadata** | **Map&lt;String, Object&gt;** |  |  [optional] |
+|**parentRef** | **String** | Pointer to this item&#39;s related parent asset, if declared. |  [optional] |
 |**score** | **BigDecimal** | For score_type &#39;rerank&#39; this is the model&#39;s match probability in [0,1] (a calibrated confidence); &#39;cosine&#39; is vector similarity; &#39;rrf&#39; is a lexical rank score. |  |
 |**scoreType** | [**ScoreTypeEnum**](#ScoreTypeEnum) |  |  |
 |**seekMs** | **Integer** | For video hits: timestamp of the winning frame, for seek-to-moment playback. |  [optional] |
@@ -38,6 +40,7 @@
 | PDF | &quot;pdf&quot; |
 | DOC | &quot;doc&quot; |
 | NOTE | &quot;note&quot; |
+| LIDAR | &quot;lidar&quot; |
 
 
 

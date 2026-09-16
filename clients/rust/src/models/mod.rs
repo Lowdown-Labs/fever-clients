@@ -1,5 +1,7 @@
 pub mod api_key;
 pub use self::api_key::ApiKey;
+pub mod associate_request;
+pub use self::associate_request::AssociateRequest;
 pub mod corpus_stats;
 pub use self::corpus_stats::CorpusStats;
 pub mod corpus_tag;
@@ -40,6 +42,8 @@ pub mod key_reveal;
 pub use self::key_reveal::KeyReveal;
 pub mod location_inner;
 pub use self::location_inner::LocationInner;
+pub mod media_attachment;
+pub use self::media_attachment::MediaAttachment;
 pub mod media_formats;
 pub use self::media_formats::MediaFormats;
 pub mod media_frame;

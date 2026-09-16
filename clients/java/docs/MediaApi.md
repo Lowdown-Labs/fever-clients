@@ -4,6 +4,8 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**associateMedia**](MediaApi.md#associateMedia) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo) |
+| [**associateMediaWithHttpInfo**](MediaApi.md#associateMediaWithHttpInfo) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo) |
 | [**getMediaBytes**](MediaApi.md#getMediaBytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG) |
 | [**getMediaBytesWithHttpInfo**](MediaApi.md#getMediaBytesWithHttpInfo) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG) |
 | [**getMediaInfo**](MediaApi.md#getMediaInfo) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts |
@@ -15,6 +17,160 @@ All URIs are relative to *http://localhost*
 | [**listMediaTranscript**](MediaApi.md#listMediaTranscript) | **GET** /v1/media/{blob_id}/transcript | Whisper transcript segments for a parent blob (audio or video) |
 | [**listMediaTranscriptWithHttpInfo**](MediaApi.md#listMediaTranscriptWithHttpInfo) | **GET** /v1/media/{blob_id}/transcript | Whisper transcript segments for a parent blob (audio or video) |
 
+
+
+## associateMedia
+
+> MediaInfo associateMedia(blobId, associateRequest, customerId)
+
+Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+
+Fill the relational columns after ingest (the SOR-driven import flow): collection_id groups assets under a client-owned project; parent_ref ties a companion asset (LiDAR, transcript, alternate capture) to its parent. Values are COALESCE-updates - present fields win, omitted fields stay. Re-ingesting the same content with the fields set does the same thing through the upsert.
+
+### Example
+
+```java
+// Import classes:
+import com.lowdownlabs.fever.ApiClient;
+import com.lowdownlabs.fever.ApiException;
+import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
+import com.lowdownlabs.fever.models.*;
+import com.lowdownlabs.fever.api.MediaApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
+
+        MediaApi apiInstance = new MediaApi(defaultClient);
+        Integer blobId = 56; // Integer | 
+        AssociateRequest associateRequest = new AssociateRequest(); // AssociateRequest | 
+        String customerId = "customerId_example"; // String | 
+        try {
+            MediaInfo result = apiInstance.associateMedia(blobId, associateRequest, customerId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling MediaApi#associateMedia");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **blobId** | **Integer**|  | |
+| **associateRequest** | [**AssociateRequest**](AssociateRequest.md)|  | |
+| **customerId** | **String**|  | [optional] |
+
+### Return type
+
+[**MediaInfo**](MediaInfo.md)
+
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+## associateMediaWithHttpInfo
+
+> ApiResponse<MediaInfo> associateMediaWithHttpInfo(blobId, associateRequest, customerId)
+
+Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+
+Fill the relational columns after ingest (the SOR-driven import flow): collection_id groups assets under a client-owned project; parent_ref ties a companion asset (LiDAR, transcript, alternate capture) to its parent. Values are COALESCE-updates - present fields win, omitted fields stay. Re-ingesting the same content with the fields set does the same thing through the upsert.
+
+### Example
+
+```java
+// Import classes:
+import com.lowdownlabs.fever.ApiClient;
+import com.lowdownlabs.fever.ApiException;
+import com.lowdownlabs.fever.ApiResponse;
+import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
+import com.lowdownlabs.fever.models.*;
+import com.lowdownlabs.fever.api.MediaApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
+
+        MediaApi apiInstance = new MediaApi(defaultClient);
+        Integer blobId = 56; // Integer | 
+        AssociateRequest associateRequest = new AssociateRequest(); // AssociateRequest | 
+        String customerId = "customerId_example"; // String | 
+        try {
+            ApiResponse<MediaInfo> response = apiInstance.associateMediaWithHttpInfo(blobId, associateRequest, customerId);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling MediaApi#associateMedia");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **blobId** | **Integer**|  | |
+| **associateRequest** | [**AssociateRequest**](AssociateRequest.md)|  | |
+| **customerId** | **String**|  | [optional] |
+
+### Return type
+
+ApiResponse<[**MediaInfo**](MediaInfo.md)>
+
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
 
 
 ## getMediaBytes

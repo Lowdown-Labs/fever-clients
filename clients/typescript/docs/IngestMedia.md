@@ -7,9 +7,12 @@
 Name | Type
 ------------ | -------------
 `caption` | string
+`collectionId` | string
 `customerId` | string
 `data` | string
+`filename` | string
 `metadata` | { [key: string]: any; }
+`parentRef` | string
 `stripExif` | boolean
 `tags` | Array&lt;string&gt;
 `url` | string
@@ -22,9 +25,12 @@ import type { IngestMedia } from 'fever-client'
 // TODO: Update the object below with actual values
 const example = {
   "caption": null,
+  "collectionId": null,
   "customerId": null,
   "data": null,
+  "filename": null,
   "metadata": null,
+  "parentRef": null,
   "stripExif": null,
   "tags": null,
   "url": null,

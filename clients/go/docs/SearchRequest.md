@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **After** | Pointer to **NullableString** | EXIF capture time &gt;&#x3D; this ISO datetime. | [optional] 
 **Before** | Pointer to **NullableString** | EXIF capture time &lt;&#x3D; this ISO datetime. | [optional] 
 **CollapseDuplicates** | Pointer to **bool** | Collapse near-duplicate items so each result is a distinct representative; the folded-in duplicates are listed on each hit. | [optional] [default to true]
+**CollectionId** | Pointer to **NullableString** | Restrict results to media tagged with this collection_id. | [optional] 
 **CustomerId** | Pointer to **NullableString** | Restrict results to media tagged with this customer_id. | [optional] 
 **Device** | Pointer to **NullableString** | EXIF camera make/model substring. | [optional] 
 **DupeThreshold** | Pointer to **NullableFloat32** | Cosine similarity cutoff 0..1 for treating two items as duplicates; higher is stricter. Defaults to the appliance setting when omitted. | [optional] 
@@ -138,6 +139,41 @@ SetCollapseDuplicates sets CollapseDuplicates field to given value.
 
 HasCollapseDuplicates returns a boolean if a field has been set.
 
+### GetCollectionId
+
+`func (o *SearchRequest) GetCollectionId() string`
+
+GetCollectionId returns the CollectionId field if non-nil, zero value otherwise.
+
+### GetCollectionIdOk
+
+`func (o *SearchRequest) GetCollectionIdOk() (*string, bool)`
+
+GetCollectionIdOk returns a tuple with the CollectionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCollectionId
+
+`func (o *SearchRequest) SetCollectionId(v string)`
+
+SetCollectionId sets CollectionId field to given value.
+
+### HasCollectionId
+
+`func (o *SearchRequest) HasCollectionId() bool`
+
+HasCollectionId returns a boolean if a field has been set.
+
+### SetCollectionIdNil
+
+`func (o *SearchRequest) SetCollectionIdNil(b bool)`
+
+ SetCollectionIdNil sets the value for CollectionId to be an explicit nil
+
+### UnsetCollectionId
+`func (o *SearchRequest) UnsetCollectionId()`
+
+UnsetCollectionId ensures that no value is present for CollectionId, not even an explicit nil
 ### GetCustomerId
 
 `func (o *SearchRequest) GetCustomerId() string`

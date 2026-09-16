@@ -9,6 +9,7 @@ Name | Type
 `audio` | Array&lt;string&gt;
 `document` | Array&lt;string&gt;
 `image` | Array&lt;string&gt;
+`lidar` | Array&lt;string&gt;
 `video` | Array&lt;string&gt;
 
 ## Example
@@ -21,6 +22,7 @@ const example = {
   "audio": null,
   "document": null,
   "image": null,
+  "lidar": null,
   "video": null,
 } satisfies MediaFormats
 

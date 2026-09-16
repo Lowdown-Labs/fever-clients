@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **audio** | **List[str]** |  | 
 **document** | **List[str]** |  | 
 **image** | **List[str]** |  | 
+**lidar** | **List[str]** |  | 
 **video** | **List[str]** |  | 
 
 ## Example

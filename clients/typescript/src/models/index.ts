@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './ApiKey';
+export * from './AssociateRequest';
 export * from './CorpusStats';
 export * from './CorpusTag';
 export * from './CreateKeyRequest';
@@ -21,6 +22,7 @@ export * from './IngestedMedia';
 export * from './Job';
 export * from './KeyReveal';
 export * from './LocationInner';
+export * from './MediaAttachment';
 export * from './MediaFormats';
 export * from './MediaFrame';
 export * from './MediaInfo';

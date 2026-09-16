@@ -9,6 +9,7 @@ Name | Type
 `after` | string
 `before` | string
 `collapseDuplicates` | boolean
+`collectionId` | string
 `customerId` | string
 `device` | string
 `dupeThreshold` | number
@@ -36,6 +37,7 @@ const example = {
   "after": null,
   "before": null,
   "collapseDuplicates": null,
+  "collectionId": null,
   "customerId": null,
   "device": null,
   "dupeThreshold": null,

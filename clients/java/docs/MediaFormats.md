@@ -10,6 +10,7 @@
 |**audio** | **List&lt;String&gt;** |  |  |
 |**document** | **List&lt;String&gt;** |  |  |
 |**image** | **List&lt;String&gt;** |  |  |
+|**lidar** | **List&lt;String&gt;** |  |  |
 |**video** | **List&lt;String&gt;** |  |  |
 
 

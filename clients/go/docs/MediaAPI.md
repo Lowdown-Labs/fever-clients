@@ -4,12 +4,87 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AssociateMedia**](MediaAPI.md#AssociateMedia) | **Post** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
 [**GetMediaBytes**](MediaAPI.md#GetMediaBytes) | **Get** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG)
 [**GetMediaInfo**](MediaAPI.md#GetMediaInfo) | **Get** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 [**ListMediaFormats**](MediaAPI.md#ListMediaFormats) | **Get** /v1/media/formats | Ingest capability: supported extensions per media family
 [**ListMediaFrames**](MediaAPI.md#ListMediaFrames) | **Get** /v1/media/{blob_id}/frames | Sampled video frames for a parent blob
 [**ListMediaTranscript**](MediaAPI.md#ListMediaTranscript) | **Get** /v1/media/{blob_id}/transcript | Whisper transcript segments for a parent blob (audio or video)
 
+
+
+## AssociateMedia
+
+> MediaInfo AssociateMedia(ctx, blobId).AssociateRequest(associateRequest).CustomerId(customerId).Execute()
+
+Set a blob's collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/Lowdown-Labs/fever-clients/clients/go"
+)
+
+func main() {
+	blobId := int32(56) // int32 | 
+	associateRequest := *openapiclient.NewAssociateRequest() // AssociateRequest | 
+	customerId := "customerId_example" // string |  (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.MediaAPI.AssociateMedia(context.Background(), blobId).AssociateRequest(associateRequest).CustomerId(customerId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `MediaAPI.AssociateMedia``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AssociateMedia`: MediaInfo
+	fmt.Fprintf(os.Stdout, "Response from `MediaAPI.AssociateMedia`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**blobId** | **int32** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAssociateMediaRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **associateRequest** | [**AssociateRequest**](AssociateRequest.md) |  | 
+ **customerId** | **string** |  | 
+
+### Return type
+
+[**MediaInfo**](MediaInfo.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## GetMediaBytes

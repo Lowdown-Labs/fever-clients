@@ -4,11 +4,115 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
+| [**AssociateMedia**](MediaApi.md#associatemedia) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo) |
 | [**GetMediaBytes**](MediaApi.md#getmediabytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG) |
 | [**GetMediaInfo**](MediaApi.md#getmediainfo) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts |
 | [**ListMediaFormats**](MediaApi.md#listmediaformats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family |
 | [**ListMediaFrames**](MediaApi.md#listmediaframes) | **GET** /v1/media/{blob_id}/frames | Sampled video frames for a parent blob |
 | [**ListMediaTranscript**](MediaApi.md#listmediatranscript) | **GET** /v1/media/{blob_id}/transcript | Whisper transcript segments for a parent blob (audio or video) |
+
+<a id="associatemedia"></a>
+# **AssociateMedia**
+> MediaInfo AssociateMedia (int blobId, AssociateRequest associateRequest, string? customerId = null)
+
+Set a blob's collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+
+Fill the relational columns after ingest (the SOR-driven import flow): collection_id groups assets under a client-owned project; parent_ref ties a companion asset (LiDAR, transcript, alternate capture) to its parent. Values are COALESCE-updates - present fields win, omitted fields stay. Re-ingesting the same content with the fields set does the same thing through the upsert.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LowdownLabs.Fever.Api;
+using LowdownLabs.Fever.Client;
+using LowdownLabs.Fever.Model;
+
+namespace Example
+{
+    public class AssociateMediaExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new MediaApi(httpClient, config, httpClientHandler);
+            var blobId = 56;  // int | 
+            var associateRequest = new AssociateRequest(); // AssociateRequest | 
+            var customerId = "customerId_example";  // string? |  (optional) 
+
+            try
+            {
+                // Set a blob's collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+                MediaInfo result = apiInstance.AssociateMedia(blobId, associateRequest, customerId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling MediaApi.AssociateMedia: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the AssociateMediaWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Set a blob's collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+    ApiResponse<MediaInfo> response = apiInstance.AssociateMediaWithHttpInfo(blobId, associateRequest, customerId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling MediaApi.AssociateMediaWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **blobId** | **int** |  |  |
+| **associateRequest** | [**AssociateRequest**](AssociateRequest.md) |  |  |
+| **customerId** | **string?** |  | [optional]  |
+
+### Return type
+
+[**MediaInfo**](MediaInfo.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="getmediabytes"></a>
 # **GetMediaBytes**

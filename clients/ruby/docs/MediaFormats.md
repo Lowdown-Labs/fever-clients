@@ -7,6 +7,7 @@
 | **audio** | **Array&lt;String&gt;** |  |  |
 | **document** | **Array&lt;String&gt;** |  |  |
 | **image** | **Array&lt;String&gt;** |  |  |
+| **lidar** | **Array&lt;String&gt;** |  |  |
 | **video** | **Array&lt;String&gt;** |  |  |
 
 ## Example
@@ -18,6 +19,7 @@ instance = FeverClient::MediaFormats.new(
   audio: null,
   document: null,
   image: null,
+  lidar: null,
   video: null
 )
 ```

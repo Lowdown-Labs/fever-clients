@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `blobId` | number
 `caption` | string
+`collectionId` | string
 `customerId` | string
 `duplicateCount` | number
 `duplicates` | Array&lt;number&gt;
@@ -17,6 +18,7 @@ Name | Type
 `kind` | string
 `mediaRef` | string
 `metadata` | { [key: string]: any; }
+`parentRef` | string
 `score` | number
 `scoreType` | string
 `seekMs` | number
@@ -34,6 +36,7 @@ import type { SearchHit } from 'fever-client'
 const example = {
   "blobId": null,
   "caption": null,
+  "collectionId": null,
   "customerId": null,
   "duplicateCount": null,
   "duplicates": null,
@@ -43,6 +46,7 @@ const example = {
   "kind": null,
   "mediaRef": null,
   "metadata": null,
+  "parentRef": null,
   "score": null,
   "scoreType": null,
   "seekMs": null,

@@ -34,6 +34,7 @@
 | PDF | &quot;pdf&quot; |
 | DOC | &quot;doc&quot; |
 | NOTE | &quot;note&quot; |
+| LIDAR | &quot;lidar&quot; |
 
 
 

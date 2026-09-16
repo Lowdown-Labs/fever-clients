@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`collectionId` | string
 `customerId` | string
 `s3Uri` | string
 `targetRes` | number
@@ -17,6 +18,7 @@ import type { IngestSource } from 'fever-client'
 
 // TODO: Update the object below with actual values
 const example = {
+  "collectionId": null,
   "customerId": null,
   "s3Uri": null,
   "targetRes": null,

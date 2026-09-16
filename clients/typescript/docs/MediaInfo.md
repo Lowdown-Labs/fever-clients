@@ -6,9 +6,11 @@
 
 Name | Type
 ------------ | -------------
+`attachments` | [Array&lt;MediaAttachment&gt;](MediaAttachment.md)
 `blobId` | number
 `caption` | string
 `capturedAt` | Date
+`collectionId` | string
 `customerId` | string
 `device` | string
 `externalRef` | string
@@ -18,6 +20,7 @@ Name | Type
 `kind` | string
 `metadata` | { [key: string]: any; }
 `ocrText` | string
+`parentRef` | string
 `synthetic` | number
 `tags` | Array&lt;string&gt;
 `transcriptSegments` | number
@@ -29,9 +32,11 @@ import type { MediaInfo } from 'fever-client'
 
 // TODO: Update the object below with actual values
 const example = {
+  "attachments": null,
   "blobId": null,
   "caption": null,
   "capturedAt": null,
+  "collectionId": null,
   "customerId": null,
   "device": null,
   "externalRef": null,
@@ -41,6 +46,7 @@ const example = {
   "kind": null,
   "metadata": null,
   "ocrText": null,
+  "parentRef": null,
   "synthetic": null,
   "tags": null,
   "transcriptSegments": null,
