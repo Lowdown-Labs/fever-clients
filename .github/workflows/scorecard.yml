@@ -13,6 +13,7 @@ permissions: read-all
 jobs:
   analysis:
     name: OpenSSF Scorecard
+    if: github.event.repository.visibility == 'public'
     runs-on: ubuntu-latest
     permissions:
       actions: read
