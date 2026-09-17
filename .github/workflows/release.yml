@@ -8,9 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  id-token: write
-  attestations: write
+  contents: read
 
 concurrency:
   group: release
@@ -20,6 +18,10 @@ jobs:
   release:
     name: Cut release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
     env:
       GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
@@ -116,6 +118,15 @@ jobs:
           done
           (cd dist && sha256sum * > checksums.txt)
           ls -la dist/
+
+      - name: Sign artifacts
+        if: env.GPG_PRIVATE_KEY != ''
+        run: |
+          cd dist
+          for f in *; do
+            gpg --batch --yes --armor --detach-sign -o "$f.asc" "$f"
+          done
+          ls -la
 
       - name: SBOM
         uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26

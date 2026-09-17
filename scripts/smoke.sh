@@ -8,7 +8,7 @@ dir="${REPO_ROOT}/clients/${lang}"
 
 case "$lang" in
   python)
-    python3 -m pip install --quiet build
+    python3 -m pip install --quiet build==1.6.1
     (cd "$dir" && python3 -m build --wheel --sdist --outdir dist/)
     ;;
   typescript)
