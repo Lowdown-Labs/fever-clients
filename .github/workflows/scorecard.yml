@@ -1,11 +1,8 @@
 name: Scorecard
 
 on:
-  branch_protection_rule:
   schedule:
     - cron: "41 6 * * 1"
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions: read-all
