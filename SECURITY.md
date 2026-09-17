@@ -3,7 +3,8 @@
 ## Reporting a vulnerability
 
 Report vulnerabilities through GitHub private vulnerability reporting:
-the **Security** tab → **Report a vulnerability**. Do not open public
+[open a private security advisory](https://github.com/Lowdown-Labs/fever-clients/security/advisories/new)
+(the **Security** tab → **Report a vulnerability**). Do not open public
 issues for security reports.
 
 We aim to acknowledge reports within 3 business days.
