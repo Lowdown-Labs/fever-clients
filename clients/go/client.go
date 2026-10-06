@@ -277,6 +277,15 @@ func parameterToJson(obj interface{}) (string, error) {
 	return string(jsonBuf), err
 }
 
+// sensitiveHeaderCheck matches HTTP headers that may carry credentials.
+var sensitiveHeaderCheck = regexp.MustCompile(`(?mi)^(authorization|proxy-authorization|x-api-key|api-key|cookie|set-cookie)(\s*:).*$`)
+
+// redactSensitiveHeaders masks credential-bearing header values in an HTTP
+// dump so debug logging does not emit secrets in clear text.
+func redactSensitiveHeaders(dump string) string {
+	return sensitiveHeaderCheck.ReplaceAllString(dump, "$1$2 REDACTED")
+}
+
 // callAPI do the request.
 func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 	if c.cfg.Debug {
@@ -284,7 +293,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 		if err != nil {
 			return nil, err
 		}
-		log.Printf("\n%s\n", string(dump))
+		log.Printf("\n%s\n", redactSensitiveHeaders(string(dump)))
 	}
 
 	resp, err := c.cfg.HTTPClient.Do(request)
@@ -297,7 +306,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 		if err != nil {
 			return resp, err
 		}
-		log.Printf("\n%s\n", string(dump))
+		log.Printf("\n%s\n", redactSensitiveHeaders(string(dump)))
 	}
 	return resp, err
 }
