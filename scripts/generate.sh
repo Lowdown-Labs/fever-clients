@@ -54,6 +54,15 @@ for lang in "${LANGS[@]}"; do
   case "$lang" in
     go)
       (cd "$out" && go mod tidy)
+      # Post-generation patch: redact credential-bearing headers in debug logs
+      # (fixes CodeQL go/clear-text-logging on generated client.go).
+      git apply --whitespace=nowarn \
+        "${REPO_ROOT}/generator/patches/go-redact-sensitive-headers.patch"
+      ;;
+    java)
+      # Post-generation pin: track a patched jackson version (Trivy).
+      sed -i -E 's|(<jackson-version>)[^<]+(</jackson-version>)|\12.21.7\2|' \
+        "$out/pom.xml"
       ;;
     csharp)
       sln=$(ls "$out"/*.sln 2>/dev/null | head -1 || true)
