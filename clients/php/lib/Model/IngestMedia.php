@@ -467,7 +467,7 @@ class IngestMedia implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets data
      *
-     * @param string|null $data Base64-encoded media item bytes.
+     * @param string|null $data Base64-encoded media item bytes. Accepted image formats: JPEG, PNG, GIF, WebP, TIFF. Documents (PDF, CSV/TSV, TXT, Markdown, XLSX, DOCX, ODT) and LiDAR (LAS, LAZ, PLY, PCD) are also accepted; video and audio ingest run on the queued worker path.
      *
      * @return self
      */
