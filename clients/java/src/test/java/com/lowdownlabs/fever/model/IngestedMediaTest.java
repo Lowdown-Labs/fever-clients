@@ -18,7 +18,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -47,6 +50,30 @@ class IngestedMediaTest {
     @Test
     void blobIdTest() {
         // TODO: test blobId
+    }
+
+    /**
+     * Test the property 'customerId'
+     */
+    @Test
+    void customerIdTest() {
+        // TODO: test customerId
+    }
+
+    /**
+     * Test the property 'embedding'
+     */
+    @Test
+    void embeddingTest() {
+        // TODO: test embedding
+    }
+
+    /**
+     * Test the property 'embeddingPrefix'
+     */
+    @Test
+    void embeddingPrefixTest() {
+        // TODO: test embeddingPrefix
     }
 
     /**

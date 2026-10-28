@@ -6,6 +6,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **blob_id** | **int** |  | 
+**customer_id** | **str** | Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode). | [optional] 
+**embedding** | **List[float]** | The full embedding vector, returned only when the ingest response carries embeddings. | [optional] 
+**embedding_prefix** | **List[float]** | The coarse prefix vector, returned only when the ingest response carries embeddings. | [optional] 
 **external_ref** | **str** |  | [optional] 
 
 ## Example

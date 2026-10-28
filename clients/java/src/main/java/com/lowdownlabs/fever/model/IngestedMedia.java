@@ -24,7 +24,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -38,6 +41,9 @@ import com.lowdownlabs.fever.ApiClient;
  */
 @JsonPropertyOrder({
   IngestedMedia.JSON_PROPERTY_BLOB_ID,
+  IngestedMedia.JSON_PROPERTY_CUSTOMER_ID,
+  IngestedMedia.JSON_PROPERTY_EMBEDDING,
+  IngestedMedia.JSON_PROPERTY_EMBEDDING_PREFIX,
   IngestedMedia.JSON_PROPERTY_EXTERNAL_REF
 })
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.25.0")
@@ -45,6 +51,15 @@ public class IngestedMedia {
   public static final String JSON_PROPERTY_BLOB_ID = "blob_id";
   @javax.annotation.Nonnull
   private Integer blobId;
+
+  public static final String JSON_PROPERTY_CUSTOMER_ID = "customer_id";
+  private JsonNullable<String> customerId = JsonNullable.<String>undefined();
+
+  public static final String JSON_PROPERTY_EMBEDDING = "embedding";
+  private JsonNullable<List<BigDecimal>> embedding = JsonNullable.<List<BigDecimal>>undefined();
+
+  public static final String JSON_PROPERTY_EMBEDDING_PREFIX = "embedding_prefix";
+  private JsonNullable<List<BigDecimal>> embeddingPrefix = JsonNullable.<List<BigDecimal>>undefined();
 
   public static final String JSON_PROPERTY_EXTERNAL_REF = "external_ref";
   private JsonNullable<String> externalRef = JsonNullable.<String>undefined();
@@ -73,6 +88,126 @@ public class IngestedMedia {
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public void setBlobId(@javax.annotation.Nonnull Integer blobId) {
     this.blobId = blobId;
+  }
+
+
+  public IngestedMedia customerId(@javax.annotation.Nullable String customerId) {
+    this.customerId = JsonNullable.<String>of(customerId);
+    return this;
+  }
+
+  /**
+   * Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode).
+   * @return customerId
+   */
+  @javax.annotation.Nullable
+  @JsonIgnore
+  public String getCustomerId() {
+        return customerId.orElse(null);
+  }
+
+  @JsonProperty(value = JSON_PROPERTY_CUSTOMER_ID, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public JsonNullable<String> getCustomerId_JsonNullable() {
+    return customerId;
+  }
+  
+  @JsonProperty(JSON_PROPERTY_CUSTOMER_ID)
+  public void setCustomerId_JsonNullable(JsonNullable<String> customerId) {
+    this.customerId = customerId;
+  }
+
+  public void setCustomerId(@javax.annotation.Nullable String customerId) {
+    this.customerId = JsonNullable.<String>of(customerId);
+  }
+
+
+  public IngestedMedia embedding(@javax.annotation.Nullable List<BigDecimal> embedding) {
+    this.embedding = JsonNullable.<List<BigDecimal>>of(embedding);
+    return this;
+  }
+
+  public IngestedMedia addEmbeddingItem(BigDecimal embeddingItem) {
+    if (this.embedding == null || !this.embedding.isPresent() || this.embedding.get() == null) {
+      this.embedding = JsonNullable.<List<BigDecimal>>of(new ArrayList<>());
+    }
+    try {
+      this.embedding.get().add(embeddingItem);
+    } catch (java.util.NoSuchElementException e) {
+      // this can never happen, as we make sure above that the value is present
+    }
+    return this;
+  }
+
+  /**
+   * The full embedding vector, returned only when the ingest response carries embeddings.
+   * @return embedding
+   */
+  @javax.annotation.Nullable
+  @JsonIgnore
+  public List<BigDecimal> getEmbedding() {
+        return embedding.orElse(null);
+  }
+
+  @JsonProperty(value = JSON_PROPERTY_EMBEDDING, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public JsonNullable<List<BigDecimal>> getEmbedding_JsonNullable() {
+    return embedding;
+  }
+  
+  @JsonProperty(JSON_PROPERTY_EMBEDDING)
+  public void setEmbedding_JsonNullable(JsonNullable<List<BigDecimal>> embedding) {
+    this.embedding = embedding;
+  }
+
+  public void setEmbedding(@javax.annotation.Nullable List<BigDecimal> embedding) {
+    this.embedding = JsonNullable.<List<BigDecimal>>of(embedding);
+  }
+
+
+  public IngestedMedia embeddingPrefix(@javax.annotation.Nullable List<BigDecimal> embeddingPrefix) {
+    this.embeddingPrefix = JsonNullable.<List<BigDecimal>>of(embeddingPrefix);
+    return this;
+  }
+
+  public IngestedMedia addEmbeddingPrefixItem(BigDecimal embeddingPrefixItem) {
+    if (this.embeddingPrefix == null || !this.embeddingPrefix.isPresent() || this.embeddingPrefix.get() == null) {
+      this.embeddingPrefix = JsonNullable.<List<BigDecimal>>of(new ArrayList<>());
+    }
+    try {
+      this.embeddingPrefix.get().add(embeddingPrefixItem);
+    } catch (java.util.NoSuchElementException e) {
+      // this can never happen, as we make sure above that the value is present
+    }
+    return this;
+  }
+
+  /**
+   * The coarse prefix vector, returned only when the ingest response carries embeddings.
+   * @return embeddingPrefix
+   */
+  @javax.annotation.Nullable
+  @JsonIgnore
+  public List<BigDecimal> getEmbeddingPrefix() {
+        return embeddingPrefix.orElse(null);
+  }
+
+  @JsonProperty(value = JSON_PROPERTY_EMBEDDING_PREFIX, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public JsonNullable<List<BigDecimal>> getEmbeddingPrefix_JsonNullable() {
+    return embeddingPrefix;
+  }
+  
+  @JsonProperty(JSON_PROPERTY_EMBEDDING_PREFIX)
+  public void setEmbeddingPrefix_JsonNullable(JsonNullable<List<BigDecimal>> embeddingPrefix) {
+    this.embeddingPrefix = embeddingPrefix;
+  }
+
+  public void setEmbeddingPrefix(@javax.annotation.Nullable List<BigDecimal> embeddingPrefix) {
+    this.embeddingPrefix = JsonNullable.<List<BigDecimal>>of(embeddingPrefix);
   }
 
 
@@ -121,6 +256,9 @@ public class IngestedMedia {
     }
     IngestedMedia ingestedMedia = (IngestedMedia) o;
     return Objects.equals(this.blobId, ingestedMedia.blobId) &&
+        equalsNullable(this.customerId, ingestedMedia.customerId) &&
+        equalsNullable(this.embedding, ingestedMedia.embedding) &&
+        equalsNullable(this.embeddingPrefix, ingestedMedia.embeddingPrefix) &&
         equalsNullable(this.externalRef, ingestedMedia.externalRef);
   }
 
@@ -130,7 +268,7 @@ public class IngestedMedia {
 
   @Override
   public int hashCode() {
-    return Objects.hash(blobId, hashCodeNullable(externalRef));
+    return Objects.hash(blobId, hashCodeNullable(customerId), hashCodeNullable(embedding), hashCodeNullable(embeddingPrefix), hashCodeNullable(externalRef));
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -145,6 +283,9 @@ public class IngestedMedia {
     StringBuilder sb = new StringBuilder();
     sb.append("class IngestedMedia {\n");
     sb.append("    blobId: ").append(toIndentedString(blobId)).append("\n");
+    sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
+    sb.append("    embedding: ").append(toIndentedString(embedding)).append("\n");
+    sb.append("    embeddingPrefix: ").append(toIndentedString(embeddingPrefix)).append("\n");
     sb.append("    externalRef: ").append(toIndentedString(externalRef)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -193,6 +334,33 @@ public class IngestedMedia {
     // add `blob_id` to the URL query string
     if (getBlobId() != null) {
       joiner.add(String.format(java.util.Locale.ROOT, "%sblob_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getBlobId()))));
+    }
+
+    // add `customer_id` to the URL query string
+    if (getCustomerId() != null) {
+      joiner.add(String.format(java.util.Locale.ROOT, "%scustomer_id%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCustomerId()))));
+    }
+
+    // add `embedding` to the URL query string
+    if (getEmbedding() != null) {
+      for (int i = 0; i < getEmbedding().size(); i++) {
+        if (getEmbedding().get(i) != null) {
+          joiner.add(String.format(java.util.Locale.ROOT, "%sembedding%s%s=%s", prefix, suffix,
+              "".equals(suffix) ? "" : String.format(java.util.Locale.ROOT, "%s%d%s", containerPrefix, i, containerSuffix),
+              ApiClient.urlEncode(ApiClient.valueToString(getEmbedding().get(i)))));
+        }
+      }
+    }
+
+    // add `embedding_prefix` to the URL query string
+    if (getEmbeddingPrefix() != null) {
+      for (int i = 0; i < getEmbeddingPrefix().size(); i++) {
+        if (getEmbeddingPrefix().get(i) != null) {
+          joiner.add(String.format(java.util.Locale.ROOT, "%sembedding_prefix%s%s=%s", prefix, suffix,
+              "".equals(suffix) ? "" : String.format(java.util.Locale.ROOT, "%s%d%s", containerPrefix, i, containerSuffix),
+              ApiClient.urlEncode(ApiClient.valueToString(getEmbeddingPrefix().get(i)))));
+        }
+      }
     }
 
     // add `external_ref` to the URL query string

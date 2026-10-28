@@ -1258,13 +1258,41 @@ components:
       example:
         existing:
         - blob_id: 0
+          customer_id: customer_id
+          embedding:
+          - 6.027456183070403
+          - 6.027456183070403
+          embedding_prefix:
+          - 1.4658129805029452
+          - 1.4658129805029452
           external_ref: external_ref
         - blob_id: 0
+          customer_id: customer_id
+          embedding:
+          - 6.027456183070403
+          - 6.027456183070403
+          embedding_prefix:
+          - 1.4658129805029452
+          - 1.4658129805029452
           external_ref: external_ref
         ingested:
         - blob_id: 0
+          customer_id: customer_id
+          embedding:
+          - 6.027456183070403
+          - 6.027456183070403
+          embedding_prefix:
+          - 1.4658129805029452
+          - 1.4658129805029452
           external_ref: external_ref
         - blob_id: 0
+          customer_id: customer_id
+          embedding:
+          - 6.027456183070403
+          - 6.027456183070403
+          embedding_prefix:
+          - 1.4658129805029452
+          - 1.4658129805029452
           external_ref: external_ref
         job: ""
       properties:
@@ -1317,11 +1345,39 @@ components:
     IngestedMedia:
       example:
         blob_id: 0
+        customer_id: customer_id
+        embedding:
+        - 6.027456183070403
+        - 6.027456183070403
+        embedding_prefix:
+        - 1.4658129805029452
+        - 1.4658129805029452
         external_ref: external_ref
       properties:
         blob_id:
           title: Blob Id
           type: integer
+        customer_id:
+          description: Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST
+            / embedding-only mode).
+          nullable: true
+          type: string
+        embedding:
+          description: "The full embedding vector, returned only when the ingest response\
+            \ carries embeddings."
+          items:
+            type: number
+          nullable: true
+          type: array
+          default: null
+        embedding_prefix:
+          description: "The coarse prefix vector, returned only when the ingest response\
+            \ carries embeddings."
+          items:
+            type: number
+          nullable: true
+          type: array
+          default: null
         external_ref:
           nullable: true
           type: string
