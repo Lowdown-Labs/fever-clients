@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -28,8 +28,11 @@ class IngestedMedia(BaseModel):
     IngestedMedia
     """ # noqa: E501
     blob_id: StrictInt
+    customer_id: Optional[StrictStr] = Field(default=None, description="Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode).")
+    embedding: Optional[List[Union[StrictFloat, StrictInt]]] = Field(default=None, description="The full embedding vector, returned only when the ingest response carries embeddings.")
+    embedding_prefix: Optional[List[Union[StrictFloat, StrictInt]]] = Field(default=None, description="The coarse prefix vector, returned only when the ingest response carries embeddings.")
     external_ref: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["blob_id", "external_ref"]
+    __properties: ClassVar[List[str]] = ["blob_id", "customer_id", "embedding", "embedding_prefix", "external_ref"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -70,6 +73,21 @@ class IngestedMedia(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if customer_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.customer_id is None and "customer_id" in self.model_fields_set:
+            _dict['customer_id'] = None
+
+        # set to None if embedding (nullable) is None
+        # and model_fields_set contains the field
+        if self.embedding is None and "embedding" in self.model_fields_set:
+            _dict['embedding'] = None
+
+        # set to None if embedding_prefix (nullable) is None
+        # and model_fields_set contains the field
+        if self.embedding_prefix is None and "embedding_prefix" in self.model_fields_set:
+            _dict['embedding_prefix'] = None
+
         # set to None if external_ref (nullable) is None
         # and model_fields_set contains the field
         if self.external_ref is None and "external_ref" in self.model_fields_set:
@@ -88,6 +106,9 @@ class IngestedMedia(BaseModel):
 
         _obj = cls.model_validate({
             "blob_id": obj.get("blob_id"),
+            "customer_id": obj.get("customer_id"),
+            "embedding": obj.get("embedding"),
+            "embedding_prefix": obj.get("embedding_prefix"),
             "external_ref": obj.get("external_ref")
         })
         return _obj

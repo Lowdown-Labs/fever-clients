@@ -467,7 +467,7 @@ class IngestMedia implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets data
      *
-     * @param string|null $data Base64-encoded media item bytes.
+     * @param string|null $data Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents.
      *
      * @return self
      */

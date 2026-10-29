@@ -32,7 +32,7 @@ export interface IngestMedia {
      */
     customerId?: string | null;
     /**
-     * Base64-encoded media item bytes.
+     * Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents.
      */
     data?: string | null;
     /**

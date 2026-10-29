@@ -7,6 +7,9 @@
 Name | Type
 ------------ | -------------
 `blobId` | number
+`customerId` | string
+`embedding` | Array&lt;number&gt;
+`embeddingPrefix` | Array&lt;number&gt;
 `externalRef` | string
 
 ## Example
@@ -17,6 +20,9 @@ import type { IngestedMedia } from 'fever-client'
 // TODO: Update the object below with actual values
 const example = {
   "blobId": null,
+  "customerId": null,
+  "embedding": null,
+  "embeddingPrefix": null,
   "externalRef": null,
 } satisfies IngestedMedia
 

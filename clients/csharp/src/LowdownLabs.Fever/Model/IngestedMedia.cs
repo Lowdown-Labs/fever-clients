@@ -41,10 +41,16 @@ namespace LowdownLabs.Fever.Model
         /// Initializes a new instance of the <see cref="IngestedMedia" /> class.
         /// </summary>
         /// <param name="blobId">blobId (required).</param>
+        /// <param name="customerId">Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode)..</param>
+        /// <param name="embedding">The full embedding vector, returned only when the ingest response carries embeddings..</param>
+        /// <param name="embeddingPrefix">The coarse prefix vector, returned only when the ingest response carries embeddings..</param>
         /// <param name="externalRef">externalRef.</param>
-        public IngestedMedia(int blobId = default, string externalRef = default)
+        public IngestedMedia(int blobId = default, string customerId = default, List<decimal> embedding = default, List<decimal> embeddingPrefix = default, string externalRef = default)
         {
             this.BlobId = blobId;
+            this.CustomerId = customerId;
+            this.Embedding = embedding;
+            this.EmbeddingPrefix = embeddingPrefix;
             this.ExternalRef = externalRef;
         }
 
@@ -53,6 +59,27 @@ namespace LowdownLabs.Fever.Model
         /// </summary>
         [DataMember(Name = "blob_id", IsRequired = true, EmitDefaultValue = true)]
         public int BlobId { get; set; }
+
+        /// <summary>
+        /// Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode).
+        /// </summary>
+        /// <value>Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode).</value>
+        [DataMember(Name = "customer_id", EmitDefaultValue = true)]
+        public string CustomerId { get; set; }
+
+        /// <summary>
+        /// The full embedding vector, returned only when the ingest response carries embeddings.
+        /// </summary>
+        /// <value>The full embedding vector, returned only when the ingest response carries embeddings.</value>
+        [DataMember(Name = "embedding", EmitDefaultValue = true)]
+        public List<decimal> Embedding { get; set; }
+
+        /// <summary>
+        /// The coarse prefix vector, returned only when the ingest response carries embeddings.
+        /// </summary>
+        /// <value>The coarse prefix vector, returned only when the ingest response carries embeddings.</value>
+        [DataMember(Name = "embedding_prefix", EmitDefaultValue = true)]
+        public List<decimal> EmbeddingPrefix { get; set; }
 
         /// <summary>
         /// Gets or Sets ExternalRef
@@ -69,6 +96,9 @@ namespace LowdownLabs.Fever.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class IngestedMedia {\n");
             sb.Append("  BlobId: ").Append(BlobId).Append("\n");
+            sb.Append("  CustomerId: ").Append(CustomerId).Append("\n");
+            sb.Append("  Embedding: ").Append(Embedding).Append("\n");
+            sb.Append("  EmbeddingPrefix: ").Append(EmbeddingPrefix).Append("\n");
             sb.Append("  ExternalRef: ").Append(ExternalRef).Append("\n");
             sb.Append("}\n");
             return sb.ToString();

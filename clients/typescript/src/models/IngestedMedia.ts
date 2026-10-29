@@ -24,6 +24,18 @@ export interface IngestedMedia {
      */
     blobId: number;
     /**
+     * Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode).
+     */
+    customerId?: string | null;
+    /**
+     * The full embedding vector, returned only when the ingest response carries embeddings.
+     */
+    embedding?: Array<number> | null;
+    /**
+     * The coarse prefix vector, returned only when the ingest response carries embeddings.
+     */
+    embeddingPrefix?: Array<number> | null;
+    /**
      * 
      */
     externalRef?: string | null;
@@ -48,6 +60,9 @@ export function IngestedMediaFromJSONTyped(json: any, ignoreDiscriminator: boole
     return {
         
         'blobId': json['blob_id'],
+        'customerId': json['customer_id'] === undefined ? undefined : json['customer_id'] === null ? null : json['customer_id'],
+        'embedding': json['embedding'] === undefined ? undefined : json['embedding'] === null ? null : json['embedding'],
+        'embeddingPrefix': json['embedding_prefix'] === undefined ? undefined : json['embedding_prefix'] === null ? null : json['embedding_prefix'],
         'externalRef': json['external_ref'] === undefined ? undefined : json['external_ref'] === null ? null : json['external_ref'],
     };
 }
@@ -64,6 +79,9 @@ export function IngestedMediaToJSONTyped(value?: IngestedMedia | null, ignoreDis
     return {
         
         'blob_id': value['blobId'],
+        'customer_id': value['customerId'],
+        'embedding': value['embedding'],
+        'embedding_prefix': value['embeddingPrefix'],
         'external_ref': value['externalRef'],
     };
 }

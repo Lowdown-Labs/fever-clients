@@ -516,7 +516,7 @@
                 "type": "null"
               }
             ],
-            "description": "Base64-encoded media item bytes.",
+            "description": "Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents.",
             "title": "Data"
           },
           "filename": {
@@ -735,6 +735,48 @@
           "blob_id": {
             "title": "Blob Id",
             "type": "integer"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode).",
+            "title": "Customer Id"
+          },
+          "embedding": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The full embedding vector, returned only when the ingest response carries embeddings.",
+            "title": "Embedding"
+          },
+          "embedding_prefix": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The coarse prefix vector, returned only when the ingest response carries embeddings.",
+            "title": "Embedding Prefix"
           },
           "external_ref": {
             "anyOf": [

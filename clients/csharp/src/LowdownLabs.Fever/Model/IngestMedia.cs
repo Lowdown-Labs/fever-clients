@@ -38,7 +38,7 @@ namespace LowdownLabs.Fever.Model
         /// <param name="caption">Optional caption/keywords; indexed at the highest text-search weight..</param>
         /// <param name="collectionId">Optional grouping you own (project, case, site - FEVER stores and filters it, never interprets it). Filterable at search time; returned on hits..</param>
         /// <param name="customerId">Optional tag attributing this item to one of your customers; filterable at search time..</param>
-        /// <param name="data">Base64-encoded media item bytes..</param>
+        /// <param name="data">Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents..</param>
         /// <param name="filename">Original file name. Drives format detection for inline documents and LiDAR (extensions like .csv or .las - office formats are recognized by their bytes alone) and is stored on the blob for media info and attachment listings..</param>
         /// <param name="metadata">Opaque JSON returned with search hits..</param>
         /// <param name="parentRef">Optional pointer to a related parent asset (its external_ref, key, or blob_id). Non-searchable companions such as LiDAR scans declare the photo or video they belong to; the parent&#39;s record lists them back as attachments..</param>
@@ -81,9 +81,9 @@ namespace LowdownLabs.Fever.Model
         public string CustomerId { get; set; }
 
         /// <summary>
-        /// Base64-encoded media item bytes.
+        /// Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents.
         /// </summary>
-        /// <value>Base64-encoded media item bytes.</value>
+        /// <value>Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents.</value>
         [DataMember(Name = "data", EmitDefaultValue = true)]
         public string Data { get; set; }
 

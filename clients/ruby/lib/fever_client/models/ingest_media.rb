@@ -24,7 +24,7 @@ module FeverClient
     # Optional tag attributing this item to one of your customers; filterable at search time.
     attr_accessor :customer_id
 
-    # Base64-encoded media item bytes.
+    # Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents.
     attr_accessor :data
 
     # Original file name. Drives format detection for inline documents and LiDAR (extensions like .csv or .las - office formats are recognized by their bytes alone) and is stored on the blob for media info and attachment listings.

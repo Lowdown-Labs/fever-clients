@@ -190,7 +190,7 @@ public class IngestMedia {
   }
 
   /**
-   * Base64-encoded media item bytes.
+   * Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents.
    * @return data
    */
   @javax.annotation.Nullable

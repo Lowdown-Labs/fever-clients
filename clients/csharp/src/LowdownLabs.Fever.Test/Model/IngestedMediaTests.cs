@@ -64,6 +64,33 @@ namespace LowdownLabs.Fever.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'CustomerId'
+        /// </summary>
+        [Fact]
+        public void CustomerIdTest()
+        {
+            // TODO unit test for the property 'CustomerId'
+        }
+
+        /// <summary>
+        /// Test the property 'Embedding'
+        /// </summary>
+        [Fact]
+        public void EmbeddingTest()
+        {
+            // TODO unit test for the property 'Embedding'
+        }
+
+        /// <summary>
+        /// Test the property 'EmbeddingPrefix'
+        /// </summary>
+        [Fact]
+        public void EmbeddingPrefixTest()
+        {
+            // TODO unit test for the property 'EmbeddingPrefix'
+        }
+
+        /// <summary>
         /// Test the property 'ExternalRef'
         /// </summary>
         [Fact]

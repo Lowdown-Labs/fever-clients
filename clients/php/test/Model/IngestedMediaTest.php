@@ -89,6 +89,33 @@ class IngestedMediaTest extends TestCase
     }
 
     /**
+     * Test attribute "customer_id"
+     */
+    public function testPropertyCustomerId()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "embedding"
+     */
+    public function testPropertyEmbedding()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
+     * Test attribute "embedding_prefix"
+     */
+    public function testPropertyEmbeddingPrefix()
+    {
+        // TODO: implement
+        self::markTestIncomplete('Not implemented');
+    }
+
+    /**
      * Test attribute "external_ref"
      */
     public function testPropertyExternalRef()

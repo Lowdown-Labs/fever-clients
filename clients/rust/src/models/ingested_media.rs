@@ -15,6 +15,15 @@ use serde::{Deserialize, Serialize};
 pub struct IngestedMedia {
     #[serde(rename = "blob_id")]
     pub blob_id: i32,
+    /// Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode).
+    #[serde(rename = "customer_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub customer_id: Option<Option<String>>,
+    /// The full embedding vector, returned only when the ingest response carries embeddings.
+    #[serde(rename = "embedding", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub embedding: Option<Option<Vec<f64>>>,
+    /// The coarse prefix vector, returned only when the ingest response carries embeddings.
+    #[serde(rename = "embedding_prefix", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub embedding_prefix: Option<Option<Vec<f64>>>,
     #[serde(rename = "external_ref", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub external_ref: Option<Option<String>>,
 }
@@ -23,6 +32,9 @@ impl IngestedMedia {
     pub fn new(blob_id: i32) -> IngestedMedia {
         IngestedMedia {
             blob_id,
+            customer_id: None,
+            embedding: None,
+            embedding_prefix: None,
             external_ref: None,
         }
     }

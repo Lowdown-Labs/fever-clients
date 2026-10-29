@@ -22,7 +22,7 @@ pub struct IngestMedia {
     /// Optional tag attributing this item to one of your customers; filterable at search time.
     #[serde(rename = "customer_id", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub customer_id: Option<Option<String>>,
-    /// Base64-encoded media item bytes.
+    /// Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents.
     #[serde(rename = "data", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub data: Option<Option<String>>,
     /// Original file name. Drives format detection for inline documents and LiDAR (extensions like .csv or .las - office formats are recognized by their bytes alone) and is stored on the blob for media info and attachment listings.

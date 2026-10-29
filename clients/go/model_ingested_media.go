@@ -22,6 +22,12 @@ var _ MappedNullable = &IngestedMedia{}
 // IngestedMedia struct for IngestedMedia
 type IngestedMedia struct {
 	BlobId int32 `json:"blob_id"`
+	// Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode).
+	CustomerId NullableString `json:"customer_id,omitempty"`
+	// The full embedding vector, returned only when the ingest response carries embeddings.
+	Embedding []float32 `json:"embedding,omitempty"`
+	// The coarse prefix vector, returned only when the ingest response carries embeddings.
+	EmbeddingPrefix []float32 `json:"embedding_prefix,omitempty"`
 	ExternalRef NullableString `json:"external_ref,omitempty"`
 }
 
@@ -67,6 +73,114 @@ func (o *IngestedMedia) GetBlobIdOk() (*int32, bool) {
 // SetBlobId sets field value
 func (o *IngestedMedia) SetBlobId(v int32) {
 	o.BlobId = v
+}
+
+// GetCustomerId returns the CustomerId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *IngestedMedia) GetCustomerId() string {
+	if o == nil || IsNil(o.CustomerId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CustomerId.Get()
+}
+
+// GetCustomerIdOk returns a tuple with the CustomerId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *IngestedMedia) GetCustomerIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CustomerId.Get(), o.CustomerId.IsSet()
+}
+
+// HasCustomerId returns a boolean if a field has been set.
+func (o *IngestedMedia) HasCustomerId() bool {
+	if o != nil && o.CustomerId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomerId gets a reference to the given NullableString and assigns it to the CustomerId field.
+func (o *IngestedMedia) SetCustomerId(v string) {
+	o.CustomerId.Set(&v)
+}
+// SetCustomerIdNil sets the value for CustomerId to be an explicit nil
+func (o *IngestedMedia) SetCustomerIdNil() {
+	o.CustomerId.Set(nil)
+}
+
+// UnsetCustomerId ensures that no value is present for CustomerId, not even an explicit nil
+func (o *IngestedMedia) UnsetCustomerId() {
+	o.CustomerId.Unset()
+}
+
+// GetEmbedding returns the Embedding field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *IngestedMedia) GetEmbedding() []float32 {
+	if o == nil {
+		var ret []float32
+		return ret
+	}
+	return o.Embedding
+}
+
+// GetEmbeddingOk returns a tuple with the Embedding field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *IngestedMedia) GetEmbeddingOk() ([]float32, bool) {
+	if o == nil || IsNil(o.Embedding) {
+		return nil, false
+	}
+	return o.Embedding, true
+}
+
+// HasEmbedding returns a boolean if a field has been set.
+func (o *IngestedMedia) HasEmbedding() bool {
+	if o != nil && !IsNil(o.Embedding) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmbedding gets a reference to the given []float32 and assigns it to the Embedding field.
+func (o *IngestedMedia) SetEmbedding(v []float32) {
+	o.Embedding = v
+}
+
+// GetEmbeddingPrefix returns the EmbeddingPrefix field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *IngestedMedia) GetEmbeddingPrefix() []float32 {
+	if o == nil {
+		var ret []float32
+		return ret
+	}
+	return o.EmbeddingPrefix
+}
+
+// GetEmbeddingPrefixOk returns a tuple with the EmbeddingPrefix field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *IngestedMedia) GetEmbeddingPrefixOk() ([]float32, bool) {
+	if o == nil || IsNil(o.EmbeddingPrefix) {
+		return nil, false
+	}
+	return o.EmbeddingPrefix, true
+}
+
+// HasEmbeddingPrefix returns a boolean if a field has been set.
+func (o *IngestedMedia) HasEmbeddingPrefix() bool {
+	if o != nil && !IsNil(o.EmbeddingPrefix) {
+		return true
+	}
+
+	return false
+}
+
+// SetEmbeddingPrefix gets a reference to the given []float32 and assigns it to the EmbeddingPrefix field.
+func (o *IngestedMedia) SetEmbeddingPrefix(v []float32) {
+	o.EmbeddingPrefix = v
 }
 
 // GetExternalRef returns the ExternalRef field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -122,6 +236,15 @@ func (o IngestedMedia) MarshalJSON() ([]byte, error) {
 func (o IngestedMedia) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["blob_id"] = o.BlobId
+	if o.CustomerId.IsSet() {
+		toSerialize["customer_id"] = o.CustomerId.Get()
+	}
+	if o.Embedding != nil {
+		toSerialize["embedding"] = o.Embedding
+	}
+	if o.EmbeddingPrefix != nil {
+		toSerialize["embedding_prefix"] = o.EmbeddingPrefix
+	}
 	if o.ExternalRef.IsSet() {
 		toSerialize["external_ref"] = o.ExternalRef.Get()
 	}

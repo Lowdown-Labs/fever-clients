@@ -17,12 +17,24 @@ module FeverClient
   class IngestedMedia < ApiModelBase
     attr_accessor :blob_id
 
+    # Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode).
+    attr_accessor :customer_id
+
+    # The full embedding vector, returned only when the ingest response carries embeddings.
+    attr_accessor :embedding
+
+    # The coarse prefix vector, returned only when the ingest response carries embeddings.
+    attr_accessor :embedding_prefix
+
     attr_accessor :external_ref
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'blob_id' => :'blob_id',
+        :'customer_id' => :'customer_id',
+        :'embedding' => :'embedding',
+        :'embedding_prefix' => :'embedding_prefix',
         :'external_ref' => :'external_ref'
       }
     end
@@ -41,6 +53,9 @@ module FeverClient
     def self.openapi_types
       {
         :'blob_id' => :'Integer',
+        :'customer_id' => :'String',
+        :'embedding' => :'Array<Float>',
+        :'embedding_prefix' => :'Array<Float>',
         :'external_ref' => :'String'
       }
     end
@@ -48,6 +63,9 @@ module FeverClient
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'customer_id',
+        :'embedding',
+        :'embedding_prefix',
         :'external_ref'
       ])
     end
@@ -72,6 +90,22 @@ module FeverClient
         self.blob_id = attributes[:'blob_id']
       else
         self.blob_id = nil
+      end
+
+      if attributes.key?(:'customer_id')
+        self.customer_id = attributes[:'customer_id']
+      end
+
+      if attributes.key?(:'embedding')
+        if (value = attributes[:'embedding']).is_a?(Array)
+          self.embedding = value
+        end
+      end
+
+      if attributes.key?(:'embedding_prefix')
+        if (value = attributes[:'embedding_prefix']).is_a?(Array)
+          self.embedding_prefix = value
+        end
       end
 
       if attributes.key?(:'external_ref')
@@ -115,6 +149,9 @@ module FeverClient
       return true if self.equal?(o)
       self.class == o.class &&
           blob_id == o.blob_id &&
+          customer_id == o.customer_id &&
+          embedding == o.embedding &&
+          embedding_prefix == o.embedding_prefix &&
           external_ref == o.external_ref
     end
 
@@ -127,7 +164,7 @@ module FeverClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [blob_id, external_ref].hash
+      [blob_id, customer_id, embedding, embedding_prefix, external_ref].hash
     end
 
     # Builds the object from hash

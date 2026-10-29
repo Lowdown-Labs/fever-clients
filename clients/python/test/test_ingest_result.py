@@ -38,11 +38,25 @@ class TestIngestResult(unittest.TestCase):
                 existing = [
                     fever_client.models.ingested_media.IngestedMedia(
                         blob_id = 56, 
+                        customer_id = '', 
+                        embedding = [
+                            1.337
+                            ], 
+                        embedding_prefix = [
+                            1.337
+                            ], 
                         external_ref = '', )
                     ],
                 ingested = [
                     fever_client.models.ingested_media.IngestedMedia(
                         blob_id = 56, 
+                        customer_id = '', 
+                        embedding = [
+                            1.337
+                            ], 
+                        embedding_prefix = [
+                            1.337
+                            ], 
                         external_ref = '', )
                     ],
                 job = fever_client.models.job.Job(

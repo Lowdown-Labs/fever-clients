@@ -58,6 +58,9 @@ class IngestedMedia implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $openAPITypes = [
         'blob_id' => 'int',
+        'customer_id' => 'string',
+        'embedding' => 'float[]',
+        'embedding_prefix' => 'float[]',
         'external_ref' => 'string'
     ];
 
@@ -70,6 +73,9 @@ class IngestedMedia implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $openAPIFormats = [
         'blob_id' => null,
+        'customer_id' => null,
+        'embedding' => null,
+        'embedding_prefix' => null,
         'external_ref' => null
     ];
 
@@ -80,6 +86,9 @@ class IngestedMedia implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static array $openAPINullables = [
         'blob_id' => false,
+        'customer_id' => true,
+        'embedding' => true,
+        'embedding_prefix' => true,
         'external_ref' => true
     ];
 
@@ -170,6 +179,9 @@ class IngestedMedia implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $attributeMap = [
         'blob_id' => 'blob_id',
+        'customer_id' => 'customer_id',
+        'embedding' => 'embedding',
+        'embedding_prefix' => 'embedding_prefix',
         'external_ref' => 'external_ref'
     ];
 
@@ -180,6 +192,9 @@ class IngestedMedia implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $setters = [
         'blob_id' => 'setBlobId',
+        'customer_id' => 'setCustomerId',
+        'embedding' => 'setEmbedding',
+        'embedding_prefix' => 'setEmbeddingPrefix',
         'external_ref' => 'setExternalRef'
     ];
 
@@ -190,6 +205,9 @@ class IngestedMedia implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     protected static $getters = [
         'blob_id' => 'getBlobId',
+        'customer_id' => 'getCustomerId',
+        'embedding' => 'getEmbedding',
+        'embedding_prefix' => 'getEmbeddingPrefix',
         'external_ref' => 'getExternalRef'
     ];
 
@@ -251,6 +269,9 @@ class IngestedMedia implements ModelInterface, ArrayAccess, \JsonSerializable
     public function __construct(?array $data = null)
     {
         $this->setIfExists('blob_id', $data ?? [], null);
+        $this->setIfExists('customer_id', $data ?? [], null);
+        $this->setIfExists('embedding', $data ?? [], null);
+        $this->setIfExists('embedding_prefix', $data ?? [], null);
         $this->setIfExists('external_ref', $data ?? [], null);
     }
 
@@ -322,6 +343,108 @@ class IngestedMedia implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable blob_id cannot be null');
         }
         $this->container['blob_id'] = $blob_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets customer_id
+     *
+     * @return string|null
+     */
+    public function getCustomerId()
+    {
+        return $this->container['customer_id'];
+    }
+
+    /**
+     * Sets customer_id
+     *
+     * @param string|null $customer_id Echoed only when the ingest response carries embeddings (FEVER_RETURN_EMBEDDING_ON_INGEST / embedding-only mode).
+     *
+     * @return self
+     */
+    public function setCustomerId($customer_id)
+    {
+        if (is_null($customer_id)) {
+            array_push($this->openAPINullablesSetToNull, 'customer_id');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('customer_id', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['customer_id'] = $customer_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets embedding
+     *
+     * @return float[]|null
+     */
+    public function getEmbedding()
+    {
+        return $this->container['embedding'];
+    }
+
+    /**
+     * Sets embedding
+     *
+     * @param float[]|null $embedding The full embedding vector, returned only when the ingest response carries embeddings.
+     *
+     * @return self
+     */
+    public function setEmbedding($embedding)
+    {
+        if (is_null($embedding)) {
+            array_push($this->openAPINullablesSetToNull, 'embedding');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('embedding', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['embedding'] = $embedding;
+
+        return $this;
+    }
+
+    /**
+     * Gets embedding_prefix
+     *
+     * @return float[]|null
+     */
+    public function getEmbeddingPrefix()
+    {
+        return $this->container['embedding_prefix'];
+    }
+
+    /**
+     * Sets embedding_prefix
+     *
+     * @param float[]|null $embedding_prefix The coarse prefix vector, returned only when the ingest response carries embeddings.
+     *
+     * @return self
+     */
+    public function setEmbeddingPrefix($embedding_prefix)
+    {
+        if (is_null($embedding_prefix)) {
+            array_push($this->openAPINullablesSetToNull, 'embedding_prefix');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('embedding_prefix', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['embedding_prefix'] = $embedding_prefix;
 
         return $this;
     }
