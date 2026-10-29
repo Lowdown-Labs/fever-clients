@@ -86,6 +86,17 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
+      - name: Configure non-interactive GPG signing
+        if: env.GPG_PRIVATE_KEY != ''
+        run: |
+          mkdir -p ~/.gnupg && chmod 700 ~/.gnupg
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          echo "allow-loopback-pinentry" >> ~/.gnupg/gpg-agent.conf
+          gpgconf --reload gpg-agent
+          printf '#!/bin/sh\ngpg --batch --yes --pinentry-mode loopback --passphrase "$GPG_PASSPHRASE" "$@"\n' > /tmp/gpg-wrapper.sh
+          chmod +x /tmp/gpg-wrapper.sh
+          git config --global gpg.program /tmp/gpg-wrapper.sh
+
       - name: Commit regenerated clients
         run: |
           git config user.name "fever-clients-bot"
@@ -126,7 +137,7 @@ jobs:
         run: |
           cd dist
           for f in *; do
-            gpg --batch --yes --armor --detach-sign -o "$f.asc" "$f"
+            gpg --batch --yes --pinentry-mode loopback --passphrase "$GPG_PASSPHRASE" --armor --detach-sign -o "$f.asc" "$f"
           done
           ls -la
 
