@@ -190,7 +190,7 @@ public class IngestMedia {
   }
 
   /**
-   * Base64-encoded media item bytes. Accepted image formats: JPEG, PNG, GIF, WebP, TIFF. Documents (PDF, CSV/TSV, TXT, Markdown, XLSX, DOCX, ODT) and LiDAR (LAS, LAZ, PLY, PCD) are also accepted; video and audio ingest run on the queued worker path.
+   * Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents.
    * @return data
    */
   @javax.annotation.Nullable

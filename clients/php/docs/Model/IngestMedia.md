@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **caption** | **string** | Optional caption/keywords; indexed at the highest text-search weight. | [optional]
 **collection_id** | **string** | Optional grouping you own (project, case, site - FEVER stores and filters it, never interprets it). Filterable at search time; returned on hits. | [optional]
 **customer_id** | **string** | Optional tag attributing this item to one of your customers; filterable at search time. | [optional]
-**data** | **string** | Base64-encoded media item bytes. Accepted image formats: JPEG, PNG, GIF, WebP, TIFF. Documents (PDF, CSV/TSV, TXT, Markdown, XLSX, DOCX, ODT) and LiDAR (LAS, LAZ, PLY, PCD) are also accepted; video and audio ingest run on the queued worker path. | [optional]
+**data** | **string** | Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents. | [optional]
 **filename** | **string** | Original file name. Drives format detection for inline documents and LiDAR (extensions like .csv or .las - office formats are recognized by their bytes alone) and is stored on the blob for media info and attachment listings. | [optional]
 **metadata** | **array<string,mixed>** | Opaque JSON returned with search hits. | [optional]
 **parent_ref** | **string** | Optional pointer to a related parent asset (its external_ref, key, or blob_id). Non-searchable companions such as LiDAR scans declare the photo or video they belong to; the parent&#39;s record lists them back as attachments. | [optional]

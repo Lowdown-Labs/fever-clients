@@ -25,7 +25,7 @@ type IngestMedia struct {
 	CollectionId NullableString `json:"collection_id,omitempty"`
 	// Optional tag attributing this item to one of your customers; filterable at search time.
 	CustomerId NullableString `json:"customer_id,omitempty"`
-	// Base64-encoded media item bytes. Accepted image formats: JPEG, PNG, GIF, WebP, TIFF. Documents (PDF, CSV/TSV, TXT, Markdown, XLSX, DOCX, ODT) and LiDAR (LAS, LAZ, PLY, PCD) are also accepted; video and audio ingest run on the queued worker path.
+	// Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents.
 	Data NullableString `json:"data,omitempty"`
 	// Original file name. Drives format detection for inline documents and LiDAR (extensions like .csv or .las - office formats are recognized by their bytes alone) and is stored on the blob for media info and attachment listings.
 	Filename NullableString `json:"filename,omitempty"`
