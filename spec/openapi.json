@@ -107,12 +107,20 @@
       },
       "CorpusStats": {
         "properties": {
+          "index_bytes": {
+            "title": "Index Bytes",
+            "type": "integer"
+          },
           "kinds": {
             "additionalProperties": {
               "type": "integer"
             },
             "title": "Kinds",
             "type": "object"
+          },
+          "storage_bytes": {
+            "title": "Storage Bytes",
+            "type": "integer"
           },
           "top_tags": {
             "items": {
@@ -124,7 +132,9 @@
         },
         "required": [
           "kinds",
-          "top_tags"
+          "top_tags",
+          "storage_bytes",
+          "index_bytes"
         ],
         "title": "CorpusStats",
         "type": "object"
@@ -178,7 +188,8 @@
               {
                 "enum": [
                   "admin",
-                  "scoped"
+                  "scoped",
+                  "read"
                 ],
                 "type": "string"
               },
@@ -186,11 +197,226 @@
                 "type": "null"
               }
             ],
-            "description": "'admin' keys search/ingest across all customers and may pass any customer_id; 'scoped' keys are locked server-side to one customer_id. If omitted it is inferred from customer_id (present means scoped, absent means admin).",
+            "description": "'admin' keys search/ingest across all customers and may pass any customer_id; 'scoped' keys are locked server-side to one customer_id; 'read' keys are locked to one customer_id and may only call read endpoints. If omitted it is inferred from customer_id (present means scoped, absent means admin).",
             "title": "Role"
           }
         },
         "title": "CreateKeyRequest",
+        "type": "object"
+      },
+      "Dataset": {
+        "properties": {
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer Id"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "item_count": {
+            "default": 0,
+            "title": "Item Count",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "source_sql": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Sql"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "Dataset",
+        "type": "object"
+      },
+      "DatasetCreate": {
+        "properties": {
+          "blob_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional initial items; every blob must belong to the dataset's customer.",
+            "title": "Blob Ids"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Admin keys only: own this dataset to this customer. Scoped keys are always forced to their own customer_id.",
+            "title": "Customer Id"
+          },
+          "name": {
+            "description": "Dataset name, unique per tenant.",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "source_sql": {
+            "anyOf": [
+              {
+                "maxLength": 10000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Provenance: the SELECT that produced the item set, kept so the curation query can be reviewed and refined later.",
+            "title": "Source Sql"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "DatasetCreate",
+        "type": "object"
+      },
+      "DatasetDetail": {
+        "properties": {
+          "blob_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Blob Ids",
+            "type": "array"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer Id"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "item_count": {
+            "default": 0,
+            "title": "Item Count",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "source_sql": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Sql"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "DatasetDetail",
+        "type": "object"
+      },
+      "DatasetItemsRemove": {
+        "properties": {
+          "blob_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "integer"
+                },
+                "maxItems": 10000,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Items to remove; omit (or pass null) to clear every item from the dataset.",
+            "title": "Blob Ids"
+          }
+        },
+        "title": "DatasetItemsRemove",
+        "type": "object"
+      },
+      "DatasetItemsRequest": {
+        "properties": {
+          "blob_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 10000,
+            "minItems": 1,
+            "title": "Blob Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "blob_ids"
+        ],
+        "title": "DatasetItemsRequest",
         "type": "object"
       },
       "DuplicateCluster": {
@@ -314,8 +540,32 @@
         "title": "DuplicatesResponse",
         "type": "object"
       },
+      "ExportJob": {
+        "properties": {
+          "job_id": {
+            "title": "Job Id",
+            "type": "integer"
+          },
+          "status": {
+            "default": "pending",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "title": "ExportJob",
+        "type": "object"
+      },
       "ExportRequest": {
         "properties": {
+          "background": {
+            "default": false,
+            "description": "Queue the export as a job and return 202 with a job id to poll at /v1/jobs/{id} instead of running it inline.",
+            "title": "Background",
+            "type": "boolean"
+          },
           "customer_id": {
             "anyOf": [
               {
@@ -328,15 +578,39 @@
             "description": "Export only media tagged with this customer_id.",
             "title": "Customer Id"
           },
+          "dataset_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Export only blobs in this dataset.",
+            "title": "Dataset Id"
+          },
           "format": {
             "default": "ndjson",
-            "description": "'ndjson' (default) is the full vector-bearing backup format /v1/import restores from. 'parquet' is a metadata-only dataset export (blob_id, customer_id, media_ref, kind, caption, tags - no vectors) for analysis in DuckDB/pandas/Spark; it is not importable.",
+            "description": "'ndjson' (default) is the full vector-bearing backup format /v1/import restores from. 'parquet' is a columnar export (blob_id, customer_id, media_ref, kind, caption, tags, plus the vector and metadata payload) for analysis in DuckDB/pandas/Spark; it is not importable.",
             "enum": [
               "ndjson",
               "parquet"
             ],
             "title": "Format",
             "type": "string"
+          },
+          "include_lineage": {
+            "default": false,
+            "description": "Write <prefix>/lineage.ndjson with per-item provenance and flags (synthetic score, face_count, gps, captured_at, device, provenance findings).",
+            "title": "Include Lineage",
+            "type": "boolean"
+          },
+          "include_media": {
+            "default": false,
+            "description": "Copy each exported blob's original object to <prefix>/media/<blob_id><ext> (best effort; missing bytes are counted, not fatal).",
+            "title": "Include Media",
+            "type": "boolean"
           },
           "kind": {
             "anyOf": [
@@ -348,7 +622,8 @@
                   "pdf",
                   "doc",
                   "note",
-                  "lidar"
+                  "lidar",
+                  "model3d"
                 ],
                 "type": "string"
               },
@@ -516,7 +791,7 @@
                 "type": "null"
               }
             ],
-            "description": "Base64-encoded media item bytes. Accepted input is text and images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown documents.",
+            "description": "Base64-encoded media item bytes. Accepted image formats: JPEG, PNG, GIF, WebP, TIFF. Documents (PDF, CSV/TSV, TXT, Markdown, XLSX, DOCX, ODT) and LiDAR (LAS, LAZ, PLY, PCD) are also accepted; video and audio ingest run on the queued worker path.",
             "title": "Data"
           },
           "filename": {
@@ -561,6 +836,35 @@
             "description": "Skip EXIF extraction/retention for this item.",
             "title": "Strip Exif",
             "type": "boolean"
+          },
+          "tag_min_score": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Minimum zero-shot similarity for an autotag to stick on this item. Higher means fewer, more confident tags. Leave unset for the service default.",
+            "title": "Tag Min Score"
+          },
+          "tag_vocab": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Extra label vocabulary for this item: beyond the built-in set, ingest also scores the media against these labels and applies matches as tags.",
+            "title": "Tag Vocab"
           },
           "tags": {
             "anyOf": [
@@ -626,6 +930,20 @@
               }
             ],
             "description": "Ingest every media item under an S3 prefix instead of sending bytes."
+          },
+          "tag_min_score": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Batch default minimum zero-shot similarity for autotags; per-item tag_min_score wins when both are set. Leave unset for the service default.",
+            "title": "Tag Min Score"
           },
           "target_res": {
             "anyOf": [
@@ -704,10 +1022,53 @@
             "description": "Tag every vacuumed item with this customer_id.",
             "title": "Customer Id"
           },
+          "hf_config": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Hugging Face dataset config/subset name, when the dataset has several.",
+            "title": "Hf Config"
+          },
+          "hf_dataset": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Hugging Face dataset repo id (org/name) whose images are staged and ingested. Only available on deployments with FEVER_HF_INGEST_ENABLED.",
+            "title": "Hf Dataset"
+          },
+          "hf_split": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Hugging Face split to ingest (e.g. 'train'); unset ingests every split.",
+            "title": "Hf Split"
+          },
           "s3_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "description": "s3://bucket/prefix in your VPC to vacuum every media item under.",
-            "title": "S3 Uri",
-            "type": "string"
+            "title": "S3 Uri"
           },
           "target_res": {
             "anyOf": [
@@ -724,9 +1085,6 @@
             "title": "Target Res"
           }
         },
-        "required": [
-          "s3_uri"
-        ],
         "title": "IngestSource",
         "type": "object"
       },
@@ -798,6 +1156,17 @@
       },
       "Job": {
         "properties": {
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Customer Id"
+          },
           "done": {
             "default": 0,
             "title": "Done",
@@ -936,7 +1305,8 @@
                   "pdf",
                   "doc",
                   "note",
-                  "lidar"
+                  "lidar",
+                  "model3d"
                 ],
                 "type": "string"
               },
@@ -983,6 +1353,13 @@
             "title": "Lidar",
             "type": "array"
           },
+          "model3d": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Model3D",
+            "type": "array"
+          },
           "video": {
             "items": {
               "type": "string"
@@ -996,7 +1373,8 @@
           "video",
           "audio",
           "document",
-          "lidar"
+          "lidar",
+          "model3d"
         ],
         "title": "MediaFormats",
         "type": "object"
@@ -1105,6 +1483,18 @@
             "description": "s3:// URI of the stored original.",
             "title": "External Ref"
           },
+          "face_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Faces detected at ingest (FEVER_FACES), when run.",
+            "title": "Face Count"
+          },
           "frame_count": {
             "default": 0,
             "description": "Sampled video frames derived from this blob.",
@@ -1143,7 +1533,8 @@
                   "pdf",
                   "doc",
                   "note",
-                  "lidar"
+                  "lidar",
+                  "model3d"
                 ],
                 "type": "string"
               },
@@ -1151,7 +1542,7 @@
                 "type": "null"
               }
             ],
-            "description": "Media kind of this blob (image/video/audio/pdf/doc/note/lidar).",
+            "description": "Media kind of this blob (image/video/audio/pdf/doc/note/lidar/model3d).",
             "title": "Kind"
           },
           "metadata": {
@@ -1230,6 +1621,18 @@
             "title": "End Ms",
             "type": "integer"
           },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Best frame score inside the range (video frame match ranges only).",
+            "title": "Score"
+          },
           "start_ms": {
             "title": "Start Ms",
             "type": "integer"
@@ -1255,6 +1658,18 @@
       },
       "QueryRequest": {
         "properties": {
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Admin keys only: run this query scoped to one customer, exactly as if a key scoped to that customer had submitted it. Scoped keys are always forced to their own customer_id and may not pass another.",
+            "title": "Customer Id"
+          },
           "row_limit": {
             "default": 200,
             "description": "Max rows to return; capped at 1000 regardless of what's requested. A LIMIT already in the sql, if smaller, is honored instead.",
@@ -1306,6 +1721,109 @@
           "truncated"
         ],
         "title": "QueryResult",
+        "type": "object"
+      },
+      "ReportJob": {
+        "properties": {
+          "job_id": {
+            "title": "Job Id",
+            "type": "integer"
+          },
+          "status": {
+            "default": "pending",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "title": "ReportJob",
+        "type": "object"
+      },
+      "ReportRequest": {
+        "properties": {
+          "customer_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Fill slots from this customer's corpus only.",
+            "title": "Customer Id"
+          },
+          "output_s3_uri": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "s3://bucket/key for the PDF. Default: reports/<customer_id>/<job_id>.pdf in the tenant bucket.",
+            "title": "Output S3 Uri"
+          },
+          "slots": {
+            "description": "Labeled photo slots; each is filled with the best-matching photo.",
+            "items": {
+              "$ref": "#/components/schemas/ReportSlot"
+            },
+            "title": "Slots",
+            "type": "array"
+          },
+          "title": {
+            "description": "Report title, rendered at the top of the PDF.",
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "slots"
+        ],
+        "title": "ReportRequest",
+        "type": "object"
+      },
+      "ReportSlot": {
+        "properties": {
+          "caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Extra caption text, appended to the search query.",
+            "title": "Caption"
+          },
+          "label": {
+            "description": "Slot label; doubles as the text search query for this slot.",
+            "title": "Label",
+            "type": "string"
+          },
+          "min_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Per-slot confidence gate (cosine). Defaults to FEVER_REPORT_MIN_SCORE (0.25).",
+            "title": "Min Score"
+          }
+        },
+        "required": [
+          "label"
+        ],
+        "title": "ReportSlot",
         "type": "object"
       },
       "SearchHit": {
@@ -1362,6 +1880,18 @@
             "title": "Duplicates",
             "type": "array"
           },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Original uploaded file name, when the blob was ingested with one.",
+            "title": "Filename"
+          },
           "geo_label": {
             "anyOf": [
               {
@@ -1408,7 +1938,8 @@
                   "pdf",
                   "doc",
                   "note",
-                  "lidar"
+                  "lidar",
+                  "model3d"
                 ],
                 "type": "string"
               },
@@ -1505,6 +2036,21 @@
             "description": "Lexical FTS highlight (ts_headline) of the winning transcript segment.",
             "title": "Span Headline"
           },
+          "spans": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/MediaSpan"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For video hits: every frame match range (not just the winning frame), so a video that matches several times shows them all. Boundaries are whole seconds (reported as ms, always a multiple of 1000).",
+            "title": "Spans"
+          },
           "tags": {
             "description": "Tags on this item: client-supplied at ingest and/or the appliance's zero-shot autotags.",
             "items": {
@@ -1589,6 +2135,20 @@
             ],
             "description": "Restrict results to media tagged with this customer_id.",
             "title": "Customer Id"
+          },
+          "depth": {
+            "anyOf": [
+              {
+                "maximum": 200.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Rerank pool depth override; defaults to offset + k. Calibration/tuning knob.",
+            "title": "Depth"
           },
           "device": {
             "anyOf": [
@@ -1696,7 +2256,8 @@
                   "pdf",
                   "doc",
                   "note",
-                  "lidar"
+                  "lidar",
+                  "model3d"
                 ],
                 "type": "string"
               },
@@ -1751,6 +2312,14 @@
             ],
             "description": "Geo filter [lat, lon, radius_km] from EXIF GPS.",
             "title": "Near"
+          },
+          "offset": {
+            "default": 0,
+            "description": "Skip this many top-ranked results before taking k (pagination).",
+            "maximum": 100000.0,
+            "minimum": 0.0,
+            "title": "Offset",
+            "type": "integer"
           },
           "sort": {
             "anyOf": [
@@ -1890,7 +2459,7 @@
   "info": {
     "description": "The multimodal media database. Images, video, audio, office documents, and LiDAR in one table: hybrid vector + full-text search, dedupe, seek-to-moment video hits, whisper transcript spans, collection grouping, and asset-to-asset attachments. Tenancy, scale, and isolation are automatic; the tenant is taken from the API key.",
     "title": "FEVER Retrieval",
-    "version": "0.4.0"
+    "version": "0.5.0"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -1912,6 +2481,7 @@
     },
     "/v1/corpus": {
       "get": {
+        "description": "kinds/top_tags/storage_bytes follow the same customer scoping.\nindex_bytes is the appliance-wide footprint of as_blobs/embeddings/\nannotations including their indexes: those tables are hash-partitioned by\ncustomer_id, not per tenant, so a per-tenant share is not attributable and\nevery caller sees the same global value.",
         "operationId": "corpus_stats",
         "parameters": [
           {
@@ -2005,6 +2575,366 @@
         "summary": "Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping",
         "tags": [
           "customers"
+        ]
+      }
+    },
+    "/v1/customers/{customer_id}": {
+      "delete": {
+        "operationId": "delete_customer",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "customer_id",
+            "required": true,
+            "schema": {
+              "title": "Customer Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "adminToken": []
+          }
+        ],
+        "summary": "Delete all data for one customer",
+        "tags": [
+          "customers"
+        ]
+      }
+    },
+    "/v1/datasets": {
+      "get": {
+        "operationId": "list_datasets",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "customer_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Customer Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Dataset"
+                  },
+                  "title": "Response List Datasets",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List datasets visible to this key",
+        "tags": [
+          "datasets"
+        ]
+      },
+      "post": {
+        "operationId": "create_dataset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatasetCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create a dataset, optionally with initial items",
+        "tags": [
+          "datasets"
+        ]
+      }
+    },
+    "/v1/datasets/{dataset_id}": {
+      "delete": {
+        "operationId": "delete_dataset",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dataset_id",
+            "required": true,
+            "schema": {
+              "title": "Dataset Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Delete Dataset",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete a dataset (the blobs themselves stay indexed)",
+        "tags": [
+          "datasets"
+        ]
+      },
+      "get": {
+        "operationId": "get_dataset",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dataset_id",
+            "required": true,
+            "schema": {
+              "title": "Dataset Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get a dataset with its blob ids",
+        "tags": [
+          "datasets"
+        ]
+      }
+    },
+    "/v1/datasets/{dataset_id}/items": {
+      "delete": {
+        "operationId": "remove_dataset_items",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dataset_id",
+            "required": true,
+            "schema": {
+              "title": "Dataset Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/DatasetItemsRemove"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Remove items from a dataset; no body clears every item",
+        "tags": [
+          "datasets"
+        ]
+      },
+      "post": {
+        "operationId": "add_dataset_items",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dataset_id",
+            "required": true,
+            "schema": {
+              "title": "Dataset Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatasetItemsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Add blobs to a dataset",
+        "tags": [
+          "datasets"
         ]
       }
     },
@@ -2130,6 +3060,16 @@
               }
             },
             "description": "Successful Response"
+          },
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportJob"
+                }
+              }
+            },
+            "description": "Export queued as a job"
           },
           "422": {
             "content": {
@@ -2504,6 +3444,65 @@
       }
     },
     "/v1/media/{blob_id}": {
+      "delete": {
+        "operationId": "delete_media",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "blob_id",
+            "required": true,
+            "schema": {
+              "title": "Blob Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "customer_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Customer Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete one media item, all of its derived rows, and its stored object",
+        "tags": [
+          "media"
+        ]
+      },
       "get": {
         "description": "Unified record for a blob_id. Scoped keys can only read their own\ncustomer's blobs; other customers' blobs are a 404 (never an existence\nleak). Admin keys may narrow with ?customer_id=.",
         "operationId": "get_media_info",
@@ -2643,7 +3642,7 @@
     },
     "/v1/media/{blob_id}/bytes": {
       "get": {
-        "description": "Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw\nbytes). Scoped keys can only fetch their own customer's items; other\ncustomers' blobs are a 404 (never an existence leak).\n\n?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic)\nso clients can show a real visual for audio hits without decoding the clip\nin the browser.",
+        "description": "Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw\nbytes). Scoped keys can only fetch their own customer's items; other\ncustomers' blobs are a 404 (never an existence leak).\n\n?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic)\nso clients can show a real visual for audio hits without decoding the clip\nin the browser.\n\n?frame=N (milliseconds) renders a video blob's poster frame at that\ntimestamp as a JPEG; frame=0 keeps the default byte-serving behavior.",
         "operationId": "get_media_bytes",
         "parameters": [
           {
@@ -2672,6 +3671,17 @@
             "schema": {
               "default": 0,
               "title": "Waveform",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "frame",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Frame",
               "type": "integer"
             }
           }
@@ -2845,7 +3855,7 @@
     },
     "/v1/query": {
       "post": {
-        "description": "A mini SQL console over the appliance's corpus tables: as_blobs, annotations, dup_edges, video_frames, transcript_segments, embeddings, datasets, dataset_items (internal jobs/job_items stay queryable for compatibility but are bookkeeping, not data). Exactly one SELECT statement. Natural-language semantic search: an `<=>` comparison between a vec_prefix/vec_full column and fever_search('some text') is allowed in the statement ORDER BY (rank by meaning) or in the SELECT target list (project the raw cosine distance; similarity = 1.0 - distance), at most four distinct fever_search() texts per statement. Raw vector columns (embeddings.vec_*, video_frames.vec_*) are selectable with an admin key; scoped keys get a rejection instead. tsvector (annotations.fts, transcript_segments.fts) columns are excluded for everyone. Scoped api keys are automatically restricted to their own customer_id, which is why they may only submit a narrow statement shape: plain tables and JOINs of them, with a FROM clause, and no subqueries, CTEs or set operations at any depth (those are rejected rather than risk a partial rewrite - use an admin key for them). Admin keys parse unrestricted and see every customer's rows in their own tenant.",
+        "description": "A mini SQL console over the appliance's corpus tables: as_blobs, annotations, dup_edges, video_frames, transcript_segments, embeddings, datasets, dataset_items (internal jobs/job_items stay queryable for compatibility but are bookkeeping, not data), plus the pre-aggregated summary views tag_counts (customer_id, tenant_id, tag, n), kind_counts (customer_id, tenant_id, media_kind, n) and dup_cosine_hist (customer_id, tenant_id, bucket, n) - flat SELECTs that give scoped keys aggregate answers their statement shape cannot express. Exactly one SELECT statement. Natural-language semantic search: an `<=>` comparison between a vec_prefix/vec_full column and fever_search('some text') is allowed in the statement ORDER BY (rank by meaning) or in the SELECT target list (project the raw cosine distance; similarity = 1.0 - distance), at most four distinct fever_search() texts per statement. Raw vector columns (embeddings.vec_*, video_frames.vec_*) are selectable with an admin key; scoped keys get a rejection instead. tsvector (annotations.fts, transcript_segments.fts) columns are excluded for everyone. Scoped api keys are automatically restricted to their own customer_id, which is why they may only submit a narrow statement shape: plain tables and JOINs of them, with a FROM clause, and no subqueries, CTEs or set operations at any depth (those are rejected rather than risk a partial rewrite - use an admin key for them). Admin keys parse unrestricted and see every customer's rows in their own tenant.",
         "operationId": "query",
         "requestBody": {
           "content": {
@@ -2887,6 +3897,99 @@
         "summary": "Run a read-only SQL SELECT over the corpus tables",
         "tags": [
           "query"
+        ]
+      }
+    },
+    "/v1/reports": {
+      "post": {
+        "operationId": "generate_report",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportJob"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Queue a photo report: fill labeled slots with the best-matching photos and render a PDF to S3",
+        "tags": [
+          "reports"
+        ]
+      }
+    },
+    "/v1/reports/{job_id}": {
+      "get": {
+        "operationId": "get_report",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "title": "Job Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get photo report job progress",
+        "tags": [
+          "reports"
         ]
       }
     },
@@ -2988,8 +4091,16 @@
       "name": "duplicates"
     },
     {
+      "description": "Named, customer-owned sets of blobs for curation and filtered export.",
+      "name": "datasets"
+    },
+    {
       "description": "Dump a tenant's vectors and metadata to S3.",
       "name": "export"
+    },
+    {
+      "description": "Photo reports: fill labeled slots with the best-matching corpus photos and render a PDF to S3.",
+      "name": "reports"
     },
     {
       "description": "Read-only SQL over the whitelisted corpus tables.",
