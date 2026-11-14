@@ -36,6 +36,20 @@ func Test_fever_MediaAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test MediaAPIService DeleteMedia", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var blobId int32
+
+		resp, httpRes, err := apiClient.MediaAPI.DeleteMedia(context.Background(), blobId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test MediaAPIService GetMediaBytes", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

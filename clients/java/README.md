@@ -2,7 +2,7 @@
 
 FEVER Retrieval
 
-- API version: 0.4.0
+- API version: 0.5.0
 
 - Generator version: 7.25.0
 
@@ -42,7 +42,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.lowdownlabs</groupId>
   <artifactId>fever-client</artifactId>
-  <version>0.4.1</version>
+  <version>0.5.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -52,7 +52,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.lowdownlabs:fever-client:0.4.1"
+compile "com.lowdownlabs:fever-client:0.5.0"
 ```
 
 ### Others
@@ -65,7 +65,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-- `target/fever-client-0.4.1.jar`
+- `target/fever-client-0.5.0.jar`
 - `target/lib/*.jar`
 
 ## Getting Started
@@ -110,8 +110,22 @@ Class | Method | HTTP request | Description
 *AuthApi* | [**whoamiWithHttpInfo**](docs/AuthApi.md#whoamiWithHttpInfo) | **GET** /v1/whoami | Report the calling key&#39;s role and customer scope
 *CorpusApi* | [**corpusStats**](docs/CorpusApi.md#corpusStats) | **GET** /v1/corpus | Corpus composition: per-kind counts and top autotags
 *CorpusApi* | [**corpusStatsWithHttpInfo**](docs/CorpusApi.md#corpusStatsWithHttpInfo) | **GET** /v1/corpus | Corpus composition: per-kind counts and top autotags
+*CustomersApi* | [**deleteCustomer**](docs/CustomersApi.md#deleteCustomer) | **DELETE** /v1/customers/{customer_id} | Delete all data for one customer
+*CustomersApi* | [**deleteCustomerWithHttpInfo**](docs/CustomersApi.md#deleteCustomerWithHttpInfo) | **DELETE** /v1/customers/{customer_id} | Delete all data for one customer
 *CustomersApi* | [**reassignCustomersBulk**](docs/CustomersApi.md#reassignCustomersBulk) | **POST** /v1/customers/reassign-bulk | Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
 *CustomersApi* | [**reassignCustomersBulkWithHttpInfo**](docs/CustomersApi.md#reassignCustomersBulkWithHttpInfo) | **POST** /v1/customers/reassign-bulk | Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
+*DatasetsApi* | [**addDatasetItems**](docs/DatasetsApi.md#addDatasetItems) | **POST** /v1/datasets/{dataset_id}/items | Add blobs to a dataset
+*DatasetsApi* | [**addDatasetItemsWithHttpInfo**](docs/DatasetsApi.md#addDatasetItemsWithHttpInfo) | **POST** /v1/datasets/{dataset_id}/items | Add blobs to a dataset
+*DatasetsApi* | [**createDataset**](docs/DatasetsApi.md#createDataset) | **POST** /v1/datasets | Create a dataset, optionally with initial items
+*DatasetsApi* | [**createDatasetWithHttpInfo**](docs/DatasetsApi.md#createDatasetWithHttpInfo) | **POST** /v1/datasets | Create a dataset, optionally with initial items
+*DatasetsApi* | [**deleteDataset**](docs/DatasetsApi.md#deleteDataset) | **DELETE** /v1/datasets/{dataset_id} | Delete a dataset (the blobs themselves stay indexed)
+*DatasetsApi* | [**deleteDatasetWithHttpInfo**](docs/DatasetsApi.md#deleteDatasetWithHttpInfo) | **DELETE** /v1/datasets/{dataset_id} | Delete a dataset (the blobs themselves stay indexed)
+*DatasetsApi* | [**getDataset**](docs/DatasetsApi.md#getDataset) | **GET** /v1/datasets/{dataset_id} | Get a dataset with its blob ids
+*DatasetsApi* | [**getDatasetWithHttpInfo**](docs/DatasetsApi.md#getDatasetWithHttpInfo) | **GET** /v1/datasets/{dataset_id} | Get a dataset with its blob ids
+*DatasetsApi* | [**listDatasets**](docs/DatasetsApi.md#listDatasets) | **GET** /v1/datasets | List datasets visible to this key
+*DatasetsApi* | [**listDatasetsWithHttpInfo**](docs/DatasetsApi.md#listDatasetsWithHttpInfo) | **GET** /v1/datasets | List datasets visible to this key
+*DatasetsApi* | [**removeDatasetItems**](docs/DatasetsApi.md#removeDatasetItems) | **DELETE** /v1/datasets/{dataset_id}/items | Remove items from a dataset; no body clears every item
+*DatasetsApi* | [**removeDatasetItemsWithHttpInfo**](docs/DatasetsApi.md#removeDatasetItemsWithHttpInfo) | **DELETE** /v1/datasets/{dataset_id}/items | Remove items from a dataset; no body clears every item
 *DefaultApi* | [**health**](docs/DefaultApi.md#health) | **GET** /v1/health | Health check
 *DefaultApi* | [**healthWithHttpInfo**](docs/DefaultApi.md#healthWithHttpInfo) | **GET** /v1/health | Health check
 *DefaultApi* | [**healthzHealthzGet**](docs/DefaultApi.md#healthzHealthzGet) | **GET** /healthz | Healthz
@@ -138,6 +152,8 @@ Class | Method | HTTP request | Description
 *KeysApi* | [**revokeKeyWithHttpInfo**](docs/KeysApi.md#revokeKeyWithHttpInfo) | **POST** /v1/keys/{key_id}/revoke | Revoke an API key
 *MediaApi* | [**associateMedia**](docs/MediaApi.md#associateMedia) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
 *MediaApi* | [**associateMediaWithHttpInfo**](docs/MediaApi.md#associateMediaWithHttpInfo) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+*MediaApi* | [**deleteMedia**](docs/MediaApi.md#deleteMedia) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object
+*MediaApi* | [**deleteMediaWithHttpInfo**](docs/MediaApi.md#deleteMediaWithHttpInfo) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object
 *MediaApi* | [**getMediaBytes**](docs/MediaApi.md#getMediaBytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG)
 *MediaApi* | [**getMediaBytesWithHttpInfo**](docs/MediaApi.md#getMediaBytesWithHttpInfo) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG)
 *MediaApi* | [**getMediaInfo**](docs/MediaApi.md#getMediaInfo) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
@@ -150,6 +166,10 @@ Class | Method | HTTP request | Description
 *MediaApi* | [**listMediaTranscriptWithHttpInfo**](docs/MediaApi.md#listMediaTranscriptWithHttpInfo) | **GET** /v1/media/{blob_id}/transcript | Whisper transcript segments for a parent blob (audio or video)
 *QueryApi* | [**query**](docs/QueryApi.md#query) | **POST** /v1/query | Run a read-only SQL SELECT over the corpus tables
 *QueryApi* | [**queryWithHttpInfo**](docs/QueryApi.md#queryWithHttpInfo) | **POST** /v1/query | Run a read-only SQL SELECT over the corpus tables
+*ReportsApi* | [**generateReport**](docs/ReportsApi.md#generateReport) | **POST** /v1/reports | Queue a photo report: fill labeled slots with the best-matching photos and render a PDF to S3
+*ReportsApi* | [**generateReportWithHttpInfo**](docs/ReportsApi.md#generateReportWithHttpInfo) | **POST** /v1/reports | Queue a photo report: fill labeled slots with the best-matching photos and render a PDF to S3
+*ReportsApi* | [**getReport**](docs/ReportsApi.md#getReport) | **GET** /v1/reports/{job_id} | Get photo report job progress
+*ReportsApi* | [**getReportWithHttpInfo**](docs/ReportsApi.md#getReportWithHttpInfo) | **GET** /v1/reports/{job_id} | Get photo report job progress
 *SearchApi* | [**search**](docs/SearchApi.md#search) | **POST** /v1/search | Search by text or image
 *SearchApi* | [**searchWithHttpInfo**](docs/SearchApi.md#searchWithHttpInfo) | **POST** /v1/search | Search by text or image
 
@@ -161,9 +181,15 @@ Class | Method | HTTP request | Description
  - [CorpusStats](docs/CorpusStats.md)
  - [CorpusTag](docs/CorpusTag.md)
  - [CreateKeyRequest](docs/CreateKeyRequest.md)
+ - [Dataset](docs/Dataset.md)
+ - [DatasetCreate](docs/DatasetCreate.md)
+ - [DatasetDetail](docs/DatasetDetail.md)
+ - [DatasetItemsRemove](docs/DatasetItemsRemove.md)
+ - [DatasetItemsRequest](docs/DatasetItemsRequest.md)
  - [DuplicateCluster](docs/DuplicateCluster.md)
  - [DuplicatesRequest](docs/DuplicatesRequest.md)
  - [DuplicatesResponse](docs/DuplicatesResponse.md)
+ - [ExportJob](docs/ExportJob.md)
  - [ExportRequest](docs/ExportRequest.md)
  - [ExportResult](docs/ExportResult.md)
  - [HTTPValidationError](docs/HTTPValidationError.md)
@@ -185,6 +211,9 @@ Class | Method | HTTP request | Description
  - [MediaSpan](docs/MediaSpan.md)
  - [QueryRequest](docs/QueryRequest.md)
  - [QueryResult](docs/QueryResult.md)
+ - [ReportJob](docs/ReportJob.md)
+ - [ReportRequest](docs/ReportRequest.md)
+ - [ReportSlot](docs/ReportSlot.md)
  - [SearchHit](docs/SearchHit.md)
  - [SearchRequest](docs/SearchRequest.md)
  - [TranscriptSegment](docs/TranscriptSegment.md)

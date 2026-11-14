@@ -8,6 +8,9 @@ Name | Type
 ------------ | -------------
 `collectionId` | string
 `customerId` | string
+`hfConfig` | string
+`hfDataset` | string
+`hfSplit` | string
 `s3Uri` | string
 `targetRes` | number
 
@@ -20,6 +23,9 @@ import type { IngestSource } from 'fever-client'
 const example = {
   "collectionId": null,
   "customerId": null,
+  "hfConfig": null,
+  "hfDataset": null,
+  "hfSplit": null,
   "s3Uri": null,
   "targetRes": null,
 } satisfies IngestSource

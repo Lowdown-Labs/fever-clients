@@ -8,13 +8,14 @@ Name | Type | Description | Notes
 **Document** | **[]string** |  | 
 **Image** | **[]string** |  | 
 **Lidar** | **[]string** |  | 
+**Model3d** | **[]string** |  | 
 **Video** | **[]string** |  | 
 
 ## Methods
 
 ### NewMediaFormats
 
-`func NewMediaFormats(audio []string, document []string, image []string, lidar []string, video []string, ) *MediaFormats`
+`func NewMediaFormats(audio []string, document []string, image []string, lidar []string, model3d []string, video []string, ) *MediaFormats`
 
 NewMediaFormats instantiates a new MediaFormats object
 This constructor will assign default values to properties that have it defined,
@@ -107,6 +108,26 @@ and a boolean to check if the value has been set.
 `func (o *MediaFormats) SetLidar(v []string)`
 
 SetLidar sets Lidar field to given value.
+
+
+### GetModel3d
+
+`func (o *MediaFormats) GetModel3d() []string`
+
+GetModel3d returns the Model3d field if non-nil, zero value otherwise.
+
+### GetModel3dOk
+
+`func (o *MediaFormats) GetModel3dOk() (*[]string, bool)`
+
+GetModel3dOk returns a tuple with the Model3d field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetModel3d
+
+`func (o *MediaFormats) SetModel3d(v []string)`
+
+SetModel3d sets Model3d field to given value.
 
 
 ### GetVideo

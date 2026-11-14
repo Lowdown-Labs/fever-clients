@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **document** | **Vec<String>** |  | 
 **image** | **Vec<String>** |  | 
 **lidar** | **Vec<String>** |  | 
+**model3d** | **Vec<String>** |  | 
 **video** | **Vec<String>** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

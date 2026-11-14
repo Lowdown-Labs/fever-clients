@@ -5,7 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**index_bytes** | **int** |  | 
 **kinds** | **Dict[str, int]** |  | 
+**storage_bytes** | **int** |  | 
 **top_tags** | [**List[CorpusTag]**](CorpusTag.md) |  | 
 
 ## Example

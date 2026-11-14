@@ -8,6 +8,7 @@ The transcript span that matched: where in the audio/video the hit is. Includes 
 Name | Type
 ------------ | -------------
 `endMs` | number
+`score` | number
 `startMs` | number
 `text` | string
 
@@ -19,6 +20,7 @@ import type { MediaSpan } from 'fever-client'
 // TODO: Update the object below with actual values
 const example = {
   "endMs": null,
+  "score": null,
   "startMs": null,
   "text": null,
 } satisfies MediaSpan

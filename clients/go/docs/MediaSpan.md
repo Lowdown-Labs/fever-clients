@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **EndMs** | **int32** |  | 
+**Score** | Pointer to **NullableFloat32** | Best frame score inside the range (video frame match ranges only). | [optional] 
 **StartMs** | **int32** |  | 
 **Text** | Pointer to **NullableString** |  | [optional] 
 
@@ -47,6 +48,41 @@ and a boolean to check if the value has been set.
 SetEndMs sets EndMs field to given value.
 
 
+### GetScore
+
+`func (o *MediaSpan) GetScore() float32`
+
+GetScore returns the Score field if non-nil, zero value otherwise.
+
+### GetScoreOk
+
+`func (o *MediaSpan) GetScoreOk() (*float32, bool)`
+
+GetScoreOk returns a tuple with the Score field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScore
+
+`func (o *MediaSpan) SetScore(v float32)`
+
+SetScore sets Score field to given value.
+
+### HasScore
+
+`func (o *MediaSpan) HasScore() bool`
+
+HasScore returns a boolean if a field has been set.
+
+### SetScoreNil
+
+`func (o *MediaSpan) SetScoreNil(b bool)`
+
+ SetScoreNil sets the value for Score to be an explicit nil
+
+### UnsetScore
+`func (o *MediaSpan) UnsetScore()`
+
+UnsetScore ensures that no value is present for Score, not even an explicit nil
 ### GetStartMs
 
 `func (o *MediaSpan) GetStartMs() int32`

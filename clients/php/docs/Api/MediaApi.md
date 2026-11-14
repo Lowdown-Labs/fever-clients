@@ -7,6 +7,7 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
 | [**associateMedia()**](MediaApi.md#associateMedia) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo) |
+| [**deleteMedia()**](MediaApi.md#deleteMedia) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object |
 | [**getMediaBytes()**](MediaApi.md#getMediaBytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG) |
 | [**getMediaInfo()**](MediaApi.md#getMediaInfo) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts |
 | [**listMediaFormats()**](MediaApi.md#listMediaFormats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family |
@@ -78,15 +79,75 @@ try {
 [[Back to Model list]](../../README.md#models)
 [[Back to README]](../../README.md)
 
+## `deleteMedia()`
+
+```php
+deleteMedia($blob_id, $customer_id): mixed
+```
+
+Delete one media item, all of its derived rows, and its stored object
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: bearerAuth
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LowdownLabs\Fever\Api\MediaApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$blob_id = 56; // int
+$customer_id = 'customer_id_example'; // string
+
+try {
+    $result = $apiInstance->deleteMedia($blob_id, $customer_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling MediaApi->deleteMedia: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **blob_id** | **int**|  | |
+| **customer_id** | **string**|  | [optional] |
+
+### Return type
+
+**mixed**
+
+### Authorization
+
+[bearerAuth](../../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
+
 ## `getMediaBytes()`
 
 ```php
-getMediaBytes($blob_id, $max_dim, $waveform): mixed
+getMediaBytes($blob_id, $max_dim, $waveform, $frame): mixed
 ```
 
 Fetch an indexed media item's bytes (images normalized to JPEG)
 
-Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw bytes). Scoped keys can only fetch their own customer's items; other customers' blobs are a 404 (never an existence leak).  ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.
+Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw bytes). Scoped keys can only fetch their own customer's items; other customers' blobs are a 404 (never an existence leak).  ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.  ?frame=N (milliseconds) renders a video blob's poster frame at that timestamp as a JPEG; frame=0 keeps the default byte-serving behavior.
 
 ### Example
 
@@ -108,9 +169,10 @@ $apiInstance = new LowdownLabs\Fever\Api\MediaApi(
 $blob_id = 56; // int
 $max_dim = 1280; // int
 $waveform = 0; // int
+$frame = 0; // int
 
 try {
-    $result = $apiInstance->getMediaBytes($blob_id, $max_dim, $waveform);
+    $result = $apiInstance->getMediaBytes($blob_id, $max_dim, $waveform, $frame);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling MediaApi->getMediaBytes: ', $e->getMessage(), PHP_EOL;
@@ -124,6 +186,7 @@ try {
 | **blob_id** | **int**|  | |
 | **max_dim** | **int**|  | [optional] [default to 1280] |
 | **waveform** | **int**|  | [optional] [default to 0] |
+| **frame** | **int**|  | [optional] [default to 0] |
 
 ### Return type
 

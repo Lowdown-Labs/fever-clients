@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **CustomerId** | Pointer to **NullableString** |  | [optional] 
 **DuplicateCount** | Pointer to **int32** | Number of near-duplicates collapsed into this hit. | [optional] [default to 0]
 **Duplicates** | Pointer to **[]int32** | blob_ids of near-duplicates collapsed into this hit. | [optional] 
+**Filename** | Pointer to **NullableString** | Original uploaded file name, when the blob was ingested with one. | [optional] 
 **GeoLabel** | Pointer to **NullableString** | Reverse-geocode label from EXIF GPS (e.g. &#39;Lisbon, PT&#39;), when the asset carries intact camera coordinates (the geo:&lt;label&gt; tag rides alongside). | [optional] 
 **Headline** | Pointer to **NullableString** | Lexical FTS highlight (ts_headline) when the hit came via full-text search. | [optional] 
 **Height** | Pointer to **NullableInt32** | Stored media height in pixels, when known. | [optional] 
@@ -22,6 +23,7 @@ Name | Type | Description | Notes
 **SeekMs** | Pointer to **NullableInt32** | For video hits: timestamp of the winning frame, for seek-to-moment playback. | [optional] 
 **Span** | Pointer to [**NullableMediaSpan**](MediaSpan.md) | For transcript hits: the matching whisper segment, with literal text for highlighting. | [optional] 
 **SpanHeadline** | Pointer to **NullableString** | Lexical FTS highlight (ts_headline) of the winning transcript segment. | [optional] 
+**Spans** | Pointer to [**[]MediaSpan**](MediaSpan.md) | For video hits: every frame match range (not just the winning frame), so a video that matches several times shows them all. Boundaries are whole seconds (reported as ms, always a multiple of 1000). | [optional] 
 **Tags** | Pointer to **[]string** | Tags on this item: client-supplied at ingest and/or the appliance&#39;s zero-shot autotags. | [optional] 
 **Width** | Pointer to **NullableInt32** | Stored media width in pixels, when known. | [optional] 
 
@@ -219,6 +221,41 @@ SetDuplicates sets Duplicates field to given value.
 
 HasDuplicates returns a boolean if a field has been set.
 
+### GetFilename
+
+`func (o *SearchHit) GetFilename() string`
+
+GetFilename returns the Filename field if non-nil, zero value otherwise.
+
+### GetFilenameOk
+
+`func (o *SearchHit) GetFilenameOk() (*string, bool)`
+
+GetFilenameOk returns a tuple with the Filename field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFilename
+
+`func (o *SearchHit) SetFilename(v string)`
+
+SetFilename sets Filename field to given value.
+
+### HasFilename
+
+`func (o *SearchHit) HasFilename() bool`
+
+HasFilename returns a boolean if a field has been set.
+
+### SetFilenameNil
+
+`func (o *SearchHit) SetFilenameNil(b bool)`
+
+ SetFilenameNil sets the value for Filename to be an explicit nil
+
+### UnsetFilename
+`func (o *SearchHit) UnsetFilename()`
+
+UnsetFilename ensures that no value is present for Filename, not even an explicit nil
 ### GetGeoLabel
 
 `func (o *SearchHit) GetGeoLabel() string`
@@ -609,6 +646,41 @@ HasSpanHeadline returns a boolean if a field has been set.
 `func (o *SearchHit) UnsetSpanHeadline()`
 
 UnsetSpanHeadline ensures that no value is present for SpanHeadline, not even an explicit nil
+### GetSpans
+
+`func (o *SearchHit) GetSpans() []MediaSpan`
+
+GetSpans returns the Spans field if non-nil, zero value otherwise.
+
+### GetSpansOk
+
+`func (o *SearchHit) GetSpansOk() (*[]MediaSpan, bool)`
+
+GetSpansOk returns a tuple with the Spans field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSpans
+
+`func (o *SearchHit) SetSpans(v []MediaSpan)`
+
+SetSpans sets Spans field to given value.
+
+### HasSpans
+
+`func (o *SearchHit) HasSpans() bool`
+
+HasSpans returns a boolean if a field has been set.
+
+### SetSpansNil
+
+`func (o *SearchHit) SetSpansNil(b bool)`
+
+ SetSpansNil sets the value for Spans to be an explicit nil
+
+### UnsetSpans
+`func (o *SearchHit) UnsetSpans()`
+
+UnsetSpans ensures that no value is present for Spans, not even an explicit nil
 ### GetTags
 
 `func (o *SearchHit) GetTags() []string`

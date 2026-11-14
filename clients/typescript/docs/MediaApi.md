@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**associateMedia**](MediaApi.md#associatemedia) | **POST** /v1/media/{blob_id}/associate | Set a blob\&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo) |
+| [**deleteMedia**](MediaApi.md#deletemedia) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object |
 | [**getMediaBytes**](MediaApi.md#getmediabytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item\&#39;s bytes (images normalized to JPEG) |
 | [**getMediaInfo**](MediaApi.md#getmediainfo) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts |
 | [**listMediaFormats**](MediaApi.md#listmediaformats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family |
@@ -91,13 +92,86 @@ example().catch(console.error);
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
+## deleteMedia
+
+> any deleteMedia(blobId, customerId)
+
+Delete one media item, all of its derived rows, and its stored object
+
+### Example
+
+```ts
+import {
+  Configuration,
+  MediaApi,
+} from 'fever-client';
+import type { DeleteMediaRequest } from 'fever-client';
+
+async function example() {
+  console.log("🚀 Testing fever-client SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: bearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new MediaApi(config);
+
+  const body = {
+    // number
+    blobId: 56,
+    // string (optional)
+    customerId: customerId_example,
+  } satisfies DeleteMediaRequest;
+
+  try {
+    const data = await api.deleteMedia(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **blobId** | `number` |  | [Defaults to `undefined`] |
+| **customerId** | `string` |  | [Optional] [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
 ## getMediaBytes
 
-> any getMediaBytes(blobId, maxDim, waveform)
+> any getMediaBytes(blobId, maxDim, waveform, frame)
 
 Fetch an indexed media item\&#39;s bytes (images normalized to JPEG)
 
-Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 &#x3D; raw bytes). Scoped keys can only fetch their own customer\&#39;s items; other customers\&#39; blobs are a 404 (never an existence leak).  ?waveform&#x3D;1 renders an audio blob\&#39;s waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.
+Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 &#x3D; raw bytes). Scoped keys can only fetch their own customer\&#39;s items; other customers\&#39; blobs are a 404 (never an existence leak).  ?waveform&#x3D;1 renders an audio blob\&#39;s waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.  ?frame&#x3D;N (milliseconds) renders a video blob\&#39;s poster frame at that timestamp as a JPEG; frame&#x3D;0 keeps the default byte-serving behavior.
 
 ### Example
 
@@ -123,6 +197,8 @@ async function example() {
     maxDim: 56,
     // number (optional)
     waveform: 56,
+    // number (optional)
+    frame: 56,
   } satisfies GetMediaBytesRequest;
 
   try {
@@ -145,6 +221,7 @@ example().catch(console.error);
 | **blobId** | `number` |  | [Defaults to `undefined`] |
 | **maxDim** | `number` |  | [Optional] [Defaults to `1280`] |
 | **waveform** | `number` |  | [Optional] [Defaults to `0`] |
+| **frame** | `number` |  | [Optional] [Defaults to `0`] |
 
 ### Return type
 

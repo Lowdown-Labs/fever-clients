@@ -12,10 +12,11 @@
 | **customer_id** | **String** |  | [optional] |
 | **device** | **String** | EXIF camera make/model. | [optional] |
 | **external_ref** | **String** | s3:// URI of the stored original. | [optional] |
+| **face_count** | **Integer** | Faces detected at ingest (FEVER_FACES), when run. | [optional] |
 | **frame_count** | **Integer** | Sampled video frames derived from this blob. | [optional][default to 0] |
 | **gps_lat** | **Float** |  | [optional] |
 | **gps_lon** | **Float** |  | [optional] |
-| **kind** | **String** | Media kind of this blob (image/video/audio/pdf/doc/note/lidar). | [optional] |
+| **kind** | **String** | Media kind of this blob (image/video/audio/pdf/doc/note/lidar/model3d). | [optional] |
 | **metadata** | **Hash&lt;String, Object&gt;** |  | [optional] |
 | **ocr_text** | **String** | Text OCR&#39;d out of the item (PDF pages always, photos when enabled). | [optional] |
 | **parent_ref** | **String** | Pointer to this item&#39;s related parent asset, if declared. | [optional] |
@@ -37,6 +38,7 @@ instance = FeverClient::MediaInfo.new(
   customer_id: null,
   device: null,
   external_ref: null,
+  face_count: null,
   frame_count: null,
   gps_lat: null,
   gps_lon: null,

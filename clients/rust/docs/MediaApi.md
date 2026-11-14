@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**associate_media**](MediaApi.md#associate_media) | **POST** /v1/media/{blob_id}/associate | Set a blob's collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+[**delete_media**](MediaApi.md#delete_media) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object
 [**get_media_bytes**](MediaApi.md#get_media_bytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item's bytes (images normalized to JPEG)
 [**get_media_info**](MediaApi.md#get_media_info) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 [**list_media_formats**](MediaApi.md#list_media_formats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family
@@ -45,12 +46,41 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## delete_media
+
+> serde_json::Value delete_media(blob_id, customer_id)
+Delete one media item, all of its derived rows, and its stored object
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**blob_id** | **i32** |  | [required] |
+**customer_id** | Option<**String**> |  |  |
+
+### Return type
+
+[**serde_json::Value**](serde_json::Value.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## get_media_bytes
 
-> serde_json::Value get_media_bytes(blob_id, max_dim, waveform)
+> serde_json::Value get_media_bytes(blob_id, max_dim, waveform, frame)
 Fetch an indexed media item's bytes (images normalized to JPEG)
 
-Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw bytes). Scoped keys can only fetch their own customer's items; other customers' blobs are a 404 (never an existence leak).  ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.
+Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw bytes). Scoped keys can only fetch their own customer's items; other customers' blobs are a 404 (never an existence leak).  ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.  ?frame=N (milliseconds) renders a video blob's poster frame at that timestamp as a JPEG; frame=0 keeps the default byte-serving behavior.
 
 ### Parameters
 
@@ -60,6 +90,7 @@ Name | Type | Description  | Required | Notes
 **blob_id** | **i32** |  | [required] |
 **max_dim** | Option<**i32**> |  |  |[default to 1280]
 **waveform** | Option<**i32**> |  |  |[default to 0]
+**frame** | Option<**i32**> |  |  |[default to 0]
 
 ### Return type
 

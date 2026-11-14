@@ -7,6 +7,7 @@ The transcript span that matched: where in the audio/video the hit is. Includes 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **end_ms** | **int** |  | 
+**score** | **float** | Best frame score inside the range (video frame match ranges only). | [optional] 
 **start_ms** | **int** |  | 
 **text** | **str** |  | [optional] 
 

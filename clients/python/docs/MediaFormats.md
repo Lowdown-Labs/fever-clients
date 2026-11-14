@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **document** | **List[str]** |  | 
 **image** | **List[str]** |  | 
 **lidar** | **List[str]** |  | 
+**model3d** | **List[str]** |  | 
 **video** | **List[str]** |  | 
 
 ## Example

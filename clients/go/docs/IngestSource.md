@@ -6,14 +6,17 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **CollectionId** | Pointer to **NullableString** | Tag every vacuumed item with this collection_id. | [optional] 
 **CustomerId** | Pointer to **NullableString** | Tag every vacuumed item with this customer_id. | [optional] 
-**S3Uri** | **string** | s3://bucket/prefix in your VPC to vacuum every media item under. | 
+**HfConfig** | Pointer to **NullableString** | Hugging Face dataset config/subset name, when the dataset has several. | [optional] 
+**HfDataset** | Pointer to **NullableString** | Hugging Face dataset repo id (org/name) whose images are staged and ingested. Only available on deployments with FEVER_HF_INGEST_ENABLED. | [optional] 
+**HfSplit** | Pointer to **NullableString** | Hugging Face split to ingest (e.g. &#39;train&#39;); unset ingests every split. | [optional] 
+**S3Uri** | Pointer to **NullableString** | s3://bucket/prefix in your VPC to vacuum every media item under. | [optional] 
 **TargetRes** | Pointer to **NullableInt32** | Resolution to index at, in pixels (rounded to a multiple of 16). Images are resized to this before embedding; higher means more detail but slower. Leave unset for the fast production default (64). | [optional] 
 
 ## Methods
 
 ### NewIngestSource
 
-`func NewIngestSource(s3Uri string, ) *IngestSource`
+`func NewIngestSource() *IngestSource`
 
 NewIngestSource instantiates a new IngestSource object
 This constructor will assign default values to properties that have it defined,
@@ -98,6 +101,111 @@ HasCustomerId returns a boolean if a field has been set.
 `func (o *IngestSource) UnsetCustomerId()`
 
 UnsetCustomerId ensures that no value is present for CustomerId, not even an explicit nil
+### GetHfConfig
+
+`func (o *IngestSource) GetHfConfig() string`
+
+GetHfConfig returns the HfConfig field if non-nil, zero value otherwise.
+
+### GetHfConfigOk
+
+`func (o *IngestSource) GetHfConfigOk() (*string, bool)`
+
+GetHfConfigOk returns a tuple with the HfConfig field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHfConfig
+
+`func (o *IngestSource) SetHfConfig(v string)`
+
+SetHfConfig sets HfConfig field to given value.
+
+### HasHfConfig
+
+`func (o *IngestSource) HasHfConfig() bool`
+
+HasHfConfig returns a boolean if a field has been set.
+
+### SetHfConfigNil
+
+`func (o *IngestSource) SetHfConfigNil(b bool)`
+
+ SetHfConfigNil sets the value for HfConfig to be an explicit nil
+
+### UnsetHfConfig
+`func (o *IngestSource) UnsetHfConfig()`
+
+UnsetHfConfig ensures that no value is present for HfConfig, not even an explicit nil
+### GetHfDataset
+
+`func (o *IngestSource) GetHfDataset() string`
+
+GetHfDataset returns the HfDataset field if non-nil, zero value otherwise.
+
+### GetHfDatasetOk
+
+`func (o *IngestSource) GetHfDatasetOk() (*string, bool)`
+
+GetHfDatasetOk returns a tuple with the HfDataset field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHfDataset
+
+`func (o *IngestSource) SetHfDataset(v string)`
+
+SetHfDataset sets HfDataset field to given value.
+
+### HasHfDataset
+
+`func (o *IngestSource) HasHfDataset() bool`
+
+HasHfDataset returns a boolean if a field has been set.
+
+### SetHfDatasetNil
+
+`func (o *IngestSource) SetHfDatasetNil(b bool)`
+
+ SetHfDatasetNil sets the value for HfDataset to be an explicit nil
+
+### UnsetHfDataset
+`func (o *IngestSource) UnsetHfDataset()`
+
+UnsetHfDataset ensures that no value is present for HfDataset, not even an explicit nil
+### GetHfSplit
+
+`func (o *IngestSource) GetHfSplit() string`
+
+GetHfSplit returns the HfSplit field if non-nil, zero value otherwise.
+
+### GetHfSplitOk
+
+`func (o *IngestSource) GetHfSplitOk() (*string, bool)`
+
+GetHfSplitOk returns a tuple with the HfSplit field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetHfSplit
+
+`func (o *IngestSource) SetHfSplit(v string)`
+
+SetHfSplit sets HfSplit field to given value.
+
+### HasHfSplit
+
+`func (o *IngestSource) HasHfSplit() bool`
+
+HasHfSplit returns a boolean if a field has been set.
+
+### SetHfSplitNil
+
+`func (o *IngestSource) SetHfSplitNil(b bool)`
+
+ SetHfSplitNil sets the value for HfSplit to be an explicit nil
+
+### UnsetHfSplit
+`func (o *IngestSource) UnsetHfSplit()`
+
+UnsetHfSplit ensures that no value is present for HfSplit, not even an explicit nil
 ### GetS3Uri
 
 `func (o *IngestSource) GetS3Uri() string`
@@ -117,7 +225,22 @@ and a boolean to check if the value has been set.
 
 SetS3Uri sets S3Uri field to given value.
 
+### HasS3Uri
 
+`func (o *IngestSource) HasS3Uri() bool`
+
+HasS3Uri returns a boolean if a field has been set.
+
+### SetS3UriNil
+
+`func (o *IngestSource) SetS3UriNil(b bool)`
+
+ SetS3UriNil sets the value for S3Uri to be an explicit nil
+
+### UnsetS3Uri
+`func (o *IngestSource) UnsetS3Uri()`
+
+UnsetS3Uri ensures that no value is present for S3Uri, not even an explicit nil
 ### GetTargetRes
 
 `func (o *IngestSource) GetTargetRes() int32`

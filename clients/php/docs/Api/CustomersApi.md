@@ -6,8 +6,67 @@ All URIs are relative to http://localhost, except if the operation defines anoth
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
+| [**deleteCustomer()**](CustomersApi.md#deleteCustomer) | **DELETE** /v1/customers/{customer_id} | Delete all data for one customer |
 | [**reassignCustomersBulk()**](CustomersApi.md#reassignCustomersBulk) | **POST** /v1/customers/reassign-bulk | Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping |
 
+
+## `deleteCustomer()`
+
+```php
+deleteCustomer($customer_id): mixed
+```
+
+Delete all data for one customer
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure Bearer authorization: adminToken
+$config = LowdownLabs\Fever\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LowdownLabs\Fever\Api\CustomersApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$customer_id = 'customer_id_example'; // string
+
+try {
+    $result = $apiInstance->deleteCustomer($customer_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling CustomersApi->deleteCustomer: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **customer_id** | **string**|  | |
+
+### Return type
+
+**mixed**
+
+### Authorization
+
+[adminToken](../../README.md#adminToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
 ## `reassignCustomersBulk()`
 

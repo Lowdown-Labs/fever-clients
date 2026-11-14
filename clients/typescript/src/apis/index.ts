@@ -3,6 +3,7 @@
 export * from './AuthApi';
 export * from './CorpusApi';
 export * from './CustomersApi';
+export * from './DatasetsApi';
 export * from './DefaultApi';
 export * from './DuplicatesApi';
 export * from './ExportApi';
@@ -11,4 +12,5 @@ export * from './JobsApi';
 export * from './KeysApi';
 export * from './MediaApi';
 export * from './QueryApi';
+export * from './ReportsApi';
 export * from './SearchApi';

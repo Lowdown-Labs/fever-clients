@@ -6,7 +6,9 @@
 
 Name | Type
 ------------ | -------------
+`indexBytes` | number
 `kinds` | { [key: string]: number; }
+`storageBytes` | number
 `topTags` | [Array&lt;CorpusTag&gt;](CorpusTag.md)
 
 ## Example
@@ -16,7 +18,9 @@ import type { CorpusStats } from 'fever-client'
 
 // TODO: Update the object below with actual values
 const example = {
+  "indexBytes": null,
   "kinds": null,
+  "storageBytes": null,
   "topTags": null,
 } satisfies CorpusStats
 

@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
 | [**associate_media**](MediaApi.md#associate_media) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo) |
+| [**delete_media**](MediaApi.md#delete_media) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object |
 | [**get_media_bytes**](MediaApi.md#get_media_bytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG) |
 | [**get_media_info**](MediaApi.md#get_media_info) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts |
 | [**list_media_formats**](MediaApi.md#list_media_formats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family |
@@ -87,13 +88,84 @@ end
 - **Accept**: application/json
 
 
+## delete_media
+
+> Object delete_media(blob_id, opts)
+
+Delete one media item, all of its derived rows, and its stored object
+
+### Examples
+
+```ruby
+require 'time'
+require 'fever_client'
+# setup authorization
+FeverClient.configure do |config|
+  # Configure Bearer authorization: bearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = FeverClient::MediaApi.new
+blob_id = 56 # Integer | 
+opts = {
+  customer_id: 'customer_id_example' # String | 
+}
+
+begin
+  # Delete one media item, all of its derived rows, and its stored object
+  result = api_instance.delete_media(blob_id, opts)
+  p result
+rescue FeverClient::ApiError => e
+  puts "Error when calling MediaApi->delete_media: #{e}"
+end
+```
+
+#### Using the delete_media_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(Object, Integer, Hash)> delete_media_with_http_info(blob_id, opts)
+
+```ruby
+begin
+  # Delete one media item, all of its derived rows, and its stored object
+  data, status_code, headers = api_instance.delete_media_with_http_info(blob_id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => Object
+rescue FeverClient::ApiError => e
+  puts "Error when calling MediaApi->delete_media_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **blob_id** | **Integer** |  |  |
+| **customer_id** | **String** |  | [optional] |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## get_media_bytes
 
 > Object get_media_bytes(blob_id, opts)
 
 Fetch an indexed media item's bytes (images normalized to JPEG)
 
-Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw bytes). Scoped keys can only fetch their own customer's items; other customers' blobs are a 404 (never an existence leak).  ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.
+Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw bytes). Scoped keys can only fetch their own customer's items; other customers' blobs are a 404 (never an existence leak).  ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.  ?frame=N (milliseconds) renders a video blob's poster frame at that timestamp as a JPEG; frame=0 keeps the default byte-serving behavior.
 
 ### Examples
 
@@ -110,7 +182,8 @@ api_instance = FeverClient::MediaApi.new
 blob_id = 56 # Integer | 
 opts = {
   max_dim: 56, # Integer | 
-  waveform: 56 # Integer | 
+  waveform: 56, # Integer | 
+  frame: 56 # Integer | 
 }
 
 begin
@@ -147,6 +220,7 @@ end
 | **blob_id** | **Integer** |  |  |
 | **max_dim** | **Integer** |  | [optional][default to 1280] |
 | **waveform** | **Integer** |  | [optional][default to 0] |
+| **frame** | **Integer** |  | [optional][default to 0] |
 
 ### Return type
 

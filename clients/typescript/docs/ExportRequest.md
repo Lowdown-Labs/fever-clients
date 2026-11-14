@@ -6,8 +6,12 @@
 
 Name | Type
 ------------ | -------------
+`background` | boolean
 `customerId` | string
+`datasetId` | number
 `format` | string
+`includeLineage` | boolean
+`includeMedia` | boolean
 `kind` | string
 `s3Uri` | string
 `tag` | string
@@ -19,8 +23,12 @@ import type { ExportRequest } from 'fever-client'
 
 // TODO: Update the object below with actual values
 const example = {
+  "background": null,
   "customerId": null,
+  "datasetId": null,
   "format": null,
+  "includeLineage": null,
+  "includeMedia": null,
   "kind": null,
   "s3Uri": null,
   "tag": null,

@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`customerId` | string
 `rowLimit` | number
 `sql` | string
 
@@ -16,6 +17,7 @@ import type { QueryRequest } from 'fever-client'
 
 // TODO: Update the object below with actual values
 const example = {
+  "customerId": null,
   "rowLimit": null,
   "sql": null,
 } satisfies QueryRequest

@@ -6,6 +6,7 @@
 
 Name | Type
 ------------ | -------------
+`customerId` | string
 `done` | number
 `error` | string
 `id` | number
@@ -20,6 +21,7 @@ import type { Job } from 'fever-client'
 
 // TODO: Update the object below with actual values
 const example = {
+  "customerId": null,
   "done": null,
   "error": null,
   "id": null,

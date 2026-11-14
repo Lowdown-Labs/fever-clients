@@ -114,6 +114,7 @@ impl From<&str> for ContentType {
 pub mod auth_api;
 pub mod corpus_api;
 pub mod customers_api;
+pub mod datasets_api;
 pub mod default_api;
 pub mod duplicates_api;
 pub mod export_api;
@@ -122,6 +123,7 @@ pub mod jobs_api;
 pub mod keys_api;
 pub mod media_api;
 pub mod query_api;
+pub mod reports_api;
 pub mod search_api;
 
 pub mod configuration;

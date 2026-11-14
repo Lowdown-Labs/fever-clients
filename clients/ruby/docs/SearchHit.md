@@ -10,6 +10,7 @@
 | **customer_id** | **String** |  | [optional] |
 | **duplicate_count** | **Integer** | Number of near-duplicates collapsed into this hit. | [optional][default to 0] |
 | **duplicates** | **Array&lt;Integer&gt;** | blob_ids of near-duplicates collapsed into this hit. | [optional] |
+| **filename** | **String** | Original uploaded file name, when the blob was ingested with one. | [optional] |
 | **geo_label** | **String** | Reverse-geocode label from EXIF GPS (e.g. &#39;Lisbon, PT&#39;), when the asset carries intact camera coordinates (the geo:&lt;label&gt; tag rides alongside). | [optional] |
 | **headline** | **String** | Lexical FTS highlight (ts_headline) when the hit came via full-text search. | [optional] |
 | **height** | **Integer** | Stored media height in pixels, when known. | [optional] |
@@ -22,6 +23,7 @@
 | **seek_ms** | **Integer** | For video hits: timestamp of the winning frame, for seek-to-moment playback. | [optional] |
 | **span** | [**MediaSpan**](MediaSpan.md) | For transcript hits: the matching whisper segment, with literal text for highlighting. | [optional] |
 | **span_headline** | **String** | Lexical FTS highlight (ts_headline) of the winning transcript segment. | [optional] |
+| **spans** | [**Array&lt;MediaSpan&gt;**](MediaSpan.md) | For video hits: every frame match range (not just the winning frame), so a video that matches several times shows them all. Boundaries are whole seconds (reported as ms, always a multiple of 1000). | [optional] |
 | **tags** | **Array&lt;String&gt;** | Tags on this item: client-supplied at ingest and/or the appliance&#39;s zero-shot autotags. | [optional] |
 | **width** | **Integer** | Stored media width in pixels, when known. | [optional] |
 
@@ -37,6 +39,7 @@ instance = FeverClient::SearchHit.new(
   customer_id: null,
   duplicate_count: null,
   duplicates: null,
+  filename: null,
   geo_label: null,
   headline: null,
   height: null,
@@ -49,6 +52,7 @@ instance = FeverClient::SearchHit.new(
   seek_ms: null,
   span: null,
   span_headline: null,
+  spans: null,
   tags: null,
   width: null
 )

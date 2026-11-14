@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **CollapseDuplicates** | **bool** | Collapse near-duplicate items so each result is a distinct representative; the folded-in duplicates are listed on each hit. | [optional] [default to true]
 **CollectionId** | **string** | Restrict results to media tagged with this collection_id. | [optional] 
 **CustomerId** | **string** | Restrict results to media tagged with this customer_id. | [optional] 
+**Depth** | **int?** | Rerank pool depth override; defaults to offset + k. Calibration/tuning knob. | [optional] 
 **Device** | **string** | EXIF camera make/model substring. | [optional] 
 **DupeThreshold** | **decimal?** | Cosine similarity cutoff 0..1 for treating two items as duplicates; higher is stricter. Defaults to the appliance setting when omitted. | [optional] 
 **ExcludeTags** | **List&lt;string&gt;** | Exclude blobs carrying any of these tags (ingest tags and/or zero-shot autotags), e.g. [&#39;people&#39;] to build a no-people dataset. | [optional] 
@@ -22,6 +23,7 @@ Name | Type | Description | Notes
 **MaxWidth** | **int?** | Restrict results to blobs at most this many pixels wide (stored media dimensions; blobs with unknown dimensions are excluded whenever this is set). | [optional] 
 **MinScore** | **decimal** | Confidence cutoff 0..1; for text this is the reranker&#39;s match probability. | [optional] [default to 0.0M]
 **Near** | **List&lt;decimal&gt;** | Geo filter [lat, lon, radius_km] from EXIF GPS. | [optional] 
+**Offset** | **int** | Skip this many top-ranked results before taking k (pagination). | [optional] [default to 0]
 **Sort** | **string** | &#39;relevance&#39; (default) is the fused/calibrated ordering; &#39;distance&#39; reorders results nearest-first and requires the near filter - e.g. an integrator&#39;s map view. An explicit ordering knob, not another relevance signal. | [optional] 
 **Text** | **string** | Text query (meaning-based, not keyword). | [optional] 
 

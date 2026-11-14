@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**CustomerId** | Pointer to **NullableString** |  | [optional] 
 **Done** | Pointer to **int32** |  | [optional] [default to 0]
 **Error** | Pointer to **NullableString** |  | [optional] 
 **Id** | **int32** |  | 
@@ -30,6 +31,41 @@ NewJobWithDefaults instantiates a new Job object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetCustomerId
+
+`func (o *Job) GetCustomerId() string`
+
+GetCustomerId returns the CustomerId field if non-nil, zero value otherwise.
+
+### GetCustomerIdOk
+
+`func (o *Job) GetCustomerIdOk() (*string, bool)`
+
+GetCustomerIdOk returns a tuple with the CustomerId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomerId
+
+`func (o *Job) SetCustomerId(v string)`
+
+SetCustomerId sets CustomerId field to given value.
+
+### HasCustomerId
+
+`func (o *Job) HasCustomerId() bool`
+
+HasCustomerId returns a boolean if a field has been set.
+
+### SetCustomerIdNil
+
+`func (o *Job) SetCustomerIdNil(b bool)`
+
+ SetCustomerIdNil sets the value for CustomerId to be an explicit nil
+
+### UnsetCustomerId
+`func (o *Job) UnsetCustomerId()`
+
+UnsetCustomerId ensures that no value is present for CustomerId, not even an explicit nil
 ### GetDone
 
 `func (o *Job) GetDone() int32`

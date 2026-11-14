@@ -6,7 +6,7 @@ info:
     \ attachments. Tenancy, scale, and isolation are automatic; the tenant is taken\
     \ from the API key."
   title: FEVER Retrieval
-  version: 0.4.0
+  version: 0.5.0
 servers:
 - url: /
 tags:
@@ -23,8 +23,13 @@ tags:
   name: search
 - description: Find near-duplicate clusters for a customer.
   name: duplicates
+- description: "Named, customer-owned sets of blobs for curation and filtered export."
+  name: datasets
 - description: Dump a tenant's vectors and metadata to S3.
   name: export
+- description: "Photo reports: fill labeled slots with the best-matching corpus photos\
+    \ and render a PDF to S3."
+  name: reports
 - description: Read-only SQL over the whitelisted corpus tables.
   name: query
 - description: "Admin-gated API key management for this appliance: mint, list, revoke."
@@ -50,6 +55,12 @@ paths:
       - application/json
   /v1/corpus:
     get:
+      description: |-
+        kinds/top_tags/storage_bytes follow the same customer scoping.
+        index_bytes is the appliance-wide footprint of as_blobs/embeddings/
+        annotations including their indexes: those tables are hash-partitioned by
+        customer_id, not per tenant, so a per-tenant share is not attributable and
+        every caller sees the same global value.
       operationId: corpus_stats
       parameters:
       - explode: true
@@ -114,6 +125,246 @@ paths:
       tags:
       - customers
       x-content-type: multipart/form-data
+      x-accepts:
+      - application/json
+  /v1/customers/{customer_id}:
+    delete:
+      operationId: delete_customer
+      parameters:
+      - explode: false
+        in: path
+        name: customer_id
+        required: true
+        schema:
+          title: Customer Id
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      security:
+      - adminToken: []
+      summary: Delete all data for one customer
+      tags:
+      - customers
+      x-accepts:
+      - application/json
+  /v1/datasets:
+    get:
+      operationId: list_datasets
+      parameters:
+      - explode: true
+        in: query
+        name: customer_id
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Dataset"
+                title: Response List Datasets
+                type: array
+                default: null
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      security:
+      - bearerAuth: []
+      summary: List datasets visible to this key
+      tags:
+      - datasets
+      x-accepts:
+      - application/json
+    post:
+      operationId: create_dataset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DatasetCreate"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatasetDetail"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      security:
+      - bearerAuth: []
+      summary: "Create a dataset, optionally with initial items"
+      tags:
+      - datasets
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /v1/datasets/{dataset_id}:
+    delete:
+      operationId: delete_dataset
+      parameters:
+      - explode: false
+        in: path
+        name: dataset_id
+        required: true
+        schema:
+          title: Dataset Id
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  nullable: true
+                title: Response Delete Dataset
+                type: object
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      security:
+      - bearerAuth: []
+      summary: Delete a dataset (the blobs themselves stay indexed)
+      tags:
+      - datasets
+      x-accepts:
+      - application/json
+    get:
+      operationId: get_dataset
+      parameters:
+      - explode: false
+        in: path
+        name: dataset_id
+        required: true
+        schema:
+          title: Dataset Id
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatasetDetail"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      security:
+      - bearerAuth: []
+      summary: Get a dataset with its blob ids
+      tags:
+      - datasets
+      x-accepts:
+      - application/json
+  /v1/datasets/{dataset_id}/items:
+    delete:
+      operationId: remove_dataset_items
+      parameters:
+      - explode: false
+        in: path
+        name: dataset_id
+        required: true
+        schema:
+          title: Dataset Id
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: "#/components/schemas/DatasetItemsRemove"
+              nullable: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatasetDetail"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      security:
+      - bearerAuth: []
+      summary: Remove items from a dataset; no body clears every item
+      tags:
+      - datasets
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+    post:
+      operationId: add_dataset_items
+      parameters:
+      - explode: false
+        in: path
+        name: dataset_id
+        required: true
+        schema:
+          title: Dataset Id
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DatasetItemsRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatasetDetail"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      security:
+      - bearerAuth: []
+      summary: Add blobs to a dataset
+      tags:
+      - datasets
+      x-content-type: application/json
       x-accepts:
       - application/json
   /v1/duplicates:
@@ -200,6 +451,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/ExportResult"
           description: Successful Response
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExportJob"
+          description: Export queued as a job
         "422":
           content:
             application/json:
@@ -454,6 +711,44 @@ paths:
       x-accepts:
       - application/json
   /v1/media/{blob_id}:
+    delete:
+      operationId: delete_media
+      parameters:
+      - explode: false
+        in: path
+        name: blob_id
+        required: true
+        schema:
+          title: Blob Id
+          type: integer
+        style: simple
+      - explode: true
+        in: query
+        name: customer_id
+        required: false
+        schema:
+          nullable: true
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      security:
+      - bearerAuth: []
+      summary: "Delete one media item, all of its derived rows, and its stored object"
+      tags:
+      - media
+      x-accepts:
+      - application/json
     get:
       description: |-
         Unified record for a blob_id. Scoped keys can only read their own
@@ -562,6 +857,9 @@ paths:
         ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic)
         so clients can show a real visual for audio hits without decoding the clip
         in the browser.
+
+        ?frame=N (milliseconds) renders a video blob's poster frame at that
+        timestamp as a JPEG; frame=0 keeps the default byte-serving behavior.
       operationId: get_media_bytes
       parameters:
       - explode: false
@@ -588,6 +886,16 @@ paths:
         schema:
           default: 0
           title: Waveform
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: frame
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          title: Frame
           type: integer
         style: form
       responses:
@@ -706,20 +1014,23 @@ paths:
       description: "A mini SQL console over the appliance's corpus tables: as_blobs,\
         \ annotations, dup_edges, video_frames, transcript_segments, embeddings, datasets,\
         \ dataset_items (internal jobs/job_items stay queryable for compatibility\
-        \ but are bookkeeping, not data). Exactly one SELECT statement. Natural-language\
-        \ semantic search: an `<=>` comparison between a vec_prefix/vec_full column\
-        \ and fever_search('some text') is allowed in the statement ORDER BY (rank\
-        \ by meaning) or in the SELECT target list (project the raw cosine distance;\
-        \ similarity = 1.0 - distance), at most four distinct fever_search() texts\
-        \ per statement. Raw vector columns (embeddings.vec_*, video_frames.vec_*)\
-        \ are selectable with an admin key; scoped keys get a rejection instead. tsvector\
-        \ (annotations.fts, transcript_segments.fts) columns are excluded for everyone.\
-        \ Scoped api keys are automatically restricted to their own customer_id, which\
-        \ is why they may only submit a narrow statement shape: plain tables and JOINs\
-        \ of them, with a FROM clause, and no subqueries, CTEs or set operations at\
-        \ any depth (those are rejected rather than risk a partial rewrite - use an\
-        \ admin key for them). Admin keys parse unrestricted and see every customer's\
-        \ rows in their own tenant."
+        \ but are bookkeeping, not data), plus the pre-aggregated summary views tag_counts\
+        \ (customer_id, tenant_id, tag, n), kind_counts (customer_id, tenant_id, media_kind,\
+        \ n) and dup_cosine_hist (customer_id, tenant_id, bucket, n) - flat SELECTs\
+        \ that give scoped keys aggregate answers their statement shape cannot express.\
+        \ Exactly one SELECT statement. Natural-language semantic search: an `<=>`\
+        \ comparison between a vec_prefix/vec_full column and fever_search('some text')\
+        \ is allowed in the statement ORDER BY (rank by meaning) or in the SELECT\
+        \ target list (project the raw cosine distance; similarity = 1.0 - distance),\
+        \ at most four distinct fever_search() texts per statement. Raw vector columns\
+        \ (embeddings.vec_*, video_frames.vec_*) are selectable with an admin key;\
+        \ scoped keys get a rejection instead. tsvector (annotations.fts, transcript_segments.fts)\
+        \ columns are excluded for everyone. Scoped api keys are automatically restricted\
+        \ to their own customer_id, which is why they may only submit a narrow statement\
+        \ shape: plain tables and JOINs of them, with a FROM clause, and no subqueries,\
+        \ CTEs or set operations at any depth (those are rejected rather than risk\
+        \ a partial rewrite - use an admin key for them). Admin keys parse unrestricted\
+        \ and see every customer's rows in their own tenant."
       operationId: query
       requestBody:
         content:
@@ -746,6 +1057,69 @@ paths:
       tags:
       - query
       x-content-type: application/json
+      x-accepts:
+      - application/json
+  /v1/reports:
+    post:
+      operationId: generate_report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReportRequest"
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReportJob"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      security:
+      - bearerAuth: []
+      summary: "Queue a photo report: fill labeled slots with the best-matching photos\
+        \ and render a PDF to S3"
+      tags:
+      - reports
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+  /v1/reports/{job_id}:
+    get:
+      operationId: get_report
+      parameters:
+      - explode: false
+        in: path
+        name: job_id
+        required: true
+        schema:
+          title: Job Id
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+          description: Successful Response
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+      security:
+      - bearerAuth: []
+      summary: Get photo report job progress
+      tags:
+      - reports
       x-accepts:
       - application/json
   /v1/search:
@@ -859,19 +1233,27 @@ components:
       title: BulkReassignUpload
     CorpusStats:
       example:
+        index_bytes: 0
         kinds:
-          key: 0
+          key: 6
+        storage_bytes: 1
         top_tags:
-        - count: 6
+        - count: 5
           tag: tag
-        - count: 6
+        - count: 5
           tag: tag
       properties:
+        index_bytes:
+          title: Index Bytes
+          type: integer
         kinds:
           additionalProperties:
             type: integer
           title: Kinds
           type: object
+        storage_bytes:
+          title: Storage Bytes
+          type: integer
         top_tags:
           items:
             $ref: "#/components/schemas/CorpusTag"
@@ -879,12 +1261,14 @@ components:
           type: array
           default: null
       required:
+      - index_bytes
       - kinds
+      - storage_bytes
       - top_tags
       title: CorpusStats
     CorpusTag:
       example:
-        count: 6
+        count: 5
         tag: tag
       properties:
         count:
@@ -915,15 +1299,166 @@ components:
           type: string
         role:
           description: "'admin' keys search/ingest across all customers and may pass\
-            \ any customer_id; 'scoped' keys are locked server-side to one customer_id.\
+            \ any customer_id; 'scoped' keys are locked server-side to one customer_id;\
+            \ 'read' keys are locked to one customer_id and may only call read endpoints.\
             \ If omitted it is inferred from customer_id (present means scoped, absent\
             \ means admin)."
           enum:
           - admin
           - scoped
+          - read
           nullable: true
           type: string
       title: CreateKeyRequest
+    Dataset:
+      example:
+        created_at: created_at
+        customer_id: customer_id
+        id: 0
+        item_count: 6
+        name: name
+        source_sql: source_sql
+      properties:
+        created_at:
+          nullable: true
+          type: string
+        customer_id:
+          nullable: true
+          type: string
+        id:
+          title: Id
+          type: integer
+        item_count:
+          default: 0
+          title: Item Count
+          type: integer
+        name:
+          title: Name
+          type: string
+        source_sql:
+          nullable: true
+          type: string
+      required:
+      - id
+      - name
+      title: Dataset
+    DatasetCreate:
+      example:
+        blob_ids:
+        - 0
+        - 0
+        customer_id: customer_id
+        name: name
+        source_sql: source_sql
+      properties:
+        blob_ids:
+          description: Optional initial items; every blob must belong to the dataset's
+            customer.
+          items:
+            type: integer
+          nullable: true
+          type: array
+          default: null
+        customer_id:
+          description: "Admin keys only: own this dataset to this customer. Scoped\
+            \ keys are always forced to their own customer_id."
+          nullable: true
+          type: string
+        name:
+          description: "Dataset name, unique per tenant."
+          maxLength: 200
+          minLength: 1
+          title: Name
+          type: string
+        source_sql:
+          description: "Provenance: the SELECT that produced the item set, kept so\
+            \ the curation query can be reviewed and refined later."
+          maxLength: 10000
+          nullable: true
+          type: string
+      required:
+      - name
+      title: DatasetCreate
+    DatasetDetail:
+      example:
+        blob_ids:
+        - 0
+        - 0
+        created_at: created_at
+        customer_id: customer_id
+        id: 6
+        item_count: 1
+        name: name
+        source_sql: source_sql
+      properties:
+        blob_ids:
+          items:
+            type: integer
+          title: Blob Ids
+          type: array
+          default: null
+        created_at:
+          nullable: true
+          type: string
+        customer_id:
+          nullable: true
+          type: string
+        id:
+          title: Id
+          type: integer
+        item_count:
+          default: 0
+          title: Item Count
+          type: integer
+        name:
+          title: Name
+          type: string
+        source_sql:
+          nullable: true
+          type: string
+      required:
+      - id
+      - name
+      title: DatasetDetail
+    DatasetItemsRemove:
+      example:
+        blob_ids:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+      properties:
+        blob_ids:
+          description: Items to remove; omit (or pass null) to clear every item from
+            the dataset.
+          items:
+            type: integer
+          maxItems: 10000
+          nullable: true
+          type: array
+          default: null
+      title: DatasetItemsRemove
+    DatasetItemsRequest:
+      example:
+        blob_ids:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+      properties:
+        blob_ids:
+          items:
+            type: integer
+          maxItems: 10000
+          minItems: 1
+          title: Blob Ids
+          type: array
+          default: null
+      required:
+      - blob_ids
+      title: DatasetItemsRequest
     DuplicateCluster:
       example:
         member_customers:
@@ -1045,29 +1580,71 @@ components:
       - clusters
       - total_duplicates
       title: DuplicatesResponse
+    ExportJob:
+      example:
+        job_id: 6
+        status: pending
+      properties:
+        job_id:
+          title: Job Id
+          type: integer
+        status:
+          default: pending
+          title: Status
+          type: string
+      required:
+      - job_id
+      title: ExportJob
     ExportRequest:
       example:
+        background: false
         customer_id: customer_id
+        dataset_id: 0
         format: ndjson
+        include_lineage: false
+        include_media: false
         kind: image
         s3_uri: s3_uri
         tag: tag
       properties:
+        background:
+          default: false
+          description: "Queue the export as a job and return 202 with a job id to\
+            \ poll at /v1/jobs/{id} instead of running it inline."
+          title: Background
+          type: boolean
         customer_id:
           description: Export only media tagged with this customer_id.
           nullable: true
           type: string
+        dataset_id:
+          description: Export only blobs in this dataset.
+          nullable: true
+          type: integer
         format:
           default: ndjson
           description: "'ndjson' (default) is the full vector-bearing backup format\
-            \ /v1/import restores from. 'parquet' is a metadata-only dataset export\
-            \ (blob_id, customer_id, media_ref, kind, caption, tags - no vectors)\
+            \ /v1/import restores from. 'parquet' is a columnar export (blob_id, customer_id,\
+            \ media_ref, kind, caption, tags, plus the vector and metadata payload)\
             \ for analysis in DuckDB/pandas/Spark; it is not importable."
           enum:
           - ndjson
           - parquet
           title: Format
           type: string
+        include_lineage:
+          default: false
+          description: "Write <prefix>/lineage.ndjson with per-item provenance and\
+            \ flags (synthetic score, face_count, gps, captured_at, device, provenance\
+            \ findings)."
+          title: Include Lineage
+          type: boolean
+        include_media:
+          default: false
+          description: "Copy each exported blob's original object to <prefix>/media/<blob_id><ext>\
+            \ (best effort; missing bytes are counted, not fatal)."
+          title: Include Media
+          type: boolean
         kind:
           description: Export only blobs of this media kind.
           enum:
@@ -1078,6 +1655,7 @@ components:
           - doc
           - note
           - lidar
+          - model3d
           nullable: true
           type: string
         s3_uri:
@@ -1184,6 +1762,10 @@ components:
           key: ""
         parent_ref: parent_ref
         strip_exif: false
+        tag_min_score: 0.08008281904610115
+        tag_vocab:
+        - tag_vocab
+        - tag_vocab
         tags:
         - tags
         - tags
@@ -1206,9 +1788,10 @@ components:
           nullable: true
           type: string
         data:
-          description: "Base64-encoded media item bytes. Accepted input is text and\
-            \ images only: JPEG, PNG, GIF, WebP, TIFF images, and plain text or Markdown\
-            \ documents."
+          description: "Base64-encoded media item bytes. Accepted image formats: JPEG,\
+            \ PNG, GIF, WebP, TIFF. Documents (PDF, CSV/TSV, TXT, Markdown, XLSX,\
+            \ DOCX, ODT) and LiDAR (LAS, LAZ, PLY, PCD) are also accepted; video and\
+            \ audio ingest run on the queued worker path."
           nullable: true
           type: string
         filename:
@@ -1235,6 +1818,23 @@ components:
           description: Skip EXIF extraction/retention for this item.
           title: Strip Exif
           type: boolean
+        tag_min_score:
+          description: "Minimum zero-shot similarity for an autotag to stick on this\
+            \ item. Higher means fewer, more confident tags. Leave unset for the service\
+            \ default."
+          maximum: 1.0
+          minimum: 0.0
+          nullable: true
+          type: number
+        tag_vocab:
+          description: "Extra label vocabulary for this item: beyond the built-in\
+            \ set, ingest also scores the media against these labels and applies matches\
+            \ as tags."
+          items:
+            type: string
+          nullable: true
+          type: array
+          default: null
         tags:
           description: Optional tags for this item; indexed for text search and returned
             on hits. Merged with the appliance's zero-shot autotags.
@@ -1261,6 +1861,10 @@ components:
             key: ""
           parent_ref: parent_ref
           strip_exif: false
+          tag_min_score: 0.08008281904610115
+          tag_vocab:
+          - tag_vocab
+          - tag_vocab
           tags:
           - tags
           - tags
@@ -1274,13 +1878,18 @@ components:
             key: ""
           parent_ref: parent_ref
           strip_exif: false
+          tag_min_score: 0.08008281904610115
+          tag_vocab:
+          - tag_vocab
+          - tag_vocab
           tags:
           - tags
           - tags
           url: url
         overwrite: false
         source: ""
-        target_res: 386
+        tag_min_score: 0.6027456183070403
+        target_res: 655
       properties:
         media:
           description: 1..N media items to ingest inline.
@@ -1302,6 +1911,13 @@ components:
           description: Ingest every media item under an S3 prefix instead of sending
             bytes.
           nullable: true
+        tag_min_score:
+          description: Batch default minimum zero-shot similarity for autotags; per-item
+            tag_min_score wins when both are set. Leave unset for the service default.
+          maximum: 1.0
+          minimum: 0.0
+          nullable: true
+          type: number
         target_res:
           description: "Resolution to index this batch at, in pixels (rounded to a\
             \ multiple of 16). Images are resized to this before embedding; higher\
@@ -1386,9 +2002,24 @@ components:
           description: Tag every vacuumed item with this customer_id.
           nullable: true
           type: string
+        hf_config:
+          description: "Hugging Face dataset config/subset name, when the dataset\
+            \ has several."
+          nullable: true
+          type: string
+        hf_dataset:
+          description: Hugging Face dataset repo id (org/name) whose images are staged
+            and ingested. Only available on deployments with FEVER_HF_INGEST_ENABLED.
+          nullable: true
+          type: string
+        hf_split:
+          description: Hugging Face split to ingest (e.g. 'train'); unset ingests
+            every split.
+          nullable: true
+          type: string
         s3_uri:
           description: s3://bucket/prefix in your VPC to vacuum every media item under.
-          title: S3 Uri
+          nullable: true
           type: string
         target_res:
           description: "Resolution to index at, in pixels (rounded to a multiple of\
@@ -1398,8 +2029,6 @@ components:
           minimum: 64.0
           nullable: true
           type: integer
-      required:
-      - s3_uri
       title: IngestSource
     IngestedMedia:
       example:
@@ -1445,6 +2074,7 @@ components:
       title: IngestedMedia
     Job:
       example:
+        customer_id: customer_id
         done: 0
         error: error
         id: 6
@@ -1452,6 +2082,9 @@ components:
         status: status
         total: 5
       properties:
+        customer_id:
+          nullable: true
+          type: string
         done:
           default: 0
           title: Done
@@ -1537,6 +2170,7 @@ components:
           - doc
           - note
           - lidar
+          - model3d
           nullable: true
           type: string
       required:
@@ -1556,6 +2190,9 @@ components:
         lidar:
         - lidar
         - lidar
+        model3d:
+        - model3d
+        - model3d
         video:
         - video
         - video
@@ -1584,6 +2221,12 @@ components:
           title: Lidar
           type: array
           default: null
+        model3d:
+          items:
+            type: string
+          title: Model3D
+          type: array
+          default: null
         video:
           items:
             type: string
@@ -1595,6 +2238,7 @@ components:
       - document
       - image
       - lidar
+      - model3d
       - video
       title: MediaFormats
     MediaFrame:
@@ -1632,19 +2276,20 @@ components:
         customer_id: customer_id
         device: device
         external_ref: external_ref
+        face_count: 5
         frame_count: 5
-        gps_lat: 5.637376656633329
-        gps_lon: 2.3021358869347655
+        gps_lat: 2.3021358869347655
+        gps_lon: 7.061401241503109
         kind: image
         metadata:
           key: ""
         ocr_text: ocr_text
         parent_ref: parent_ref
-        synthetic: 7.061401241503109
+        synthetic: 9.301444243932576
         tags:
         - tags
         - tags
-        transcript_segments: 9
+        transcript_segments: 3
       properties:
         attachments:
           description: Related items pointing at this blob via parent_ref (e.g. a
@@ -1681,6 +2326,10 @@ components:
           description: s3:// URI of the stored original.
           nullable: true
           type: string
+        face_count:
+          description: "Faces detected at ingest (FEVER_FACES), when run."
+          nullable: true
+          type: integer
         frame_count:
           default: 0
           description: Sampled video frames derived from this blob.
@@ -1693,7 +2342,7 @@ components:
           nullable: true
           type: number
         kind:
-          description: Media kind of this blob (image/video/audio/pdf/doc/note/lidar).
+          description: Media kind of this blob (image/video/audio/pdf/doc/note/lidar/model3d).
           enum:
           - image
           - video
@@ -1702,6 +2351,7 @@ components:
           - doc
           - note
           - lidar
+          - model3d
           nullable: true
           type: string
         metadata:
@@ -1740,10 +2390,20 @@ components:
       description: |-
         The transcript span that matched: where in the audio/video the hit is.
         Includes the literal segment text so the UI can highlight it.
+      example:
+        end_ms: 7
+        score: 9.301444243932576
+        start_ms: 3
+        text: text
       properties:
         end_ms:
           title: End Ms
           type: integer
+        score:
+          description: Best frame score inside the range (video frame match ranges
+            only).
+          nullable: true
+          type: number
         start_ms:
           title: Start Ms
           type: integer
@@ -1756,9 +2416,16 @@ components:
       title: MediaSpan
     QueryRequest:
       example:
+        customer_id: customer_id
         row_limit: 81
         sql: sql
       properties:
+        customer_id:
+          description: "Admin keys only: run this query scoped to one customer, exactly\
+            \ as if a key scoped to that customer had submitted it. Scoped keys are\
+            \ always forced to their own customer_id and may not pass another."
+          nullable: true
+          type: string
         row_limit:
           default: 200
           description: "Max rows to return; capped at 1000 regardless of what's requested.\
@@ -1821,6 +2488,81 @@ components:
       - rows
       - truncated
       title: QueryResult
+    ReportJob:
+      example:
+        job_id: 0
+        status: pending
+      properties:
+        job_id:
+          title: Job Id
+          type: integer
+        status:
+          default: pending
+          title: Status
+          type: string
+      required:
+      - job_id
+      title: ReportJob
+    ReportRequest:
+      example:
+        customer_id: customer_id
+        output_s3_uri: output_s3_uri
+        slots:
+        - caption: caption
+          label: label
+          min_score: 0.8008281904610115
+        - caption: caption
+          label: label
+          min_score: 0.8008281904610115
+        title: title
+      properties:
+        customer_id:
+          description: Fill slots from this customer's corpus only.
+          nullable: true
+          type: string
+        output_s3_uri:
+          description: "s3://bucket/key for the PDF. Default: reports/<customer_id>/<job_id>.pdf\
+            \ in the tenant bucket."
+          nullable: true
+          type: string
+        slots:
+          description: Labeled photo slots; each is filled with the best-matching
+            photo.
+          items:
+            $ref: "#/components/schemas/ReportSlot"
+          title: Slots
+          type: array
+          default: null
+        title:
+          description: "Report title, rendered at the top of the PDF."
+          title: Title
+          type: string
+      required:
+      - slots
+      - title
+      title: ReportRequest
+    ReportSlot:
+      example:
+        caption: caption
+        label: label
+        min_score: 0.8008281904610115
+      properties:
+        caption:
+          description: "Extra caption text, appended to the search query."
+          nullable: true
+          type: string
+        label:
+          description: Slot label; doubles as the text search query for this slot.
+          title: Label
+          type: string
+        min_score:
+          description: Per-slot confidence gate (cosine). Defaults to FEVER_REPORT_MIN_SCORE
+            (0.25).
+          nullable: true
+          type: number
+      required:
+      - label
+      title: ReportSlot
     SearchHit:
       example:
         blob_id: 0
@@ -1831,6 +2573,7 @@ components:
         duplicates:
         - 1
         - 1
+        filename: filename
         geo_label: geo_label
         headline: headline
         height: 5
@@ -1844,10 +2587,19 @@ components:
         seek_ms: 2
         span: ""
         span_headline: span_headline
+        spans:
+        - end_ms: 7
+          score: 9.301444243932576
+          start_ms: 3
+          text: text
+        - end_ms: 7
+          score: 9.301444243932576
+          start_ms: 3
+          text: text
         tags:
         - tags
         - tags
-        width: 7
+        width: 2
       properties:
         blob_id:
           title: Blob Id
@@ -1874,6 +2626,11 @@ components:
           title: Duplicates
           type: array
           default: null
+        filename:
+          description: "Original uploaded file name, when the blob was ingested with\
+            \ one."
+          nullable: true
+          type: string
         geo_label:
           description: "Reverse-geocode label from EXIF GPS (e.g. 'Lisbon, PT'), when\
             \ the asset carries intact camera coordinates (the geo:<label> tag rides\
@@ -1899,6 +2656,7 @@ components:
           - doc
           - note
           - lidar
+          - model3d
           nullable: true
           type: string
         media_ref:
@@ -1943,6 +2701,15 @@ components:
             segment.
           nullable: true
           type: string
+        spans:
+          description: "For video hits: every frame match range (not just the winning\
+            \ frame), so a video that matches several times shows them all. Boundaries\
+            \ are whole seconds (reported as ms, always a multiple of 1000)."
+          items:
+            $ref: "#/components/schemas/MediaSpan"
+          nullable: true
+          type: array
+          default: null
         tags:
           description: "Tags on this item: client-supplied at ingest and/or the appliance's\
             \ zero-shot autotags."
@@ -1967,25 +2734,27 @@ components:
         collapse_duplicates: true
         collection_id: collection_id
         customer_id: customer_id
+        depth: 16
         device: device
-        dupe_threshold: 0.8008281904610115
+        dupe_threshold: 6.027456183070403
         exclude_tags:
         - exclude_tags
         - exclude_tags
         image: image
-        image_blob_id: 6
+        image_blob_id: 1
         include_tags:
         - include_tags
         - include_tags
-        indexed_res: 1
+        indexed_res: 5
         k: 5
         kind: image
-        max_height: 5
-        max_width: 2
-        min_score: 7.061401241503109
+        max_height: 2
+        max_width: 7
+        min_score: 9.301444243932576
         near:
-        - 9.301444243932576
-        - 9.301444243932576
+        - 3.616076749251911
+        - 3.616076749251911
+        offset: 20271
         sort: relevance
         text: text
       properties:
@@ -2011,6 +2780,13 @@ components:
           description: Restrict results to media tagged with this customer_id.
           nullable: true
           type: string
+        depth:
+          description: Rerank pool depth override; defaults to offset + k. Calibration/tuning
+            knob.
+          maximum: 200.0
+          minimum: 1.0
+          nullable: true
+          type: integer
         device:
           description: EXIF camera make/model substring.
           nullable: true
@@ -2069,6 +2845,7 @@ components:
           - doc
           - note
           - lidar
+          - model3d
           nullable: true
           type: string
         max_height:
@@ -2096,6 +2873,13 @@ components:
           nullable: true
           type: array
           default: null
+        offset:
+          default: 0
+          description: Skip this many top-ranked results before taking k (pagination).
+          maximum: 100000.0
+          minimum: 0.0
+          title: Offset
+          type: integer
         sort:
           description: "'relevance' (default) is the fused/calibrated ordering; 'distance'\
             \ reorders results nearest-first and requires the near filter - e.g. an\

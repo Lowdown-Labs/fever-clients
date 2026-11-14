@@ -4,8 +4,79 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**deleteCustomer**](CustomersApi.md#deletecustomer) | **DELETE** /v1/customers/{customer_id} | Delete all data for one customer |
 | [**reassignCustomersBulk**](CustomersApi.md#reassigncustomersbulk) | **POST** /v1/customers/reassign-bulk | Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping |
 
+
+
+## deleteCustomer
+
+> any deleteCustomer(customerId)
+
+Delete all data for one customer
+
+### Example
+
+```ts
+import {
+  Configuration,
+  CustomersApi,
+} from 'fever-client';
+import type { DeleteCustomerRequest } from 'fever-client';
+
+async function example() {
+  console.log("🚀 Testing fever-client SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: adminToken
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new CustomersApi(config);
+
+  const body = {
+    // string
+    customerId: customerId_example,
+  } satisfies DeleteCustomerRequest;
+
+  try {
+    const data = await api.deleteCustomer(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **customerId** | `string` |  | [Defaults to `undefined`] |
+
+### Return type
+
+**any**
+
+### Authorization
+
+[adminToken](../README.md#adminToken)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
 
 ## reassignCustomersBulk

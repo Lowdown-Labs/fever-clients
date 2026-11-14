@@ -4,7 +4,105 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
+| [**DeleteCustomer**](CustomersApi.md#deletecustomer) | **DELETE** /v1/customers/{customer_id} | Delete all data for one customer |
 | [**ReassignCustomersBulk**](CustomersApi.md#reassigncustomersbulk) | **POST** /v1/customers/reassign-bulk | Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping |
+
+<a id="deletecustomer"></a>
+# **DeleteCustomer**
+> Object DeleteCustomer (string customerId)
+
+Delete all data for one customer
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LowdownLabs.Fever.Api;
+using LowdownLabs.Fever.Client;
+using LowdownLabs.Fever.Model;
+
+namespace Example
+{
+    public class DeleteCustomerExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: adminToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new CustomersApi(httpClient, config, httpClientHandler);
+            var customerId = "customerId_example";  // string | 
+
+            try
+            {
+                // Delete all data for one customer
+                Object result = apiInstance.DeleteCustomer(customerId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling CustomersApi.DeleteCustomer: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the DeleteCustomerWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Delete all data for one customer
+    ApiResponse<Object> response = apiInstance.DeleteCustomerWithHttpInfo(customerId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling CustomersApi.DeleteCustomerWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **customerId** | **string** |  |  |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[adminToken](../README.md#adminToken)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="reassigncustomersbulk"></a>
 # **ReassignCustomersBulk**

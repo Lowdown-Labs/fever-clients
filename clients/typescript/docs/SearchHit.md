@@ -12,6 +12,7 @@ Name | Type
 `customerId` | string
 `duplicateCount` | number
 `duplicates` | Array&lt;number&gt;
+`filename` | string
 `geoLabel` | string
 `headline` | string
 `height` | number
@@ -24,6 +25,7 @@ Name | Type
 `seekMs` | number
 `span` | [MediaSpan](MediaSpan.md)
 `spanHeadline` | string
+`spans` | [Array&lt;MediaSpan&gt;](MediaSpan.md)
 `tags` | Array&lt;string&gt;
 `width` | number
 
@@ -40,6 +42,7 @@ const example = {
   "customerId": null,
   "duplicateCount": null,
   "duplicates": null,
+  "filename": null,
   "geoLabel": null,
   "headline": null,
   "height": null,
@@ -52,6 +55,7 @@ const example = {
   "seekMs": null,
   "span": null,
   "spanHeadline": null,
+  "spans": null,
   "tags": null,
   "width": null,
 } satisfies SearchHit

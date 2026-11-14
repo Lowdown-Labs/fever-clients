@@ -11,6 +11,7 @@ Name | Type
 `collapseDuplicates` | boolean
 `collectionId` | string
 `customerId` | string
+`depth` | number
 `device` | string
 `dupeThreshold` | number
 `excludeTags` | Array&lt;string&gt;
@@ -24,6 +25,7 @@ Name | Type
 `maxWidth` | number
 `minScore` | number
 `near` | Array&lt;number&gt;
+`offset` | number
 `sort` | string
 `text` | string
 
@@ -39,6 +41,7 @@ const example = {
   "collapseDuplicates": null,
   "collectionId": null,
   "customerId": null,
+  "depth": null,
   "device": null,
   "dupeThreshold": null,
   "excludeTags": null,
@@ -52,6 +55,7 @@ const example = {
   "maxWidth": null,
   "minScore": null,
   "near": null,
+  "offset": null,
   "sort": null,
   "text": null,
 } satisfies SearchRequest

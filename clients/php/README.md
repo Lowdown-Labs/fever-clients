@@ -76,7 +76,14 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AuthApi* | [**whoami**](docs/Api/AuthApi.md#whoami) | **GET** /v1/whoami | Report the calling key&#39;s role and customer scope
 *CorpusApi* | [**corpusStats**](docs/Api/CorpusApi.md#corpusstats) | **GET** /v1/corpus | Corpus composition: per-kind counts and top autotags
+*CustomersApi* | [**deleteCustomer**](docs/Api/CustomersApi.md#deletecustomer) | **DELETE** /v1/customers/{customer_id} | Delete all data for one customer
 *CustomersApi* | [**reassignCustomersBulk**](docs/Api/CustomersApi.md#reassigncustomersbulk) | **POST** /v1/customers/reassign-bulk | Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
+*DatasetsApi* | [**addDatasetItems**](docs/Api/DatasetsApi.md#adddatasetitems) | **POST** /v1/datasets/{dataset_id}/items | Add blobs to a dataset
+*DatasetsApi* | [**createDataset**](docs/Api/DatasetsApi.md#createdataset) | **POST** /v1/datasets | Create a dataset, optionally with initial items
+*DatasetsApi* | [**deleteDataset**](docs/Api/DatasetsApi.md#deletedataset) | **DELETE** /v1/datasets/{dataset_id} | Delete a dataset (the blobs themselves stay indexed)
+*DatasetsApi* | [**getDataset**](docs/Api/DatasetsApi.md#getdataset) | **GET** /v1/datasets/{dataset_id} | Get a dataset with its blob ids
+*DatasetsApi* | [**listDatasets**](docs/Api/DatasetsApi.md#listdatasets) | **GET** /v1/datasets | List datasets visible to this key
+*DatasetsApi* | [**removeDatasetItems**](docs/Api/DatasetsApi.md#removedatasetitems) | **DELETE** /v1/datasets/{dataset_id}/items | Remove items from a dataset; no body clears every item
 *DefaultApi* | [**health**](docs/Api/DefaultApi.md#health) | **GET** /v1/health | Health check
 *DefaultApi* | [**healthzHealthzGet**](docs/Api/DefaultApi.md#healthzhealthzget) | **GET** /healthz | Healthz
 *DuplicatesApi* | [**findDuplicates**](docs/Api/DuplicatesApi.md#findduplicates) | **POST** /v1/duplicates | Find near-duplicate media clusters for a customer
@@ -90,12 +97,15 @@ Class | Method | HTTP request | Description
 *KeysApi* | [**listKeys**](docs/Api/KeysApi.md#listkeys) | **GET** /v1/keys | List this appliance&#39;s API keys
 *KeysApi* | [**revokeKey**](docs/Api/KeysApi.md#revokekey) | **POST** /v1/keys/{key_id}/revoke | Revoke an API key
 *MediaApi* | [**associateMedia**](docs/Api/MediaApi.md#associatemedia) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+*MediaApi* | [**deleteMedia**](docs/Api/MediaApi.md#deletemedia) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object
 *MediaApi* | [**getMediaBytes**](docs/Api/MediaApi.md#getmediabytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG)
 *MediaApi* | [**getMediaInfo**](docs/Api/MediaApi.md#getmediainfo) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 *MediaApi* | [**listMediaFormats**](docs/Api/MediaApi.md#listmediaformats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family
 *MediaApi* | [**listMediaFrames**](docs/Api/MediaApi.md#listmediaframes) | **GET** /v1/media/{blob_id}/frames | Sampled video frames for a parent blob
 *MediaApi* | [**listMediaTranscript**](docs/Api/MediaApi.md#listmediatranscript) | **GET** /v1/media/{blob_id}/transcript | Whisper transcript segments for a parent blob (audio or video)
 *QueryApi* | [**query**](docs/Api/QueryApi.md#query) | **POST** /v1/query | Run a read-only SQL SELECT over the corpus tables
+*ReportsApi* | [**generateReport**](docs/Api/ReportsApi.md#generatereport) | **POST** /v1/reports | Queue a photo report: fill labeled slots with the best-matching photos and render a PDF to S3
+*ReportsApi* | [**getReport**](docs/Api/ReportsApi.md#getreport) | **GET** /v1/reports/{job_id} | Get photo report job progress
 *SearchApi* | [**search**](docs/Api/SearchApi.md#search) | **POST** /v1/search | Search by text or image
 
 ## Models
@@ -105,9 +115,15 @@ Class | Method | HTTP request | Description
 - [CorpusStats](docs/Model/CorpusStats.md)
 - [CorpusTag](docs/Model/CorpusTag.md)
 - [CreateKeyRequest](docs/Model/CreateKeyRequest.md)
+- [Dataset](docs/Model/Dataset.md)
+- [DatasetCreate](docs/Model/DatasetCreate.md)
+- [DatasetDetail](docs/Model/DatasetDetail.md)
+- [DatasetItemsRemove](docs/Model/DatasetItemsRemove.md)
+- [DatasetItemsRequest](docs/Model/DatasetItemsRequest.md)
 - [DuplicateCluster](docs/Model/DuplicateCluster.md)
 - [DuplicatesRequest](docs/Model/DuplicatesRequest.md)
 - [DuplicatesResponse](docs/Model/DuplicatesResponse.md)
+- [ExportJob](docs/Model/ExportJob.md)
 - [ExportRequest](docs/Model/ExportRequest.md)
 - [ExportResult](docs/Model/ExportResult.md)
 - [HTTPValidationError](docs/Model/HTTPValidationError.md)
@@ -129,6 +145,9 @@ Class | Method | HTTP request | Description
 - [MediaSpan](docs/Model/MediaSpan.md)
 - [QueryRequest](docs/Model/QueryRequest.md)
 - [QueryResult](docs/Model/QueryResult.md)
+- [ReportJob](docs/Model/ReportJob.md)
+- [ReportRequest](docs/Model/ReportRequest.md)
+- [ReportSlot](docs/Model/ReportSlot.md)
 - [SearchHit](docs/Model/SearchHit.md)
 - [SearchRequest](docs/Model/SearchRequest.md)
 - [TranscriptSegment](docs/Model/TranscriptSegment.md)
@@ -162,6 +181,6 @@ vendor/bin/phpunit
 
 This PHP package is automatically generated by the [OpenAPI Generator](https://openapi-generator.tech) project:
 
-- API version: `0.4.0`
+- API version: `0.5.0`
     - Generator version: `7.25.0`
 - Build package: `org.openapitools.codegen.languages.PhpClientCodegen`

@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**customer_id** | Option<**String**> |  | [optional]
 **done** | Option<**i32**> |  | [optional][default to 0]
 **error** | Option<**String**> |  | [optional]
 **id** | **i32** |  | 

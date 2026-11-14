@@ -9,6 +9,7 @@
 | **collapse_duplicates** | **Boolean** | Collapse near-duplicate items so each result is a distinct representative; the folded-in duplicates are listed on each hit. | [optional][default to true] |
 | **collection_id** | **String** | Restrict results to media tagged with this collection_id. | [optional] |
 | **customer_id** | **String** | Restrict results to media tagged with this customer_id. | [optional] |
+| **depth** | **Integer** | Rerank pool depth override; defaults to offset + k. Calibration/tuning knob. | [optional] |
 | **device** | **String** | EXIF camera make/model substring. | [optional] |
 | **dupe_threshold** | **Float** | Cosine similarity cutoff 0..1 for treating two items as duplicates; higher is stricter. Defaults to the appliance setting when omitted. | [optional] |
 | **exclude_tags** | **Array&lt;String&gt;** | Exclude blobs carrying any of these tags (ingest tags and/or zero-shot autotags), e.g. [&#39;people&#39;] to build a no-people dataset. | [optional] |
@@ -22,6 +23,7 @@
 | **max_width** | **Integer** | Restrict results to blobs at most this many pixels wide (stored media dimensions; blobs with unknown dimensions are excluded whenever this is set). | [optional] |
 | **min_score** | **Float** | Confidence cutoff 0..1; for text this is the reranker&#39;s match probability. | [optional][default to 0.0] |
 | **near** | **Array&lt;Float&gt;** | Geo filter [lat, lon, radius_km] from EXIF GPS. | [optional] |
+| **offset** | **Integer** | Skip this many top-ranked results before taking k (pagination). | [optional][default to 0] |
 | **sort** | **String** | &#39;relevance&#39; (default) is the fused/calibrated ordering; &#39;distance&#39; reorders results nearest-first and requires the near filter - e.g. an integrator&#39;s map view. An explicit ordering knob, not another relevance signal. | [optional] |
 | **text** | **String** | Text query (meaning-based, not keyword). | [optional] |
 
@@ -36,6 +38,7 @@ instance = FeverClient::SearchRequest.new(
   collapse_duplicates: null,
   collection_id: null,
   customer_id: null,
+  depth: null,
   device: null,
   dupe_threshold: null,
   exclude_tags: null,
@@ -49,6 +52,7 @@ instance = FeverClient::SearchRequest.new(
   max_width: null,
   min_score: null,
   near: null,
+  offset: null,
   sort: null,
   text: null
 )

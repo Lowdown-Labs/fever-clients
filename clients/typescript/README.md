@@ -1,4 +1,4 @@
-# fever-client@0.4.1
+# fever-client@0.5.0
 
 A TypeScript SDK client for the localhost API.
 
@@ -51,7 +51,14 @@ All URIs are relative to *http://localhost*
 | ----- | ------ | ------------ | -------------
 *AuthApi* | [**whoami**](docs/AuthApi.md#whoami) | **GET** /v1/whoami | Report the calling key\&#39;s role and customer scope
 *CorpusApi* | [**corpusStats**](docs/CorpusApi.md#corpusstats) | **GET** /v1/corpus | Corpus composition: per-kind counts and top autotags
+*CustomersApi* | [**deleteCustomer**](docs/CustomersApi.md#deletecustomer) | **DELETE** /v1/customers/{customer_id} | Delete all data for one customer
 *CustomersApi* | [**reassignCustomersBulk**](docs/CustomersApi.md#reassigncustomersbulk) | **POST** /v1/customers/reassign-bulk | Reassign customer_id in bulk from a JSONL / CSV / Parquet mapping
+*DatasetsApi* | [**addDatasetItems**](docs/DatasetsApi.md#adddatasetitems) | **POST** /v1/datasets/{dataset_id}/items | Add blobs to a dataset
+*DatasetsApi* | [**createDataset**](docs/DatasetsApi.md#createdataset) | **POST** /v1/datasets | Create a dataset, optionally with initial items
+*DatasetsApi* | [**deleteDataset**](docs/DatasetsApi.md#deletedataset) | **DELETE** /v1/datasets/{dataset_id} | Delete a dataset (the blobs themselves stay indexed)
+*DatasetsApi* | [**getDataset**](docs/DatasetsApi.md#getdataset) | **GET** /v1/datasets/{dataset_id} | Get a dataset with its blob ids
+*DatasetsApi* | [**listDatasets**](docs/DatasetsApi.md#listdatasets) | **GET** /v1/datasets | List datasets visible to this key
+*DatasetsApi* | [**removeDatasetItems**](docs/DatasetsApi.md#removedatasetitems) | **DELETE** /v1/datasets/{dataset_id}/items | Remove items from a dataset; no body clears every item
 *DefaultApi* | [**health**](docs/DefaultApi.md#health) | **GET** /v1/health | Health check
 *DefaultApi* | [**healthzHealthzGet**](docs/DefaultApi.md#healthzhealthzget) | **GET** /healthz | Healthz
 *DuplicatesApi* | [**findDuplicates**](docs/DuplicatesApi.md#findduplicates) | **POST** /v1/duplicates | Find near-duplicate media clusters for a customer
@@ -65,12 +72,15 @@ All URIs are relative to *http://localhost*
 *KeysApi* | [**listKeys**](docs/KeysApi.md#listkeys) | **GET** /v1/keys | List this appliance\&#39;s API keys
 *KeysApi* | [**revokeKey**](docs/KeysApi.md#revokekey) | **POST** /v1/keys/{key_id}/revoke | Revoke an API key
 *MediaApi* | [**associateMedia**](docs/MediaApi.md#associatemedia) | **POST** /v1/media/{blob_id}/associate | Set a blob\&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+*MediaApi* | [**deleteMedia**](docs/MediaApi.md#deletemedia) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object
 *MediaApi* | [**getMediaBytes**](docs/MediaApi.md#getmediabytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item\&#39;s bytes (images normalized to JPEG)
 *MediaApi* | [**getMediaInfo**](docs/MediaApi.md#getmediainfo) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 *MediaApi* | [**listMediaFormats**](docs/MediaApi.md#listmediaformats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family
 *MediaApi* | [**listMediaFrames**](docs/MediaApi.md#listmediaframes) | **GET** /v1/media/{blob_id}/frames | Sampled video frames for a parent blob
 *MediaApi* | [**listMediaTranscript**](docs/MediaApi.md#listmediatranscript) | **GET** /v1/media/{blob_id}/transcript | Whisper transcript segments for a parent blob (audio or video)
 *QueryApi* | [**query**](docs/QueryApi.md#queryoperation) | **POST** /v1/query | Run a read-only SQL SELECT over the corpus tables
+*ReportsApi* | [**generateReport**](docs/ReportsApi.md#generatereport) | **POST** /v1/reports | Queue a photo report: fill labeled slots with the best-matching photos and render a PDF to S3
+*ReportsApi* | [**getReport**](docs/ReportsApi.md#getreport) | **GET** /v1/reports/{job_id} | Get photo report job progress
 *SearchApi* | [**search**](docs/SearchApi.md#searchoperation) | **POST** /v1/search | Search by text or image
 
 
@@ -81,9 +91,15 @@ All URIs are relative to *http://localhost*
 - [CorpusStats](docs/CorpusStats.md)
 - [CorpusTag](docs/CorpusTag.md)
 - [CreateKeyRequest](docs/CreateKeyRequest.md)
+- [Dataset](docs/Dataset.md)
+- [DatasetCreate](docs/DatasetCreate.md)
+- [DatasetDetail](docs/DatasetDetail.md)
+- [DatasetItemsRemove](docs/DatasetItemsRemove.md)
+- [DatasetItemsRequest](docs/DatasetItemsRequest.md)
 - [DuplicateCluster](docs/DuplicateCluster.md)
 - [DuplicatesRequest](docs/DuplicatesRequest.md)
 - [DuplicatesResponse](docs/DuplicatesResponse.md)
+- [ExportJob](docs/ExportJob.md)
 - [ExportRequest](docs/ExportRequest.md)
 - [ExportResult](docs/ExportResult.md)
 - [HTTPValidationError](docs/HTTPValidationError.md)
@@ -105,6 +121,9 @@ All URIs are relative to *http://localhost*
 - [MediaSpan](docs/MediaSpan.md)
 - [QueryRequest](docs/QueryRequest.md)
 - [QueryResult](docs/QueryResult.md)
+- [ReportJob](docs/ReportJob.md)
+- [ReportRequest](docs/ReportRequest.md)
+- [ReportSlot](docs/ReportSlot.md)
 - [SearchHit](docs/SearchHit.md)
 - [SearchRequest](docs/SearchRequest.md)
 - [TranscriptSegment](docs/TranscriptSegment.md)
@@ -131,8 +150,8 @@ This TypeScript SDK client supports the [Fetch API](https://fetch.spec.whatwg.or
 and is automatically generated by the
 [OpenAPI Generator](https://openapi-generator.tech) project:
 
-- API version: `0.4.0`
-- Package version: `0.4.1`
+- API version: `0.5.0`
+- Package version: `0.5.0`
 - Generator version: `7.25.0`
 - Build package: `org.openapitools.codegen.languages.TypeScriptFetchClientCodegen`
 

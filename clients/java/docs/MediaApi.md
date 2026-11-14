@@ -6,6 +6,8 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 | [**associateMedia**](MediaApi.md#associateMedia) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo) |
 | [**associateMediaWithHttpInfo**](MediaApi.md#associateMediaWithHttpInfo) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo) |
+| [**deleteMedia**](MediaApi.md#deleteMedia) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object |
+| [**deleteMediaWithHttpInfo**](MediaApi.md#deleteMediaWithHttpInfo) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object |
 | [**getMediaBytes**](MediaApi.md#getMediaBytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG) |
 | [**getMediaBytesWithHttpInfo**](MediaApi.md#getMediaBytesWithHttpInfo) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG) |
 | [**getMediaInfo**](MediaApi.md#getMediaInfo) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts |
@@ -173,13 +175,159 @@ ApiResponse<[**MediaInfo**](MediaInfo.md)>
 | **422** | Validation Error |  -  |
 
 
+## deleteMedia
+
+> Object deleteMedia(blobId, customerId)
+
+Delete one media item, all of its derived rows, and its stored object
+
+### Example
+
+```java
+// Import classes:
+import com.lowdownlabs.fever.ApiClient;
+import com.lowdownlabs.fever.ApiException;
+import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
+import com.lowdownlabs.fever.models.*;
+import com.lowdownlabs.fever.api.MediaApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
+
+        MediaApi apiInstance = new MediaApi(defaultClient);
+        Integer blobId = 56; // Integer | 
+        String customerId = "customerId_example"; // String | 
+        try {
+            Object result = apiInstance.deleteMedia(blobId, customerId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling MediaApi#deleteMedia");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **blobId** | **Integer**|  | |
+| **customerId** | **String**|  | [optional] |
+
+### Return type
+
+**Object**
+
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+## deleteMediaWithHttpInfo
+
+> ApiResponse<Object> deleteMediaWithHttpInfo(blobId, customerId)
+
+Delete one media item, all of its derived rows, and its stored object
+
+### Example
+
+```java
+// Import classes:
+import com.lowdownlabs.fever.ApiClient;
+import com.lowdownlabs.fever.ApiException;
+import com.lowdownlabs.fever.ApiResponse;
+import com.lowdownlabs.fever.Configuration;
+import com.lowdownlabs.fever.auth.*;
+import com.lowdownlabs.fever.models.*;
+import com.lowdownlabs.fever.api.MediaApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("http://localhost");
+        
+        // Configure HTTP bearer authorization: bearerAuth
+        HttpBearerAuth bearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("bearerAuth");
+        bearerAuth.setBearerToken("BEARER TOKEN");
+
+        MediaApi apiInstance = new MediaApi(defaultClient);
+        Integer blobId = 56; // Integer | 
+        String customerId = "customerId_example"; // String | 
+        try {
+            ApiResponse<Object> response = apiInstance.deleteMediaWithHttpInfo(blobId, customerId);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling MediaApi#deleteMedia");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **blobId** | **Integer**|  | |
+| **customerId** | **String**|  | [optional] |
+
+### Return type
+
+ApiResponse<**Object**>
+
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+
 ## getMediaBytes
 
-> Object getMediaBytes(blobId, maxDim, waveform)
+> Object getMediaBytes(blobId, maxDim, waveform, frame)
 
 Fetch an indexed media item&#39;s bytes (images normalized to JPEG)
 
-Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 &#x3D; raw bytes). Scoped keys can only fetch their own customer&#39;s items; other customers&#39; blobs are a 404 (never an existence leak).  ?waveform&#x3D;1 renders an audio blob&#39;s waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.
+Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 &#x3D; raw bytes). Scoped keys can only fetch their own customer&#39;s items; other customers&#39; blobs are a 404 (never an existence leak).  ?waveform&#x3D;1 renders an audio blob&#39;s waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.  ?frame&#x3D;N (milliseconds) renders a video blob&#39;s poster frame at that timestamp as a JPEG; frame&#x3D;0 keeps the default byte-serving behavior.
 
 ### Example
 
@@ -205,8 +353,9 @@ public class Example {
         Integer blobId = 56; // Integer | 
         Integer maxDim = 1280; // Integer | 
         Integer waveform = 0; // Integer | 
+        Integer frame = 0; // Integer | 
         try {
-            Object result = apiInstance.getMediaBytes(blobId, maxDim, waveform);
+            Object result = apiInstance.getMediaBytes(blobId, maxDim, waveform, frame);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MediaApi#getMediaBytes");
@@ -227,6 +376,7 @@ public class Example {
 | **blobId** | **Integer**|  | |
 | **maxDim** | **Integer**|  | [optional] [default to 1280] |
 | **waveform** | **Integer**|  | [optional] [default to 0] |
+| **frame** | **Integer**|  | [optional] [default to 0] |
 
 ### Return type
 
@@ -250,11 +400,11 @@ public class Example {
 
 ## getMediaBytesWithHttpInfo
 
-> ApiResponse<Object> getMediaBytesWithHttpInfo(blobId, maxDim, waveform)
+> ApiResponse<Object> getMediaBytesWithHttpInfo(blobId, maxDim, waveform, frame)
 
 Fetch an indexed media item&#39;s bytes (images normalized to JPEG)
 
-Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 &#x3D; raw bytes). Scoped keys can only fetch their own customer&#39;s items; other customers&#39; blobs are a 404 (never an existence leak).  ?waveform&#x3D;1 renders an audio blob&#39;s waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.
+Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 &#x3D; raw bytes). Scoped keys can only fetch their own customer&#39;s items; other customers&#39; blobs are a 404 (never an existence leak).  ?waveform&#x3D;1 renders an audio blob&#39;s waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.  ?frame&#x3D;N (milliseconds) renders a video blob&#39;s poster frame at that timestamp as a JPEG; frame&#x3D;0 keeps the default byte-serving behavior.
 
 ### Example
 
@@ -281,8 +431,9 @@ public class Example {
         Integer blobId = 56; // Integer | 
         Integer maxDim = 1280; // Integer | 
         Integer waveform = 0; // Integer | 
+        Integer frame = 0; // Integer | 
         try {
-            ApiResponse<Object> response = apiInstance.getMediaBytesWithHttpInfo(blobId, maxDim, waveform);
+            ApiResponse<Object> response = apiInstance.getMediaBytesWithHttpInfo(blobId, maxDim, waveform, frame);
             System.out.println("Status code: " + response.getStatusCode());
             System.out.println("Response headers: " + response.getHeaders());
             System.out.println("Response body: " + response.getData());
@@ -305,6 +456,7 @@ public class Example {
 | **blobId** | **Integer**|  | |
 | **maxDim** | **Integer**|  | [optional] [default to 1280] |
 | **waveform** | **Integer**|  | [optional] [default to 0] |
+| **frame** | **Integer**|  | [optional] [default to 0] |
 
 ### Return type
 

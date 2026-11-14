@@ -11,6 +11,7 @@
 |**document** | **List&lt;String&gt;** |  |  |
 |**image** | **List&lt;String&gt;** |  |  |
 |**lidar** | **List&lt;String&gt;** |  |  |
+|**model3d** | **List&lt;String&gt;** |  |  |
 |**video** | **List&lt;String&gt;** |  |  |
 
 

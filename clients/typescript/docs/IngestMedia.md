@@ -14,6 +14,8 @@ Name | Type
 `metadata` | { [key: string]: any; }
 `parentRef` | string
 `stripExif` | boolean
+`tagMinScore` | number
+`tagVocab` | Array&lt;string&gt;
 `tags` | Array&lt;string&gt;
 `url` | string
 
@@ -32,6 +34,8 @@ const example = {
   "metadata": null,
   "parentRef": null,
   "stripExif": null,
+  "tagMinScore": null,
+  "tagVocab": null,
   "tags": null,
   "url": null,
 } satisfies IngestMedia

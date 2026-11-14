@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
 | [**AssociateMedia**](MediaApi.md#associatemedia) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo) |
+| [**DeleteMedia**](MediaApi.md#deletemedia) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object |
 | [**GetMediaBytes**](MediaApi.md#getmediabytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG) |
 | [**GetMediaInfo**](MediaApi.md#getmediainfo) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts |
 | [**ListMediaFormats**](MediaApi.md#listmediaformats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family |
@@ -114,13 +115,112 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a id="deletemedia"></a>
+# **DeleteMedia**
+> Object DeleteMedia (int blobId, string? customerId = null)
+
+Delete one media item, all of its derived rows, and its stored object
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LowdownLabs.Fever.Api;
+using LowdownLabs.Fever.Client;
+using LowdownLabs.Fever.Model;
+
+namespace Example
+{
+    public class DeleteMediaExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "http://localhost";
+            // Configure Bearer token for authorization: bearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new MediaApi(httpClient, config, httpClientHandler);
+            var blobId = 56;  // int | 
+            var customerId = "customerId_example";  // string? |  (optional) 
+
+            try
+            {
+                // Delete one media item, all of its derived rows, and its stored object
+                Object result = apiInstance.DeleteMedia(blobId, customerId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling MediaApi.DeleteMedia: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the DeleteMediaWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Delete one media item, all of its derived rows, and its stored object
+    ApiResponse<Object> response = apiInstance.DeleteMediaWithHttpInfo(blobId, customerId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling MediaApi.DeleteMediaWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **blobId** | **int** |  |  |
+| **customerId** | **string?** |  | [optional]  |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a id="getmediabytes"></a>
 # **GetMediaBytes**
-> Object GetMediaBytes (int blobId, int? maxDim = null, int? waveform = null)
+> Object GetMediaBytes (int blobId, int? maxDim = null, int? waveform = null, int? frame = null)
 
 Fetch an indexed media item's bytes (images normalized to JPEG)
 
-Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw bytes). Scoped keys can only fetch their own customer's items; other customers' blobs are a 404 (never an existence leak).  ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.
+Return the bytes for a blob_id (JPEG, normalized to max_dim; 0 = raw bytes). Scoped keys can only fetch their own customer's items; other customers' blobs are a 404 (never an existence leak).  ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic) so clients can show a real visual for audio hits without decoding the clip in the browser.  ?frame=N (milliseconds) renders a video blob's poster frame at that timestamp as a JPEG; frame=0 keeps the default byte-serving behavior.
 
 ### Example
 ```csharp
@@ -149,11 +249,12 @@ namespace Example
             var blobId = 56;  // int | 
             var maxDim = 1280;  // int? |  (optional)  (default to 1280)
             var waveform = 0;  // int? |  (optional)  (default to 0)
+            var frame = 0;  // int? |  (optional)  (default to 0)
 
             try
             {
                 // Fetch an indexed media item's bytes (images normalized to JPEG)
-                Object result = apiInstance.GetMediaBytes(blobId, maxDim, waveform);
+                Object result = apiInstance.GetMediaBytes(blobId, maxDim, waveform, frame);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -174,7 +275,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Fetch an indexed media item's bytes (images normalized to JPEG)
-    ApiResponse<Object> response = apiInstance.GetMediaBytesWithHttpInfo(blobId, maxDim, waveform);
+    ApiResponse<Object> response = apiInstance.GetMediaBytesWithHttpInfo(blobId, maxDim, waveform, frame);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -194,6 +295,7 @@ catch (ApiException e)
 | **blobId** | **int** |  |  |
 | **maxDim** | **int?** |  | [optional] [default to 1280] |
 | **waveform** | **int?** |  | [optional] [default to 0] |
+| **frame** | **int?** |  | [optional] [default to 0] |
 
 ### Return type
 

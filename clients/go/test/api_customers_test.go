@@ -22,6 +22,20 @@ func Test_fever_CustomersAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test CustomersAPIService DeleteCustomer", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var customerId string
+
+		resp, httpRes, err := apiClient.CustomersAPI.DeleteCustomer(context.Background(), customerId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test CustomersAPIService ReassignCustomersBulk", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

@@ -9,6 +9,7 @@ Name | Type
 `media` | [Array&lt;IngestMedia&gt;](IngestMedia.md)
 `overwrite` | boolean
 `source` | [IngestSource](IngestSource.md)
+`tagMinScore` | number
 `targetRes` | number
 
 ## Example
@@ -21,6 +22,7 @@ const example = {
   "media": null,
   "overwrite": null,
   "source": null,
+  "tagMinScore": null,
   "targetRes": null,
 } satisfies IngestRequest
 

@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**customer_id** | **str** |  | [optional] 
 **done** | **int** |  | [optional] [default to 0]
 **error** | **str** |  | [optional] 
 **id** | **int** |  | 

@@ -12,10 +12,11 @@ Name | Type | Description | Notes
 **CustomerId** | Pointer to **NullableString** |  | [optional] 
 **Device** | Pointer to **NullableString** | EXIF camera make/model. | [optional] 
 **ExternalRef** | Pointer to **NullableString** | s3:// URI of the stored original. | [optional] 
+**FaceCount** | Pointer to **NullableInt32** | Faces detected at ingest (FEVER_FACES), when run. | [optional] 
 **FrameCount** | Pointer to **int32** | Sampled video frames derived from this blob. | [optional] [default to 0]
 **GpsLat** | Pointer to **NullableFloat32** |  | [optional] 
 **GpsLon** | Pointer to **NullableFloat32** |  | [optional] 
-**Kind** | Pointer to **NullableString** | Media kind of this blob (image/video/audio/pdf/doc/note/lidar). | [optional] 
+**Kind** | Pointer to **NullableString** | Media kind of this blob (image/video/audio/pdf/doc/note/lidar/model3d). | [optional] 
 **Metadata** | Pointer to **map[string]interface{}** |  | [optional] 
 **OcrText** | Pointer to **NullableString** | Text OCR&#39;d out of the item (PDF pages always, photos when enabled). | [optional] 
 **ParentRef** | Pointer to **NullableString** | Pointer to this item&#39;s related parent asset, if declared. | [optional] 
@@ -297,6 +298,41 @@ HasExternalRef returns a boolean if a field has been set.
 `func (o *MediaInfo) UnsetExternalRef()`
 
 UnsetExternalRef ensures that no value is present for ExternalRef, not even an explicit nil
+### GetFaceCount
+
+`func (o *MediaInfo) GetFaceCount() int32`
+
+GetFaceCount returns the FaceCount field if non-nil, zero value otherwise.
+
+### GetFaceCountOk
+
+`func (o *MediaInfo) GetFaceCountOk() (*int32, bool)`
+
+GetFaceCountOk returns a tuple with the FaceCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFaceCount
+
+`func (o *MediaInfo) SetFaceCount(v int32)`
+
+SetFaceCount sets FaceCount field to given value.
+
+### HasFaceCount
+
+`func (o *MediaInfo) HasFaceCount() bool`
+
+HasFaceCount returns a boolean if a field has been set.
+
+### SetFaceCountNil
+
+`func (o *MediaInfo) SetFaceCountNil(b bool)`
+
+ SetFaceCountNil sets the value for FaceCount to be an explicit nil
+
+### UnsetFaceCount
+`func (o *MediaInfo) UnsetFaceCount()`
+
+UnsetFaceCount ensures that no value is present for FaceCount, not even an explicit nil
 ### GetFrameCount
 
 `func (o *MediaInfo) GetFrameCount() int32`

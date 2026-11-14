@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **CollapseDuplicates** | Pointer to **bool** | Collapse near-duplicate items so each result is a distinct representative; the folded-in duplicates are listed on each hit. | [optional] [default to true]
 **CollectionId** | Pointer to **NullableString** | Restrict results to media tagged with this collection_id. | [optional] 
 **CustomerId** | Pointer to **NullableString** | Restrict results to media tagged with this customer_id. | [optional] 
+**Depth** | Pointer to **NullableInt32** | Rerank pool depth override; defaults to offset + k. Calibration/tuning knob. | [optional] 
 **Device** | Pointer to **NullableString** | EXIF camera make/model substring. | [optional] 
 **DupeThreshold** | Pointer to **NullableFloat32** | Cosine similarity cutoff 0..1 for treating two items as duplicates; higher is stricter. Defaults to the appliance setting when omitted. | [optional] 
 **ExcludeTags** | Pointer to **[]string** | Exclude blobs carrying any of these tags (ingest tags and/or zero-shot autotags), e.g. [&#39;people&#39;] to build a no-people dataset. | [optional] 
@@ -22,6 +23,7 @@ Name | Type | Description | Notes
 **MaxWidth** | Pointer to **NullableInt32** | Restrict results to blobs at most this many pixels wide (stored media dimensions; blobs with unknown dimensions are excluded whenever this is set). | [optional] 
 **MinScore** | Pointer to **float32** | Confidence cutoff 0..1; for text this is the reranker&#39;s match probability. | [optional] [default to 0.0]
 **Near** | Pointer to **[]float32** | Geo filter [lat, lon, radius_km] from EXIF GPS. | [optional] 
+**Offset** | Pointer to **int32** | Skip this many top-ranked results before taking k (pagination). | [optional] [default to 0]
 **Sort** | Pointer to **NullableString** | &#39;relevance&#39; (default) is the fused/calibrated ordering; &#39;distance&#39; reorders results nearest-first and requires the near filter - e.g. an integrator&#39;s map view. An explicit ordering knob, not another relevance signal. | [optional] 
 **Text** | Pointer to **NullableString** | Text query (meaning-based, not keyword). | [optional] 
 
@@ -209,6 +211,41 @@ HasCustomerId returns a boolean if a field has been set.
 `func (o *SearchRequest) UnsetCustomerId()`
 
 UnsetCustomerId ensures that no value is present for CustomerId, not even an explicit nil
+### GetDepth
+
+`func (o *SearchRequest) GetDepth() int32`
+
+GetDepth returns the Depth field if non-nil, zero value otherwise.
+
+### GetDepthOk
+
+`func (o *SearchRequest) GetDepthOk() (*int32, bool)`
+
+GetDepthOk returns a tuple with the Depth field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDepth
+
+`func (o *SearchRequest) SetDepth(v int32)`
+
+SetDepth sets Depth field to given value.
+
+### HasDepth
+
+`func (o *SearchRequest) HasDepth() bool`
+
+HasDepth returns a boolean if a field has been set.
+
+### SetDepthNil
+
+`func (o *SearchRequest) SetDepthNil(b bool)`
+
+ SetDepthNil sets the value for Depth to be an explicit nil
+
+### UnsetDepth
+`func (o *SearchRequest) UnsetDepth()`
+
+UnsetDepth ensures that no value is present for Depth, not even an explicit nil
 ### GetDevice
 
 `func (o *SearchRequest) GetDevice() string`
@@ -644,6 +681,31 @@ HasNear returns a boolean if a field has been set.
 `func (o *SearchRequest) UnsetNear()`
 
 UnsetNear ensures that no value is present for Near, not even an explicit nil
+### GetOffset
+
+`func (o *SearchRequest) GetOffset() int32`
+
+GetOffset returns the Offset field if non-nil, zero value otherwise.
+
+### GetOffsetOk
+
+`func (o *SearchRequest) GetOffsetOk() (*int32, bool)`
+
+GetOffsetOk returns a tuple with the Offset field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOffset
+
+`func (o *SearchRequest) SetOffset(v int32)`
+
+SetOffset sets Offset field to given value.
+
+### HasOffset
+
+`func (o *SearchRequest) HasOffset() bool`
+
+HasOffset returns a boolean if a field has been set.
+
 ### GetSort
 
 `func (o *SearchRequest) GetSort() string`

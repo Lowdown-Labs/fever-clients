@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**CustomerId** | **string** |  | [optional] 
 **Done** | **int** |  | [optional] [default to 0]
 **Error** | **string** |  | [optional] 
 **Id** | **int** |  | 

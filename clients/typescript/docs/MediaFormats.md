@@ -10,6 +10,7 @@ Name | Type
 `document` | Array&lt;string&gt;
 `image` | Array&lt;string&gt;
 `lidar` | Array&lt;string&gt;
+`model3d` | Array&lt;string&gt;
 `video` | Array&lt;string&gt;
 
 ## Example
@@ -23,6 +24,7 @@ const example = {
   "document": null,
   "image": null,
   "lidar": null,
+  "model3d": null,
   "video": null,
 } satisfies MediaFormats
 

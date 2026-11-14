@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **document** | **string[]** |  |
 **image** | **string[]** |  |
 **lidar** | **string[]** |  |
+**model3d** | **string[]** |  |
 **video** | **string[]** |  |
 
 [[Back to Model list]](../../README.md#models) [[Back to API list]](../../README.md#endpoints) [[Back to README]](../../README.md)

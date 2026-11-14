@@ -7,6 +7,7 @@
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
+|**customerId** | **String** |  |  [optional] |
 |**done** | **Integer** |  |  [optional] |
 |**error** | **String** |  |  [optional] |
 |**id** | **Integer** |  |  |

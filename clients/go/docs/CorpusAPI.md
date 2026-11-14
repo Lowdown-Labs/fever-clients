@@ -14,6 +14,8 @@ Method | HTTP request | Description
 
 Corpus composition: per-kind counts and top autotags
 
+
+
 ### Example
 
 ```go

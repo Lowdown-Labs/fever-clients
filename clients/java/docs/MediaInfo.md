@@ -15,10 +15,11 @@
 |**customerId** | **String** |  |  [optional] |
 |**device** | **String** | EXIF camera make/model. |  [optional] |
 |**externalRef** | **String** | s3:// URI of the stored original. |  [optional] |
+|**faceCount** | **Integer** | Faces detected at ingest (FEVER_FACES), when run. |  [optional] |
 |**frameCount** | **Integer** | Sampled video frames derived from this blob. |  [optional] |
 |**gpsLat** | **BigDecimal** |  |  [optional] |
 |**gpsLon** | **BigDecimal** |  |  [optional] |
-|**kind** | [**KindEnum**](#KindEnum) | Media kind of this blob (image/video/audio/pdf/doc/note/lidar). |  [optional] |
+|**kind** | [**KindEnum**](#KindEnum) | Media kind of this blob (image/video/audio/pdf/doc/note/lidar/model3d). |  [optional] |
 |**metadata** | **Map&lt;String, Object&gt;** |  |  [optional] |
 |**ocrText** | **String** | Text OCR&#39;d out of the item (PDF pages always, photos when enabled). |  [optional] |
 |**parentRef** | **String** | Pointer to this item&#39;s related parent asset, if declared. |  [optional] |
@@ -39,6 +40,7 @@
 | DOC | &quot;doc&quot; |
 | NOTE | &quot;note&quot; |
 | LIDAR | &quot;lidar&quot; |
+| MODEL3D | &quot;model3d&quot; |
 
 
 

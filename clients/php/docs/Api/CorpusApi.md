@@ -17,6 +17,8 @@ corpusStats($customer_id): \LowdownLabs\Fever\Model\CorpusStats
 
 Corpus composition: per-kind counts and top autotags
 
+kinds/top_tags/storage_bytes follow the same customer scoping. index_bytes is the appliance-wide footprint of as_blobs/embeddings/ annotations including their indexes: those tables are hash-partitioned by customer_id, not per tenant, so a per-tenant share is not attributable and every caller sees the same global value.
+
 ### Example
 
 ```php

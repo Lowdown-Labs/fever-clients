@@ -14,6 +14,7 @@ Name | Type
 `customerId` | string
 `device` | string
 `externalRef` | string
+`faceCount` | number
 `frameCount` | number
 `gpsLat` | number
 `gpsLon` | number
@@ -40,6 +41,7 @@ const example = {
   "customerId": null,
   "device": null,
   "externalRef": null,
+  "faceCount": null,
   "frameCount": null,
   "gpsLat": null,
   "gpsLon": null,

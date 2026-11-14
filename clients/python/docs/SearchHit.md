@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **customer_id** | **str** |  | [optional] 
 **duplicate_count** | **int** | Number of near-duplicates collapsed into this hit. | [optional] [default to 0]
 **duplicates** | **List[int]** | blob_ids of near-duplicates collapsed into this hit. | [optional] 
+**filename** | **str** | Original uploaded file name, when the blob was ingested with one. | [optional] 
 **geo_label** | **str** | Reverse-geocode label from EXIF GPS (e.g. &#39;Lisbon, PT&#39;), when the asset carries intact camera coordinates (the geo:&lt;label&gt; tag rides alongside). | [optional] 
 **headline** | **str** | Lexical FTS highlight (ts_headline) when the hit came via full-text search. | [optional] 
 **height** | **int** | Stored media height in pixels, when known. | [optional] 
@@ -23,6 +24,7 @@ Name | Type | Description | Notes
 **seek_ms** | **int** | For video hits: timestamp of the winning frame, for seek-to-moment playback. | [optional] 
 **span** | [**MediaSpan**](MediaSpan.md) | For transcript hits: the matching whisper segment, with literal text for highlighting. | [optional] 
 **span_headline** | **str** | Lexical FTS highlight (ts_headline) of the winning transcript segment. | [optional] 
+**spans** | [**List[MediaSpan]**](MediaSpan.md) | For video hits: every frame match range (not just the winning frame), so a video that matches several times shows them all. Boundaries are whole seconds (reported as ms, always a multiple of 1000). | [optional] 
 **tags** | **List[str]** | Tags on this item: client-supplied at ingest and/or the appliance&#39;s zero-shot autotags. | [optional] 
 **width** | **int** | Stored media width in pixels, when known. | [optional] 
 

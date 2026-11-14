@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**associate_media**](MediaApi.md#associate_media) | **POST** /v1/media/{blob_id}/associate | Set a blob&#39;s collection and/or parent association (e.g. attach a LiDAR scan to its source photo)
+[**delete_media**](MediaApi.md#delete_media) | **DELETE** /v1/media/{blob_id} | Delete one media item, all of its derived rows, and its stored object
 [**get_media_bytes**](MediaApi.md#get_media_bytes) | **GET** /v1/media/{blob_id}/bytes | Fetch an indexed media item&#39;s bytes (images normalized to JPEG)
 [**get_media_info**](MediaApi.md#get_media_info) | **GET** /v1/media/{blob_id} | Everything known about a blob: annotations, EXIF summary, media kind, derived artifact counts
 [**list_media_formats**](MediaApi.md#list_media_formats) | **GET** /v1/media/formats | Ingest capability: supported extensions per media family
@@ -100,8 +101,86 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **delete_media**
+> object delete_media(blob_id, customer_id=customer_id)
+
+Delete one media item, all of its derived rows, and its stored object
+
+### Example
+
+* Bearer Authentication (bearerAuth):
+
+```python
+import fever_client
+from fever_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fever_client.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: bearerAuth
+configuration = fever_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+async with fever_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = fever_client.MediaApi(api_client)
+    blob_id = 56 # int | 
+    customer_id = 'customer_id_example' # str |  (optional)
+
+    try:
+        # Delete one media item, all of its derived rows, and its stored object
+        api_response = await api_instance.delete_media(blob_id, customer_id=customer_id)
+        print("The response of MediaApi->delete_media:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling MediaApi->delete_media: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **blob_id** | **int**|  | 
+ **customer_id** | **str**|  | [optional] 
+
+### Return type
+
+**object**
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_media_bytes**
-> object get_media_bytes(blob_id, max_dim=max_dim, waveform=waveform)
+> object get_media_bytes(blob_id, max_dim=max_dim, waveform=waveform, frame=frame)
 
 Fetch an indexed media item's bytes (images normalized to JPEG)
 
@@ -112,6 +191,9 @@ customers' blobs are a 404 (never an existence leak).
 ?waveform=1 renders an audio blob's waveform as a PNG (ffmpeg showwavespic)
 so clients can show a real visual for audio hits without decoding the clip
 in the browser.
+
+?frame=N (milliseconds) renders a video blob's poster frame at that
+timestamp as a JPEG; frame=0 keeps the default byte-serving behavior.
 
 ### Example
 
@@ -145,10 +227,11 @@ async with fever_client.ApiClient(configuration) as api_client:
     blob_id = 56 # int | 
     max_dim = 1280 # int |  (optional) (default to 1280)
     waveform = 0 # int |  (optional) (default to 0)
+    frame = 0 # int |  (optional) (default to 0)
 
     try:
         # Fetch an indexed media item's bytes (images normalized to JPEG)
-        api_response = await api_instance.get_media_bytes(blob_id, max_dim=max_dim, waveform=waveform)
+        api_response = await api_instance.get_media_bytes(blob_id, max_dim=max_dim, waveform=waveform, frame=frame)
         print("The response of MediaApi->get_media_bytes:\n")
         pprint(api_response)
     except Exception as e:
@@ -165,6 +248,7 @@ Name | Type | Description  | Notes
  **blob_id** | **int**|  | 
  **max_dim** | **int**|  | [optional] [default to 1280]
  **waveform** | **int**|  | [optional] [default to 0]
+ **frame** | **int**|  | [optional] [default to 0]
 
 ### Return type
 
