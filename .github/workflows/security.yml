@@ -37,7 +37,7 @@ jobs:
             git --verbose --report-format sarif --report-path /repo/gitleaks.sarif /repo
       - name: Upload SARIF
         if: always() && steps.vis.outputs.public == 'true'
-        uses: github/codeql-action/upload-sarif@1c5b675653bb5c22dbe9b12b556ec555138e09fd
+        uses: github/codeql-action/upload-sarif@9b3254085494b55a0f7c4c2b3d2d52cc712ce370
         with:
           sarif_file: gitleaks.sarif
 
@@ -71,7 +71,7 @@ jobs:
           output: trivy-results.sarif
       - name: Upload SARIF
         if: always() && steps.vis.outputs.public == 'true'
-        uses: github/codeql-action/upload-sarif@1c5b675653bb5c22dbe9b12b556ec555138e09fd
+        uses: github/codeql-action/upload-sarif@9b3254085494b55a0f7c4c2b3d2d52cc712ce370
         with:
           sarif_file: trivy-results.sarif
 
@@ -106,6 +106,6 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff
         with:
-          go-version: "1.26"
+          go-version: "1.26.11"
       - run: go install golang.org/x/vuln/cmd/govulncheck@v1.8.0
       - run: cd clients/go && govulncheck ./...
